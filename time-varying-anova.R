@@ -67,6 +67,72 @@ dat %>%
     theme_bw()
 
 
-fit <- stan_gamm4(y ~ s(time, treatment), data = dat)
+library(rstan)
+dat_fit <- list(
+    N = length(y),
+    n_time = n_time,
+    n_treatment = n_treatment,
+    q = ncol(X_bs),
+    time_idx = dat$time,
+    treatment_idx = as.numeric(dat$treatment),
+    y = dat$y,
+    X = X_bs
+)
 
-plot_nonlinear(fit, smooths = "s(treatment)")
+fit <- stan(file = here::here("time-varying.stan"), data = dat_fit)
+
+
+
+
+
+
+
+
+
+
+
+
+library(rstanarm)
+fit <- stan_gamm4(y ~ s(time, treatment), data = dat)
+e <- extract(fit)
+mu_post <- sapply(1:nrow(e$sigma), function(i) X_bs %*% e$beta[i, , ],
+                  simplify = "array")
+dimnames(mu_post) <- list(
+    time       = 1:n_time,
+    treatment  = 1:n_treatment,
+    iteration = 1:nrow(e$sigma)
+)
+
+mu_post_mean <- apply(mu_post, c(1, 2), mean)
+mu_post_lower50 <- apply(mu_post, c(1, 2), quantile, prob = 0.25)
+mu_post_upper50 <- apply(mu_post, c(1, 2), quantile, prob = 0.75)
+mu_post_lower95 <- apply(mu_post, c(1, 2), quantile, prob = 0.025)
+mu_post_upper95 <- apply(mu_post, c(1, 2), quantile, prob = 0.975)
+
+dat_plot <- data.frame(
+    mean      = c(mu_post_mean),
+    lower_50  = c(mu_post_lower50),
+    upper_50  = c(mu_post_upper50),
+    lower_95  = c(mu_post_lower95),
+    upper_95  = c(mu_post_upper95),
+    truth     = c(mu),
+    time      = rep(1:n_time, times = n_treatment),
+    treatment = factor(rep(1:n_treatment, each = n_time))
+)
+
+dat_plot %>%
+    ggplot(aes(x = time, y = truth, color = treatment, group = treatment)) +
+    geom_line(lwd = 1.5) +
+    # geom_line(aes(x = time, y = mean, color = treatment, group = treatment)) +
+    scale_color_viridis_d(end = 0.75) +
+    scale_fill_viridis_d(end = 0.75) +
+    ggtitle("Fitted time-varying responses") +
+    theme_bw() +
+    geom_ribbon(aes(ymin = lower_50, ymax = upper_50, fill = treatment), alpha = 0.5, color = NA) +
+    geom_ribbon(aes(ymin = lower_95, ymax = upper_95, fill = treatment), alpha = 0.25, color = NA) +
+    geom_point(data = dat, aes(x = time, y = y))
+
+
+
+
+
