@@ -2,9 +2,9 @@ library(tidyverse)
 library(splines)
 
 set.seed(11)
-n_time      <- 10
-n_treatment <- 3
-n_reps      <- 5
+n_time      <- 10 #repeated observations
+n_treatment <- 3 #treatment groups
+n_reps      <- 5 #subjects per treatment
 ## spline degrees of freedom
 ## controls "wigglieness" of the response
 df          <- 4
@@ -43,7 +43,7 @@ sigma <- 0.25
 ##
 ## generate the data
 ##
-#generates empty arrays. n_time rows, n_treatment columns, n_reps number of arrays and then puts names on the rows
+#generates empty arrays. n_time rows, n_treatment columns, n_reps (number of subjects per treatment group) number of arrays and then puts names on the rows
 #and columns of each array
 y <- array(NA, dim = c(n_time, n_treatment, n_reps))
 dimnames(y) <- list(
