@@ -63,7 +63,7 @@ for (i in 1:n_reps) {
 dat <- as.data.frame.table(y, responseName = "y")
 dat$time <- as.numeric(dat$time)
 
-## merge in the mean response mu
+## merge in the mean response mu with the generated data per treatment per timepoint per subject
 dat <- merge(dat, dat_mu)
 
 dat %>%
@@ -77,14 +77,14 @@ dat %>%
 
 library(rstan)
 dat_fit <- list(
-    N = length(y),
+    N = length(y), #length (total number of observations) is No. of subjects*timepoints*treatments
     n_time = n_time,
     n_treatment = n_treatment,
-    q = ncol(X_bs),
-    time_idx = dat$time,
+    q = ncol(X_bs), #wiggliness of the response
+    time_idx = dat$time, #all the timepoints per group per treatment
     treatment_idx = as.numeric(dat$treatment),
-    y = dat$y,
-    X = X_bs
+    y = dat$y, #all the generated responses
+    X = X_bs #the polynomial spline matrix
 )
 
 fit <- stan(file = here::here("time-varying.stan"), data = dat_fit)
