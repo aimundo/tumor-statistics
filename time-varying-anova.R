@@ -4,9 +4,9 @@ library(rstan)
 library(rstanarm)
 
 set.seed(11)
-n_time      <- 10
-n_treatment <- 3
-n_reps      <- 5
+n_time      <- 10 #repeated observations
+n_treatment <- 3 #treatment groups
+n_reps      <- 5 #subjects per treatment
 ## spline degrees of freedom
 ## controls "wigglieness" of the response
 df          <- 4
@@ -15,19 +15,23 @@ time      <- 1:n_time
 treatment <- 1:n_treatment
 
 ## basis expansion over time that allows for smooth functional response
-X_bs <- bs(time, df = df)
+X_bs <- bs(time, df = df) #generates matrix for representing the family of piecewise polynomials with specificed knots
+#and df
 ## beta parameters
 ## each treatment gets a different set of parameters
-beta <- matrix(rnorm(df * n_treatment), df, n_treatment)
+beta <- matrix(rnorm(df * n_treatment), df, n_treatment) #generates samples from the normal distribution and
+#places them in a matrix with size df and n_treatment
 
 ## mean time-varying response within each group
-mu <- X_bs %*% beta
+mu <- X_bs %*% beta #matrix multiplication to generate the mean time-varying response
 
 dat_mu <- data.frame(
     mu        = c(mu),
     time      = rep(1:n_time, times = n_treatment),
     treatment = factor(rep(1:n_treatment, each = n_time))
 )
+
+#this data frame has mean response for 10 observations for 3 treatment groups
 dat_mu %>%
     ggplot(aes(x = time, y = mu, group = treatment, color = treatment)) +
     geom_line() +
@@ -41,14 +45,16 @@ sigma <- 0.25
 ##
 ## generate the data
 ##
-
+#generates empty arrays. n_time rows, n_treatment columns, n_reps (number of subjects per treatment group) number of arrays and then puts names on the rows
+#and columns of each array
 y <- array(NA, dim = c(n_time, n_treatment, n_reps))
 dimnames(y) <- list(
     time       = 1:n_time,
     treatment  = 1:n_treatment,
     individual = 1:n_reps
 )
-
+#this cycle places mean response per treatment group from mu, adds a newly generated parameter generated from the
+#normal distribution and pastes them in the previously made arrays
 for (i in 1:n_reps) {
     y[, , i] <- mu + matrix(rnorm(n_time * n_treatment, 0, sigma), n_time, n_treatment)
 }
