@@ -22,6 +22,18 @@ X_bs <- bs(time, df = df) #generates matrix for representing the family of piece
 beta <- matrix(rnorm(df * n_treatment), df, n_treatment) #generates samples from the normal distribution and
 #places them in a matrix with size df and n_treatment
 
+beta <- matrix(c(
+    4, 3, 2, 1,
+    -1, -2, -3, -4,
+    -4, -1, -1, -4), df, n_treatment)
+
+plot(X_bs %*% beta[, 1], ylim = c(0, 6), type = 'l')
+matplot(X_bs, type = 'l', add = TRUE)
+plot(X_bs %*% beta[, 2], ylim = c(-4, 4), type = 'l')
+matplot(t(t(X_bs) * beta[, 2]), type = 'l', add = TRUE)
+
+
+
 ## mean time-varying response within each group
 mu <- X_bs %*% beta #matrix multiplication to generate the mean time-varying response
 
