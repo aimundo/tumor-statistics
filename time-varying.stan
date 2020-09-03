@@ -5,7 +5,7 @@ data {
   int<lower=0> q;// wiggliness of the response
   int<lower=0> time_idx[N]; #all timepoints
   int<lower=0> treatment_idx[N];#all observations per group
-  vector[N] y; #vector of generated responses
+  vector[N] y; //vector of generated responses
   matrix[n_time, q] X; //polynomial spline matrix
 }
 
@@ -23,10 +23,10 @@ transformed parameters {
 // 'y' to be normally distributed with mean 'mu'
 // and standard deviation 'sigma'.
 model {
-  to_vector(beta) ~ normal(0, 1);
-  sigma ~ cauchy(0, 2);
+  to_vector(beta) ~ normal(0, 1); //effect
+  sigma ~ cauchy(0, 2);//prior
   for (i in 1:N) {
-      y[i] ~ normal(mu[time_idx[i], treatment_idx[i]], sigma);
+      y[i] ~ normal(mu[time_idx[i], treatment_idx[i]], sigma); //likelihood
   }
 }
 
