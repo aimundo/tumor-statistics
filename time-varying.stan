@@ -3,8 +3,8 @@ data {
   int<lower=0> n_time; //number of repeated measurements
   int<lower=0> n_treatment; //number of treatments
   int<lower=0> q;// wiggliness of the response
-  int<lower=0> time_idx[N]; #all timepoints
-  int<lower=0> treatment_idx[N];#all observations per group
+  int<lower=0> time_idx[N]; //all timepoints
+  int<lower=0> treatment_idx[N]; //all observations per group
   vector[N] y; //vector of generated responses
   matrix[n_time, q] X; //polynomial spline matrix
 }
