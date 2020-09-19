@@ -29,9 +29,15 @@ n <- 10
 sd <- 5
 set.seed(11)
 dat_sim <- simulate_data(dat, n, sd)
+df <- 6
+
+n_time <- length(unique(dat_sim$Day))
+n_treatment <- length(unique(dat_sim$Group))
 
 ## basis expansion over time that allows for smooth functional response
-X_bs <- bs(unique(dat_sim$Day), df = df) #generates matrix for representing the family of piecewise polynomials with specificed knots
+X_bs <- bs(unique(dat_sim$Day), df = df, intercept = TRUE) #generates matrix for representing the family of piecewise polynomials with specificed knots
+
+matplot(unique(dat_sim$Day), X_bs, type = 'l')
 
 
 ggplot(dat_sim, aes(x = Day, y = observation, color = Group)) +
@@ -40,6 +46,7 @@ ggplot(dat_sim, aes(x = Day, y = observation, color = Group)) +
     scale_color_viridis_d(end = 0.75) +
     geom_line(aes(y = StO2), alpha = 0.75) +
     theme_bw()
+
 
 
 
@@ -78,22 +85,22 @@ dat_plot <- data.frame(
     upper_50  = c(mu_post_upper50),
     lower_95  = c(mu_post_lower95),
     upper_95  = c(mu_post_upper95),
-    # truth     = c(dat_sim$StO2),
-    time      = rep(1:n_time, times = n_treatment),
-    treatment = factor(rep(1:n_treatment, each = n_time))
+    truth     = c(dat_sim$StO2),
+    time      = rep(unique(dat_sim$Day), times = n_treatment),
+    treatment = factor(rep(unique(dat_sim$Group), each = n_time))
 )
 
 dat_plot %>%
     ggplot(aes(x = time, y = mean, color = treatment, group = treatment)) +
     geom_line(lwd = 1.5) +
-    # geom_line(aes(x = time, y = mean, color = treatment, group = treatment)) +
+    geom_line(data = dat_sim, aes(x = Day, y = StO2, color = Group, group = Group), inherit.aes = FALSE) +
     scale_color_viridis_d(end = 0.75) +
     scale_fill_viridis_d(end = 0.75) +
     ggtitle("Fitted time-varying responses") +
     theme_bw() +
     geom_ribbon(aes(ymin = lower_50, ymax = upper_50, fill = treatment), alpha = 0.5, color = NA) +
     geom_ribbon(aes(ymin = lower_95, ymax = upper_95, fill = treatment), alpha = 0.25, color = NA) +
-    geom_point(data = dat_sim, aes(x = as.numeric(as.factor(Day)), y = observation, group = Group, color = Group), inherit.aes = FALSE)
+    geom_point(data = dat_sim, aes(x = Day, y = observation, group = Group, color = Group), inherit.aes = FALSE)
 
 
 

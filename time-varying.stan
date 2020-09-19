@@ -23,7 +23,7 @@ transformed parameters {
 // 'y' to be normally distributed with mean 'mu'
 // and standard deviation 'sigma'.
 model {
-  to_vector(beta) ~ normal(0, 1); //effect
+  to_vector(beta) ~ normal(0, 100); //effect
   sigma ~ cauchy(0, 2);//prior
   for (i in 1:N) {
       y[i] ~ normal(mu[time_idx[i], treatment_idx[i]], sigma); //likelihood
