@@ -36,7 +36,8 @@ n_treatment <- length(unique(dat_sim$Group))
 
 ## basis expansion over time that allows for smooth functional response
 X_bs <- bs(unique(dat_sim$Day), df = df, intercept = TRUE) #generates matrix for representing the family of piecewise polynomials with specificed knots
-
+# 2 knots as it is defined by df(6)-degree(3)-1 because of the intercept
+#each column of the matrix is a basis function
 matplot(unique(dat_sim$Day), X_bs, type = 'l')
 
 
