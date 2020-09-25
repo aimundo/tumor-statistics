@@ -10,7 +10,7 @@ data {
 }
 
 parameters {  //parameters to be estimated
-  matrix[q, n_treatment] beta;//coefficients
+  matrix[q, n_treatment] beta;//
   real<lower=0> sigma;
 }
 

@@ -56,7 +56,7 @@ dat_fit <- list(
     N = nrow(dat_sim), #length (total number of observations) is No. of subjects*timepoints*treatments
     n_time = n_time,
     n_treatment = n_treatment,
-    q = ncol(X_bs), #wiggliness of the response
+    q = ncol(X_bs), #number of basis functions for the spline
     time_idx = as.numeric(as.factor(dat_sim$Day)), #all the timepoints per group per treatment
     treatment_idx = as.numeric(as.factor(dat_sim$Group)),
     y = dat_sim$observation, #all the generated responses
