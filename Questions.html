@@ -12,7 +12,7 @@
 
 <meta name="author" content="Document Author" />
 
-<meta name="date" content="2020-09-27" />
+<meta name="date" content="2020-09-29" />
 
 <title>Questions regarding modeling</title>
 
@@ -63,7 +63,7 @@ code span.ot { color: #007020; }
 <div class="inner">
 <h1 class="title toc-ignore">Questions regarding modeling</h1>
 <h3 class="author">Document Author</h3>
-<h3 class="date">2020-09-27</h3>
+<h3 class="date">2020-09-29</h3>
 </div>
 </header>
 
@@ -74,7 +74,10 @@ code span.ot { color: #007020; }
     <section id="main-content">
 <p>After reading the book from Krushke and going back and forth between the “time-varying-anova-example” file and the Stan model “time-varying” there are certain things that I have understood:</p>
 <ul>
-<li><p>The specification of prior distributions: I did not understand at the beginning why you chose a Cauchy distribution for the error, but upon reading and talking with you I understand it is just a possible distribution, it has large tails and therefore can accomodate outliers well.</p></li>
+<li><p>The specification of prior distributions: I did not understand at the beginning why you chose a Cauchy distribution for the error, but upon reading and talking with you I understand it is just a possible distribution, it has large tails and therefore can accomodate outliers well.</p>
+<ul>
+<li>Right, there are many different prior choices. In general, the choice of prior is not that important. You can also check the posterior distribution and compare with the prior to explore how sensitive the model is to the prior choice.</li>
+</ul></li>
 <li><p>I also understand most of the operations that take place and specially for the simulate_data function.</p></li>
 </ul>
 <p>Things that I still don’t understand:</p>
@@ -95,12 +98,21 @@ y_n \sim normal(\alpha+\beta x_n,\sigma) \tag{2}\\
 </ul>
 <p>And the model appears in the model block as: <span class="math inline">\(y\sim normal(alpha+beta*x,sigma)\)</span></p>
 <p>I understand this is a less complex model than the one that we are implementing, but the correspondence between the model notation and the specification in Stan makes it easy to understand for people that don’t know complex statistical notation (such as myself).</p>
+<ul>
+<li>The model we are fitting is very similar. The primary difference is that our model can be expressed as <span class="math inline">\(y_n \sim normal(\alpha+\beta f(x_n),\sigma)\)</span> where <span class="math inline">\(f(x_n)\)</span> is a function of the <span class="math inline">\(x_n\)</span>. In the model above, <span class="math inline">\(f(x_n) = x_n\)</span> is the identity function whereas in the <code>time-varying.stan</code> model we use the b-spline function <span class="math inline">\(f(\cdot)\)</span>.</li>
+</ul>
 <p>I know you have mentioned this before, but I am a little confused by how the argument is passed in the model in “time-varying.stan”. The parameter <span class="math inline">\(\beta\)</span> is a matrix of 2 rows and 6 columns, and then is transformed into <span class="math inline">\(\mu\)</span>, by multiplying <span class="math inline">\(\beta\)</span> (2 rows,6 columns) by matrix <span class="math inline">\(X\)</span> (6 rows, 5 columns) .In this way, <span class="math inline">\(\mu\)</span> is a combination of the basis functions of the spline and the <span class="math inline">\(\beta\)</span> parameter, with size ( 2 rows, 5 columns).</p>
 <p>But I looked upon the basis spline functions that the script creates (X_bs) and while I think I understand what X_bs is(a matrix that contains a basis function for a spline model on each column), I don’t understand the role of this matrix in the Bayesian model. Does this mean that we are using X_bs to fit the data? And if that is the case, setting a different seed then would cause to have a better or worse fit?</p>
+<ul>
+<li>The <span class="math inline">\(X_{bs}\)</span> is the transformation of <span class="math inline">\(X\)</span> by the function <span class="math inline">\(f(X)\)</span>. There are lots of functions <span class="math inline">\(f(\cdot)\)</span> that are widely used (log transformations, square roots, polynomials etc.). For example, <span class="math inline">\(y_n \sim normal(\alpha+\beta_1 x_n + \beta_2 x_n^2, \sigma)\)</span> is a function <span class="math inline">\(f(x_n) = x_n + x_n^2\)</span>. The function <span class="math inline">\(f(\cdot)\)</span> is deterministic which means that the random seed should not matter.</li>
+</ul>
 <p>When the final model is specified,I don’t fully understand how the model would look if specified as in <span class="math inline">\((1)\)</span>.It is running within a loop, and if taken literally, the model is:</p>
 <p><span class="math display">\[\begin{align}
 y_i \sim normal(\mu(time_i,treatment_i)) \tag{3}\\
 \end{align}\]</span> Does this mean the model specifies an interaction between the <span class="math inline">\(time\)</span> and <span class="math inline">\(treatment\)</span> factors? I think this is the most important thing that I don’t understand, because when the model is run and the “mu_post” variable is called in the R script, I just seen 100 matrices each size (2,5) but don’t understand how the model created the numbers in each cell.</p>
+<ul>
+<li>The model defines <span class="math inline">\(\mu\)</span> as a matrix where each row represents a treatment and each column represents a time step. Thus, <span class="math inline">\(\mu[2, 4]\)</span> is the mean response for treatment 2 at during the 4th time period. The basis functions in <span class="math inline">\(X_{bs}\)</span> allow for the time-varying process to be different for each treatment (each row of <span class="math inline">\(\beta\)</span> are the parameters for a treatment). The <span class="math inline">\(X_{bs} \beta\)</span> model the correlation in the <span class="math inline">\(y\)</span> variable over time based on how close in time the observations are.</li>
+</ul>
 <p>Thank you for your help, if you can provide some guidance on the questions I wrote here, that would be very helpful!</p>
     </section>
   </div>
