@@ -2,6 +2,7 @@ library(tidyverse)
 library(splines)
 library(rstan)
 library(rstanarm)
+library(patchwork)
 
 
 ## number of observations -- currently using 3
@@ -17,7 +18,9 @@ simulate_data <- function(dat, n = 10, sd = 5) {
     dat_sim <- dat %>%
         slice(rep(1:n(), each = n)) %>%
         group_by(Group, Day) %>%
-        mutate(observation = rnorm(n, StO2, sd)) %>%
+        mutate(observation = rnorm(n, StO2, sd),
+               observation_log = rlnorm(n, log(StO2), log(sd)),
+               observation_tobit = pmax(rnorm(n, StO2, sd), 0.0001)) %>%
         ungroup()
 
     return(dat_sim)
@@ -41,14 +44,28 @@ X_bs <- bs(unique(dat_sim$Day), df = df, intercept = TRUE) #generates matrix for
 matplot(unique(dat_sim$Day), X_bs, type = 'l')
 
 
-ggplot(dat_sim, aes(x = Day, y = observation, color = Group)) +
+p1 <- ggplot(dat_sim, aes(x = Day, y = observation, color = Group)) +
     geom_point() +
     ggtitle("Simulated time-varying responses") +
     scale_color_viridis_d(end = 0.75) +
     geom_line(aes(y = StO2), alpha = 0.75) +
     theme_bw()
 
+p2 <- ggplot(dat_sim, aes(x = Day, y = observation_log, color = Group)) +
+    geom_point() +
+    ggtitle("Simulated log-scale time-varying responses") +
+    scale_color_viridis_d(end = 0.75) +
+    geom_line(aes(y = StO2), alpha = 0.75) +
+    theme_bw()
 
+p3 <- ggplot(dat_sim, aes(x = Day, y = observation_tobit, color = Group)) +
+    geom_point() +
+    ggtitle("Simulated tobit-scale time-varying responses") +
+    scale_color_viridis_d(end = 0.75) +
+    geom_line(aes(y = StO2), alpha = 0.75) +
+    theme_bw()
+
+p1 / p2 / p3
 
 
 library(rstan)
@@ -102,6 +119,24 @@ dat_plot %>%
     geom_ribbon(aes(ymin = lower_50, ymax = upper_50, fill = treatment), alpha = 0.5, color = NA) +
     geom_ribbon(aes(ymin = lower_95, ymax = upper_95, fill = treatment), alpha = 0.25, color = NA) +
     geom_point(data = dat_sim, aes(x = Day, y = observation, group = Group, color = Group), inherit.aes = FALSE)
+
+## plot the re-weighted basis functions
+
+beta_post_mean <- apply(e$beta, c(2, 3), mean)
+
+layout(matrix(1:4, 2, 2))
+matplot(unique(dat_sim$Day), X_bs, type = 'l', main = "Raw basis functions")
+
+
+X_bs_weighted_1 <- matrix(0, 5, 6)
+X_bs_weighted_2 <- matrix(0, 5, 6)
+for (i in 1:6) {
+    X_bs_weighted_1[, i] <- X_bs[, i] * beta_post_mean[i, 1]
+    X_bs_weighted_2[, i] <- X_bs[, i] * beta_post_mean[i, 2]
+}
+matplot(unique(dat_sim$Day), X_bs_weighted_1, type = 'l', main = "weighted functions, 1st group")
+matplot(unique(dat_sim$Day), X_bs_weighted_2, type = 'l', main = "weighted functions, 2nd group")
+
 
 
 
