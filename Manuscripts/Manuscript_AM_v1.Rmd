@@ -9,8 +9,41 @@ output:
     #pdf_document: default
 bibliography: refs.bib
 ---
+Paper outline
+
+Background/Introduction
+
+* Paragraph 1: Definition of a longitudinal study. .Statistical advantages of repeated measures studies over cross sectional:power and number of subjects (references). 
+
+* Paragraph 2: Challenges presented by longitudinal studies. Missing observations, and correlation between measurements. Limitations that these items raise for the traditional ANOVA methods of analysis.
+
+* Paragraph 3: Bayesian statistics as an alternative approach. Advantages over ANOVA and what inference can be made from it. Argue that while it is not commonly used in the biomedical arena, this paper aims at showing the implementation in an amenable manner to analyze non-linear trends in data.
+
+***
+
+* Recap on repeated measures ANOVA and the requisites that it needs to work properly
+-Sphericity
+-Variance-covariance matrix
+-Explain the *true* meaning of a _p-value_ and why it is not what researchers commonly think it is
+
+* Gentle introduction to Bayesian statistics
+-How it works
+-What advantages it has over ANOVA
+-What a confidence interval means probabilistically
+
+
+
+
+
+
+
+
 Background
 ==============================================================
+
+1. 
+
+
 
 Biomedical research often uses longitudinal studies to analyze tumor response [@vishwanath2009].
 
