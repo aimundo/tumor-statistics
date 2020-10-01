@@ -1,0 +1,17 @@
+---
+title: "Bayesian statistics for repeated measures"
+author: "Ariel Mundo, John Tipton, Timothy Muldoon"
+subtitle: Their application and use in biomedical research
+output: 
+    html_document: default
+    word_document:
+     reference_docx: docx_template.docx
+    #pdf_document: default
+bibliography: refs.bib
+---
+Background
+==============================================================
+
+Biomedical research often uses longitudinal studies to analyze tumor response [@vishwanath2009].
+
+# References
