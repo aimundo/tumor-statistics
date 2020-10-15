@@ -4,16 +4,27 @@ author: "Ariel Mundo, John Tipton, Timothy Muldoon"
 subtitle: Their application and use in biomedical research
 output: 
     html_document: default
+    css: style.css
     word_document:
      reference_docx: docx_template.docx
+mainfont: Times New Roman
     #pdf_document: default
 bibliography: refs.bib
+biblio-style: apalike
+link-citations: yes
 ---
+
+
+
 Paper outline
 
 Background/Introduction
 
 * Paragraph 1: Definition of a longitudinal study. .Statistical advantages of repeated measures studies over cross sectional:power and number of subjects (references). 
+
+
+
+
 
 * Paragraph 2: Challenges presented by longitudinal studies. Missing observations, and correlation between measurements. Limitations that these items raise for the traditional ANOVA methods of analysis.
 
@@ -41,10 +52,15 @@ Background/Introduction
 Background
 ==============================================================
 
-1. 
+The study of the temporal changes in a variable of interest is a question that has been analyzed extensively in biomedical research. Typically, measurements are taken across multiple timepoints on the same subject(s) within a group.  Examples of this type of approach include clinical studies on cancer breast and neck cancer[@sio2016;@kamstra2015], tumor response[@roblyer2011;@tank2020;@pavlov2018;@demidov2018], antibody expression[@ritter2001;@roth2017], and cell metabolism[@jones2018;@skala2010]. Whereas this type of study presents advantages over a cross-sectional study in the number of subjects required to achieve a certain statistical power, and in its ability 
+[@chavalarias2016]
 
 
 
-Biomedical research often uses longitudinal studies to analyze tumor response [@vishwanath2009].
+
+[@vishwanath2009].
+
+### Longitudinal vs
+
 
 # References
