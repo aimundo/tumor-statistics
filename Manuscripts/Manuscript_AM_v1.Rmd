@@ -3,11 +3,11 @@ title: "Bayesian statistics for repeated measures"
 author: "Ariel Mundo, John Tipton, Timothy Muldoon"
 bibliography: refs.bib
 output:
-  pdf_document: default
+  html_document: default
   word_document:
     reference_docx: docx_template.docx
   css: style.css
-  html_document: default
+  pdf_document: default
 mainfont: Times New Roman
 link-citations: yes
 subtitle: Their application and use in biomedical research
@@ -23,16 +23,37 @@ biblio-style: apalike
 
 
 
-Background/Introduction
-Background
-==============================================================
+
+## Background
 
 
-The study of the temporal changes in a variable of interest (a longitudinal analysis) is a question that has been analyzed extensively in biomedical research. Typically, measurements are taken across multiple timepoints on the same subject(s) within a group.  Examples of this type of approach include clinical studies on cancer breast and neck cancer[@sio2016;@kamstra2015], tumor response[@roblyer2011;@tank2020;@pavlov2018;@demidov2018], antibody expression[@ritter2001;@roth2017], and cell metabolism[@jones2018;@skala2010]. Whereas this type of study presents advantages over a cross-sectional study in the number of subjects required to achieve a certain statistical power, its ability to provide a time-correlated view of the phenomenon of interest, and, the potential to explore multiple relationships between different variables, the statistical analysis of such data is more challenging and requires careful consideration.
+The study of the temporal changes in a variable of interest (a longitudinal analysis) presents advantages over a cross-sectional study as it reduces the number of subjects required to achieve a certain statistical power[@guo2013], it enables a time-correlated view of the phenomenon of interest, and allows to explore multiple relationships between different variables. Typically, measurements are taken across multiple timepoints on the same subjects within  different group(s). Examples of this type of approach in biomedical research include clinical studies on breast and neck cancer[@sio2016;@kamstra2015], tumor response[@roblyer2011;@tank2020;@pavlov2018;@demidov2018], antibody expression[@ritter2001;@roth2017], and cell metabolism[@jones2018;@skala2010].
 
-Biomedical researchers typically employ a $frequentist$ approach to analyze longitudinal data. Such type of analysis is a hypothesis test using the _analysis of variance over repeated measures_ (repeated measures ANOVA or rm-ANOVA). Although the usual approach, rm-ANOVA is subject to multiple conditions to be valid, some of which are not easily verifiable. Moreover, this approach restricts the inferences it can extract from a longitudinal study, particularly when the data does not follow a linear trend (Figure 1. with line and "wiggly plot"), due to the inherent nature of the model and its limitations .Examples of such type of data are found in studies of tumor response to radio/chemotherapy in multiple models and clinical settings [[@vishwanath2009]]. Therefore, this study has three goals: a) Present in an amenable and practical manner the requisities  of a $frequentist$ approach over longitudinal data and how these limit the analysis b) present a different area of statistical analysis for longitudinal biomedical data $Bayesian Statistics$, which does not use *p-values*, and is less restrictive thereby allowing  a statical analysis that is based on the data itself. c)Iimplement b) over a set of simulated data that matches previously reported trends in longitudinal biomedical studies. With an emphasis on reproducibility by providing the code and dataset used, this will provide biomedical researchers a clear view of the advantages of Bayesian statistics for the analysis of longitudinal data.
+Researchers typically employ a $frequentist$ approach to analyze longitudinal data. Such type of analysis is a hypothesis test using the _analysis of variance over repeated measures_ (repeated measures ANOVA or rm-ANOVA). Although the usual approach, rm-ANOVA assumes that the data fulfills certain requisites: Constant variance across measurements (which is frequently unjustified) and  complete observations from each subject [@schober2018;@gueorguieva2004]. Moreover, this approach restricts the inferences it can extract from a longitudinal study, particularly when the data does not follow a linear trend (Figure 1. with line and "wiggly plot"), due to the inherent nature of the model and its limitations .Examples of such type of data are found in studies of tumor response to radio/chemotherapy in multiple models and clinical settings [@vishwanath2009]. Therefore, this study has three goals: a) Present in an amenable and practical manner the requisites  of a $frequentist$ approach over longitudinal data and how these limit the analysis b) present a different area of statistical analysis for longitudinal biomedical data _Bayesian Statistics_, which does not use *p-values*, and is less restrictive thereby allowing  a statical analysis that is based on the data itself. c)Iimplement b) over a set of simulated data that matches previously reported trends in longitudinal biomedical studies. With an emphasis on reproducibility by providing the code and dataset used, this will provide biomedical researchers a clear view of the advantages of Bayesian statistics for the analysis of longitudinal data.
 
- 
+
+```{r,FIGURE 1}
+rm(list=ls())
+library(ggplot2)
+library(splines)
+dt<-seq(1,6,0.1)
+y<-2*dt+1
+z<-rnorm(y,mean=y,sd=3)
+q<-0.01*dt^6-0.2*dt^5+0.2*dt^4+1
+zq<-rnorm(q,mean=q,sd=10)
+ab<-as.data.frame(cbind(dt,z,zq))
+
+x<-seq(0.6,500)
+knots <- c(0.25, 0.5, 0.75)
+theta <- c(0.6, 0.1, 0.5, 0.2, 0.8, 0.3)
+basis<-bs(x,knots=3,degree=1)
+y.spline<-basis %*% theta
+
+
+ggplot(data=ab,aes(x=dt,y=z))+geom_point()
+ggplot(data=ab,aes(x=dt,y=zq))+geom_point()
+
+```
 
 * Paragraph 2: Challenges presented by longitudinal studies. Missing observations, and correlation between measurements. Limitations that these items raise for the traditional ANOVA methods of analysis.
 
