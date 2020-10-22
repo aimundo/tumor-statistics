@@ -1,13 +1,13 @@
 ---
-title: "Bayesian statistics for repeated measures"
+title: "*Bayesian statistics for longitudinal studies in biomedical research*"
 author: "Ariel Mundo, John Tipton, Timothy Muldoon"
 bibliography: refs.bib
 output:
-  html_document: default
+  pdf_document: default
   word_document:
     reference_docx: docx_template.docx
   css: style.css
-  pdf_document: default
+  html_document: default
 mainfont: Times New Roman
 link-citations: yes
 subtitle: Their application and use in biomedical research
@@ -17,7 +17,7 @@ biblio-style: apalike
 
 
 ## Paper outline
- <span style="color: red;">I have been thinking that this type of paper probably does not need a relatively long introduction as the one I did for $JBO$. Below are some of my ideas on how to tackle this paper, your comments would be appreciated. Please keep in mind that I have started to write the Background/Intro part, and just have ideas on how to go from there</span>
+ <span style="color: red;">I have been thinking that this type of paper probably does not need a relatively long introduction as the one I did for _JBO_. Below are some of my ideas on how to tackle this paper, your comments would be appreciated. Please keep in mind that I have started to write the Background/Intro part, and just have ideas on how to go from there</span>
 
 
 
@@ -28,13 +28,16 @@ biblio-style: apalike
 
 A longitudinal study is defined as that were a variable of interest is measured repeatedly in a group (or groups) of subjects. In biomedical research, this type of study is preferred when the intention is to observe the evolution of the effect of treatment (or treatments) across time, rather than analyzing the information at a single timepoint (a cross-sectional study). Clinical examples of this  approach in biomedical research include studies on breast and neck cancer[@sio2016;@kamstra2015], where in the first case  weekly measurements of skin toxicities in breast cancer patients with radiation-induced dermatitis were taken for up to 8 weeks, and mouth opening in head and neck cancer patients was measured at 6,12, 18, 24 and 36 months after radiotherapy (RT) in the latter. Similar examples are found in studies of tumor response [@roblyer2011;@tank2020;@pavlov2018;@demidov2018], antibody expression[@ritter2001;@roth2017], and cell metabolism[@jones2018;@skala2010]. From a statistical standpoint, a longitudinal study presents advantages over a cross-sectional approach:it requires a lower number of subjects to reach a certain statistical power, and besides the previously mentioned time-effect evolution, it allows to determine the intra-variability of the response between different subjects [@guo2013; @fitzmaurice2012]. 
 
-Researchers have typically employed a _frequentist_ approach to analyze longitudinal data. Such type of analysis is based on a hypothesis test using the _analysis of variance over repeated measures_ (repeated measures ANOVA or rm-ANOVA). However,a rm-ANOVA analysis not only assumes that the data fulfills certain requisites such as constant variance across measurements (which is frequently unjustified) and  complete observations from each subject [@schober2018;@gueorguieva2004], but it also requires the use of _post hoc_ analyses which inflate the false positivity rate[@liu2010]. Recently, _linear mixed effects models_ (LMEMs) have started to be used by certain groups to analyze longitudinal data [@vishwanath2009;@skala2010]. Generally speaking, LMEMs incorporate both _fixed_ and _random_ effects making them more flexible that rm-ANOVA as they can work with missing observations, and they allow to model the covariance of the parameters in different manners[@west2014].
+Researchers have typically employed a _frequentist_ approach to analyze longitudinal data. Such type of analysis is based on a hypothesis test using the _analysis of variance over repeated measures_ (repeated measures ANOVA or rm-ANOVA). However, a rm-ANOVA analysis not only assumes that the data fulfills certain requisites such as constant variance across measurements (which is frequently unjustified) and  complete observations from each subject [@schober2018;@gueorguieva2004], but it also requires the use of _post hoc_ analyses which inflate the false positivity rate[@liu2010]. Recently, _linear mixed effects models_ (LMEMs) have started to be used by certain groups to analyze longitudinal data [@vishwanath2009;@skala2010]. Generally speaking, LMEMs incorporate both _fixed_ and _random_ effects making them more flexible that rm-ANOVA as they can work with missing observations, and they allow to model the covariance of the parameters in different manners[@west2014].
 
-However, both LMEMs and rm-ANOVA restricts the inferences it can extract from a longitudinal study, particularly when the data does not follow a linear trend (Figure 1. with line and "wiggly plot"), due to the inherent nature of the model and its limitations .Examples of such type of data are found in studies of tumor response to radio/chemotherapy in multiple models and clinical settings [@vishwanath2009; @roblyer2011,@]. Therefore, this study has three goals: a) Present in an amenable and practical manner the requisites  of a _frequentist_ approach over longitudinal data and how these limit the analysis b) present a different area of statistical analysis for longitudinal biomedical data _Bayesian Statistics_, which does not use *p-values*, and is less restrictive thereby allowing  a statical analysis that is based on the data itself. c)Iimplement b) over a set of simulated data that matches previously reported trends in longitudinal biomedical studies. With an emphasis on reproducibility by providing the code and dataset used, this will provide biomedical researchers a clear view of the advantages of Bayesian statistics for the analysis of longitudinal data.
+However, the nature of LMEMs and rm-ANOVA restrict the inferences they can extract from a longitudinal study when the data does not follow a linear trend (Figure 1. with line and "wiggly plot"), because the model in both cases does not allow for a consistent fit with the trend of the data. This particular non-linear behavior in longitudinal data has been reported in particular in studies that measure tumor response to radio/chemotherapy in preclinical and clinical settings  [@vishwanath2009; @roblyer2011;@tank2020;@skala2010;@demidov2018], and wound healing and metabolism[@jones2018;@grice2010;@young1994]. In such circumstances, even if a _p-value_ with "significance" ( _p_<0.05) is obtained, the model lacks predictive power and this compromises the extent of the inferences that can be derived from the analysis. 
+
+In contrast to the _frequentist_ rm-ANOVA and LMEM analysis, _Bayesian statistics_ represent a relatively new field that does not rely on _p-values_ and hypothesis test to analyze information. Bayesian statistics can work with missing observations, allow the data (and not an underlying assumed distribution) to determine the outcome in regard to significance and are able to expand the comparisons and inferences derived form the analysis.On the other hand, the shift that Bayesian theory represents from the traditional statistical view in research and the set of computational tools required for the implementation of this type of models have limited their use in the biomedical research community. Based on this, the goals of this study are: a) to present the limitations of a _frequentist_ approach over longitudinal data, and demonstrate how these limitations in turn affect the results of the analysis b) introduce in a practical and amenable manner the theory of Bayesian statistics highlighting its applicability to biomedical research and c)Implement b) over a set of simulated data that matches previously reported trends in longitudinal biomedical studies. With an emphasis on reproducibility by providing the code and dataset used, this will provide biomedical researchers a clear view of the advantages of Bayesian statistics for the analysis of longitudinal data.
 
 
 ```{r,FIGURE 1}
 rm(list=ls())
+set.seed(123)
 library(ggplot2)
 library(splines)
 dt<-seq(1,6,0.1)
