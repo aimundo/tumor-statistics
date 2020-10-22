@@ -1,27 +1,27 @@
 ---
-title: "*Bayesian statistics for longitudinal studies in biomedical research*"
-author: "Ariel Mundo, John Tipton, Timothy Muldoon"
+title: '**Bayesian statistics for longitudinal studies in biomedical research**'
+author: 
+- Ariel Mundo^[Department of Biomedical Engineering, University of Arkansas, Fayetteville]
+- Timothy J. Muldoon^[Department of Biomedical Engineering, University of Arkansas, Fayetteville]
+- John R. Tipton^[Department of Mathematical Sciences, University of Arkansas, Fayetteville]
+  
 bibliography: refs.bib
 output:
-  pdf_document: default
   word_document:
     reference_docx: docx_template.docx
+  pdf_document: default
   css: style.css
   html_document: default
 mainfont: Times New Roman
 link-citations: yes
-subtitle: Their application and use in biomedical research
+subtitle: '_Their application and use in biomedical research_'
 biblio-style: apalike
 ---
 
 
 
 ## Paper outline
- <span style="color: red;">I have been thinking that this type of paper probably does not need a relatively long introduction as the one I did for _JBO_. Below are some of my ideas on how to tackle this paper, your comments would be appreciated. Please keep in mind that I have started to write the Background/Intro part, and just have ideas on how to go from there</span>
-
-
-
-
+<span style="color: red;">\textcolor{red}{The paper Introduction has been updated, proposed sections appear at the end of the document as well as an initial graph.}</span>
 
 
 ## Background
@@ -32,55 +32,51 @@ Researchers have typically employed a _frequentist_ approach to analyze longitud
 
 However, the nature of LMEMs and rm-ANOVA restrict the inferences they can extract from a longitudinal study when the data does not follow a linear trend (Figure 1. with line and "wiggly plot"), because the model in both cases does not allow for a consistent fit with the trend of the data. This particular non-linear behavior in longitudinal data has been reported in particular in studies that measure tumor response to radio/chemotherapy in preclinical and clinical settings  [@vishwanath2009; @roblyer2011;@tank2020;@skala2010;@demidov2018], and wound healing and metabolism[@jones2018;@grice2010;@young1994]. In such circumstances, even if a _p-value_ with "significance" ( _p_<0.05) is obtained, the model lacks predictive power and this compromises the extent of the inferences that can be derived from the analysis. 
 
-In contrast to the _frequentist_ rm-ANOVA and LMEM analysis, _Bayesian statistics_ represent a relatively new field that does not rely on _p-values_ and hypothesis test to analyze information. Bayesian statistics can work with missing observations, allow the data (and not an underlying assumed distribution) to determine the outcome in regard to significance and are able to expand the comparisons and inferences derived form the analysis.On the other hand, the shift that Bayesian theory represents from the traditional statistical view in research and the set of computational tools required for the implementation of this type of models have limited their use in the biomedical research community. Based on this, the goals of this study are: a) to present the limitations of a _frequentist_ approach over longitudinal data, and demonstrate how these limitations in turn affect the results of the analysis b) introduce in a practical and amenable manner the theory of Bayesian statistics highlighting its applicability to biomedical research and c)Implement b) over a set of simulated data that matches previously reported trends in longitudinal biomedical studies. With an emphasis on reproducibility by providing the code and dataset used, this will provide biomedical researchers a clear view of the advantages of Bayesian statistics for the analysis of longitudinal data.
+In contrast to the _frequentist_ rm-ANOVA and LMEM analysis, _Bayesian statistics_ represent a relatively new field that does not rely on _p-values_ and hypothesis test to analyze information. Bayesian statistics can work with missing observations, allow the data (and not an underlying assumed distribution) to determine the outcome in regard to significance and are able to expand the comparisons and inferences derived form the analysis.On the other hand, the shift that Bayesian theory represents from the traditional statistical view in research and the set of computational tools required for the implementation of this type of models have limited their use in the biomedical research community. Based on this, the goals of this study are: a) to present the limitations of a _frequentist_ approach (rm-ANOVA) over longitudinal data, and demonstrate how these limitations in turn affect the results of the analysis b) introduce in a practical and amenable manner the theory of Bayesian statistics highlighting its applicability to biomedical research and c)Implement b) over a set of simulated data that matches previously reported trends in longitudinal biomedical studies. With an emphasis on reproducibility by providing the code and dataset used, this will provide biomedical researchers a clear view of the advantages of Bayesian statistics for the analysis of longitudinal data.
 
 
-```{r,FIGURE 1}
+```{r,FIGURE 1,echo=FALSE, message=FALSE, warning=FALSE}
 rm(list=ls())
 set.seed(123)
 library(ggplot2)
 library(splines)
-dt<-seq(1,6,0.1)
-y<-2*dt+1
-z<-rnorm(y,mean=y,sd=3)
-q<-0.01*dt^6-0.2*dt^5+0.2*dt^4+1
-zq<-rnorm(q,mean=q,sd=10)
-ab<-as.data.frame(cbind(dt,z,zq))
+library(tidyverse)
+library(here)
 
-# x<-seq(0.6,500)
-# knots <- c(0.25, 0.5, 0.75)
-# theta <- c(0.6, 0.1, 0.5, 0.2, 0.8, 0.3)
-# basis<-bs(x,knots=3,degree=1)
-# y.spline<-basis %*% theta
-# 
-# 
-# ggplot(data=ab,aes(x=dt,y=z))+geom_point()
-# ggplot(data=ab,aes(x=dt,y=zq))+geom_point()
+
+linear<-read.csv(here("data","Simulated_linear.csv"))
+
+sim_linear <- function(dat, n = 10, sd = 5) {
+    linear_vals <- dat %>%
+        slice(rep(1:n(), each = n)) %>%
+        group_by(Group,Day) %>%
+        mutate(observation = rnorm(n, y, sd)) %>%
+        ungroup()
+
+    return(linear_vals)
+}
+n<-10
+sd<-2
+linear_vals <- sim_linear(linear, n, sd)
+linear_vals[] <- lapply(linear_vals, function(observation) ifelse(observation<=0, NA, observation)) #taking out values below 0
+
+ ggplot(linear_vals, aes(x = Day, y = observation, color = Group)) +
+    geom_point() +
+    ggtitle("Simulated linear time-varying responses") +
+    scale_color_viridis_d(end = 0.75) +
+    geom_line(aes(y = y), alpha = 0.75) +
+    theme_bw()
+
 
 ```
 
-* Paragraph 2: Challenges presented by longitudinal studies. Missing observations, and correlation between measurements. Limitations that these items raise for the traditional ANOVA methods of analysis.
+* Section 1: Challenges presented by longitudinal studies: Missing observations, and correlation between measurements. How rm-ANOVA is limited by missing observations, and how both rm-ANOVA and LMEMs are limited with data that does not follow a linear trend (equations for both situations and the fit they produce.)
 
-* Paragraph 3: Bayesian statistics as an alternative approach. Advantages over ANOVA and what inference can be made from it. Argue that while it is not commonly used in the biomedical arena, this paper aims at showing the implementation in an amenable manner to analyze non-linear trends in data.
+* Section 2: Bayesian statistics as an alternative approach. Gentle presentation of Bayes theorem _with a biomedical-related example(!)_ Advantages over ANOVA and how inference works. Argue that while it is not commonly used in the biomedical arena, it is a more accurate and flexible approach.
+
+* Section 3: Present the implementation of a spline-fitted model in R, using data simulated from [@vishwanath2009]
 
 ***
-
-* Recap on repeated measures ANOVA and the requisites that it needs to work properly
--Sphericity
--Variance-covariance matrix
--Explain the *true* meaning of a _p-value_ and why it is not what researchers commonly think it is
-
-* Gentle introduction to Bayesian statistics
--How it works
--What advantages it has over ANOVA
--What a confidence interval means probabilistically
-
-
-
-[@chavalarias2016]
-
-
-
 
 
 
