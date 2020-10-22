@@ -7,11 +7,12 @@ author:
   
 bibliography: refs.bib
 output:
+  pdf_document: 
+    fig_caption: yes
+  html_document: default
+  css: style.css
   word_document:
     reference_docx: docx_template.docx
-  pdf_document: default
-  css: style.css
-  html_document: default
 mainfont: Times New Roman
 link-citations: yes
 subtitle: '_Their application and use in biomedical research_'
@@ -35,7 +36,7 @@ However, the nature of LMEMs and rm-ANOVA restrict the inferences they can extra
 In contrast to the _frequentist_ rm-ANOVA and LMEM analysis, _Bayesian statistics_ represent a relatively new field that does not rely on _p-values_ and hypothesis test to analyze information. Bayesian statistics can work with missing observations, allow the data (and not an underlying assumed distribution) to determine the outcome in regard to significance and are able to expand the comparisons and inferences derived form the analysis.On the other hand, the shift that Bayesian theory represents from the traditional statistical view in research and the set of computational tools required for the implementation of this type of models have limited their use in the biomedical research community. Based on this, the goals of this study are: a) to present the limitations of a _frequentist_ approach (rm-ANOVA) over longitudinal data, and demonstrate how these limitations in turn affect the results of the analysis b) introduce in a practical and amenable manner the theory of Bayesian statistics highlighting its applicability to biomedical research and c)Implement b) over a set of simulated data that matches previously reported trends in longitudinal biomedical studies. With an emphasis on reproducibility by providing the code and dataset used, this will provide biomedical researchers a clear view of the advantages of Bayesian statistics for the analysis of longitudinal data.
 
 
-```{r,FIGURE 1,echo=FALSE, message=FALSE, warning=FALSE}
+```{r,FIGURE 1,echo=FALSE, message=FALSE, warning=FALSE, fig.cap='Simulated longitudinal data with a linear trend.'}
 rm(list=ls())
 set.seed(123)
 library(ggplot2)
