@@ -7,12 +7,12 @@ author:
   
 bibliography: refs.bib
 output:
-  html_document: default
+  word_document:
+    reference_docx: docx_template.docx
   pdf_document: 
     fig_caption: yes
   css: style.css
-  word_document:
-    reference_docx: docx_template.docx
+  html_document: default
 mainfont: Times New Roman
 link-citations: yes
 subtitle: '_Their application and use in biomedical research_'
@@ -33,9 +33,11 @@ Researchers have typically employed a _frequentist_ approach to analyze longitud
 
 Recently, _linear mixed effects models_ (LMEMs) have been used by certain groups to analyze biomedical longitudinal data [@vishwanath2009;@skala2010]. Briefly, these models incorporate _fixed_ effects, which correspond to the levels of experimental factors in the study (e.g. the different drug regimens in a clinical trial), and _random_ effects, which account for random variation within the population [@pinheiro2006]. These models are more flexible than rm-ANOVA as they can accomodate missing observations in the data, and  allow to model the covariance of the parameters in different manners[@west2014]. On the other hand, they impose restrictions in the distribution of the errors and of the random effects, and assume linearity between the response and the parameters[@schielzeth2020;@pinheiro2006]. 
 
-Additionaly, the inherent nature of both LMEMs and rm-ANOVA restrict the inferences they can extract from a longitudinal study when the data does not follow a linear trend, because the model in both cases does not provide consistent fit with the trend of the data. This particular non-linear behavior is exemplified in longitudinal studies that measure tumor response to radio/chemotherapy in preclinical and clinical settings  [@vishwanath2009; @roblyer2011;@tank2020;@skala2010;@demidov2018], and wound healing and metabolism[@jones2018;@grice2010;@young1994]. In such circumstances, it is even possible to obtain a "significant" _p-value_( _p_<0.05) due to the well-known variability of this metric [@nuzzo2014;@halsey2019], but the model will lack predictive power and this in turn will compromise the extent of the inferences that can be derived. 
+This assumption of linearity in LMEMs is also present in rm-ANOVA, and therefore both models restrict the inferences they can extract from a longitudinal study when the data does not follow a linear trend.In both cases the model does not provide a consistent fit with the trend of the data. In such circumstances, it is even possible to obtain a "significant" _p-value_( _p_<0.05) due to the well-known variability of this metric [@nuzzo2014;@halsey2019], but the model will lack predictive power and this in turn will compromise the extent of the inferences that can be derived. The non-linear behavior in longitudinal data is exemplified in different biomedical studies, including response to radio/chemotherapy in preclinical and clinical settings  [@vishwanath2009; @roblyer2011;@tank2020;@skala2010;@demidov2018], and wound healing and metabolism[@jones2018;@grice2010;@young1994].  Since both the _frequentist_ (rm-ANOVA) and LMEM approaches are limited in the analysis of non-linear longitudinal information, there is a need to use statistical tools that allow both a consistent fit with the data and that allow adequate inferences.
 
-In contrast to rm-ANOVA and LMEMs, _Bayesian statistics_ represent a relatively new field that does not rely on _p-values_ and hypothesis tests to analyze information. Bayesian statistics can work with missing observations, allow the data (and not an underlying assumed distribution) to determine the outcome in regard to significance and are able to expand the comparisons and inferences derived form the analysis. On the other hand, the shift that Bayesian theory represents from the traditional statistical view in research and the set of computational tools required for the implementation of this type of models have limited their use in the biomedical research community. Based on this, the goals of this study are: a) to present the limitations of a _frequentist_ approach (rm-ANOVA) over longitudinal data, and demonstrate how these limitations in turn affect the results of the analysis b) introduce in a practical and amenable manner the theory of Bayesian statistics highlighting its applicability to biomedical research and c)Implement b) over a set of simulated data that matches previously reported trends in longitudinal biomedical studies. With an emphasis on reproducibility by providing the code and dataset used, this will provide biomedical researchers a clear view of the advantages of Bayesian statistics for the analysis of longitudinal data.
+In this regard, _Bayesian statistics_ represent a relatively new field in statistics that does not rely on _p-values_ and hypothesis tests to analyze information. Bayesian statistics can work with missing observations, allow the data (and not an underlying assumed distribution) to determine the outcome in regard to significance and are able to expand the comparisons and inferences derived form the analysis. On the other hand, the shift that Bayesian theory represents from the traditional _frequentist_ statistical view in research and the computational tools required for the implementation of this type of models have limited their use in the biomedical research community. However, the increasing recognition of the advantages of Bayesian statistics and the current development in computational tools are enabling researchers to transition to the field more rapidly.
+
+To this end, the goals of this study are: a) to present the limitations of (rm-ANOVA) and LMEMs over longitudinal data, and demonstrate how these limitations in turn affect the results of the analysis b) introduce in a practical and amenable manner the theory of Bayesian statistics highlighting its applicability to biomedical research and c)Implement a Bayesian analysis over a set of simulated data that matches previously reported trends in longitudinal biomedical studies. With an emphasis on reproducibility by providing the code and dataset used, this will provide biomedical researchers a clear view of the advantages of Bayesian statistics for the analysis of longitudinal data.
 
 
 ```{r,FIGURE 1,echo=FALSE, message=FALSE, warning=FALSE, fig.cap='Simulated longitudinal data with a linear trend.'}
@@ -73,11 +75,15 @@ linear_vals[] <- lapply(linear_vals, function(observation) ifelse(observation<=0
 
 ```
 
-* Section 1: 
+## Section 1: 
 
-###Challenges presented by longitudinal studies: 
+### Challenges presented by longitudinal studies: 
 
+#### the _frequentist_ case for constant correlation
 
+One of the key assumptions for rm-ANOVA is the constant correlation among measurements. This frequently not the case as the correlation reduces as the time interval between two measurements increases [@ugrinowitsch2004]. From a practical  
+
+The first 
 Missing observations, and correlation between measurements. How rm-ANOVA is limited by missing observations, and how both rm-ANOVA and LMEMs are limited with data that does not follow a linear trend (equations for both situations and the fit they produce.)
 
 * Section 2: Bayesian statistics as an alternative approach. Gentle presentation of Bayes theorem _with a biomedical-related example(!)_ Advantages over ANOVA and how inference works. Argue that while it is not commonly used in the biomedical arena, it is a more accurate and flexible approach.
