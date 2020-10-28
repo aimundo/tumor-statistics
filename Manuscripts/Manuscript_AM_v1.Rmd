@@ -78,7 +78,6 @@ linear_vals[] <- lapply(linear_vals, function(observation) ifelse(observation<=0
     geom_line(aes(y = y), alpha = 0.75) +
     theme_bw()
 
-
 ```
 
 ## Section 1: 
