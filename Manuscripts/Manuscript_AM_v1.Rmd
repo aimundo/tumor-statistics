@@ -39,6 +39,12 @@ In this regard, _Bayesian statistics_ represent a relatively new field in statis
 
 To this end, the goals of this study are: a) to present the limitations of (rm-ANOVA) and LMEMs over longitudinal data, and demonstrate how these limitations in turn affect the results of the analysis b) introduce in a practical and amenable manner the theory of Bayesian statistics highlighting its applicability to biomedical research and c)Implement a Bayesian analysis over a set of simulated data that matches previously reported trends in longitudinal biomedical studies. With an emphasis on reproducibility by providing the code and dataset used, this will provide biomedical researchers a clear view of the advantages of Bayesian statistics for the analysis of longitudinal data.
 
+- Why LMEMs are better than ANOVA
+
+- How LMEMs (using splines) and a Bayesian analysis can be used to analyze longitudinal data
+
+
+https://www.frontiersin.org/articles/10.3389/fevo.2018.00149/full
 
 ```{r,FIGURE 1,echo=FALSE, message=FALSE, warning=FALSE, fig.cap='Simulated longitudinal data with a linear trend.'}
 rm(list=ls())
@@ -72,23 +78,30 @@ linear_vals[] <- lapply(linear_vals, function(observation) ifelse(observation<=0
     geom_line(aes(y = y), alpha = 0.75) +
     theme_bw()
 
-
 ```
 
 ## Section 1: 
 
 ### Challenges presented by longitudinal studies: 
 
-#### the _frequentist_ case for constant correlation
-
-One of the key assumptions for rm-ANOVA is the constant correlation among measurements. This frequently not the case as the correlation reduces as the time interval between two measurements increases [@ugrinowitsch2004]. From a practical  
+#### 1.1 the _frequentist_ case for constant correlation (ANOVA limitations)
 
 The first 
 Missing observations, and correlation between measurements. How rm-ANOVA is limited by missing observations, and how both rm-ANOVA and LMEMs are limited with data that does not follow a linear trend (equations for both situations and the fit they produce.)
 
-* Section 2: Bayesian statistics as an alternative approach. Gentle presentation of Bayes theorem _with a biomedical-related example(!)_ Advantages over ANOVA and how inference works. Argue that while it is not commonly used in the biomedical arena, it is a more accurate and flexible approach.
+One of the key assumptions for rm-ANOVA is the constant correlation among measurements. This frequently not the case as the correlation reduces as the time interval between two measurements increases [@ugrinowitsch2004]. From a practical  
 
-* Section 3: Present the implementation of a spline-fitted model in R, using data simulated from [@vishwanath2009]
+#### 1.2 the case of LMEMs using splines and how they work and how they are better than rm-ANOVA
+
+
+
+#### 1.3 Bayesian brief introduction, and compare the results of 1.2 to the results of Bayesian
+
+
+* Section 2: Implementation of both LMEMs and Bayesian and their results
+
+
+Present the implementation of a spline-fitted model in R, using data simulated from [@vishwanath2009]
 
 ***
 
