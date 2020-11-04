@@ -95,9 +95,19 @@ While the _repeated measures analysis of variance_ (rm-ANOVA) is the standard fo
   
 #### 1.1 Linear relationship 
 
-When a continuous and normally distributed response $y$ is measured from subject $n$, the basic model for rm-ANOVA becomes[@davis2002]:
+In a biomedical longitudinal study, two or more groups of subjects (humans, mice, samples) are subject to a different treatments (e.g. group of mice receiving a novel drug vs. a group that receives a placebo), and measurements from each subject within each group are collected at specific time points. Moreover, it is assumed that the collected response has two components: a _fixed_ and a _random_ component. The _fixed_ component can be understood as a constant value in the response which the researcher intends to measure, i.e, the effect of a novel drug in a subject.The _random_ component can be defined as "noise" caused by some some factors that are not of interest to the researcher, i.e., if the concentration of a drug is measured in some subjects within the same group in the early hours of the morning while others are measured in the afternoon, the researcher might consider this variability in the collection time of the measurement to introduce some "noise" in the signal. As their name suggests, this "random" variabliity needs to be modeled as a variable rather than as a constant value.
 
-$$ y_{ij}=\mu_{ij}+\pi_{ij}+e_{ij}$$
+
+Mathematically speaking, if a normally distributed response $y$ is measured repeatedly at $t$ time points from subjects in $p$ groups, where each group has a certain $n_p$ number of subjects, the the model for the response $y_{hij}$ becomes:
+
+$$ y_{hij}=\mu+\gamma_h+\tau_j+(\gamma \tau)_{hj}+\pi_{i(h)}+e_{hij}$$
+Where 
+
+$i=1,...,n_h$ $j=1,...,t$, $h=1,...,p$; with $\pi_i{h} \sim N(0,\sigma^{2}_\epsilon)$ (independently normally distributed) and $e_{hij} \sim N(0,\sigma^{2}_\epsilon)$
+
+In this model, $\mu$ represents the group mean, $\gamma_h$ is the _fixed effect_ of group $h$, $\tau_j$ is the fixed effect of time $j$, and $(\gamma \tau)_{hj}$ represents the interaction of time and group effects. The term $\pi_{ij}$ represents the _random effects_ for each subject within each group.Finally, $e_{hij}$ represents the independent random error terms, which need to be normally distributed with mean 0 [@davis2002].  
+
+
 Missing observations, and correlation between measurements. How rm-ANOVA is limited by missing observations, and how both rm-ANOVA and LMEMs are limited with data that does not follow a linear trend (equations for both situations and the fit they produce.)
 #### 1.1 Constant correlation
 
