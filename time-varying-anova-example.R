@@ -8,7 +8,7 @@ library(patchwork)
 ## number of observations -- currently using 3
 ## use measurement error of sd as 5 (rough estimate)
 
-dat <- read_csv("Vishwanath StO2.csv")
+dat <- read_csv(here::here("data", "Vishwanath StO2.csv"))
 
 ## plot the data
 ggplot(dat, aes(x = Day, y = StO2, color = Group)) +

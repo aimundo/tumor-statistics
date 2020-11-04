@@ -13,7 +13,7 @@ output:
 
 After reading the book from Krushke and going back and forth between the "time-varying-anova-example" file and the Stan model "time-varying" there are certain things that I have understood:
 
-* The specification of prior distributions: I did not understand at the beginning why you chose a Cauchy distribution for the error, but upon reading and talking with you I understand it is just a possible distribution, it has large tails and therefore can accomodate outliers well.
+* The specification of prior distributions: I did not understand at the beginning why you chose a Cauchy distribution for the error, but upon reading and talking with you I understand it is just a possible distribution, it has large tails and therefore can accommodate outliers well.
 
     * Right, there are many different prior choices. In general, the choice of prior is not that important. You can also check the posterior distribution and compare with the prior to explore how sensitive the model is to the prior choice.
 
