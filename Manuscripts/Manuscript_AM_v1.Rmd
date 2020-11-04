@@ -105,7 +105,9 @@ Where
 
 $i=1,...,n_h$ $j=1,...,t$, $h=1,...,p$; with $\pi_i{h} \sim N(0,\sigma^{2}_\epsilon)$ (independently normally distributed) and $e_{hij} \sim N(0,\sigma^{2}_\epsilon)$
 
-In this model, $\mu$ represents the group mean, $\gamma_h$ is the _fixed effect_ of group $h$, $\tau_j$ is the fixed effect of time $j$, and $(\gamma \tau)_{hj}$ represents the interaction of time and group effects. The term $\pi_{ij}$ represents the _random effects_ for each subject within each group.Finally, $e_{hij}$ represents the independent random error terms, which need to be normally distributed with mean 0 [@davis2002].  
+In this model, $\mu$ represents the group mean, $\gamma_h$ is the _fixed effect_ of group $h$, $\tau_j$ is the fixed effect of time $j$, and $(\gamma \tau)_{hj}$ represents the interaction of time and group effects. The term $\pi_{ij}$ represents the _random effects_ for each subject within each group.Finally, $e_{hij}$ represents the independent random error terms, which need to be normally distributed with mean 0 [@davis2002]. The model then, is a linear combination of terms, and if plotted, it would a straight line.
+
+#### 1.2 Constant correlation 
 
 
 Missing observations, and correlation between measurements. How rm-ANOVA is limited by missing observations, and how both rm-ANOVA and LMEMs are limited with data that does not follow a linear trend (equations for both situations and the fit they produce.)
