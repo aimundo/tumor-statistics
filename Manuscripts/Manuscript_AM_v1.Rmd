@@ -112,11 +112,13 @@ Where
 
 $i=1,...,n_h$ $j=1,...,t$, $h=1,...,p$; with $\pi_i{h} \sim N(0,\sigma^{2}_\epsilon)$ (independently normally distributed) and $e_{hij} \sim N(0,\sigma^{2}_\epsilon)$
 
-In this model, $\mu$ represents the group mean, $\gamma_h$ is the _fixed effect_ of group $h$, $\tau_j$ is the fixed effect of time $j$, and $(\gamma \tau)_{hj}$ represents the interaction of time and group effects. The term $\pi_{ij}$ represents the _random effects_ for each subject within each group.Finally, $e_{hij}$ represents the independent random error terms, which need to be normally distributed with mean 0 [@davis2002]. The model then, is a linear combination of terms, and if plotted, it would a straight line.
+In this model, $\mu$ represents the group mean, $\gamma_h$ is the _fixed effect_ of group $h$, $\tau_j$ is the fixed effect of time $j$, and $(\gamma \tau)_{hj}$ represents the interaction of time and group effects. The term $\pi_{ij}$ represents the _random effects_ for each subject within each group.Finally, $e_{hij}$ represents the independent random error terms, which need to be normally distributed with mean 0 [@davis2002]. The model then, is a linear combination of terms, and if plotted, it would a straight line. 
 
-#### 1.2 Constant correlation 
+_Question: How can one make a plot that tests the "limits" of the model, i.e how much "wiggliness" can this model accomodate? Make a plot to show the behavior of the model_
 
+#### 1.2 Covariance and correlation
 
+In a longitudinal study, multiple measures on the same subject creates a _correlation_ and _covariance_ issue that needs to be incorporated into the model. In this case, _correlation_ can be defined as the relationship between different variables, e.g. how much one variable changes when other variable changes. It can be further decomposed in _between-subject_ correlation and _within-subject correlation_. In the first case, _between-subject correlation_ measures the correlation between subject means, whereas _within-subject correlation_ describes how much a measurement in a subject changes in regard to another to another measurement _in the same subject_ [@roy2006].  between repeated measures on the same subject can be defined as the relationship between the variability . The _correlation_ of the measures can be practically defined as is defined as the relationship between  
 Missing observations, and correlation between measurements. How rm-ANOVA is limited by missing observations, and how both rm-ANOVA and LMEMs are limited with data that does not follow a linear trend (equations for both situations and the fit they produce.)
 #### 1.1 Constant correlation
 
@@ -125,7 +127,7 @@ Missing observations, and correlation between measurements. How rm-ANOVA is limi
 
 One of the key assumptions for rm-ANOVA is the constant correlation among measurements. This frequently not the case as the correlation reduces as the time interval between two measurements increases [@ugrinowitsch2004]. From a practical  
 
-#### 1.2 the case of LMEMs using splines and how they work and how they are better than rm-ANOVA
+#### 1.2 the case of GMEMs using splines and how they work and how they are better than rm-ANOVA
 
 
 
