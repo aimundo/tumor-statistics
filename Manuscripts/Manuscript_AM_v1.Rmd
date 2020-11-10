@@ -7,12 +7,12 @@ author:
   
 bibliography: refs.bib
 output:
-  word_document:
-    reference_docx: docx_template.docx
   pdf_document: 
     fig_caption: yes
-  css: style.css
   html_document: default
+  css: style.css
+  word_document:
+    reference_docx: docx_template.docx
 mainfont: Times New Roman
 link-citations: yes
 subtitle: '_Their application and use in biomedical research_'
@@ -107,7 +107,12 @@ In a biomedical longitudinal study, two or more groups of subjects (humans, mice
 
 Mathematically speaking, if a normally distributed response $y$ is measured repeatedly at $t$ time points from subjects in $p$ groups, where each group has a certain $n_p$ number of subjects, the the model for the response $y_{hij}$ becomes:
 
-$$ y_{hij}=\mu+\gamma_h+\tau_j+(\gamma \tau)_{hj}+\pi_{i(h)}+e_{hij}$$
+\begin{equation}
+(\#eq:labelANOVA)
+y_{hij}=\mu+\gamma_h+\tau_j+(\gamma \tau)_{hj}+\pi_{i(h)}+e_{hij}
+\end{equation}
+
+
 Where 
 
 $i=1,...,n_h$ $j=1,...,t$, $h=1,...,p$; with $\pi_i{h} \sim N(0,\sigma^{2}_\epsilon)$ (independently normally distributed) and $e_{hij} \sim N(0,\sigma^{2}_\epsilon)$
@@ -116,16 +121,24 @@ In this model, $\mu$ represents the group mean, $\gamma_h$ is the _fixed effect_
 
 _Question: How can one make a plot that tests the "limits" of the model, i.e how much "wiggliness" can this model accomodate? Make a plot to show the behavior of the model_
 
-#### 1.2 Covariance and correlation
+#### 1.2 Covariance and correlation in rm-ANOVA and LMEMs
 
-In a longitudinal study, multiple measures on the same subject creates a _correlation_ and _covariance_ issue that needs to be incorporated into the model. In this case, _correlation_ can be defined as the relationship between different variables, e.g. how much one variable changes when other variable changes. It can be further decomposed in _between-subject_ correlation and _within-subject correlation_. In the first case, _between-subject correlation_ measures the correlation between subject means, whereas _within-subject correlation_ describes how much a measurement in a subject changes in regard to another to another measurement _in the same subject_ [@roy2006].  between repeated measures on the same subject can be defined as the relationship between the variability . The _correlation_ of the measures can be practically defined as is defined as the relationship between  
-Missing observations, and correlation between measurements. How rm-ANOVA is limited by missing observations, and how both rm-ANOVA and LMEMs are limited with data that does not follow a linear trend (equations for both situations and the fit they produce.)
-#### 1.1 Constant correlation
+In a longitudinal study, the fact that multiple measures are taken on the same subject creates a a _covariance_ issue that needs to be incorporated into the model. Specifically, a parametric model (rm-ANOVA or LMEMs) assumes that there is no relationship between the repeated measures of different subjects (no correlation), but that there is a relationship for the repeated measures of the same subject. The latter is then taken in to account by a _covariance_ structure [@wolfinger1996].  In this case, _covariance_ can be defined as the dependency  between two different values, e.g. if higher values of a variable correspond with higher values of another value, the covariance is positive.  Although not immediately apparent, the reason for this specification arises from the fact that the model from \@ref(eq:labelANOVA) is re-written in matrix form for computational purposes (For an in-depth analysis see [@west2014;@weiss2005]). 
 
-While the _repeated measures analysis of variance_ (rm-ANOVA) is the norm in the biomedical community to analyze longitudinal data, two frequent situations that arise in longitudinal studies limit its applicability. 
-Missing observations, and correlation between measurements. How rm-ANOVA is limited by missing observations, and how both rm-ANOVA and LMEMs are limited with data that does not follow a linear trend (equations for both situations and the fit they produce.)
+For an rm-ANOVA analysis, the _variance-covariance matrix_ or the matrix that specifies the relationships between the different repeated measures, needs to have a specific construction known as _compound symmetry_ (which is commonly known also as "sphericity" or "circularity"). This assumes that variance of observations and the correlation between observations are constant,and when this is not the case, adjustments need to be made  [@weiss2005;@geisser1958;@huynh1976].However, it has been shown when the data violates the sphericity assumption, the false positivity rate is inflated [@haverkamp2017].This assumption is frequently unjustified as the correlation between measurements tends to change over time; and it is higher between consecutive measurements [@gueorguieva2004;@ugrinowitsch2004].
 
-One of the key assumptions for rm-ANOVA is the constant correlation among measurements. This frequently not the case as the correlation reduces as the time interval between two measurements increases [@ugrinowitsch2004]. From a practical  
+In the case of LMEMs, they have the advantage of allowing different structures of the variance-covariance matrix [@pinheiro2006]. 
+
+
+*make plot that explains between and within correlation*
+
+#### 1.3 Missing observations
+
+In a longitudinal study, missing observations are an important issue that arises frequently. In biomedical research, this situation is not unusual and can be caused by different reasons in the context of each study, but they are typically beyond the control of the investigator [molenberghs2004].statistical treatment of missing observations is particularly important for longitudinal studies. 
+*talk about missing at random, mcar etc*
+
+
+One of the key assumptions for rm-ANOVA is the constant correlation among measurements. This frequently not the case as the correlation reduces as the time interval between two measurements increases []. From a practical  
 
 #### 1.2 the case of GMEMs using splines and how they work and how they are better than rm-ANOVA
 
