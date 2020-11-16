@@ -121,11 +121,16 @@ In this model, $\mu$ represents the group mean, $\gamma_h$ is the _fixed effect_
 
 _Question: How can one make a plot that tests the "limits" of the model, i.e how much "wiggliness" can this model accomodate? Make a plot to show the behavior of the model_
 
-#### 1.2 Covariance and correlation in rm-ANOVA and LMEMs
 
-The fact that multiple measures are taken on the same subject creates a a _covariance_ issue that needs to be incorporated into the model. Specifically, a parametric model (rm-ANOVA or LMEMs) assumes that there is no relationship between the repeated measures of different subjects (no correlation), but that there is a relationship for the repeated measures of the same subject. The latter is then taken in to account by a _covariance_ structure [@wolfinger1996].  In this case, _covariance_ can be defined as the dependency  between two different values, e.g. if higher values of a variable correspond with higher values of another value, the covariance is positive.  Although not immediately apparent, the reason for this specification arises from the fact that the model from \@ref(eq:labelANOVA) is re-written in matrix form for computational purposes (For an in-depth analysis see [@west2014;@weiss2005]). 
 
-For an rm-ANOVA analysis, the _variance-covariance matrix_ or the matrix that specifies the relationships between the different repeated measures, needs to have a specific construction known as _compound symmetry_ (which is commonly known also as "sphericity" or "circularity"). This assumes that variance of observations and the correlation between observations are constant,and when this is not the case, adjustments need to be made  [@weiss2005;@geisser1958;@huynh1976].However, it has been shown when the data violates the sphericity assumption, the false positivity rate is inflated [@haverkamp2017].This assumption is frequently unjustified as the correlation between measurements tends to change over time; and it is higher between consecutive measurements [@gueorguieva2004;@ugrinowitsch2004].
+
+
+#### 1.2 Covariance in rm-ANOVA and LMEMs
+
+In a longitudinal study, there is a relationship between repeated measures on the same subject. In other words, there is an expected _variance_ between those measurements, and since repeated measures are also taken on the rest of the subjects within each group, there is a _covariance_ between  measurements at each time point within each group. The _covariance matrix_ (also known as the variance-covariance matrix) is a matrix that captures the variation between and within subjects in a longitudinal study[@wolfinger1996] (For an in-depth analysis of the covariance matrix see [@west2014;@weiss2005]). 
+
+
+For practical purposes, an rm-ANOVA analysis assumes that the covariance matrix has a specific construction known as _compound symmetry_ (also known as "sphericity" or "circularity"). This construction implies that the between-subject variance and within-subject correlation  are constant across time [@weiss2005;@geisser1958;@huynh1976]. However, it has been shown that this condition is is frequently unjustified [@maxwell2017] because the correlation between measurements tends to change over time; and it is higher between consecutive measurements [@gueorguieva2004;@ugrinowitsch2004].When the data violates the sphericity assumption, the false positivity rate is inflated [@haverkamp2017].
 
 In the case of LMEMs, they have the advantage of allowing different structures of the variance-covariance matrix [@pinheiro2006]. 
 
