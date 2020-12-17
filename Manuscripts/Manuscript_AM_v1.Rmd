@@ -92,6 +92,12 @@ linear_vals[] <- lapply(linear_vals, function(observation) ifelse(observation<=0
 
 ```
 
+```{r,quadatric behavior}
+#equation y=-2*(x-3)^2
+
+
+```
+
 ## Section 1: 
 
 ### Challenges presented by longitudinal studies: 
