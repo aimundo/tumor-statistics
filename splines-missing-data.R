@@ -56,8 +56,6 @@ dat_missing %>%
     summarize(count = n())
 
 
-
-
 dat_missing$Group <- as.factor(dat_missing$Group)
 dat_sim$Group <- as.factor(dat_sim$Group)
 mod1 <- gam(observation ~ s(Day, by = Group, k = 5), data  = dat_missing)
