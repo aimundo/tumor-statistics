@@ -84,7 +84,6 @@ full_predict<-cbind(full_predict,
                          predict(mod2,full_predict,
                                  se.fit = TRUE,type='response'))
 
-
 ggplot(data=full_predict,aes(x=Day,y=fit))+geom_point()+facet_wrap(~Group)
 
 ggplot(data=dat_sim, aes(x=Day, y=observation, group=Group)) +
