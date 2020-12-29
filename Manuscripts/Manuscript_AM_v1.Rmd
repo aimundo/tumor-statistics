@@ -50,13 +50,6 @@ Therefore, the purpose of this study is to provide biomedical researchers with a
 In summary, the exploration of modern statistical techniques to analyze longitudinal data may allow biomedical researchers to consider the use of GAMs instead of rm-ANOVA or LMEMs when the data does not follow a linear trend, and will also help to improve the standards for reproducibility  in biomedical research.
 
 
-- Why LMEMs are better than ANOVA
-
-- How LMEMs (using splines) and a Bayesian analysis can be used to analyze longitudinal data
-
-
-https://www.frontiersin.org/articles/10.3389/fevo.2018.00149/full
-
 ```{r,FIGURE 1,echo=FALSE, message=FALSE, warning=FALSE, fig.cap='Simulated longitudinal data with a linear trend.'}
 rm(list=ls())
 set.seed(123)
@@ -103,14 +96,14 @@ linear_vals[] <- lapply(linear_vals, function(observation) ifelse(observation<=0
 
 ### 1 The "frequentist" case for longitudinal data
 
-The _repeated measures analysis of variance_ (rm-ANOVA) is the standard statistical analysis for longitudinal data, and certain assumptions are necessary to make the model valid. From a practical view, they can be divided in three areas: linear relationship between covariates and response, constant correlation between measurements, and complete observations for all subjects. Each one of these assumptions is discussed below from a biomedical perspective.
+The _repeated measures analysis of variance_ (rm-ANOVA) is the standard statistical analysis for longitudinal data in biomedical research, but certain assumptions are necessary to make the model valid. From a practical view, they can be divided in three areas: linear relationship between covariates and response, constant correlation between measurements, and complete observations for all subjects. Each one of these assumptions is discussed below.
   
 #### 1.1 Linear relationship 
 
-In a biomedical longitudinal study, two or more groups of subjects (patients, mice, samples) are subject to a different treatments (e.g. a "treatment" group receives a novel drug vs. a "control" group that receives a placebo), and measurements from each subject within each group are collected at specific time points. The collected response has both  _fixed_ and  _random_ components. The _fixed_ component can be understood as a constant value in the response which the researcher is interested in measuring, i.e, the effect of the novel drug in the "treatment" group.The _random_ component can be defined as "noise" caused by some inherent variability within the study. For example, if the blood concentration of the drug is measured in certain subjects in the early hours of the morning while others are measured in the afternoon, it is possible that this this variability in the collection time of the measurement introduces some "noise" in the signal. As their name suggests, this "random" variabiliity needs to be modeled as a variable rather than as a constant value.
+In a biomedical longitudinal study, two or more groups of subjects (patients, mice, samples) are subject to a different treatments (e.g. a "treatment" group receives a novel drug vs. a "control" group that receives a placebo), and measurements from each subject within each group are collected at specific time points. The collected response has both  _fixed_ and  _random_ components. The _fixed_ component can be understood as a constant value in the response which the researcher is interested in measuring, i.e, the effect of the novel drug in the "treatment" group.The _random_ component can be defined as "noise" caused by some inherent variability within the study. For example, if the blood concentration of the drug is measured in certain subjects in the early hours of the morning while others are measured in the afternoon, it is possible that the difference in the collection time of the measurement introduces some "noise" in the signal. As their name suggests, this "random" variabiliity needs to be modeled as a variable rather than as a constant value.
 
 
-Mathematically speaking, if a normally distributed response $y$ is measured repeatedly at $t$ time points from subjects in $p$ groups, where each group has a certain $n_p$ number of subjects, the rm-ANOVA the model for the response $y_{hij}$ becomes:
+Mathematically speaking, if a normally distributed response $y$ is measured repeatedly at $t$ time points from  $i$ subjects in $k$ groups, the rm-ANOVA the model for the response $y_{kit}$ becomes:
 
 \begin{equation}
 \label{eq:ANOVA}
@@ -120,9 +113,10 @@ $$y_{kit}=\mu+\gamma_k+\tau_t+(\gamma \tau)_{kt}+\pi_{i(k)}+e_{kit}$$
 
 Where 
 
-$i=1,...,n_K$ $t=1,...,T$, $k=1,...,K$; with $\pi_i{h} \sim N(0,\sigma^{2}_\epsilon)$ (independently normally distributed) and $e_{hij} \sim N(0,\sigma^{2}_\epsilon)$
+$i=1,...,n_K$ $t=1,...,T$, $k=1,...,K$; with $\pi_{ik} \sim N(0,\sigma^{2}_\epsilon)$ (independently normally distributed) and $e_{hik} \sim N(0,\sigma^{2}_\epsilon)$
 
-In this model, $\mu$ represents the group mean, $\gamma_h$ is the _fixed effect_ of group $h$, $\tau_j$ is the fixed effect of time $j$, and $(\gamma \tau)_{hj}$ represents the interaction of time and group effects. The term $\pi_{ij}$ represents the _random effects_ for each subject within each group. Finally, $e_{hij}$ represents the independent random error terms, which need to be normally distributed with mean 0 [@davis2002]. The model then, is a linear combination of terms, and if plotted, represents a line. 
+In this model, $\mu$ represents the group mean, $\gamma_k$ is the _fixed effect_ of each group $k$, $\tau_t$ is the fixed effect of time, and $(\gamma \tau)_{kt}$ represents the interaction of time and group effects. The term $\pi_{ik}$ represents the _random effects_ for each subject within each group. Finally, $e_{hik}$ represents the independent random error terms, which need to be normally distributed with mean 0 [@davis2002]. The model then, assumes a linear relationship between the response and the covariate.
+This is better represented in the follo
 
 _Question: How can one make a plot that tests the "limits" of the model, i.e how much "wiggliness" can this model accomodate? Make a plot to show the behavior of the model_
 
@@ -132,7 +126,7 @@ _Question: How can one make a plot that tests the "limits" of the model, i.e how
 
 In a longitudinal study there is an expected _variance_ between repeated measurements on the same subject, and because repeated measures occur in the subjects within each group, there is a _covariance_ between  measurements at each time point within each group. The _covariance matrix_ (also known as the variance-covariance matrix) is a matrix that captures the variation between and within subjects in a longitudinal study[@wolfinger1996] (For an in-depth analysis of the covariance matrix see [@west2014;@weiss2005]). 
 
-In the case of an rm-ANOVA analysis, it is assumed that the covariance matrix has a specific construction known as _compound symmetry_ (also known as "sphericity" or "circularity"). Under this assumption, the between-subject variance and within-subject correlation  are constant across time [@weiss2005;@geisser1958;@huynh1976]. However, it has been shown that this condition is frequently unjustified because the correlation between measurements tends to change over time [@maxwell2017]; and it is higher between consecutive measurements [@gueorguieva2004;@ugrinowitsch2004]. Although corrections can be made (such as Huyhn-Feldt or Greenhouse-Geisser) but the effectiveness of each correction is dependent on the size of the sample and the number of repeated measurement[@haverkamp2017]. 
+In the case of an rm-ANOVA analysis, it is assumed that the covariance matrix has a specific construction known as _compound symmetry_ (also known as "sphericity" or "circularity"). Under this assumption, the between-subject variance and within-subject correlation  are constant across time [@weiss2005;@geisser1958;@huynh1976]. However, it has been shown that this condition is frequently unjustified because the correlation between measurements tends to change over time [@maxwell2017]; and it is higher between consecutive measurements [@gueorguieva2004;@ugrinowitsch2004]. Although corrections can be made (such as Huyhn-Feldt or Greenhouse-Geisser) the effectiveness of each correction is limited because it depends on the size of the sample,the number of repeated measurements[@haverkamp2017], and they are not robust if the group sizes are unbalanced [@keselman2001]. In other words, if the data does not present constant correlation between repeated measurements, the assumptions required for an rm-ANOVA model are not met and the use of corrections may still not provide a reasonable adjustment that makes the model valid.
 
 
 In the case of LMEMs, one key advantage over rm-ANOVA is that they allow different structures for the variance-covariance matrix including exponential, autoregressive of order 1, rational quadratic and others [@pinheiro2006]. Nevertheless, the analysis required to determine an appropriate variance-covariance structure for the data can be a long process by itself. Overall, the spherical assumption for rm-ANOVA may not capture the natural variations of the correlation in the data, and can bias the inferences from the analysis. 
@@ -152,7 +146,7 @@ This section has presented the assumptions of rm-ANOVA to analyze longitudinal i
 
 #### 2 GAMs as a special case of Generalized Linear Models
 
-A GAM is a special case of the Generalized Linear Model (GLM), a framework that allows for response distributions that do not follow a normal distribution [@wood2017;@hastie1987].  [@simpson2018].  In contrast to rm-ANOVA or LMEMs, GAMs use _smooth functions_  to model the relationship between the covariates and the response. The smooth functions are represented using splines over  evenly spaced ranges of the covariates known as _knots_.  A GAM model can be represented as:
+A GAM is a special case of the Generalized Linear Model (GLM), a framework that allows for response distributions that do not follow a normal distribution [@wood2017;@hastie1987].  Following the notation by Simpson [@simpson2018] A GAM model can be represented as:
 
 
 \begin{equation}
@@ -162,9 +156,11 @@ y_{t}=\beta_0+f(x_t)+\epsilon_t
 
 Where $y_t$ is the response at time $t$, $\beta_0$ is the expected value at time 0, the change of $y$ over time is represented by the function $f(x_t)$ and $\epsilon_t$ represents the residuals.
 
-*This equation above does not have an "interaction term" similar to that of anova.*
+In contrast to rm-ANOVA or LMEMs, GAMs use _smooth functions_  to model the relationship between the covariates and the response. This approach is more advantageous than that of a LMEM or rm-ANOVA models as it allows a non-linear behavior of the data. One possibility is to use a polynomial function, but polynomials create a "global" fit as they assume that the same relationship exists everywhere, which can cause problems with the fit [@beck1998].
 
-This model is similar in its construction to that of \ref{eq:ANOVA}, but the key difference relies on the fact that instead of a linear relationship for the covariates, a function is used. 
+In GAMs the smooth functions are represented using _basis functions_ function over  evenly spaced ranges of the covariates known as _knots_. In particular, the _basis function_ used is a cubic spline, which is a smooth curve constructed from cubic polynomials joined together[@wood2017;@simpson2018].
+
+This model is similar in its construction to that of \ref{eq:ANOVA}, but the key difference relies on the fact that instead of a linear combination of terms, a function is used to model the response. This allows  
 
 #### 1.3 Bayesian brief introduction, and compare the results of 1.2 to the results of Bayesianjo
 
