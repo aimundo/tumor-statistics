@@ -158,7 +158,7 @@ Where $y_t$ is the response at time $t$, $\beta_0$ is the expected value at time
 
 In contrast to rm-ANOVA or LMEMs, GAMs use _smooth functions_  to model the relationship between the covariates and the response. This approach is more advantageous than that of a LMEM or rm-ANOVA models as it allows a non-linear behavior of the data. One possibility is to use a polynomial function, but polynomials create a "global" fit as they assume that the same relationship exists everywhere, which can cause problems with the fit [@beck1998].
 
-In GAMs the smooth functions are represented using _basis functions_ function over  evenly spaced ranges of the covariates known as _knots_. In particular, the _basis function_ used is a cubic spline, which is a smooth curve constructed from cubic polynomials joined together[@wood2017;@simpson2018].
+In GAMs the smooth functions are represented using _basis functions_  over  evenly spaced ranges of the covariates known as _knots_. The _basis function_ used is a cubic spline, which is a smooth curve constructed from cubic polynomials joined together[@wood2017;@simpson2018]. Cubic splines have a long history in their use to solve non-parametric statistical problems and are the default choice to fit GAMs as they are the simplest option to obtain visual smoothness [@wegman1983].
 
 This model is similar in its construction to that of \ref{eq:ANOVA}, but the key difference relies on the fact that instead of a linear combination of terms, a function is used to model the response. This allows  
 
