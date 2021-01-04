@@ -63,7 +63,20 @@ The _repeated measures analysis of variance_ (rm-ANOVA) is the standard statisti
 In a biomedical longitudinal study, two or more groups of subjects (patients, mice, samples) are subject to a different treatments (e.g. a "treatment" group receives a novel drug vs. a "control" group that receives a placebo), and measurements from each subject within each group are collected at specific time points. The collected response has both  _fixed_ and  _random_ components. The _fixed_ component can be understood as a constant value in the response which the researcher is interested in measuring, i.e, the effect of the novel drug in the "treatment" group.The _random_ component can be defined as "noise" caused by some inherent variability within the study. For example, if the blood concentration of the drug is measured in certain subjects in the early hours of the morning while others are measured in the afternoon, it is possible that the difference in the collection time of the measurement introduces some "noise" in the signal. As their name suggests, this "random" variabiliity needs to be modeled as a variable rather than as a constant value.
 
 
-Mathematically speaking, if a normally distributed response $y$ is measured repeatedly at $t$ time points from  $i$ subjects in $k$ groups, the rm-ANOVA the model for the response $y_{kit}$ becomes:
+Mathematically speaking, a linear model can be written as:
+
+\begin{equation}
+\label{eq:linear_model}
+$$
+y = \beta_0 + time * \beta_1 + treatment * \beta_2 + time * treatment * \beta_3 \\
+y = \begin{cases}
+\beta_0 + time * \beta_1 & \mbox{if treatment 1}\\
+\beta_0 + time * \beta_1 + treatment * \beta_2 + time * treatment * \beta_3 & \mbox{if treatment 2}\\
+\end{cases}
+\\
+$$
+\end{equation}
+
 
 \begin{equation}
 \label{eq:ANOVA}
@@ -76,10 +89,31 @@ Where
 $i=1,...,n_K$ $t=1,...,T$, $k=1,...,K$; with $\pi_{ik} \sim N(0,\sigma^{2}_\epsilon)$ (independently normally distributed) and $e_{hik} \sim N(0,\sigma^{2}_\epsilon)$
 
 In this model, $\mu$ represents the group mean, $\gamma_k$ is the _fixed effect_ of each group $k$, $\tau_t$ is the fixed effect of time, and $(\gamma \tau)_{kt}$ represents the interaction of time and group effects. The term $\pi_{ik}$ represents the _random effects_ for each subject within each group. Finally, $e_{hik}$ represents the independent random error terms, which need to be normally distributed with mean 0 [@davis2002]. The model then, assumes a linear relationship between the response and the covariate.
-This is better represented in the follo
 
-_Question: How can one make a plot that tests the "limits" of the model, i.e how much "wiggliness" can this model accomodate? Make a plot to show the behavior of the model_
+The rm-ANOVA model  can be re-written under the generalized linear model  (GLM) framework [@nelder1972]. The main difference in this case is that a GLM model  uses a _linking function_ to connect the observed value to the linear model. Thus, 
 
+\begin{equation}
+\label{eq:GLM}
+
+$$
+y = \beta_0 + f(time) * \boldsymbol{\beta}_1 + treatment * \beta_2 + f(time) * treatment * \boldsymbol{\beta}_3 \\
+y = \begin{cases}
+\beta_0 + f(time) * \boldsymbol{\beta}_1 & \mbox{if treatment 1} \\
+\beta_0 + f(time) * \boldsymbol{\beta}_1 + treatment * \beta_2 + f(time) * treatment * \boldsymbol{\beta}_3 & \mbox{if treatment 2}\\
+\end{cases}
+\\
+$$
+\end{equation}
+
+
+\begin{equation}
+\label{eq:ANOVA_GLM}
+$$y_{kit}=\mu+f(\gamma_k)+f(\tau_t)+(\gamma \tau)_{kt}+\pi_{i(k)}+e_{kit}$$
+\end{equation}
+
+
+
+The Linear model as a GLM: set $f(time) = time$ with the identity function $f(x) = x$
 
 
 #### 1.2 Covariance in rm-ANOVA and LMEMs
