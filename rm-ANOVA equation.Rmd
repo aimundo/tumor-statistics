@@ -1,0 +1,23 @@
+---
+title: "rm-ANOVA"
+author: "Ariel Mundo"
+date: "1/4/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+\begin{equation}
+\label{eq:ANOVA}
+$$ y_{kit}=\mu+\gamma_k+\tau_t+(\gamma \tau)_{kt}+\pi_{i(k)}+e_{kit}$$
+\end{equation}
+
+
+Where 
+
+$i=1,...,n_K$ $t=1,...,T$, $k=1,...,K$; with $\pi_{ik} \sim N(0,\sigma^{2}_\epsilon)$ (independently normally distributed) and $e_{hik} \sim N(0,\sigma^{2}_\epsilon)$
+
+In this model, $\mu$ represents the group mean, $\gamma_k$ is the _fixed effect_ of each group $k$, $\tau_t$ is the fixed effect of time, and $(\gamma \tau)_{kt}$ represents the interaction of time and group effects. The term $\pi_{ik}$ represents the _random effects_ for each subject within each group. Finally, $e_{hik}$ represents the independent random error terms, which need to be normally distributed with mean 0 [@davis2002]. The model then, assumes a linear relationship between the response and the covariate.

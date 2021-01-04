@@ -1,5 +1,5 @@
 ---
-title: '**Bayesian statistics for longitudinal studies in biomedical research**'
+title: '**The statistical analysis of non-linear longitudinal data in biomedical research**'
 author: 
 - Ariel Mundo^[Department of Biomedical Engineering, University of Arkansas, Fayetteville]
 - Timothy J. Muldoon^[Department of Biomedical Engineering, University of Arkansas, Fayetteville]
@@ -7,18 +7,17 @@ author:
   
 bibliography: refs.bib
 output:
-  html_document: default
   pdf_document: 
     fig_caption: yes
+  html_document: default
   css: style.css
   word_document:
     reference_docx: docx_template.docx
 mainfont: Times New Roman
 link-citations: yes
-subtitle: '_Their application and use in biomedical research_'
-biblio-style: apalike
+subtitle: '_Beyond repeated measures ANOVA and Linear Mixed Models_'
+csl: ieee.csl
 ---
-
 
 
 ## Paper outline
@@ -60,60 +59,204 @@ The _repeated measures analysis of variance_ (rm-ANOVA) is the standard statisti
   
 #### 1.1 Linear relationship 
 
-In a biomedical longitudinal study, two or more groups of subjects (patients, mice, samples) are subject to a different treatments (e.g. a "treatment" group receives a novel drug vs. a "control" group that receives a placebo), and measurements from each subject within each group are collected at specific time points. The collected response has both  _fixed_ and  _random_ components. The _fixed_ component can be understood as a constant value in the response which the researcher is interested in measuring, i.e, the effect of the novel drug in the "treatment" group.The _random_ component can be defined as "noise" caused by some inherent variability within the study. For example, if the blood concentration of the drug is measured in certain subjects in the early hours of the morning while others are measured in the afternoon, it is possible that the difference in the collection time of the measurement introduces some "noise" in the signal. As their name suggests, this "random" variabiliity needs to be modeled as a variable rather than as a constant value.
+In a biomedical longitudinal study, two or more groups of subjects (patients, mice, samples) are subject to a different treatments (e.g. a "treatment" group receives a novel drug vs. a "control" group that receives a placebo), and measurements from each subject within each group are collected at specific time points. The collected response has both  _fixed_ and  _random_ components. The _fixed_ component can be understood as a constant value in the response which the researcher is interested in measuring, i.e, the effect of the novel drug in the "treatment" group.The _random_ component can be defined as "noise" caused by some inherent variability within the study. For example, if the blood concentration of the drug is measured in certain subjects in the early hours of the morning while others are measured in the afternoon, it is possible that the difference in the collection time of the measurement introduces some "noise" in the signal. As their name suggests, this "random" variability needs to be modeled as a variable rather than as a constant value.
 
 
-Mathematically speaking, a linear model can be written as:
+Mathematically speaking, a rm-ANOVA model can be written as:
+
 
 \begin{equation}
-\label{eq:linear_model}
-$$
-y = \beta_0 + time * \beta_1 + treatment * \beta_2 + time * treatment * \beta_3 \\
-y = \begin{cases}
-\beta_0 + time * \beta_1 & \mbox{if treatment 1}\\
-\beta_0 + time * \beta_1 + treatment * \beta_2 + time * treatment * \beta_3 & \mbox{if treatment 2}\\
-\end{cases}
-\\
-$$
+  y_{i} = \mu+ \beta_1* time_{t} + \beta_2* treatment_{j} + \beta_3* time_{t} * treatment_{j}+\pi_{ij} +\epsilon_{tij}\\ (\#eq:linear-model)
 \end{equation}
 
 
-\begin{equation}
-\label{eq:ANOVA}
-$$y_{kit}=\mu+\gamma_k+\tau_t+(\gamma \tau)_{kt}+\pi_{i(k)}+e_{kit}$$
-\end{equation}
-
-
-Where 
-
-$i=1,...,n_K$ $t=1,...,T$, $k=1,...,K$; with $\pi_{ik} \sim N(0,\sigma^{2}_\epsilon)$ (independently normally distributed) and $e_{hik} \sim N(0,\sigma^{2}_\epsilon)$
-
-In this model, $\mu$ represents the group mean, $\gamma_k$ is the _fixed effect_ of each group $k$, $\tau_t$ is the fixed effect of time, and $(\gamma \tau)_{kt}$ represents the interaction of time and group effects. The term $\pi_{ik}$ represents the _random effects_ for each subject within each group. Finally, $e_{hik}$ represents the independent random error terms, which need to be normally distributed with mean 0 [@davis2002]. The model then, assumes a linear relationship between the response and the covariate.
-
-The rm-ANOVA model  can be re-written under the generalized linear model  (GLM) framework [@nelder1972]. The main difference in this case is that a GLM model  uses a _linking function_ to connect the observed value to the linear model. Thus, 
-
-\begin{equation}
-\label{eq:GLM}
-
-$$
-y = \beta_0 + f(time) * \boldsymbol{\beta}_1 + treatment * \beta_2 + f(time) * treatment * \boldsymbol{\beta}_3 \\
-y = \begin{cases}
-\beta_0 + f(time) * \boldsymbol{\beta}_1 & \mbox{if treatment 1} \\
-\beta_0 + f(time) * \boldsymbol{\beta}_1 + treatment * \beta_2 + f(time) * treatment * \boldsymbol{\beta}_3 & \mbox{if treatment 2}\\
-\end{cases}
-\\
-$$
-\end{equation}
+In this model $y_i$ is the response by subject $i$, which can be decomposed in a mean value $\mu$, _fixed effects_ of time ($time_t$), treatment ($time_j$) and their interaction; a _random effect_ $\pi_{ij}$ of each subject within each group, and errors per subject per time per group $\epsilon_{tij}$. 
+Suppose two treatments groups are used in the study. Models per group can be generated if 0 is used for the first treatment group (Group A) and 1 for the second treatment group (Group B). The linear models then become:
 
 
 \begin{equation}
-\label{eq:ANOVA_GLM}
-$$y_{kit}=\mu+f(\gamma_k)+f(\tau_t)+(\gamma \tau)_{kt}+\pi_{i(k)}+e_{kit}$$
+  y = \begin{cases}
+  \mu + \beta_1*time_{t}+\epsilon_{ti}   & \mbox{if Group A}\\
+  \mu + \beta_1 * time_{t} + \beta_2 * treatment_{j} +\beta_3* time_{t} * treatment_{j}        +\pi_{i}+ \epsilon_{tij}  & \mbox{if Group B}\\
+  \end{cases}
+  (\#eq:ANOVA-by-group)
 \end{equation}
 
 
 
-The Linear model as a GLM: set $f(time) = time$ with the identity function $f(x) = x$
+Furthermore, \@ref(eq:ANOVA-by-group) can be re-written under the generalized linear model  (GLM) framework [@nelder1972]. The main difference in this case is that a GLM model  uses a _linking function_ to connect the observed value to the linear model. 
+
+Thus, 
+
+\begin{equation}
+  y =\mu +\boldsymbol{\beta}_1* f(time) + \beta_2* treatment+\boldsymbol{\beta}_3* f(time)*treatment \\
+
+  y = \begin{cases}
+  \mu +\boldsymbol{\beta}_1* f(time)  & \mbox{if Group A} \\
+  \mu +\boldsymbol{\beta}_1* f(time)  + \beta_2* treatment + \boldsymbol{\beta}_3* f(time) *     treatment   & \mbox{if Group B}\\
+  \end{cases}
+  \\
+  (\#eq:GLM
+\end{equation}
+
+
+The linear model in \@ref(eq:linear-model) is a GLM where $f(time) = time$ with the identity function $f(x) = x$.
+
+Regardless of its presentation, \@ref(eq:linear-model), \@ref(eq:ANOVA-by-group) and \@ref(eq:GLM) show that the model expects a linear relationship between the covariates and the response. When the data does not follow a linear trend, the fit that the model produces does not accurately represent the changes in the data. To exemplify this consider simulated longitudinal data where the a normally distributed response of two groups of 10 subjects each is obtained, and an rm-ANOVA model such as \@ref(eq:linear-model) is fitted to the data (code for the simulated data is available in the Appendix).  
+
+```{r, message = FALSE,include=FALSE}
+set.seed(11)
+library(patchwork)
+library(tidyverse)
+```
+
+
+```{r,include=FALSE}
+## Example with linear response
+example <- function(n_time = 6, 
+                    fun_type = "linear", 
+                    error_type = "correlated") {
+  
+  if (!(fun_type %in% c("linear", "quadratic")))
+    stop('fun_type must be either "linear", or "quadratic"')
+  if (!(error_type %in% c("correlated", "independent")))
+    stop('fun_type must be either "correlated", or "independent"')
+  
+  library(tidyverse)
+  library(mvnfast)
+  library(nlme)
+  
+  x <- seq(0, 1, length.out = n_time)
+  mu <- matrix(0, length(x), 2)
+  # linear response
+  if (fun_type == "linear") {
+    mu[, 1] <- - (x - .5) + 0.25
+    mu[, 2] <- (x - .3)
+  } else {
+    # nonlinear response
+    mu[, 1] <- - 4 * (x - .5)^2 + 0.25
+    mu[, 2] <- 4 * (x - .5)^2
+  }
+  # matplot(mu, type = 'l')
+  
+  y <- array(0, dim = c(length(x), 2, 10))
+  errors <- array(0, dim = c(length(x), 2, 10))
+  
+  if (error_type == "independent") {
+    ## independent errors
+    for (i in 1:2) {
+      for (j in 1:10) {
+        errors[, i, j] <- rnorm(6, 0, 0.25)
+        y[, i, j] <- mu[, i] + errors[, i, j]
+      }
+    }
+  } else {
+    for (i in 1:2) {     # number of treatments
+      for (j in 1:10) {  # number of subjects
+        # compound symmetry errors
+        errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * diag(6) + 0.25 * matrix(1, 6, 6))
+        y[, i, j] <- mu[, i] + errors[, i, j]
+      }
+    }
+  }    
+  
+  
+  ## subject random effects
+  
+  ## visualizing the difference between independent errors and compound symmetry
+  ## why do we need to account for this -- overly confident inference
+  
+  
+  dimnames(y) <- list(time = x, treatment = 1:2, subject = 1:10)
+  dimnames(errors) <- list(time = x, treatment = 1:2, subject = 1:10)
+  dimnames(mu) <- list(time = x, treatment = 1:2)
+  dat <- as.data.frame.table(y, responseName = "y")
+  dat_errors <- as.data.frame.table(errors, responseName = "errors")
+  dat_mu <- as.data.frame.table(mu, responseName = "mu")
+  dat <- left_join(dat, dat_errors, by = c("time", "treatment", "subject"))
+  dat <- left_join(dat, dat_mu, by = c("time", "treatment"))
+  dat$time <- as.numeric(as.character(dat$time))
+  dat <- dat %>%
+    mutate(subject = factor(paste(subject, treatment, sep = "-")))
+  
+  
+  ## repeated measures ANOVA in R
+  fit_lm <- lm(y ~ time + treatment + time * treatment, data = dat)
+  dat$preds_lm <- predict(fit_lm)
+
+  fit_lme <- lme(y ~ treatment + time + treatment:time,
+                 data = dat,
+                 random = ~ 1 | subject,
+                 correlation = corCompSymm(form = ~ 1 | subject)
+  )
+  
+  
+  pred_dat <- expand.grid(
+    treatment = factor(1:2), 
+    time = unique(dat$time)
+  )
+  
+  dat$y_pred <- predict(fit_lme)
+  
+  
+  return(list(
+    dat = dat,
+    pred_dat = pred_dat,
+    fit_lm = fit_lm,
+    fit_lme = fit_lme
+    
+  ))
+}
+
+
+plot_example <- function(sim_dat) {
+  library(patchwork)
+  ## Plot the simulated data
+  p1 <- sim_dat$dat %>%
+    ggplot(aes(x = time, y = y, group = treatment, color = treatment)) +
+    geom_point() +
+    geom_line(aes(x = time, y = mu, color = treatment)) +
+    theme_bw(base_size = 12) +
+    ggtitle("Simulated data with true response function")
+  
+  p2 <- sim_dat$dat %>%
+    ggplot(aes(x = time, y = y, group = subject, color = treatment)) +
+    geom_line(aes(size = "Subjects")) +
+    # facet_wrap(~ treatment) +
+    geom_line(aes(x = time, y = mu, color = treatment, size = "Simulated Truth"), lty = 1) +
+    scale_size_manual(name = "Type", values=c("Subjects" = 0.5, "Simulated Truth" = 3)) +
+    ggtitle("Simulated data\nIndividual responses with population mean") +
+    theme_bw(base_size = 12)
+  
+   p3 <- sim_dat$dat %>%
+    ggplot(aes(x = time, y = errors, group = subject, color = treatment)) +
+    geom_line() +
+    # facet_wrap(~ treatment) +
+    ggtitle("Simulated errors") +
+    theme_bw(base_size = 12)
+  
+  p4 <- ggplot(sim_dat$dat, aes(x = time, y = y, color = treatment)) +
+    geom_point() +
+    geom_line(aes(y = predict(sim_dat$fit_lme), group = subject, size = "Subjects")) +
+    geom_line(data = sim_dat$pred_dat, aes(y = predict(sim_dat$fit_lme, level = 0, newdata = sim_dat$pred_dat), size = "Population")) +
+    scale_size_manual(name = "Predictions", values=c("Subjects" = 0.5, "Population" = 3)) +
+    theme_bw(base_size = 12) +
+    ggtitle("Fitted Model")
+  return((p1 + p3) / (p2 + p4))
+  # return((p1 + p3 + plot_layout(guides = "collect")) / (p2 + p4 + plot_layout(guides = "collect")))
+
+}
+```
+
+```{r, fig.width=16, fig.height=9, out.width="100%", echo=FALSE}
+# linear response, correlated errors (subject effect)
+plot_example(example(fun_type = "linear", error_type = "correlated")) +
+  plot_annotation(
+  title = 'Simulated with linear function and correlated errors',
+    theme = theme(plot.title = element_text(size = 20))
+) #& 
+  # theme(plot.title = element_text(size = 20))
+```
 
 
 #### 1.2 Covariance in rm-ANOVA and LMEMs
@@ -142,8 +285,8 @@ A GAM is a special case of the Generalized Linear Model (GLM), a framework that 
 
 
 \begin{equation}
-(\#eq:labelGAM)
-y_{t}=\beta_0+f(x_t)+\epsilon_t  
+  y_{t}=\beta_0+f(x_t)+\epsilon_t  
+  (\#eq:GAM)
 \end{equation}
 
 Where $y_t$ is the response at time $t$, $\beta_0$ is the expected value at time 0, the change of $y$ over time is represented by the function $f(x_t)$ and $\epsilon_t$ represents the residuals.
@@ -155,14 +298,6 @@ To overcome this limitation, the smooth functions in GAMs  are represented using
 
 
 
-
-#### 1.3 Bayesian brief introduction, and compare the results of 1.2 to the results of Bayesianjo
-
-
-* Section 2: Implementation of both LMEMs and Bayesian and their results
-
-
-Present the implementation of a spline-fitted model in R, using data simulated from [@vishwanath2009]
 
 ***
 
