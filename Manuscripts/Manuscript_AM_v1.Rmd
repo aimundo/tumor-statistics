@@ -11,8 +11,6 @@ csl: ieee.csl
 css: style.css
 fontfamily: Arial
   output:
-  
-  
   bookdown::html_document2: default
   bookdown::pdf_document2:
     keep_tex: yes
