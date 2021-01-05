@@ -1,0 +1,64 @@
+---
+title: "Questions regarding modeling"
+author: "Document Author"
+header-includes:
+- \usepackage{amsmath}
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+    
+---
+
+After reading the book from Krushke and going back and forth between the "time-varying-anova-example" file and the Stan model "time-varying" there are certain things that I have understood:
+
+* The specification of prior distributions: I did not understand at the beginning why you chose a Cauchy distribution for the error, but upon reading and talking with you I understand it is just a possible distribution, it has large tails and therefore can accommodate outliers well.
+
+    * Right, there are many different prior choices. In general, the choice of prior is not that important. You can also check the posterior distribution and compare with the prior to explore how sensitive the model is to the prior choice.
+
+* I also understand most of the operations that take place and specially for the simulate_data function.
+
+Things that I still don't understand:
+
+1. Krushke's book uses Stan model specification that goes something like this:
+
+\begin{align}
+y_n=\alpha+\beta*x_n+\epsilon_n \tag{1}\\
+\end{align}
+
+where $\epsilon_n \sim normal(0,\sigma)$. 
+Alternatively, the model can be specified as:
+\begin{align}
+y_n \sim normal(\alpha+\beta x_n,\sigma) \tag{2}\\
+\end{align}
+
+The parameters in Stan are then defined:
+
+* alpha
+* beta 
+* sigma
+
+And the model appears in the model block as:
+$y\sim normal(alpha+beta*x,sigma)$
+
+I understand this is a less complex model than the one that we are implementing, but the correspondence between the model notation and the specification in Stan makes it easy to understand for people that don't know complex statistical notation (such as myself).
+
+* The model we are fitting is very similar. The primary difference is that our model can be expressed as $y_n \sim normal(\alpha+\beta f(x_n),\sigma)$ where $f(x_n)$ is a function of the $x_n$. In the model above, $f(x_n) = x_n$ is the identity function whereas in the `time-varying.stan` model we use the b-spline function $f(\cdot)$.
+    
+I know you have mentioned this before, but I am a little confused by how the argument is passed in the model in "time-varying.stan". The parameter $\beta$ is a matrix of 2 rows and 6 columns, and then is transformed into $\mu$, by multiplying $\beta$ (2 rows,6 columns) by  matrix $X$ (6 rows, 5 columns) .In this way, $\mu$ is a combination of the basis functions of the spline and the $\beta$ parameter, with size ( 2 rows, 5 columns).
+
+But I looked upon the basis spline functions that the script creates (X_bs) and while I think I understand what X_bs is(a matrix that contains a basis function for a spline model on each column), I don't understand the role of this matrix in the Bayesian model. Does this mean that we are using X_bs to fit the data? And if that is the case, setting a different seed then would cause to have a better or worse fit?
+
+* The $X_{bs}$ is the transformation of $X$ by the function $f(X)$. There are lots of functions $f(\cdot)$ that are widely used (log transformations, square roots, polynomials etc.). For example, $y_n \sim normal(\alpha+\beta_1 x_n + \beta_2 x_n^2, \sigma)$ is a function $f(x_n) = x_n + x_n^2$. The function $f(\cdot)$ is deterministic which means that the random seed should not matter.
+
+When the final model is specified,I don't fully understand how the model would look if specified as in $(1)$.It is running within a loop, and if taken literally, the model is:
+
+\begin{align}
+y_i \sim normal(\mu(time_i,treatment_i)) \tag{3}\\
+\end{align}
+Does this mean the model specifies an interaction between the $time$ and $treatment$ factors? I think this is the most important thing that I don't understand, because when the model is run and the "mu_post" variable is called in the R script, I just seen 100 matrices each size (2,5) but don't understand how the model created the numbers in each cell.
+
+* The model defines $\mu$ as a matrix where each row represents a treatment and each column represents a time step. Thus, $\mu[2, 4]$ is the mean response for treatment 2 at during the 4th time period. The basis functions in $X_{bs}$ allow for the time-varying process to be different for each treatment (each row of $\beta$ are the parameters for a treatment). The $X_{bs} \beta$ model the correlation in the $y$ variable over time based on how close in time the observations are.
+
+Thank you for your help, if you can provide some guidance on the questions I wrote here, that would be very helpful!

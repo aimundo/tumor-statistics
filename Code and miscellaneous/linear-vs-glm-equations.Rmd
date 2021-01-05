@@ -1,0 +1,56 @@
+---
+title: "Equations"
+author: "John Tipton"
+date: "12/23/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Linear model
+
+$$
+y = \beta_0 + time * \beta_1 + treatment * \beta_2 + time * treatment * \beta_3 \\
+y = \begin{cases}
+\beta_0 + time * \beta_1 & \mbox{if treatment 1}\\
+\beta_0 + time * \beta_1 + treatment * \beta_2 + time * treatment * \beta_3 & \mbox{if treatment 2}\\
+\end{cases}
+\\
+$$
+
+plugging in the value treatment = 0 for treatment 1 and the value treatment = 1 for treatment 2
+
+$$
+y = \begin{cases}
+\beta_0 + time * \beta_1 & \mbox{if treatment 1}\\
+( \beta_0 + \beta_2)  + time * (\beta_1 + \beta_3) & \mbox{if treatment 2}\\
+\end{cases}
+$$
+
+# GLM framework
+
+$$
+y = \beta_0 + f(time) * \boldsymbol{\beta}_1 + treatment * \beta_2 + f(time) * treatment * \boldsymbol{\beta}_3 \\
+y = \begin{cases}
+\beta_0 + f(time) * \boldsymbol{\beta}_1 & \mbox{if treatment 1} \\
+\beta_0 + f(time) * \boldsymbol{\beta}_1 + treatment * \beta_2 + f(time) * treatment * \boldsymbol{\beta}_3 & \mbox{if treatment 2}\\
+\end{cases}
+\\
+$$
+
+
+$$
+y = \begin{cases}
+\beta_0 + f(time) * \boldsymbol{\beta}_1 & \mbox{if treatment 1}\\
+(\beta_0 + \beta_2) + f(time) * (\boldsymbol{\beta}_1 + \boldsymbol{\beta}_3) & \mbox{if treatment 2}\\
+\end{cases} \\
+= \begin{cases}
+\beta_0 + f(time) * \boldsymbol{\beta}_1 & \mbox{if treatment 1}\\
+(\tilde{\beta}_2) + f(time) * (\boldsymbol{\tilde{\beta}}_3) & \mbox{if treatment 2}\\
+\end{cases}
+$$
+
+The Linear model as a GLM: set $f(time) = time$ with the identity function $f(x) = x$
+

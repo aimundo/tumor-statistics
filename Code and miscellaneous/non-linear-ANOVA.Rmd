@@ -1,0 +1,193 @@
+---
+title: "Non-linear ANOVA example"
+output: html_document
+---
+
+```{r, message = FALSE}
+set.seed(11)
+library(patchwork)
+library(tidyverse)
+```
+
+```{r}
+## Example with linear response
+example <- function(n_time = 6, 
+                    fun_type = "linear", 
+                    error_type = "correlated") {
+  
+  if (!(fun_type %in% c("linear", "quadratic")))
+    stop('fun_type must be either "linear", or "quadratic"')
+  if (!(error_type %in% c("correlated", "independent")))
+    stop('fun_type must be either "correlated", or "independent"')
+  
+  library(tidyverse)
+  library(mvnfast)
+  library(nlme)
+  
+  x <- seq(0, 1, length.out = n_time)
+  mu <- matrix(0, length(x), 2)
+  # linear response
+  if (fun_type == "linear") {
+    mu[, 1] <- - (x - .5) + 0.25
+    mu[, 2] <- (x - .3)
+  } else {
+    # nonlinear response
+    mu[, 1] <- - 4 * (x - .5)^2 + 0.25
+    mu[, 2] <- 4 * (x - .5)^2
+  }
+  # matplot(mu, type = 'l')
+  
+  y <- array(0, dim = c(length(x), 2, 10))
+  errors <- array(0, dim = c(length(x), 2, 10))
+  
+  if (error_type == "independent") {
+    ## independent errors
+    for (i in 1:2) {
+      for (j in 1:10) {
+        errors[, i, j] <- rnorm(6, 0, 0.25)
+        y[, i, j] <- mu[, i] + errors[, i, j]
+      }
+    }
+  } else {
+    for (i in 1:2) {     # number of treatments
+      for (j in 1:10) {  # number of subjects
+        # compound symmetry errors
+        errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * diag(6) + 0.25 * matrix(1, 6, 6))
+        y[, i, j] <- mu[, i] + errors[, i, j]
+      }
+    }
+  }    
+  
+  
+  ## subject random effects
+  
+  ## visualizing the difference between independent errors and compound symmetry
+  ## why do we need to account for this -- overly confident inference
+  
+  
+  dimnames(y) <- list(time = x, treatment = 1:2, subject = 1:10)
+  dimnames(errors) <- list(time = x, treatment = 1:2, subject = 1:10)
+  dimnames(mu) <- list(time = x, treatment = 1:2)
+  dat <- as.data.frame.table(y, responseName = "y")
+  dat_errors <- as.data.frame.table(errors, responseName = "errors")
+  dat_mu <- as.data.frame.table(mu, responseName = "mu")
+  dat <- left_join(dat, dat_errors, by = c("time", "treatment", "subject"))
+  dat <- left_join(dat, dat_mu, by = c("time", "treatment"))
+  dat$time <- as.numeric(as.character(dat$time))
+  dat <- dat %>%
+    mutate(subject = factor(paste(subject, treatment, sep = "-")))
+  
+  
+  ## repeated measures ANOVA in R
+  fit_lm <- lm(y ~ time + treatment + time * treatment, data = dat)
+  dat$preds_lm <- predict(fit_lm)
+
+  fit_lme <- lme(y ~ treatment + time + treatment:time,
+                 data = dat,
+                 random = ~ 1 | subject,
+                 correlation = corCompSymm(form = ~ 1 | subject)
+  )
+  
+  
+  pred_dat <- expand.grid(
+    treatment = factor(1:2), 
+    time = unique(dat$time)
+  )
+  
+  dat$y_pred <- predict(fit_lme)
+  
+  
+  return(list(
+    dat = dat,
+    pred_dat = pred_dat,
+    fit_lm = fit_lm,
+    fit_lme = fit_lme
+    
+  ))
+}
+
+
+plot_example <- function(sim_dat) {
+  library(patchwork)
+  ## Plot the simulated data
+  p1 <- sim_dat$dat %>%
+    ggplot(aes(x = time, y = y, group = treatment, color = treatment)) +
+    geom_point() +
+    geom_line(aes(x = time, y = mu, color = treatment)) +
+    theme_bw(base_size = 12) +
+    ggtitle("Simulated data with true response function")
+  
+  p2 <- sim_dat$dat %>%
+    ggplot(aes(x = time, y = y, group = subject, color = treatment)) +
+    geom_line(aes(size = "Subjects")) +
+    # facet_wrap(~ treatment) +
+    geom_line(aes(x = time, y = mu, color = treatment, size = "Simulated Truth"), lty = 1) +
+    scale_size_manual(name = "Type", values=c("Subjects" = 0.5, "Simulated Truth" = 3)) +
+    ggtitle("Simulated data\nIndividual responses with population mean") +
+    theme_bw(base_size = 12)
+  
+   p3 <- sim_dat$dat %>%
+    ggplot(aes(x = time, y = errors, group = subject, color = treatment)) +
+    geom_line() +
+    # facet_wrap(~ treatment) +
+    ggtitle("Simulated errors") +
+    theme_bw(base_size = 12)
+  
+  p4 <- ggplot(sim_dat$dat, aes(x = time, y = y, color = treatment)) +
+    geom_point() +
+    geom_line(aes(y = predict(sim_dat$fit_lme), group = subject, size = "Subjects")) +
+    geom_line(data = sim_dat$pred_dat, aes(y = predict(sim_dat$fit_lme, level = 0, newdata = sim_dat$pred_dat), size = "Population")) +
+    scale_size_manual(name = "Predictions", values=c("Subjects" = 0.5, "Population" = 3)) +
+    theme_bw(base_size = 12) +
+    ggtitle("Fitted Model")
+  return((p1 + p3) / (p2 + p4))
+  # return((p1 + p3 + plot_layout(guides = "collect")) / (p2 + p4 + plot_layout(guides = "collect")))
+
+}
+```
+
+
+```{r, fig.width=16, fig.height=9, out.width="100%"}
+set.seed(111)
+# linear response, independent errors (no subject effect)
+plot_example(example(fun_type = "linear", error_type = "independent")) +
+  plot_annotation(
+  title = 'Simulated with linear function and independent errors', 
+  theme = theme(plot.title = element_text(size = 20))
+) #& 
+  # theme(plot.title = element_text(size = 20))
+```
+
+
+```{r, fig.width=16, fig.height=9, out.width="100%"}
+# linear response, correlated errors (subject effect)
+plot_example(example(fun_type = "linear", error_type = "correlated")) +
+  plot_annotation(
+  title = 'Simulated with linear function and correlated errors',
+    theme = theme(plot.title = element_text(size = 20))
+) #& 
+  # theme(plot.title = element_text(size = 20))
+```
+
+```{r, fig.width=16, fig.height=9, out.width="100%"}
+# quadratic response, independent errors (no subject effect)
+plot_example(example(fun_type = "quadratic", error_type = "independent")) +
+  plot_annotation(
+  title = 'Simulated with quadratic function and independent errors',
+    theme = theme(plot.title = element_text(size = 20))
+) #& 
+  # theme(plot.title = element_text(size = 20))
+```
+
+```{r, fig.width=16, fig.height=9, out.width="100%"}
+# quadratic response, correlated errors (subject effect)
+plot_example(example(fun_type = "quadratic", error_type = "correlated")) +
+  plot_annotation(
+  title = 'Simulated with quadratic function and correlated errors',
+    theme = theme(plot.title = element_text(size = 20))
+) #& 
+  # theme(plot.title = element_text(size = 20))
+```
+  
+  
+  
