@@ -9,7 +9,8 @@ subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
 bibliography: refs.bib
 csl: ieee.csl
 css: style.css
-output:
+fontfamily: Arial
+  output:
   
   
   bookdown::html_document2: default
@@ -22,7 +23,7 @@ output:
 
 # Background
 
-A longitudinal study is defined as that which is designed to repeatedly measure a variable of interest in a group (or groups) of subjects. In biomedical research, this type of study is employed when the intention is to observe the evolution of the effect of a certain treatment across time, rather than analyzing it at a single time point (a cross-sectional study). Clinical studies of breast and neck cancer have used a longitudinal approach [@sio2016;@kamstra2015]. In the first case, weekly measurements of skin toxicities in  patients with radiation-induced dermatitis were taken for up to 8 weeks; whereas in the latter mouth opening was assessed at 6,12, 18, 24 and 36 months after radiotherapy (RT). Longitudinal studies have been also used to analyze tumor response [@roblyer2011;@tank2020;@pavlov2018;@demidov2018], antibody expression [@ritter2001;@roth2017], and cell metabolism [@jones2018;@skala2010]. 
+A longitudinal study is defined as that which is designed to repeatedly measure a variable of interest in a group (or groups) of subjects. In biomedical research, this type of study is employed when the intention is to observe the evolution of the effect of a certain treatment across time, rather than analyzing it at a single time point (a cross-sectional study). Clinical studies of breast and neck cancer have used a longitudinal approach [@sio2016;@kamstra2015]. In the first case, weekly measurements of skin toxicities in  patients with radiation-induced dermatitis were taken for up to 8 weeks; whereas in the latter mouth opening was assessed at 6,12, 18, 24 and 36 months after radiotherapy (RT). Longitudinal studies have beenn also used to analyze tumor response [@roblyer2011;@tank2020;@pavlov2018;@demidov2018], antibody expression [@ritter2001;@roth2017], and cell metabolism [@jones2018;@skala2010]. 
 
 
 Traditionally, a “frequentist” approach is used in biomedical research to derive inferences from a longitudinal study. Such statistical view derives its name from the fact that it regards probability as a limiting frequency[@wagenmakers2008] and its application is based on a null hypothesis test using the _analysis of variance over repeated measures_ (repeated measures ANOVA or rm-ANOVA). This methodology makes two key assumptions regarding longitudinal data: constant correlation exists across same-subject measurements, and observations from each subject are obtained at all time points through the study (a condition also known as complete observations) [@gueorguieva2004;@schober2018].
