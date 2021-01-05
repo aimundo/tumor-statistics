@@ -1,22 +1,23 @@
 ---
-title: '**The statistical analysis of non-linear longitudinal data in biomedical research**'
+title: '**The statistical analysis of non-linear longitudinal data in biomedical research using generalized additive models**'
 author:
 - Ariel Mundo^[Department of Biomedical Engineering, University of Arkansas, Fayetteville]
 - Timothy J. Muldoon^[Department of Biomedical Engineering, University of Arkansas,
   Fayetteville]
 - John R. Tipton^[Department of Mathematical Sciences, University of Arkansas, Fayetteville]
 subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
-bibliography: refs.bib
-csl: ieee.csl
-css: style.css
-fontfamily: Arial
-  output:
-  bookdown::html_document2: default
+output:
   bookdown::pdf_document2:
     keep_tex: yes
     fig_caption: yes
+    extra_dependencies: ["subfig","breqn"]
   bookdown::word_document2: default
-  link-citations: true
+  bookdown::html_document2: default
+  link-citations: yes
+  css: style.css
+  '': default
+csl: ieee.csl
+bibliography: refs.bib
 ---
 
 # Background
@@ -57,23 +58,21 @@ In a biomedical longitudinal study, two or more groups of subjects (patients, mi
 
 Mathematically speaking, a rm-ANOVA model can be written as:
 
-
 \begin{equation}
-  y_{i} = \mu+ \beta_1* time_{t} + \beta_2* treatment_{j} + \beta_3* time_{t} *                                    treatment_{j}+\pi_{ij} +\epsilon_{tij}\\ 
-  (\#eq:linear-model)
+y_{i} = \mu+ \beta_1* time_{t} + \beta_2* treatment_{j} + \beta_3* time_{t}*treatment_{j}+\pi_{ij} +\epsilon_{tij}\\ 
+(\#eq:linear-model)
 \end{equation}
-
 
 In this model $y_i$ is the response by subject $i$, which can be decomposed in a mean value $\mu$, _fixed effects_ of time ($time_t$), treatment ($time_j$) and their interaction; a _random effect_ $\pi_{ij}$ of each subject within each group, and errors per subject per time per group $\epsilon_{tij}$. 
 Suppose two treatments groups are used in the study. Models per group can be generated if 0 is used for the first treatment group (Group A) and 1 for the second treatment group (Group B). The linear models then become:
 
 
 \begin{equation}
-  y = \begin{cases}
-  \mu + \beta_1*time_{t}+\epsilon_{ti}   & \mbox{if Group A}\\
-  \mu + \beta_1 * time_{t} + \beta_2 * treatment_{j} +\beta_3* time_{t} * treatment_{j}+\pi_{i}+\epsilon_{tij}  & \mbox{if Group B}\\
-  \end{cases}
-  (\#eq:ANOVA-by-group)
+y = \begin{cases}
+\mu + \beta_1*time_{t}+\epsilon_{ti}   & \mbox{if Group A}\\
+\mu + \beta_1 * time_{t} + \beta_2 * treatment_{j} +\beta_3* time_{t} * treatment_{j}+\pi_{i}+\epsilon_{tij}  & \mbox{if Group B}\\
+\end{cases}
+(\#eq:ANOVA-by-group)
 \end{equation}
 
 
@@ -83,19 +82,23 @@ Furthermore, \@ref(eq:ANOVA-by-group) can be re-written under the generalized li
 Thus, 
 
 \begin{equation}
-  y =\mu +\boldsymbol{\beta}_1* f(time) + \beta_2* treatment+\boldsymbol{\beta}_3*             f(time)*treatment \\
-
+  y =\mu +\boldsymbol{\beta}_1* f(time) + \beta_2* treatment+ \\
+  \boldsymbol{\beta}_3* f(time)*treatment \\
+  (\#eq:GLM)
+  \end{equation}
+  
+The linear model in \@ref(eq:linear-model) is a GLM where $f(time) = time$ with the identity function $f(x) = x$. If the GLM is then written in terms of two treatment groups as in \@ref(eq:ANOVA-by-group), the model becomes:
+  
+  \begin{equation}
   y = \begin{cases}
   \mu +\boldsymbol{\beta}_1* f(time)  & \mbox{if Group A} \\
-  \mu +\boldsymbol{\beta}_1* f(time)  + \beta_2* treatment + \boldsymbol{\beta}_3* f(time) *     treatment   & \mbox{if Group B}\\
+  \mu +\boldsymbol{\beta}_1* f(time)  + \beta_2* treatment + \boldsymbol{\beta}_3* f(time) *treatment   
+  & \mbox{if Group B}\\
   \end{cases}
-  (\#eq:GLM)
+  (\#eq:GLM-by-group)
 \end{equation}
 
-
-The linear model in \@ref(eq:linear-model) is a GLM where $f(time) = time$ with the identity function $f(x) = x$.
-
-Regardless of its presentation, \@ref(eq:linear-model), \@ref(eq:ANOVA-by-group) and \@ref(eq:GLM) show that the model expects a linear relationship between the covariates and the response. When the data does not follow a linear trend, the fit that the model produces does not accurately represent the changes in the data. To exemplify this consider simulated longitudinal data where the a normally distributed response of two groups of 10 subjects each is obtained, and an rm-ANOVA model such as \@ref(eq:linear-model) is fitted to the data (code for the simulated data is available in the Appendix).  
+Regardless of its presentation, \@ref(eq:linear-model), \@ref(eq:ANOVA-by-group) and \@ref(eq:GLM-by-group) show that the model expects a linear relationship between the covariates and the response. When the data does not follow a linear trend, the fit that the model produces does not accurately represent the changes in the data. To exemplify this consider simulated longitudinal data where the a normally distributed response of two groups of 10 subjects each is obtained, and an rm-ANOVA model identical to \@ref(eq:linear-model) is fitted to the data using the package _nlme_ (the code for the simulated data and models is available in the Appendix). 
 
 ```{r, message = FALSE,include=FALSE}
 set.seed(11)
@@ -127,6 +130,7 @@ example <- function(n_time = 6,
     mu[, 2] <- (x - .3)
   } else {
     # nonlinear response
+    
     mu[, 1] <- - 4 * (x - .5)^2 + 0.25
     mu[, 2] <- 4 * (x - .5)^2
   }
@@ -241,7 +245,7 @@ plot_example <- function(sim_dat) {
 }
 ```
 
-```{r, fig.width=16, fig.height=9, out.width="100%", echo=FALSE,message=FALSE}
+```{r linear-model, fig.width=16, fig.height=9, out.width="100%", echo=FALSE,message=FALSE,fig.show='hold',fig.cap="Simulated linear responses from two groups with a rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response "}
 # linear response, correlated errors (subject effect)
 plot_example(example(fun_type = "linear", error_type = "correlated")) +
   plot_annotation(
@@ -250,9 +254,13 @@ plot_example(example(fun_type = "linear", error_type = "correlated")) +
 ) #& 
   # theme(plot.title = element_text(size = 20))
 ```
-It is clear from this graph that
 
-```{r, fig.width=16, fig.height=9, out.width="100%"}
+
+It is clear from \@ref(fig:linear-model) that the fit produced by the rm-ANOVA model is good as the predictions for the mean response are identical to the "truth" of the simulated data.
+
+However, consider the case when the data follows a non-linear trend, such as the one simulated in \@ref(fig:quadratic-response). Here, the simulated data follows a quadratic behavior. It is clear from the figure that changes in each group occur through the timeline, although the final mean value is the same as the initial value. Fitting an rm-ANOVA model like \@ref(eq:linear-model) again produces the fit that appears at the bottom of \@ref(fig:quadratic-response).
+
+```{r quadratic-response, fig.width=16, fig.height=9, out.width="100%",echo=FALSE,fig.cap='Simulated quadratic responses from two groups with an rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response', message=FALSE}
 # quadratic response, correlated errors (subject effect)
 plot_example(example(fun_type = "quadratic", error_type = "correlated")) +
   plot_annotation(
@@ -262,6 +270,7 @@ plot_example(example(fun_type = "quadratic", error_type = "correlated")) +
   # theme(plot.title = element_text(size = 20))
 ```
 
+In this case, when the predictions are compared to the simulated data it is clear that the model is not capturing the changes within each group throughout the timeline. This highlights the limitation of rm-ANOVA and LMEMs with longitudinal non-linear data, where the variations are not captured and modeled properly.  
 
 ## Covariance in rm-ANOVA and LMEMs
 
@@ -279,8 +288,6 @@ Missing observations are an issue that arises frequently in longitudinal studies
 
 In the case of LMEMs, inferences from the model are valid when missing observations in the data exist that are MAR [@west2014]. The pattern of missing observations can be considered MAR if the missing observations are not related any of the other variables measured in the study [@maxwell2017]. For example, if attrition occurs in all mice that had lower weights at the beginning of a chemotherapy response study, the missing data can be considered MAR because  the missigness is unrelated to other variables of interest.
 
-_What limitations LMEMs have regarding missing observations?_
-
 This section has presented the assumptions of rm-ANOVA to analyze longitudinal information and  its differences when compared to LMEMs  regarding to missing data and the modeling of the covariance matrix. Of notice, LMEMs offer a more robust and flexible approach than rm-ANOVA and if the data follows a linear trend, they provide an excellent choice to derive inferences from a repeated measures study. However, when the data presents high variability, LMEMs fail to capture the non-linear trend of the data. To analyze such type of data, we present generalized additive models (GAMs) as an alternative in the following section.
 
 # GAMs as a special case of Generalized Linear Models
@@ -295,11 +302,11 @@ A GAM is a special case of the Generalized Linear Model (GLM), a framework that 
 
 Where $y_t$ is the response at time $t$, $\beta_0$ is the expected value at time 0, the change of $y$ over time is represented by the function $f(x_t)$ and $\epsilon_t$ represents the residuals.
 
-In contrast to rm-ANOVA or LMEMs, GAMs use _smooth functions_  to model the relationship between the covariates and the response. This approach is more advantageous than that of a LMEMs or rm-ANOVA as it does not restrict the model to a linear relationship. One possible function for $f(x_t)$  is a polynomial, but a major limitation is that they create a "global" fit as they assume that the same relationship exists everywhere, which can cause problems with the fit [@beck1998].
+In contrast to rm-ANOVA or LMEMs, GAMs use _smooth functions_  to model the relationship between the covariates and the response. This approach is more advantageous as it does not restrict the model to a linear relationship. One possible function for $f(x_t)$  is a polynomial, but a major limitation is that they create a "global" fit as they assume that the same relationship exists everywhere, which can cause problems with the fit [@beck1998].
 
-To overcome this limitation, the smooth functions in GAMs  are represented using _basis functions_  over  evenly spaced ranges of the covariates known as _knots_. The _basis function_ used is a cubic spline, which is a smooth curve constructed from cubic polynomials joined together[@wood2017;@simpson2018]. Cubic splines have a long history in their use to solve non-parametric statistical problems and are the default choice to fit GAMs as they are the simplest option to obtain visual smoothness [@wegman1983].
+To overcome this limitation, the smooth functions in GAMs  are represented using _basis functions_  over  evenly spaced ranges of the covariates known as _knots_. The _basis function_ used is a cubic spline, which is a smooth curve constructed from cubic polynomials joined together[@wood2017;@simpson2018]. Cubic splines have a long history in their use to solve non-parametric statistical problems and are the default choice to fit GAMs as they are the simplest option to obtain visual smoothness [@wegman1983]. Therefore, GAMs overcome the limitation that occurs in LMEMs and rm-ANOVA when the data is non linear, such as \@ref(fig:quadratic-response). Regarding longitudinal data, Pedersen et al [@pedersen2019] demonstrated the capabilities of GAMs in this area using ecological data.
 
-
+The use of GAMs to analyze biomedical longitudinal data, and the impact of missing observations in the fit of the model will be examined in detail in the following section using simulation.
 
 
 
