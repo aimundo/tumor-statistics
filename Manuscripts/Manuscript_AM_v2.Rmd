@@ -35,13 +35,7 @@ When incomplete observations occur, an rm-ANOVA is fit by excluding all subjects
 During the last decade, the biomedical community has started to recognize the limitations of rm-ANOVA in the analysis of longitudinal information. The recognition on the limitations of rm-ANOVA is exemplified by the  use of  linear mixed effects models (LMEMs) by certain groups to analyze longitudinal data [@skala2010;@vishwanath2009]. Briefly, LMEMs incorporate _fixed effects_, which correspond to the levels of experimental factors in the study (e.g. the different drug regimens in a clinical trial), and _random effects_, which account for random variation within the population. When compared to the traditional rm-ANOVA, LMEMs are more flexible as they can accommodate missing observations for multiple subjects and allow different modeling strategies for the variability within each measure in every subject [@pinheiro2006]. On the other hand, LMEMs impose restrictions in the distribution of the errors  of the random effects [@gueorguieva2004].
 
 One final assumption that is not initially evident for both rm-ANOVA and LMEMs models is that the mean response is expected to change linearly through time[@pinheiro2006]. The linearity assumption in both rm-ANOVA ane LMEMs consequently restricts the inferences from the model when the data does not follow a linear trend. In biomedical research, a particular case of this non-linear behavior in longitudinal data arises in measurements of tumor response in preclinical and clinical settings [@roblyer2011;@skala2010;@vishwanath2009]. These studies have shown that the collected signal does not follow a linear trend over time, and presents extreme variability at different time points, making the fit of and the estimations of an LMEM or rm-ANOVA model inconsistent with the observed variation. In other words, both LMEMs and rm-ANOVA explain highly-variable data using a linear trend, consequently biasing the estimates when the true response is non-linear in time. 
-
-Additionally,  although it is possible that a _post hoc_ analysis is able to find “significant” _p-values_( _p_<0.05) by using multiple comparisons between the model terms, the use of this estimator is limited in such scenario because it is intended to work in models that have a reasonable agreement with the data.
-
-***
 Additionally,  although it is possible that a _post hoc_ analysis is able to find “significant” _p-values_( _p_<0.05) it has to be reminded that the validity of such metric relies on how adequate the model is to the data. In other words, the _p-value_ requires that the model and the data have good agreement and if that is not the case, a "Type 3" error (known as "model misspecification") occurs[@dennis2019].That would be the case if for example, a model that is only able to explain linear responses is fitted to data that has a quadratic behavior. In such scenario, the _p-value_ becomes invalid[@wang2019].
-
-***
 
 As  the “frequentist” rm-ANOVA and the more flexible LMEM approaches make overly restrictive assumptions regarding the linearity of the response, there is a need for biomedical researchers to explore the use of additional statistical tools that allow the information (and not an assumed trend) to determine the fit of the model, enabling inference that is appropiate to the data.
 In this regard, generalized additive models (GAMs) present an alternative approach to analyze longitudinal data. Although not commonly used in the biomedical community, these non-parametric models have been used to analyze temporal variations in geochemical and palaeoecological data  [@rose2012;@pedersen2019;@simpson2018], health-environment interactions [@yang2012] and the dynamics of government in political science [@beck1998] . There are several advantages of GAMs over LMEMs and rm-ANOVA models: GAMs can fit a more flexible class of smooth responses that enable the data to dictate the trend of the model, can easily accommodate missing observations and can model non-constant correlation between repeated measurements [@wood2017].Therefore, GAMs can provide a more flexible statistical approach to analyze non-linear biomedical longitudinal data.
@@ -55,28 +49,28 @@ The purpose of this work is to provide biomedical researchers with a clear under
 
 ## The "frequentist" case for longitudinal data
 
-The _repeated measures analysis of variance_ (rm-ANOVA) is the standard statistical analysis for longitudinal data in biomedical research, but certain assumptions are necessary to make the model valid. From a practical view, they can be divided in three areas: linear relationship between covariates and response, constant correlation between measurements, and complete observations for all subjects. Each one of these assumptions is discussed below.
+The _repeated measures analysis of variance_ (rm-ANOVA) is the standard statistical analysis for longitudinal data in biomedical research, but certain assumptions are necessary for the model to be valid. From a practical view, the assumptions can be divided in three areas: a linear relationship between covariates and response, a constant correlation between measurements, and complete observations for all subjects. Each one of these assumptions is discussed below.
   
 ## Linear relationship 
 
-In a biomedical longitudinal study, two or more groups of subjects (patients, mice, samples) are subject to a different treatments (e.g. a "treatment" group receives a novel drug vs. a "control" group that receives a placebo), and measurements from each subject within each group are collected at specific time points. The collected response has both  _fixed_ and  _random_ components. The _fixed_ component can be understood as a constant value in the response which the researcher is interested in measuring, i.e, the effect of the novel drug in the "treatment" group.The _random_ component can be defined as "noise" caused by some inherent variability within the study. For example, if the blood concentration of the drug is measured in certain subjects in the early hours of the morning while others are measured in the afternoon, it is possible that the difference in the collection time of the measurement introduces some "noise" in the signal. As their name suggests, this "random" variability needs to be modeled as a variable rather than as a constant value.
+In a biomedical longitudinal study, two or more groups of subjects (patients, mice, samples) are subject to different treatments (e.g., a "treatment" group receives a novel drug vs. a "control" group that receives a placebo), and measurements from each subject within each group are collected at specific time points. The collected response has both  _fixed_ and  _random_ components. The _fixed_ component can be understood as a constant value in the response which the researcher is interested in measuring, i.e, the effect of the novel drug in the "treatment" group. The _random_ component can be defined as "noise" caused by some inherent variability within the study. For example, if the blood concentration of the drug is measured in certain subjects in the early hours of the morning while others are measured in the afternoon, it is possible that the difference in the collection time of the measurement introduces some "noise" in the signal. As their name suggests, this "random" variability needs to be modeled as a variable rather than as a constant value.
 
 
-Mathematically speaking, a rm-ANOVA model can be written as:
+Mathematically speaking, a rm-ANOVA model with an interaction can be written as:
 
 \begin{equation}
-y_{i} = \mu+ \beta_1* time_{t} + \beta_2* treatment_{j} + \beta_3* time_{t}*treatment_{j}+\pi_{ij} +\epsilon_{tij}\\ 
+y_{ijt} = \mu+ \beta_1* time_{t} + \beta_2* treatment_{j} + \beta_3* time_{t}*treatment_{j}+\pi_{ij} +\varepsilon_{tij}\\ 
 (\#eq:linear-model)
 \end{equation}
 
-In this model $y_i$ is the response by subject $i$, which can be decomposed in a mean value $\mu$, _fixed effects_ of time ($time_t$), treatment ($time_j$) and their interaction; a _random effect_ $\pi_{ij}$ of each subject within each group, and errors per subject per time per group $\epsilon_{tij}$. 
-Suppose two treatments groups are used in the study. Models per group can be generated if 0 is used for the first treatment group (Group A) and 1 for the second treatment group (Group B). The linear models then become:
+In this model $y_{ijt}$ is the response by subject $i$, in treatment group $j$ at time $t$, which can be decomposed in a mean value $\mu$, _fixed effects_ of time ($time_t$), treatment ($treatment_j$) and their interaction $time_t*treatment_j$. A _random effect_ $\pi_{ij}$ of each subject within each group, and independent errors per subject per time per group $\varepsilon_{tij}$, that represent random variation not explained by the _fixed_ or _random_ effects. 
+Suppose two treatments groups are used in the study. Then the models per group can be written as below with $j=0$ representing the first treatment group (Group A) and $j=1$ representing the second treatment group (Group B). The linear models then become:
 
 
 \begin{equation}
-y = \begin{cases}
-\mu + \beta_1*time_{t}+\epsilon_{ti}   & \mbox{if Group A}\\
-\mu + \beta_1 * time_{t} + \beta_2 * treatment_{j} +\beta_3* time_{t} * treatment_{j}+\pi_{i}+\epsilon_{tij}  & \mbox{if Group B}\\
+y_{ijt} = \begin{cases}
+\mu + \beta_1*time_{t}+\varepsilon_{ijt}+\pi_{ijt}   & \mbox{if Group A}\\
+\mu + \beta_1 * time_{t} + \beta_2 * treatment_{j} +\beta_3* time_{t} * treatment_{j}+\pi_{ijt}+\varepsilon_{ijt}  & \mbox{if Group B}\\
 \end{cases}
 (\#eq:ANOVA-by-group)
 \end{equation}
