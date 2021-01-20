@@ -79,7 +79,7 @@
 }
 \makeatother
 \subtitle{\emph{Beyond repeated measures ANOVA and Linear Mixed Models}}
-\author{true \and true \and Ariel Mundo\footnote{Department of Biomedical Engineering, University of Arkansas, Fayetteville} \and Timothy J. Muldoon\footnote{Department of Biomedical Engineering, University of Arkansas, Fayetteville} \and John R. Tipton\footnote{Department of Mathematical Sciences, University of Arkansas, Fayetteville}}
+\author{Ariel Mundo\footnote{Department of Biomedical Engineering, University of Arkansas, Fayetteville} \and Timothy J. Muldoon\footnote{Department of Biomedical Engineering, University of Arkansas, Fayetteville} \and John R. Tipton\footnote{Department of Mathematical Sciences, University of Arkansas, Fayetteville}}
 \date{}
 
 \begin{document}
@@ -158,7 +158,9 @@ Presenting the model in this manner makes clear that when treating different gro
 When the data does not follow a linear trend, the fit that an rm-ANOVA or LMEM model produces does not accurately represent the trends in the data. To demonstrate this, longitudinal data where a normally distributed response of two groups of 10 subjects each is simulated, and a rm-ANOVA model (\eqref{eq:linear-model}) is fitted to the data using the package \emph{nlme} (the code for the simulated data and models is available in the Appendix).
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{Manuscript_AM_v2_files/figure-latex/linear-model-1} \caption{Simulated linear responses from two groups with a rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response}\label{fig:linear-model}
+\centering
+\includegraphics{Manuscript_AM_v2_files/figure-latex/linear-model-1.pdf}
+\caption{\label{fig:linear-model}Simulated linear responses from two groups with a rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response}
 \end{figure}
 
 It is clear from Figure \ref{fig:linear-model} that the fit produced by the rm-ANOVA model is good as the predictions for the mean response are reasonably close to the ``truth'' of the simulated data.
@@ -166,7 +168,9 @@ It is clear from Figure \ref{fig:linear-model} that the fit produced by the rm-A
 However, consider the case when the data follows a non-linear trend, such as the simulated data in Figure \ref{fig:quadratic-response}. Here, the simulated data follows a quadratic behavior. The figure shows that changes in each group occur through the timeline, although the final mean value is the same as the initial value. Fitting an rm-ANOVA model \eqref{eq:linear-model} to this data produces the fit that appears at the bottom right of Figure \ref{fig:quadratic-response}.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{Manuscript_AM_v2_files/figure-latex/quadratic-response-1} \caption{Simulated quadratic responses from two groups with an rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response}\label{fig:quadratic-response}
+\centering
+\includegraphics{Manuscript_AM_v2_files/figure-latex/quadratic-response-1.pdf}
+\caption{\label{fig:quadratic-response}Simulated quadratic responses from two groups with an rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response}
 \end{figure}
 
 In this case, compare the predictions to the simulated data and it is noticeable that the model is not capturing the changes within each group throughout the timeline. This highlights the limitation of rm-ANOVA and LMEMs with longitudinal non-linear data, where the model is only flexible enough to allow different slopes per group, but is unable to follow any trend that is highly variable.

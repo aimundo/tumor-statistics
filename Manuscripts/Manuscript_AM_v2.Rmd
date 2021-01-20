@@ -7,13 +7,12 @@ author:
   Fayetteville]
 - John R. Tipton^[Department of Mathematical Sciences, University of Arkansas, Fayetteville]
 output:
-  rticles::jss_article
-  bookdown::html_document2: default
-  bookdown::word_document2: default
   bookdown::pdf_document2:
     keep_tex: yes
     fig_caption: yes
     extra_dependencies: ["subfig","breqn"]
+  bookdown::word_document2: default
+  bookdown::html_document2: default
   link-citations: yes
   css: style.css
   '': default
@@ -202,8 +201,11 @@ plot_example <- function(sim_dat) {
     ggplot(aes(x = time, y = y, group = treatment, color = treatment)) +
     geom_point() +
     geom_line(aes(x = time, y = mu, color = treatment)) +
-    theme_bw(base_size = 12) +
+    theme_classic() +
     ggtitle("Simulated data with true response function")+
+    theme(plot.title = element_text(size = 30, 
+                                  face = "bold"),
+        text=element_text(size=30))+
     scale_color_aaas()
   
   p2 <- sim_dat$dat %>%
@@ -213,7 +215,10 @@ plot_example <- function(sim_dat) {
     geom_line(aes(x = time, y = mu, color = treatment, size = "Simulated Truth"), lty = 1) +
     scale_size_manual(name = "Type", values=c("Subjects" = 0.5, "Simulated Truth" = 3)) +
     ggtitle("Simulated data\nIndividual responses with population mean") +
-    theme_bw(base_size = 12)+
+    theme(plot.title = element_text(size = 30, 
+                                  face = "bold"),
+        text=element_text(size=30))+
+    theme_classic()+
     scale_color_aaas()
   
    p3 <- sim_dat$dat %>%
@@ -221,7 +226,10 @@ plot_example <- function(sim_dat) {
     geom_line() +
     # facet_wrap(~ treatment) +
     ggtitle("Simulated errors") +
-    theme_bw(base_size = 12)+
+     theme(plot.title = element_text(size = 30, 
+                                  face = "bold"),
+        text=element_text(size=30))+
+    theme_classic()+
     scale_color_aaas()
   
   p4 <- ggplot(sim_dat$dat, aes(x = time, y = y, color = treatment)) +
@@ -229,8 +237,11 @@ plot_example <- function(sim_dat) {
     geom_line(aes(y = predict(sim_dat$fit_lme), group = subject, size = "Subjects")) +
     geom_line(data = sim_dat$pred_dat, aes(y = predict(sim_dat$fit_lme, level = 0, newdata = sim_dat$pred_dat), size = "Population")) +
     scale_size_manual(name = "Predictions", values=c("Subjects" = 0.5, "Population" = 3)) +
-    theme_bw(base_size = 12) +
+    theme_classic() +
     ggtitle("Fitted Model")+
+    theme(plot.title = element_text(size = 30, 
+                                  face = "bold"),
+        text=element_text(size=30))+
     scale_color_aaas()
   
   return((p1 + p3) / (p2 + p4))
@@ -239,13 +250,13 @@ plot_example <- function(sim_dat) {
 }
 ```
 
-```{r, linear-model, fig.width=16, fig.height=9, out.width="100%", echo=FALSE,message=FALSE,fig.show='hold',fig.cap="Simulated linear responses from two groups with a rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response"}
+```{r, linear-model, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap="Simulated linear responses from two groups with a rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response"}
 # linear response, correlated errors (subject effect)
-txt<-20
+txt<-18
 plot_example(example(fun_type = "linear", error_type = "correlated")) +
-  plot_annotation(
-  title = 'Simulated with linear function and correlated errors',
-    theme = theme(plot.title = element_text(size = txt),text=element_text(size=txt))
+  plot_annotation(tag_levels='A',
+                  title = 'Simulated with linear function and correlated errors') &
+   theme(plot.title = element_text(size = 20),text=element_text(size=txt)
 )
 ```
 
@@ -254,13 +265,14 @@ It is clear from Figure \@ref(fig:linear-model) that the fit produced by the rm-
 
 However, consider the case when the data follows a non-linear trend, such as the simulated data in Figure \@ref(fig:quadratic-response). Here, the simulated data follows a quadratic behavior. The figure shows that changes in each group occur through the timeline, although the final mean value is the same as the initial value. Fitting an rm-ANOVA model \@ref(eq:linear-model) to this data  produces the fit that appears at the bottom right of Figure \@ref(fig:quadratic-response).
 
-```{r quadratic-response, fig.width=16, fig.height=9, out.width="100%",echo=FALSE,fig.cap='Simulated quadratic responses from two groups with an rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response', message=FALSE}
+```{r quadratic-response, fig.width=16, fig.height=16,echo=FALSE,fig.cap='Simulated quadratic responses from two groups with an rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response', message=FALSE}
 # quadratic response, correlated errors (subject effect)
-library(ggsci)
+txt<-18
 plot_example(example(fun_type = "linear", error_type = "correlated")) +
   plot_annotation(
-  title = 'Simulated with linear function and correlated errors',
-    theme = theme(plot.title = element_text(size = txt),text=element_text(size=txt))
+    tag_levels='A',
+  title = 'Simulated with linear function and correlated errors') &
+   theme(plot.title = element_text(size = 20),text=element_text(size=txt)
 )
   # theme(plot.title = element_text(size = 20))
 ```
