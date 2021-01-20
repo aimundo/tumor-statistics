@@ -1,12 +1,13 @@
 ---
 title: '**The statistical analysis of non-linear longitudinal data in biomedical research using generalized additive models**'
+subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
 author:
 - Ariel Mundo^[Department of Biomedical Engineering, University of Arkansas, Fayetteville]
 - Timothy J. Muldoon^[Department of Biomedical Engineering, University of Arkansas,
   Fayetteville]
 - John R. Tipton^[Department of Mathematical Sciences, University of Arkansas, Fayetteville]
-subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
 output:
+  rticles::jss_article
   bookdown::html_document2: default
   bookdown::word_document2: default
   bookdown::pdf_document2:
@@ -16,7 +17,7 @@ output:
   link-citations: yes
   css: style.css
   '': default
-csl: ieee.csl
+csl: Elsevier.csl
 bibliography: refs.bib
 ---
 
@@ -59,7 +60,7 @@ In a biomedical longitudinal study, two or more groups of subjects (patients, mi
 Mathematically speaking, a rm-ANOVA model with an interaction can be written as:
 
 \begin{equation}
-y_{ijt} = \mu+ \beta_1* time_{t} + \beta_2* treatment_{j} + \beta_3* time_{t}*treatment_{j}+\pi_{ij} +\varepsilon_{tij}\\ 
+y_{ijt} = \mu+ \beta_1 \times time_{t} + \beta_2 \times treatment_{j} + \beta_3 \times time_{t}\times treatment_{j}+\pi_{ij} +\varepsilon_{tij}\\ 
 (\#eq:linear-model)
 \end{equation}
 
@@ -69,8 +70,8 @@ Suppose two treatments groups are used in the study. Then the models per group c
 
 \begin{equation}
 y_{ijt} = \begin{cases}
-\mu + \beta_1*time_{t}+\varepsilon_{ijt}+\pi_{ijt}   & \mbox{if Group A}\\
-\mu + \beta_1 * time_{t} + \beta_2 * treatment_{j} +\beta_3* time_{t} * treatment_{j}+\pi_{ijt}+\varepsilon_{ijt}  & \mbox{if Group B}\\
+\mu + \beta_1\times time_{t}+\varepsilon_{ijt}+\pi_{ijt}   & \mbox{if Group A}\\
+\mu + \beta_1 \times time_{t} + \beta_2 \times treatment_{j} +\beta_3 \times time_{t} \times treatment_{j}+\pi_{ijt}+\varepsilon_{ijt}  & \mbox{if Group B}\\
 \end{cases}
 (\#eq:ANOVA-by-group)
 \end{equation}
@@ -79,8 +80,8 @@ To further simplify the expression, let us substitute $\widetilde{\mu}=\mu+\beta
 
 \begin{equation}
 y_{ijt} = \begin{cases}
-\mu + \beta_1*time_{t}+\varepsilon_{ijt}+\pi_{ijt}   & \mbox{if Group A}\\
-\widetilde{mu} + \widetilde{\beta_1} * time_{t} +\pi_{ijt}+\varepsilon_{ijt}  & \mbox{if Group B}\\
+\mu + \beta_1\times time_{t}+\varepsilon_{ijt}+\pi_{ijt}   & \mbox{if Group A}\\
+\widetilde{\mu} + \widetilde{\beta_1} \times time_{t} +\pi_{ijt}+\varepsilon_{ijt}  & \mbox{if Group B}\\
 \end{cases}
 (\#eq:ANOVA-lines)
 \end{equation}
@@ -302,8 +303,10 @@ Where $y_{ijt}$ is the response at time $t$, $\beta_0$ is the expected value at 
 In contrast to rm-ANOVA or LMEMs, GAMs use _smooth functions_  to model the relationship between the covariates and the response. This approach is more advantageous as it does not restrict the model to a linear relationship. One possible function for $f(x_t\mid \beta)$ that allows for non-linear responses is a polynomial, but a major limitation is that they create a "global" fit as they assume that the same relationship exists everywhere, which can cause problems with the fit [@beck1998].In particular, as $t$ goes to $\pm \infty$, $f(x_t \mid \beta)$ goes to $\pm \infty$ which is almost always unrealistic.
 
 
-The model specification for GAMs requires that the _smooth functions_ are represented in a parametric way that fit within the GLM framework, and this step is achieved by using a _basis function_ to represent such functions. A _basis_ is a set of functions that capture the space where the smooths that approximate $f(x_t \mid \beta)$ exist [@simpson2018]. In other words, 
-To overcome this limitation, the smooth functions in GAMs  are represented using _basis functions_  over  evenly spaced ranges of the covariates known as _knots_. The _basis function_ used is a cubic spline, which is a smooth curve constructed from cubic polynomials joined together[@wood2017;@simpson2018]. Cubic splines have a long history in their use to solve non-parametric statistical problems and are the default choice to fit GAMs as they are the simplest option to obtain visual smoothness [@wegman1983]. Therefore, GAMs overcome the limitation that occurs in LMEMs and rm-ANOVA when the data is non linear, such as \@ref(fig:quadratic-response). Regarding longitudinal data, Pedersen et al [@pedersen2019] demonstrated the capabilities of GAMs in this area using ecological data.
+The model specification for GAMs requires that the _smooth functions_ are represented in a parametric way that fit within the GLM framework, and this step is achieved by using _basis functions_ to represent them. A _basis_ is a set of functions that capture the space where the smooths that approximate $f(x_t \mid \beta)$ exist [@simpson2018]. For the linear model in \@ref(eq:linear-model), the basis coefficients are $\beta_1$, $\beta_2$ and $\beta_3$ and the basis vectors are $time_t$, $treatment_j$ and $time_t \times treatment_j$. The basis function then, is the combination of basis coefficients and basis vectors that map the possible relationship between the covariates and the response [@hefley2017], which in the case of \@ref(eq:linear-model) is restricted to a linear behavior.  In the case of \@ref(eq:GAM), the basis function is $f(x_t\mid \beta)$, which means that the model allows relationships beyond linear for the covariates.
+
+
+In GAMs the _basis functions_  are represented over  evenly spaced ranges of the covariates known as _knots_. A commonly used _basis function_ is a cubic spline, which is a smooth curve constructed from cubic polynomials joined together at the knot locations[@wood2017;@simpson2018]. Cubic splines have a long history in solving non-parametric statistical problems and are often a default choice to fit GAMs as they are a simple, flexible and powerful option to obtain visual smoothness [@wegman1983]. Therefore, GAMs overcome the limitation that occurs in LMEMs and rm-ANOVA when the data is non linear, such as Figure \@ref(fig:quadratic-response). Regarding longitudinal data, Pedersen et al [@pedersen2019] demonstrated the capabilities of GAMs in this area using ecological data.
 
 The use of GAMs to analyze biomedical longitudinal data, and the impact of missing observations in the fit of the model will be examined in detail in the following section using simulation.
 

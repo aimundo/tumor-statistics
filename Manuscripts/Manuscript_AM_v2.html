@@ -417,23 +417,31 @@ summary {
 <h4 class="author">Ariel Mundo<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></h4>
 <h4 class="author">Timothy J. Muldoon<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></h4>
 <h4 class="author">John R. Tipton<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></h4>
+<h4 class="author">Alice Anonymous</h4>
+<address class="author_afil">
+Some Institute of Technology<br><a class="author_email" href="mailto:#"><a href="mailto:alice@example.com" class="email">alice@example.com</a></a>
+</address>
+<h4 class="author">Bob Security</h4>
+<address class="author_afil">
+Another University<br><a class="author_email" href="mailto:#"><a href="mailto:bob@example.com" class="email">bob@example.com</a></a>
+</address>
 
 </div>
 
 
 <div id="background" class="section level1">
 <h1><span class="header-section-number">1</span> Background</h1>
-<p>A longitudinal study is designed to repeatedly measure a variable of interest in a group (or groups) of subjects, when the intention is to observe the evolution of the effect of a certain treatment across time rather than analyzing it at a single time point (e.g., a cross-sectional study). Medical research commonly uses longitudinal studies to analyze the evolution of patients before, during and after treatment. For example, Sio et al analyzed the evolution of dermatitis symptoms in breast cancer patients after radiotherapy (RT), by taking weekly measurements over the course of two moths <span class="citation">[1]</span>, and Kamstra et al measured mouth opening at regular monthly intervals after RT in neck cancer patients <span class="citation">[2]</span>. Biomedical research has used longitudinal studies as well to analyze tumor response <span class="citation">[3]–[6]</span>, antibody expression <span class="citation">[7], [8]</span>, and cell metabolism <span class="citation">[9], [10]</span>.</p>
-<p>Traditionally, a “frequentist” or “classical” statistical paradigm is used in biomedical research to derive inferences from a longitudinal study. The frequentist paradigm regards probability as a limiting frequency<span class="citation">[11]</span> by assuming a null hypothesis using the <em>analysis of variance over repeated measures</em> (repeated measures ANOVA or rm-ANOVA). This methodology makes two key assumptions regarding longitudinal data: constant correlation exists across same-subject measurements, and observations from each subject are obtained at all time points through the study (a condition also known as complete observations) <span class="citation">[12], [13]</span>.</p>
+<p>A longitudinal study is designed to repeatedly measure a variable of interest in a group (or groups) of subjects, when the intention is to observe the evolution of the effect of a certain treatment across time rather than analyzing it at a single time point (e.g., a cross-sectional study). Medical research commonly uses longitudinal studies to analyze the evolution of patients before, during and after treatment. For example, Sio et al analyzed the evolution of dermatitis symptoms in breast cancer patients after radiotherapy (RT), by taking weekly measurements over the course of two moths <span class="citation">[1]</span>, and Kamstra et al measured mouth opening at regular monthly intervals after RT in neck cancer patients <span class="citation">[2]</span>. Biomedical research has used longitudinal studies as well to analyze tumor response <span class="citation">[3–6]</span>, antibody expression <span class="citation">[7,8]</span>, and cell metabolism <span class="citation">[9,10]</span>.</p>
+<p>Traditionally, a “frequentist” or “classical” statistical paradigm is used in biomedical research to derive inferences from a longitudinal study. The frequentist paradigm regards probability as a limiting frequency<span class="citation">[11]</span> by assuming a null hypothesis using the <em>analysis of variance over repeated measures</em> (repeated measures ANOVA or rm-ANOVA). This methodology makes two key assumptions regarding longitudinal data: constant correlation exists across same-subject measurements, and observations from each subject are obtained at all time points through the study (a condition also known as complete observations) <span class="citation">[12,13]</span>.</p>
 <p>The assumption of constant correlation is frequently unjustified as correlation in time tends to diminish between measurements when the time interval between them increases <span class="citation">[14]</span>.
 Due to a variety of causes, the number of observations during a study can vary between all subjects. For example, in a clinical trial voluntary withdrawal from one or multiple patients can occur, whereas attrition in animals due to injury or weight loss can occur in preclinical experiments, and it is even possible that unexpected complications with equipment or supplies arise, preventing the researcher from collecting measurements at a certain time point and therefore violating the <em>complete observations</em> assumption of classical rm-ANOVA.</p>
-<p>When incomplete observations occur, an rm-ANOVA is fit by excluding all subjects with missing observations from the analysis<span class="citation">[12]</span>. This can result in increased costs if the desired statistical power is not met with the remaining observations, as it would be necessary to enroll more subjects. At the same time, if the excluded observations contain insightful information that is not used, their elimination from the analysis may limit the demonstration of significant differences between groups. Additionally, rm-ANOVA uses a <em>post hoc</em> analysis to assess differences between the measured response in different groups. A <em>post hoc</em> analysis is based on multiple repeated comparisons to estimate a <em>p-value</em>, a metric that is widely used as a measure of significance. Because the <em>p-value</em> is highly variable, multiple comparisons can inflate the false positivity rate <span class="citation">[15], [16]</span>, consequently biasing the conclusions of the study.</p>
-<p>During the last decade, the biomedical community has started to recognize the limitations of rm-ANOVA in the analysis of longitudinal information. The recognition on the limitations of rm-ANOVA is exemplified by the use of linear mixed effects models (LMEMs) by certain groups to analyze longitudinal data <span class="citation">[10], [17]</span>. Briefly, LMEMs incorporate <em>fixed effects</em>, which correspond to the levels of experimental factors in the study (e.g. the different drug regimens in a clinical trial), and <em>random effects</em>, which account for random variation within the population. When compared to the traditional rm-ANOVA, LMEMs are more flexible as they can accommodate missing observations for multiple subjects and allow different modeling strategies for the variability within each measure in every subject <span class="citation">[18]</span>. On the other hand, LMEMs impose restrictions in the distribution of the errors of the random effects <span class="citation">[12]</span>.</p>
-<p>One final assumption that is not initially evident for both rm-ANOVA and LMEMs models is that the mean response is expected to change linearly through time<span class="citation">[18]</span>. The linearity assumption in both rm-ANOVA ane LMEMs consequently restricts the inferences from the model when the data does not follow a linear trend. In biomedical research, a particular case of this non-linear behavior in longitudinal data arises in measurements of tumor response in preclinical and clinical settings <span class="citation">[3], [10], [17]</span>. These studies have shown that the collected signal does not follow a linear trend over time, and presents extreme variability at different time points, making the fit of and the estimations of an LMEM or rm-ANOVA model inconsistent with the observed variation. In other words, both LMEMs and rm-ANOVA explain highly-variable data using a linear trend, consequently biasing the estimates when the true response is non-linear in time.
+<p>When incomplete observations occur, an rm-ANOVA is fit by excluding all subjects with missing observations from the analysis<span class="citation">[12]</span>. This can result in increased costs if the desired statistical power is not met with the remaining observations, as it would be necessary to enroll more subjects. At the same time, if the excluded observations contain insightful information that is not used, their elimination from the analysis may limit the demonstration of significant differences between groups. Additionally, rm-ANOVA uses a <em>post hoc</em> analysis to assess differences between the measured response in different groups. A <em>post hoc</em> analysis is based on multiple repeated comparisons to estimate a <em>p-value</em>, a metric that is widely used as a measure of significance. Because the <em>p-value</em> is highly variable, multiple comparisons can inflate the false positivity rate <span class="citation">[15,16]</span>, consequently biasing the conclusions of the study.</p>
+<p>During the last decade, the biomedical community has started to recognize the limitations of rm-ANOVA in the analysis of longitudinal information. The recognition on the limitations of rm-ANOVA is exemplified by the use of linear mixed effects models (LMEMs) by certain groups to analyze longitudinal data <span class="citation">[10,17]</span>. Briefly, LMEMs incorporate <em>fixed effects</em>, which correspond to the levels of experimental factors in the study (e.g. the different drug regimens in a clinical trial), and <em>random effects</em>, which account for random variation within the population. When compared to the traditional rm-ANOVA, LMEMs are more flexible as they can accommodate missing observations for multiple subjects and allow different modeling strategies for the variability within each measure in every subject <span class="citation">[18]</span>. On the other hand, LMEMs impose restrictions in the distribution of the errors of the random effects <span class="citation">[12]</span>.</p>
+<p>One final assumption that is not initially evident for both rm-ANOVA and LMEMs models is that the mean response is expected to change linearly through time<span class="citation">[18]</span>. The linearity assumption in both rm-ANOVA ane LMEMs consequently restricts the inferences from the model when the data does not follow a linear trend. In biomedical research, a particular case of this non-linear behavior in longitudinal data arises in measurements of tumor response in preclinical and clinical settings <span class="citation">[3,10,17]</span>. These studies have shown that the collected signal does not follow a linear trend over time, and presents extreme variability at different time points, making the fit of and the estimations of an LMEM or rm-ANOVA model inconsistent with the observed variation. In other words, both LMEMs and rm-ANOVA explain highly-variable data using a linear trend, consequently biasing the estimates when the true response is non-linear in time.
 Additionally, although it is possible that a <em>post hoc</em> analysis is able to find “significant” <em>p-values</em>( <em>p</em>&lt;0.05) it has to be reminded that the validity of such metric relies on how adequate the model is to the data. In other words, the <em>p-value</em> requires that the model and the data have good agreement and if that is not the case, a “Type 3” error (known as “model misspecification”) occurs<span class="citation">[19]</span>.That would be the case if for example, a model that is only able to explain linear responses is fitted to data that has a quadratic behavior. In such scenario, the <em>p-value</em> becomes invalid<span class="citation">[20]</span>.</p>
 <p>As the “frequentist” rm-ANOVA and the more flexible LMEM approaches make overly restrictive assumptions regarding the linearity of the response, there is a need for biomedical researchers to explore the use of additional statistical tools that allow the information (and not an assumed trend) to determine the fit of the model, enabling inference that is appropiate to the data.
-In this regard, generalized additive models (GAMs) present an alternative approach to analyze longitudinal data. Although not commonly used in the biomedical community, these non-parametric models have been used to analyze temporal variations in geochemical and palaeoecological data <span class="citation">[21]–[23]</span>, health-environment interactions <span class="citation">[24]</span> and the dynamics of government in political science <span class="citation">[25]</span> . There are several advantages of GAMs over LMEMs and rm-ANOVA models: GAMs can fit a more flexible class of smooth responses that enable the data to dictate the trend of the model, can easily accommodate missing observations and can model non-constant correlation between repeated measurements <span class="citation">[26]</span>.Therefore, GAMs can provide a more flexible statistical approach to analyze non-linear biomedical longitudinal data.</p>
-<p>The current advances in programming languages designed for statistical analysis (specifically <span class="math inline">\(\textsf{R}\)</span>), have eased the computational implementation of more complex models beyond LMEMs. In particular, <span class="math inline">\(\textsf{R}\)</span> has an extensive collection of documentation and functions to fit GAMs in the package <em>mgcv</em> <span class="citation">[26], [27]</span> that not only speed up the initial stages of the analysis but enable the use of advanced modeling structures (e.g. hierarchical models, confidence interval comparisons) without requiring advanced programming skills from the user. At the same time, <span class="math inline">\(\textsf{R}\)</span> has many tools that simplify data simulation, an emerging strategy used to test statistical models <span class="citation">[28]</span>. This allows to create and explore different alternatives for analysis without collecting information in the field, and reduces the time window between experiment design and its implementation.</p>
+In this regard, generalized additive models (GAMs) present an alternative approach to analyze longitudinal data. Although not commonly used in the biomedical community, these non-parametric models have been used to analyze temporal variations in geochemical and palaeoecological data <span class="citation">[21–23]</span>, health-environment interactions <span class="citation">[24]</span> and the dynamics of government in political science <span class="citation">[25]</span> . There are several advantages of GAMs over LMEMs and rm-ANOVA models: GAMs can fit a more flexible class of smooth responses that enable the data to dictate the trend of the model, can easily accommodate missing observations and can model non-constant correlation between repeated measurements <span class="citation">[26]</span>.Therefore, GAMs can provide a more flexible statistical approach to analyze non-linear biomedical longitudinal data.</p>
+<p>The current advances in programming languages designed for statistical analysis (specifically <span class="math inline">\(\textsf{R}\)</span>), have eased the computational implementation of more complex models beyond LMEMs. In particular, <span class="math inline">\(\textsf{R}\)</span> has an extensive collection of documentation and functions to fit GAMs in the package <em>mgcv</em> <span class="citation">[26,27]</span> that not only speed up the initial stages of the analysis but enable the use of advanced modeling structures (e.g. hierarchical models, confidence interval comparisons) without requiring advanced programming skills from the user. At the same time, <span class="math inline">\(\textsf{R}\)</span> has many tools that simplify data simulation, an emerging strategy used to test statistical models <span class="citation">[28]</span>. This allows to create and explore different alternatives for analysis without collecting information in the field, and reduces the time window between experiment design and its implementation.</p>
 <p>The purpose of this work is to provide biomedical researchers with a clear understanding of the theory and the practical implementation of GAMs to analyze longitudinal data using by focusing on four areas. First, the limitations of rm-ANOVA and LMEMs to analyze longitudinal data are contrasted in the cases of missing observations, assumption of linearity of response and constant correlation structures. Second, the key theoretical elements of GAMs are presented without using extensive derivations or complex mathematical notation that can obscure their understanding. Third, simulated data that follows the trend of previously reported values <span class="citation">[17]</span> is used to illustrate the type of non-linear longitudinal data that occurs in biomedical research to highlight the differences in inference between rm-ANOVA, LMEMs and GAMs and the implementation of the latter in such scenario. Finally, reproducibility is emphasized by providing the code to generate the data and the implementation of GAMs in <span class="math inline">\(\textsf{R}\)</span>, in conjunction with a step-by-step guide to fit models of increasing complexity. In summary, the exploration of modern statistical techniques to analyze longitudinal data may allow biomedical researchers to consider the use of GAMs instead of rm-ANOVA or LMEMs when the data does not follow a linear trend, and will also help to improve the standards for reproducibility in biomedical research.</p>
 </div>
 <div id="challenges-presented-by-longitudinal-studies" class="section level1">
@@ -447,23 +455,23 @@ In this regard, generalized additive models (GAMs) present an alternative approa
 <p>In a biomedical longitudinal study, two or more groups of subjects (patients, mice, samples) are subject to different treatments (e.g., a “treatment” group receives a novel drug vs. a “control” group that receives a placebo), and measurements from each subject within each group are collected at specific time points. The collected response has both <em>fixed</em> and <em>random</em> components. The <em>fixed</em> component can be understood as a constant value in the response which the researcher is interested in measuring, i.e, the effect of the novel drug in the “treatment” group. The <em>random</em> component can be defined as “noise” caused by some inherent variability within the study. For example, if the blood concentration of the drug is measured in certain subjects in the early hours of the morning while others are measured in the afternoon, it is possible that the difference in the collection time of the measurement introduces some “noise” in the signal. As their name suggests, this “random” variability needs to be modeled as a variable rather than as a constant value.</p>
 <p>Mathematically speaking, a rm-ANOVA model with an interaction can be written as:</p>
 <p><span class="math display" id="eq:linear-model">\[\begin{equation}
-y_{ijt} = \mu+ \beta_1* time_{t} + \beta_2* treatment_{j} + \beta_3* time_{t}*treatment_{j}+\pi_{ij} +\varepsilon_{tij}\\ 
+y_{ijt} = \mu+ \beta_1 \times time_{t} + \beta_2 \times treatment_{j} + \beta_3 \times time_{t}\times treatment_{j}+\pi_{ij} +\varepsilon_{tij}\\ 
 \tag{2.1}
 \end{equation}\]</span></p>
 <p>In this model <span class="math inline">\(y_{ijt}\)</span> is the response by subject <span class="math inline">\(i\)</span>, in treatment group <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span>, which can be decomposed in a mean value <span class="math inline">\(\mu\)</span>, <em>fixed effects</em> of time (<span class="math inline">\(time_t\)</span>), treatment (<span class="math inline">\(treatment_j\)</span>) and their interaction <span class="math inline">\(time_t*treatment_j\)</span>. A <em>random effect</em> <span class="math inline">\(\pi_{ij}\)</span> of each subject within each group, and independent errors per subject per time per group <span class="math inline">\(\varepsilon_{tij}\)</span>, that represent random variation not explained by the <em>fixed</em> or <em>random</em> effects.
 Suppose two treatments groups are used in the study. Then the models per group can be written as below with <span class="math inline">\(j=0\)</span> representing the first treatment group (Group A) and <span class="math inline">\(j=1\)</span> representing the second treatment group (Group B). The linear models then become:</p>
 <p><span class="math display" id="eq:ANOVA-by-group">\[\begin{equation}
 y_{ijt} = \begin{cases}
-\mu + \beta_1*time_{t}+\varepsilon_{ijt}+\pi_{ijt}   &amp; \mbox{if Group A}\\
-\mu + \beta_1 * time_{t} + \beta_2 * treatment_{j} +\beta_3* time_{t} * treatment_{j}+\pi_{ijt}+\varepsilon_{ijt}  &amp; \mbox{if Group B}\\
+\mu + \beta_1\times time_{t}+\varepsilon_{ijt}+\pi_{ijt}   &amp; \mbox{if Group A}\\
+\mu + \beta_1 \times time_{t} + \beta_2 \times treatment_{j} +\beta_3 \times time_{t} \times treatment_{j}+\pi_{ijt}+\varepsilon_{ijt}  &amp; \mbox{if Group B}\\
 \end{cases}
 \tag{2.2}
 \end{equation}\]</span></p>
 <p>To further simplify the expression, let us substitute <span class="math inline">\(\widetilde{\mu}=\mu+\beta_{2}\)</span> and <span class="math inline">\(\widetilde{\beta_{1}}=\beta_{1}+\beta_{3}\)</span> in the equation for Group B. The equation then becomes:</p>
 <p><span class="math display" id="eq:ANOVA-lines">\[\begin{equation}
 y_{ijt} = \begin{cases}
-\mu + \beta_1*time_{t}+\varepsilon_{ijt}+\pi_{ijt}   &amp; \mbox{if Group A}\\
-\widetilde{mu} + \widetilde{\beta_1} * time_{t} +\pi_{ijt}+\varepsilon_{ijt}  &amp; \mbox{if Group B}\\
+\mu + \beta_1\times time_{t}+\varepsilon_{ijt}+\pi_{ijt}   &amp; \mbox{if Group A}\\
+\widetilde{\mu} + \widetilde{\beta_1} \times time_{t} +\pi_{ijt}+\varepsilon_{ijt}  &amp; \mbox{if Group B}\\
 \end{cases}
 \tag{2.3}
 \end{equation}\]</span></p>
@@ -487,8 +495,8 @@ Figure 2.2: Simulated quadratic responses from two groups with an rm-ANOVA model
 </div>
 <div id="covariance-in-rm-anova-and-lmems" class="section level2">
 <h2><span class="header-section-number">2.3</span> Covariance in rm-ANOVA and LMEMs</h2>
-<p>In a longitudinal study there is an expected <em>variance</em> between repeated measurements on the same subject, and because repeated measures occur in the subjects within each group, there is a <em>covariance</em> between measurements at each time point within each group. The <em>covariance matrix</em> (also known as the variance-covariance matrix) is a matrix that captures the variation between and within subjects in a longitudinal study<span class="citation">[29]</span> (For an in-depth analysis of the covariance matrix see <span class="citation">[30], [31]</span>).</p>
-<p>In the case of an rm-ANOVA analysis, it is typically assumed that the covariance matrix has a specific construction known as <em>compound symmetry</em> (also known as “sphericity” or “circularity”). Under this assumption, the between-subject variance and within-subject correlation are constant across time <span class="citation">[31]–[33]</span>. However, it has been shown that this condition is frequently unjustified because the correlation between measurements tends to change over time <span class="citation">[34]</span>; and it is higher between consecutive measurements <span class="citation">[12], [14]</span>. A visual representation of the
+<p>In a longitudinal study there is an expected <em>variance</em> between repeated measurements on the same subject, and because repeated measures occur in the subjects within each group, there is a <em>covariance</em> between measurements at each time point within each group. The <em>covariance matrix</em> (also known as the variance-covariance matrix) is a matrix that captures the variation between and within subjects in a longitudinal study<span class="citation">[29]</span> (For an in-depth analysis of the covariance matrix see <span class="citation">[30,31]</span>).</p>
+<p>In the case of an rm-ANOVA analysis, it is typically assumed that the covariance matrix has a specific construction known as <em>compound symmetry</em> (also known as “sphericity” or “circularity”). Under this assumption, the between-subject variance and within-subject correlation are constant across time <span class="citation">[31–33]</span>. However, it has been shown that this condition is frequently unjustified because the correlation between measurements tends to change over time <span class="citation">[34]</span>; and it is higher between consecutive measurements <span class="citation">[12,14]</span>. A visual representation of the
 Although corrections can be made (such as Huyhn-Feldt or Greenhouse-Geisser) the effectiveness of each correction is limited because it depends on the size of the sample,the number of repeated measurements<span class="citation">[28]</span>, and they are not robust if the group sizes are unbalanced <span class="citation">[35]</span>. In other words, if the data does not present constant correlation between repeated measurements, the assumptions required for an rm-ANOVA model are not met and the use of corrections may still not provide a reasonable adjustment that makes the model valid.</p>
 <p>In the case of LMEMs, one key advantage over rm-ANOVA is that they allow different structures for the variance-covariance matrix including exponential, autoregressive of order 1, rational quadratic and others <span class="citation">[18]</span>. Nevertheless, the analysis required to determine an appropriate variance-covariance structure for the data can be a long process by itself. Overall, the spherical assumption for rm-ANOVA may not capture the natural variations of the correlation in the data, and can bias the inferences from the analysis.</p>
 </div>
@@ -503,15 +511,15 @@ Although corrections can be made (such as Huyhn-Feldt or Greenhouse-Geisser) the
 <h1><span class="header-section-number">3</span> GAMs as a special case of Generalized Linear Models</h1>
 <div id="gams-and-basis-functions" class="section level2">
 <h2><span class="header-section-number">3.1</span> GAMs and Basis Functions</h2>
-<p>A GAM is a special case of the Generalized Linear Model (GLM), a framework that allows for response distributions that do not follow a normal distribution <span class="citation">[26], [40]</span>. Following the notation by Simpson <span class="citation">[23]</span> A GAM model can be represented as:</p>
+<p>A GAM is a special case of the Generalized Linear Model (GLM), a framework that allows for response distributions that do not follow a normal distribution <span class="citation">[26,40]</span>. Following the notation by Simpson <span class="citation">[23]</span> A GAM model can be represented as:</p>
 <p><span class="math display" id="eq:GAM">\[\begin{equation}
   y_{ijt}=\beta_0+f(x_t\mid \beta)+\varepsilon_{ijt}
   \tag{3.1}
 \end{equation}\]</span></p>
 <p>Where <span class="math inline">\(y_{ijt}\)</span> is the response at time <span class="math inline">\(t\)</span>, <span class="math inline">\(\beta_0\)</span> is the expected value at time 0, the change of <span class="math inline">\(y_{ijt}\)</span> over time is represented by the function <span class="math inline">\(f(x_t\mid \beta)\)</span> and <span class="math inline">\(\varepsilon_{ijt}\)</span> represents the residuals.</p>
 <p>In contrast to rm-ANOVA or LMEMs, GAMs use <em>smooth functions</em> to model the relationship between the covariates and the response. This approach is more advantageous as it does not restrict the model to a linear relationship. One possible function for <span class="math inline">\(f(x_t\mid \beta)\)</span> that allows for non-linear responses is a polynomial, but a major limitation is that they create a “global” fit as they assume that the same relationship exists everywhere, which can cause problems with the fit <span class="citation">[25]</span>.In particular, as <span class="math inline">\(t\)</span> goes to <span class="math inline">\(\pm \infty\)</span>, <span class="math inline">\(f(x_t \mid \beta)\)</span> goes to <span class="math inline">\(\pm \infty\)</span> which is almost always unrealistic.</p>
-<p>The model specification for GAMs requires that the <em>smooth functions</em> are represented in a parametric way that fit within the GLM framework, and this step is achieved by using a <em>basis function</em> to represent such functions. A <em>basis</em> is a set of functions that capture the space where the smooths that approximate <span class="math inline">\(f(x_t \mid \beta)\)</span> exist <span class="citation">[23]</span>. In other words,
-To overcome this limitation, the smooth functions in GAMs are represented using <em>basis functions</em> over evenly spaced ranges of the covariates known as <em>knots</em>. The <em>basis function</em> used is a cubic spline, which is a smooth curve constructed from cubic polynomials joined together<span class="citation">[23], [26]</span>. Cubic splines have a long history in their use to solve non-parametric statistical problems and are the default choice to fit GAMs as they are the simplest option to obtain visual smoothness <span class="citation">[41]</span>. Therefore, GAMs overcome the limitation that occurs in LMEMs and rm-ANOVA when the data is non linear, such as <a href="#fig:quadratic-response">2.2</a>. Regarding longitudinal data, Pedersen et al <span class="citation">[22]</span> demonstrated the capabilities of GAMs in this area using ecological data.</p>
+<p>The model specification for GAMs requires that the <em>smooth functions</em> are represented in a parametric way that fit within the GLM framework, and this step is achieved by using <em>basis functions</em> to represent them. A <em>basis</em> is a set of functions that capture the space where the smooths that approximate <span class="math inline">\(f(x_t \mid \beta)\)</span> exist <span class="citation">[23]</span>. For the linear model in <a href="#eq:linear-model">(2.1)</a>, the basis coefficients are <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span> and <span class="math inline">\(\beta_3\)</span> and the basis vectors are <span class="math inline">\(time_t\)</span>, <span class="math inline">\(treatment_j\)</span> and <span class="math inline">\(time_t \times treatment_j\)</span>. The basis function then, is the combination of basis coefficients and basis vectors that map the possible relationship between the covariates and the response <span class="citation">[41]</span>, which in the case of <a href="#eq:linear-model">(2.1)</a> is restricted to a linear behavior. In the case of <a href="#eq:GAM">(3.1)</a>, the basis function is <span class="math inline">\(f(x_t\mid \beta)\)</span>, which means that the model allows relationships beyond linear for the covariates.</p>
+<p>In GAMs the <em>basis functions</em> are represented over evenly spaced ranges of the covariates known as <em>knots</em>. A commonly used <em>basis function</em> is a cubic spline, which is a smooth curve constructed from cubic polynomials joined together at the knot locations<span class="citation">[23,26]</span>. Cubic splines have a long history in solving non-parametric statistical problems and are often a default choice to fit GAMs as they are a simple, flexible and powerful option to obtain visual smoothness <span class="citation">[42]</span>. Therefore, GAMs overcome the limitation that occurs in LMEMs and rm-ANOVA when the data is non linear, such as Figure <a href="#fig:quadratic-response">2.2</a>. Regarding longitudinal data, Pedersen et al <span class="citation">[22]</span> demonstrated the capabilities of GAMs in this area using ecological data.</p>
 <p>The use of GAMs to analyze biomedical longitudinal data, and the impact of missing observations in the fit of the model will be examined in detail in the following section using simulation.</p>
 <hr />
 </div>
@@ -520,127 +528,130 @@ To overcome this limitation, the smooth functions in GAMs are represented using 
 <h1>References</h1>
 <div id="refs" class="references">
 <div id="ref-sio2016">
-<p>[1] T. T. Sio <em>et al.</em>, “Repeated measures analyses of dermatitis symptom evolution in breast cancer patients receiving radiotherapy in a phase 3 randomized trial of mometasone furoate vs placebo (N06C4 [alliance]),” <em>Supportive Care in Cancer</em>, vol. 24, no. 9, pp. 3847–3855, 2016.</p>
+<p>[1] T.T. Sio, P.J. Atherton, B.J. Birckhead, D.J. Schwartz, J.A. Sloan, D.K. Seisler, J.A. Martenson, C.L. Loprinzi, P.C. Griffin, R.F. Morton, others, Repeated measures analyses of dermatitis symptom evolution in breast cancer patients receiving radiotherapy in a phase 3 randomized trial of mometasone furoate vs placebo (N06C4 [alliance]), Supportive Care in Cancer. 24 (2016) 3847–3855.</p>
 </div>
 <div id="ref-kamstra2015">
-<p>[2] J. Kamstra, P. Dijkstra, M. Van Leeuwen, J. Roodenburg, and J. Langendijk, “Mouth opening in patients irradiated for head and neck cancer: A prospective repeated measures study,” <em>Oral Oncology</em>, vol. 51, no. 5, pp. 548–555, 2015.</p>
+<p>[2] J. Kamstra, P. Dijkstra, M. Van Leeuwen, J. Roodenburg, J. Langendijk, Mouth opening in patients irradiated for head and neck cancer: A prospective repeated measures study, Oral Oncology. 51 (2015) 548–555.</p>
 </div>
 <div id="ref-roblyer2011">
-<p>[3] D. Roblyer <em>et al.</em>, “Optical imaging of breast cancer oxyhemoglobin flare correlates with neoadjuvant chemotherapy response one day after starting treatment,” <em>Proceedings of the National Academy of Sciences</em>, vol. 108, no. 35, pp. 14626–14631, 2011.</p>
+<p>[3] D. Roblyer, S. Ueda, A. Cerussi, W. Tanamai, A. Durkin, R. Mehta, D. Hsiang, J.A. Butler, C. McLaren, W.-P. Chen, others, Optical imaging of breast cancer oxyhemoglobin flare correlates with neoadjuvant chemotherapy response one day after starting treatment, Proceedings of the National Academy of Sciences. 108 (2011) 14626–14631.</p>
 </div>
 <div id="ref-tank2020">
-<p>[4] A. Tank <em>et al.</em>, “Diffuse optical spectroscopic imaging reveals distinct early breast tumor hemodynamic responses to metronomic and maximum tolerated dose regimens,” <em>Breast Cancer Research</em>, vol. 22, no. 1, pp. 1–10, 2020.</p>
+<p>[4] A. Tank, H.M. Peterson, V. Pera, S. Tabassum, A. Leproux, T. O’Sullivan, E. Jones, H. Cabral, N. Ko, R.S. Mehta, others, Diffuse optical spectroscopic imaging reveals distinct early breast tumor hemodynamic responses to metronomic and maximum tolerated dose regimens, Breast Cancer Research. 22 (2020) 1–10.</p>
 </div>
 <div id="ref-pavlov2018">
-<p>[5] M. V. Pavlov <em>et al.</em>, “Multimodal approach in assessment of the response of breast cancer to neoadjuvant chemotherapy,” <em>Journal of Biomedical Optics</em>, vol. 23, no. 9, p. 091410, 2018.</p>
+<p>[5] M.V. Pavlov, T.I. Kalganova, Y.S. Lyubimtseva, V.I. Plekhanov, G.Y. Golubyatnikov, O.Y. Ilyinskaya, A.G. Orlova, P.V. Subochev, D.V. Safonov, N.M. Shakhova, others, Multimodal approach in assessment of the response of breast cancer to neoadjuvant chemotherapy, Journal of Biomedical Optics. 23 (2018) 091410.</p>
 </div>
 <div id="ref-demidov2018">
-<p>[6] V. Demidov <em>et al.</em>, “Preclinical longitudinal imaging of tumor microvascular radiobiological response with functional optical coherence tomography,” <em>Scientific Reports</em>, vol. 8, no. 1, pp. 1–12, 2018.</p>
+<p>[6] V. Demidov, A. Maeda, M. Sugita, V. Madge, S. Sadanand, C. Flueraru, I.A. Vitkin, Preclinical longitudinal imaging of tumor microvascular radiobiological response with functional optical coherence tomography, Scientific Reports. 8 (2018) 1–12.</p>
 </div>
 <div id="ref-ritter2001">
-<p>[7] G. Ritter, L. S. Cohen, C. Williams, E. C. Richards, L. J. Old, and S. Welt, “Serological analysis of human anti-human antibody responses in colon cancer patients treated with repeated doses of humanized monoclonal antibody a33,” <em>Cancer Research</em>, vol. 61, no. 18, pp. 6851–6859, 2001.</p>
+<p>[7] G. Ritter, L.S. Cohen, C. Williams, E.C. Richards, L.J. Old, S. Welt, Serological analysis of human anti-human antibody responses in colon cancer patients treated with repeated doses of humanized monoclonal antibody a33, Cancer Research. 61 (2001) 6851–6859.</p>
 </div>
 <div id="ref-roth2017">
-<p>[8] E. M. Roth <em>et al.</em>, “Antidrug antibodies in patients treated with alirocumab,” 2017.</p>
+<p>[8] E.M. Roth, A.C. Goldberg, A.L. Catapano, A. Torri, G.D. Yancopoulos, N. Stahl, A. Brunet, G. Lecorps, H.M. Colhoun, Antidrug antibodies in patients treated with alirocumab, (2017).</p>
 </div>
 <div id="ref-jones2018">
-<p>[9] J. D. Jones, H. E. Ramser, A. E. Woessner, and K. P. Quinn, “In vivo multiphoton microscopy detects longitudinal metabolic changes associated with delayed skin wound healing,” <em>Communications Biology</em>, vol. 1, no. 1, pp. 1–8, 2018.</p>
+<p>[9] J.D. Jones, H.E. Ramser, A.E. Woessner, K.P. Quinn, In vivo multiphoton microscopy detects longitudinal metabolic changes associated with delayed skin wound healing, Communications Biology. 1 (2018) 1–8.</p>
 </div>
 <div id="ref-skala2010">
-<p>[10] M. C. Skala, A. N. Fontanella, L. Lan, J. A. Izatt, and M. W. Dewhirst, “Longitudinal optical imaging of tumor metabolism and hemodynamics,” <em>Journal of Biomedical Optics</em>, vol. 15, no. 1, p. 011112, 2010.</p>
+<p>[10] M.C. Skala, A.N. Fontanella, L. Lan, J.A. Izatt, M.W. Dewhirst, Longitudinal optical imaging of tumor metabolism and hemodynamics, Journal of Biomedical Optics. 15 (2010) 011112.</p>
 </div>
 <div id="ref-wagenmakers2008">
-<p>[11] E.-J. Wagenmakers, M. Lee, T. Lodewyckx, and G. J. Iverson, “Bayesian versus frequentist inference,” in <em>Bayesian evaluation of informative hypotheses</em>, Springer, 2008, pp. 181–207.</p>
+<p>[11] E.-J. Wagenmakers, M. Lee, T. Lodewyckx, G.J. Iverson, Bayesian versus frequentist inference, in: Bayesian Evaluation of Informative Hypotheses, Springer, 2008: pp. 181–207.</p>
 </div>
 <div id="ref-gueorguieva2004">
-<p>[12] R. Gueorguieva and J. H. Krystal, “Move over anova: Progress in analyzing repeated-measures data andits reflection in papers published in the archives of general psychiatry,” <em>Archives of General Psychiatry</em>, vol. 61, no. 3, pp. 310–317, 2004.</p>
+<p>[12] R. Gueorguieva, J.H. Krystal, Move over anova: Progress in analyzing repeated-measures data andits reflection in papers published in the archives of general psychiatry, Archives of General Psychiatry. 61 (2004) 310–317.</p>
 </div>
 <div id="ref-schober2018">
-<p>[13] P. Schober and T. R. Vetter, “Repeated measures designs and analysis of longitudinal data: If at first you do not succeed—try, try again,” <em>Anesthesia and Analgesia</em>, vol. 127, no. 2, p. 569, 2018.</p>
+<p>[13] P. Schober, T.R. Vetter, Repeated measures designs and analysis of longitudinal data: If at first you do not succeed—try, try again, Anesthesia and Analgesia. 127 (2018) 569.</p>
 </div>
 <div id="ref-ugrinowitsch2004">
-<p>[14] C. Ugrinowitsch, G. W. Fellingham, and M. D. Ricard, “Limitations of ordinary least squares models in analyzing repeated measures data,” <em>Medicine and Science in Sports and Exercise</em>, vol. 36, pp. 2144–2148, 2004.</p>
+<p>[14] C. Ugrinowitsch, G.W. Fellingham, M.D. Ricard, Limitations of ordinary least squares models in analyzing repeated measures data, Medicine and Science in Sports and Exercise. 36 (2004) 2144–2148.</p>
 </div>
 <div id="ref-liu2010">
-<p>[15] C. Liu, T. P. Cripe, and M.-O. Kim, “Statistical issues in longitudinal data analysis for treatment efficacy studies in the biomedical sciences,” <em>Molecular Therapy</em>, vol. 18, no. 9, pp. 1724–1730, 2010.</p>
+<p>[15] C. Liu, T.P. Cripe, M.-O. Kim, Statistical issues in longitudinal data analysis for treatment efficacy studies in the biomedical sciences, Molecular Therapy. 18 (2010) 1724–1730.</p>
 </div>
 <div id="ref-halsey2015">
-<p>[16] L. G. Halsey, D. Curran-Everett, S. L. Vowler, and G. B. Drummond, “The fickle p value generates irreproducible results,” <em>Nature Methods</em>, vol. 12, no. 3, pp. 179–185, 2015.</p>
+<p>[16] L.G. Halsey, D. Curran-Everett, S.L. Vowler, G.B. Drummond, The fickle p value generates irreproducible results, Nature Methods. 12 (2015) 179–185.</p>
 </div>
 <div id="ref-vishwanath2009">
-<p>[17] K. Vishwanath, H. Yuan, W. T. Barry, M. W. Dewhirst, and N. Ramanujam, “Using optical spectroscopy to longitudinally monitor physiological changes within solid tumors,” <em>Neoplasia</em>, vol. 11, no. 9, pp. 889–900, 2009.</p>
+<p>[17] K. Vishwanath, H. Yuan, W.T. Barry, M.W. Dewhirst, N. Ramanujam, Using optical spectroscopy to longitudinally monitor physiological changes within solid tumors, Neoplasia. 11 (2009) 889–900.</p>
 </div>
 <div id="ref-pinheiro2006">
-<p>[18] J. Pinheiro and D. Bates, <em>Mixed-effects models in s and s-plus</em>. Springer Science &amp; Business Media, 2006.</p>
+<p>[18] J. Pinheiro, D. Bates, Mixed-effects models in s and s-plus, Springer Science &amp; Business Media, 2006.</p>
 </div>
 <div id="ref-dennis2019">
-<p>[19] B. Dennis, J. M. Ponciano, M. L. Taper, and S. R. Lele, “Errors in statistical inference under model misspecification: Evidence, hypothesis testing, and aic,” <em>Frontiers in Ecology and Evolution</em>, vol. 7, p. 372, 2019.</p>
+<p>[19] B. Dennis, J.M. Ponciano, M.L. Taper, S.R. Lele, Errors in statistical inference under model misspecification: Evidence, hypothesis testing, and aic, Frontiers in Ecology and Evolution. 7 (2019) 372.</p>
 </div>
 <div id="ref-wang2019">
-<p>[20] B. Wang, Z. Zhou, H. Wang, X. M. Tu, and C. Feng, “The p-value and model specification in statistics,” <em>General Psychiatry</em>, vol. 32, no. 3, 2019.</p>
+<p>[20] B. Wang, Z. Zhou, H. Wang, X.M. Tu, C. Feng, The p-value and model specification in statistics, General Psychiatry. 32 (2019).</p>
 </div>
 <div id="ref-rose2012">
-<p>[21] N. L. Rose, H. Yang, S. D. Turner, and G. L. Simpson, “An assessment of the mechanisms for the transfer of lead and mercury from atmospherically contaminated organic soils to lake sediments with particular reference to Scotland, UK,” <em>Geochimica et Cosmochimica Acta</em>, vol. 82, pp. 113–135, 2012.</p>
+<p>[21] N.L. Rose, H. Yang, S.D. Turner, G.L. Simpson, An assessment of the mechanisms for the transfer of lead and mercury from atmospherically contaminated organic soils to lake sediments with particular reference to Scotland, UK, Geochimica et Cosmochimica Acta. 82 (2012) 113–135.</p>
 </div>
 <div id="ref-pedersen2019">
-<p>[22] E. J. Pedersen, D. L. Miller, G. L. Simpson, and N. Ross, “Hierarchical generalized additive models in ecology: An introduction with mgcv,” <em>PeerJ</em>, vol. 7, p. e6876, 2019.</p>
+<p>[22] E.J. Pedersen, D.L. Miller, G.L. Simpson, N. Ross, Hierarchical generalized additive models in ecology: An introduction with mgcv, PeerJ. 7 (2019) e6876.</p>
 </div>
 <div id="ref-simpson2018">
-<p>[23] G. L. Simpson, “Modelling palaeoecological time series using generalised additive models,” <em>Frontiers in Ecology and Evolution</em>, vol. 6, p. 149, 2018.</p>
+<p>[23] G.L. Simpson, Modelling palaeoecological time series using generalised additive models, Frontiers in Ecology and Evolution. 6 (2018) 149.</p>
 </div>
 <div id="ref-yang2012">
-<p>[24] L. Yang, G. Qin, N. Zhao, C. Wang, and G. Song, “Using a generalized additive model with autoregressive terms to study the effects of daily temperature on mortality,” <em>BMC Medical Research Methodology</em>, vol. 12, no. 1, p. 165, 2012.</p>
+<p>[24] L. Yang, G. Qin, N. Zhao, C. Wang, G. Song, Using a generalized additive model with autoregressive terms to study the effects of daily temperature on mortality, BMC Medical Research Methodology. 12 (2012) 165.</p>
 </div>
 <div id="ref-beck1998">
-<p>[25] N. Beck and S. Jackman, “Beyond linearity by default: Generalized additive models,” <em>American Journal of Political Science</em>, pp. 596–627, 1998.</p>
+<p>[25] N. Beck, S. Jackman, Beyond linearity by default: Generalized additive models, American Journal of Political Science. (1998) 596–627.</p>
 </div>
 <div id="ref-wood2017">
-<p>[26] S. N. Wood, <em>Generalized additive models: An introduction with r</em>. CRC press, 2017.</p>
+<p>[26] S.N. Wood, Generalized additive models: An introduction with r, CRC press, 2017.</p>
 </div>
 <div id="ref-wood2016">
-<p>[27] S. N. Wood, N., Pya, and B. Säfken, “Smoothing parameter and model selection for general smooth models (with discussion),” <em>Journal of the American Statistical Association</em>, vol. 111, pp. 1548–1575, 2016.</p>
+<p>[27] S.N. Wood, N., Pya, B. Säfken, Smoothing parameter and model selection for general smooth models (with discussion), Journal of the American Statistical Association. 111 (2016) 1548–1575.</p>
 </div>
 <div id="ref-haverkamp2017">
-<p>[28] N. Haverkamp and A. Beauducel, “Violation of the sphericity assumption and its effect on type-i error rates in repeated measures anova and multi-level linear models (mlm),” <em>Frontiers in psychology</em>, vol. 8, p. 1841, 2017.</p>
+<p>[28] N. Haverkamp, A. Beauducel, Violation of the sphericity assumption and its effect on type-i error rates in repeated measures anova and multi-level linear models (mlm), Frontiers in Psychology. 8 (2017) 1841.</p>
 </div>
 <div id="ref-wolfinger1996">
-<p>[29] R. D. Wolfinger, “Heterogeneous variance: Covariance structures for repeated measures,” <em>Journal of Agricultural, Biological, and Environmental Statistics</em>, pp. 205–230, 1996.</p>
+<p>[29] R.D. Wolfinger, Heterogeneous variance: Covariance structures for repeated measures, Journal of Agricultural, Biological, and Environmental Statistics. (1996) 205–230.</p>
 </div>
 <div id="ref-west2014">
-<p>[30] B. T. West, K. B. Welch, and A. T. Galecki, <em>Linear mixed models: A practical guide using statistical software</em>. CRC Press, 2014.</p>
+<p>[30] B.T. West, K.B. Welch, A.T. Galecki, Linear mixed models: A practical guide using statistical software, CRC Press, 2014.</p>
 </div>
 <div id="ref-weiss2005">
-<p>[31] R. E. Weiss, <em>Modeling longitudinal data</em>. Springer Science &amp; Business Media, 2005.</p>
+<p>[31] R.E. Weiss, Modeling longitudinal data, Springer Science &amp; Business Media, 2005.</p>
 </div>
 <div id="ref-geisser1958">
-<p>[32] S. Geisser, S. W. Greenhouse, and others, “An extension of box’s results on the use of the <span class="math inline">\(F\)</span> distribution in multivariate analysis,” <em>The Annals of Mathematical Statistics</em>, vol. 29, no. 3, pp. 885–891, 1958.</p>
+<p>[32] S. Geisser, S.W. Greenhouse, others, An extension of box’s results on the use of the <span class="math inline">\(F\)</span> distribution in multivariate analysis, The Annals of Mathematical Statistics. 29 (1958) 885–891.</p>
 </div>
 <div id="ref-huynh1976">
-<p>[33] H. Huynh and L. S. Feldt, “Estimation of the box correction for degrees of freedom from sample data in randomized block and split-plot designs,” <em>Journal of Educational Statistics</em>, vol. 1, no. 1, pp. 69–82, 1976.</p>
+<p>[33] H. Huynh, L.S. Feldt, Estimation of the box correction for degrees of freedom from sample data in randomized block and split-plot designs, Journal of Educational Statistics. 1 (1976) 69–82.</p>
 </div>
 <div id="ref-maxwell2017">
-<p>[34] S. E. Maxwell, H. D. Delaney, and K. Kelley, <em>Designing experiments and analyzing data: A model comparison perspective</em>. Routledge, 2017.</p>
+<p>[34] S.E. Maxwell, H.D. Delaney, K. Kelley, Designing experiments and analyzing data: A model comparison perspective, Routledge, 2017.</p>
 </div>
 <div id="ref-keselman2001">
-<p>[35] H. Keselman, J. Algina, and R. K. Kowalchuk, “The analysis of repeated measures designs: A review,” <em>British Journal of Mathematical and Statistical Psychology</em>, vol. 54, no. 1, pp. 1–20, 2001.</p>
+<p>[35] H. Keselman, J. Algina, R.K. Kowalchuk, The analysis of repeated measures designs: A review, British Journal of Mathematical and Statistical Psychology. 54 (2001) 1–20.</p>
 </div>
 <div id="ref-molenberghs2004">
-<p>[36] G. Molenberghs <em>et al.</em>, “Analyzing incomplete longitudinal clinical trial data,” <em>Biostatistics</em>, vol. 5, no. 3, pp. 445–464, 2004.</p>
+<p>[36] G. Molenberghs, H. Thijs, I. Jansen, C. Beunckens, M.G. Kenward, C. Mallinckrodt, R.J. Carroll, Analyzing incomplete longitudinal clinical trial data, Biostatistics. 5 (2004) 445–464.</p>
 </div>
 <div id="ref-scheffer2002">
-<p>[37] J. Scheffer, “Dealing with missing data,” 2002.</p>
+<p>[37] J. Scheffer, Dealing with missing data, (2002).</p>
 </div>
 <div id="ref-potthoff2006">
-<p>[38] R. F. Potthoff, G. E. Tudor, K. S. Pieper, and V. Hasselblad, “Can one assess whether missing data are missing at random in medical studies?” <em>Statistical Methods in Medical Research</em>, vol. 15, no. 3, pp. 213–234, 2006.</p>
+<p>[38] R.F. Potthoff, G.E. Tudor, K.S. Pieper, V. Hasselblad, Can one assess whether missing data are missing at random in medical studies?, Statistical Methods in Medical Research. 15 (2006) 213–234.</p>
 </div>
 <div id="ref-ma2012">
-<p>[39] Y. Ma, M. Mazumdar, and S. G. Memtsoudis, “Beyond repeated-measures analysis of variance: Advanced statistical methods for the analysis of longitudinal data in anesthesia research,” <em>Regional Anesthesia &amp; Pain Medicine</em>, vol. 37, no. 1, pp. 99–105, 2012.</p>
+<p>[39] Y. Ma, M. Mazumdar, S.G. Memtsoudis, Beyond repeated-measures analysis of variance: Advanced statistical methods for the analysis of longitudinal data in anesthesia research, Regional Anesthesia &amp; Pain Medicine. 37 (2012) 99–105.</p>
 </div>
 <div id="ref-hastie1987">
-<p>[40] T. Hastie and R. Tibshirani, “Generalized additive models: Some applications,” <em>Journal of the American Statistical Association</em>, vol. 82, no. 398, pp. 371–386, 1987.</p>
+<p>[40] T. Hastie, R. Tibshirani, Generalized additive models: Some applications, Journal of the American Statistical Association. 82 (1987) 371–386.</p>
+</div>
+<div id="ref-hefley2017">
+<p>[41] T.J. Hefley, K.M. Broms, B.M. Brost, F.E. Buderman, S.L. Kay, H.R. Scharf, J.R. Tipton, P.J. Williams, M.B. Hooten, The basis function approach for modeling autocorrelation in ecological data, Ecology. 98 (2017) 632–646.</p>
 </div>
 <div id="ref-wegman1983">
-<p>[41] E. J. Wegman and I. W. Wright, “Splines in statistics,” <em>Journal of the American Statistical Association</em>, vol. 78, no. 382, pp. 351–365, 1983.</p>
+<p>[42] E.J. Wegman, I.W. Wright, Splines in statistics, Journal of the American Statistical Association. 78 (1983) 351–365.</p>
 </div>
 </div>
 </div>
