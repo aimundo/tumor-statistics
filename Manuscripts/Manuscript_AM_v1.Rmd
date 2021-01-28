@@ -1,22 +1,24 @@
 ---
-title: '**The statistical analysis of non-linear longitudinal data in biomedical research using generalized additive models**'
+title: '**The statistical analysis of non-linear longitudinal data in biomedical research
+  using generalized additive models**'
 author:
 - Ariel Mundo^[Department of Biomedical Engineering, University of Arkansas, Fayetteville]
 - Timothy J. Muldoon^[Department of Biomedical Engineering, University of Arkansas,
   Fayetteville]
 - John R. Tipton^[Department of Mathematical Sciences, University of Arkansas, Fayetteville]
-subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
-output:
-  bookdown::pdf_document2:
-    keep_tex: yes
-    fig_caption: yes
-    extra_dependencies: ["subfig","breqn"]
-  bookdown::word_document2: default
-  bookdown::html_document2: default
-  link-citations: yes
-  css: style.css
-  '': default
 csl: ieee.csl
+output:
+- default
+- default
+- yes
+- style.css
+- default
+- extra_dependencies:
+  - subfig
+  - breqn
+  fig_caption: yes
+  keep_tex: yes
+subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
 bibliography: refs.bib
 ---
 
