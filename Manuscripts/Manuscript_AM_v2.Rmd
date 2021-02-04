@@ -91,7 +91,7 @@ y_{ijt} = \begin{cases}
 
 Presenting the model in this manner makes clear that when treating different groups, an rm-ANOVA model is able to accommodate non-parallel lines in each case (different intercepts and slopes per group). In other words, When it is stated that an rm-ANOVA model "expects" a linear relationship between the covariates and the response, this means that either presented as Equation \@ref(eq:linear-model), Equation \@ref(eq:ANOVA-by-group) or Equation \@ref(eq:ANOVA-lines), an rm-ANOVA model is only able to accommodate linear patterns in the data. If the data show non-linear behavior, the rm-ANOVa model will approximate this behavior with non-parallel lines. Because the construction of the model is essentially the same in LMEMs, the linearity assumption holds for these models, although it is possible to fit models with different slopes at the subject-level[@pinheiro2006].  
 
-When the data does not follow a linear trend, the fit that an rm-ANOVA or LMEM produces may not accurately represent the trends in the data. To demonstrate this inaccurate representation, longitudinal data where a normally distributed response of two groups of 10 subjects each is simulated, and a rm-ANOVA model  (Equation \@ref(eq:linear-model)) is fitted to the data using $\textsf{R}$[@r] and the package _nlme_[@nlme] (code in the Appendix). Briefly, the mean responses for each group are linear functions with different intercepts. 
+When the data does not follow a linear trend, the fit that an rm-ANOVA or LMEM produces may not accurately represent the trends in the data. To demonstrate this inaccurate representation, longitudinal data where a normally distributed response of two groups of 10 subjects each is simulated, and a rm-ANOVA model  (Equation \@ref(eq:linear-model)) is fitted to the data using $\textsf{R}$[@r] and the package _nlme_[@nlme] (code in the Appendix). Briefly, two cases for the mean responses for each group are considered: in the first case, the mean response in each group is a linear function with different intercepts and slopes (negative slope for Group 1 and positive slope for Group 2 ). In the second case, a quadratic function is used for the mean response per group (concave down for Group 1 and concave up for Group 2 ). From the mean response per group in the linear or quadratic case, individual responses for each subject in each group are simulated using covariance matrices for with compound symmetry (constant variance across time) or independent errors (errors that are generated from a a normal distribution but are not constant over time). Thus, the response per subject corresponds to the mean response per group plus the error (compound symmetry or independent). To this data, an rm-ANOVA model identical as Equation \@ref:eqn(linear-model) is fitted. The resulting simulated data, simulated errors, individual response and fitted parameters from the model are plotted.
 
 ```{r, message = FALSE,include=FALSE}
 set.seed(11)
@@ -249,13 +249,13 @@ plot_example <- function(sim_dat) {
         text=element_text(size=30))+
     scale_color_aaas()
   
-  return((p1 + p3) / (p2 + p4))
+  return((p1+p3+p2+p4)+plot_layout(nrow=1))
   # return((p1 + p3 + plot_layout(guides = "collect")) / (p2 + p4 + plot_layout(guides = "collect")))
 
 }
 ```
 
-```{r, linear-model, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap="Simulated linear responses from two groups with a rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response"}
+```{r, linear-model-correlated, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap="Simulated linear responses from two groups with a rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response"}
 # linear response, correlated errors (subject effect)
 txt<-18
 plot_example(example(fun_type = "linear", error_type = "correlated")) +
@@ -266,21 +266,25 @@ plot_example(example(fun_type = "linear", error_type = "correlated")) +
 ```
 
 
-It is clear from Figure \@ref(fig:linear-model) that the fit produced by the rm-ANOVA model is good as the predictions for the mean response are reasonably close to the "truth" of the simulated data.
-
-However, consider the case when the data follows a non-linear trend, such as the simulated data in Figure \@ref(fig:quadratic-response). Here, the simulated data follows a quadratic behavior. The figure shows that changes in each group occur through the timeline, although the final mean value is the same as the initial value. Fitting an rm-ANOVA model \@ref(eq:linear-model) to this data  produces the fit that appears at the bottom right of Figure \@ref(fig:quadratic-response).
-
-```{r quadratic-response, fig.width=16, fig.height=16,echo=FALSE,fig.cap='Simulated quadratic responses from two groups with an rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response', message=FALSE}
+```{r linear-model-independent, fig.width=16, fig.height=16,echo=FALSE,fig.cap='Simulated quadratic responses from two groups with an rm-ANOVA model fitted. Top row, simulated data, lines represent mean response. Bottom row, fitted model, thick lines represent predicted mean response', message=FALSE}
 # quadratic response, correlated errors (subject effect)
 txt<-18
-plot_example(example(fun_type = "linear", error_type = "correlated")) +
+plot_example(example(fun_type = "linear", error_type = "independent")) +
   plot_annotation(
     tag_levels='A',
-  title = 'Simulated with linear function and correlated errors') &
+  title = 'Simulated with linear function and independent errors') &
    theme(plot.title = element_text(size = 20),text=element_text(size=txt)
 )
   # theme(plot.title = element_text(size = 20))
 ```
+
+It is clear from Figure \@ref(fig:linear-model) that the fit produced by the rm-ANOVA model is good as the predictions for the mean response are reasonably close to the "truth" of the simulated data.
+
+However, consider the case when the data follows a non-linear trend, such as the simulated data in Figure \@ref(fig:quadratic-response). Here, the simulated data follows a quadratic behavior. The figure shows that changes in each group occur through the timeline, although the final mean value is the same as the initial value. Fitting an rm-ANOVA model \@ref(eq:linear-model) to this data  produces the fit that appears at the bottom right of Figure \@ref(fig:quadratic-response).
+
+
+
+
 
 In this case, compare the predictions to the simulated data and it is noticeable that the model is not capturing the changes within each group throughout the timeline. This highlights the limitation of rm-ANOVA and LMEMs with longitudinal non-linear data, where the model is only flexible enough to allow different slopes per group, but is unable to follow any trend that is highly variable.
 
