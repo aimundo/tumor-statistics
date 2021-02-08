@@ -1,9 +1,4 @@
 ---
-output:
-  pdf_document: default
-  html_document: default
----
- ---
 title: '**The statistical analysis of non-linear longitudinal data in biomedical research using generalized additive models**'
 subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
 author:
