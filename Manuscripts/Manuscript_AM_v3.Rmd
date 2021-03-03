@@ -334,6 +334,47 @@ In contrast to the linear functions used to model the relationship between the c
 
 The smooth functional relationship between the covariates and the response in GAMs is specified   using a parametric relationship that can be fit within the GLM framework, by using _basis functions_ expansions of the covariates and by estimating random coefficients for these basis functions and this step is achieved by using _basis functions_ to represent them. A _basis_ is a set of functions that spans the space where the smooths that approximate $f(x_t \mid \beta_j)$ exist [@simpson2018]. For the linear model in Equation \@ref(eq:linear-model), the basis coefficients are $\beta_1$, $\beta_2$ and $\beta_3$ and the basis vectors are $time_t$, $treatment_j$ and $time_t \times treatment_j$. The basis function then, is the combination of basis coefficients and basis vectors that map the possible relationship between the covariates and the response [@hefley2017], which in the case of Equation \@ref(eq:linear-model) is restricted to a linear family of functions.  In the case of Equation \@ref(eq:GAM), the basis function is $f(x_t\mid \beta_j)$, which means that the model allows relationships beyond linear for the covariates.
 
+```{r,basis-functions}
+
+n_time = 6
+ x <- seq(1,6, length.out = n_time)
+ mu <- matrix(0, length(x), 2)
+ mu[, 1] <-  -(0.25 * x^2) +1.5*x-1.25
+ mu[, 2] <- (0.25 * x^2) -1.5*x+1.25
+ y <- array(0, dim = c(length(x), 2, 10))
+ errors <- array(0, dim = c(length(x), 2, 10))
+ for (i in 1:2) {     # number of treatments
+     for (j in 1:10) {  # number of subjects
+         # compound symmetry errors
+         errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * diag(6) + 0.25 * matrix(1, 6, 6))
+         y[, i, j] <- mu[, i] + errors[, i, j]
+     }
+ }
+  dimnames(y) <- list(time = x, treatment = 1:2, subject = 1:10)
+ dimnames(errors) <- list(time = x, treatment = 1:2, subject = 1:10)
+ dimnames(mu) <- list(time = x, treatment = 1:2)
+ dat <- as.data.frame.table(y, responseName = "y")
+ dat_errors <- as.data.frame.table(errors, responseName = "errors")
+ dat_mu <- as.data.frame.table(mu, responseName = "mu")
+ dat <- left_join(dat, dat_errors, by = c("time", "treatment", "subject"))
+ dat <- left_join(dat, dat_mu, by = c("time", "treatment"))
+ dat$time <- as.numeric(as.character(dat$time))
+ dat <- dat %>%
+     mutate(subject = factor(paste(subject, treatment, sep = "-")))
+  
+  dat<-subset(dat,treatment==1)
+  dat<-dat[,c('y','time')]
+gm<-gam(y~s(time,k=5),data=dat)
+model_matrix<-predict(gm,type='lpmatrix')
+
+x_new <- as.data.frame(seq(0, max(dat$time), length.out = 100))
+y_pred <- predict(gm, data.frame(x = x_new)) 
+
+
+matplot(dat$time, model_matrix[,-1], type = "l", lty = 2, add = T)
+
+```
+
 
 In GAMs the _basis functions_ are typically evenly spaced in _knots_ over the range of the covariates. A commonly used _basis function_ is the cubic spline, which is a smooth curve constructed from cubic polynomials joined together at the knot locations[@wood2017;@simpson2018]. Cubic splines have a long history in solving non-parametric statistical problems and are often a default choice to fit GAMs as they are a simple, flexible and powerful option to obtain visual smoothness [@wegman1983]. Therefore, this data-driven flexibility in GAMs overcomes the limitation that occurs in LMEMs and rm-ANOVA when the data is non linear.
 
