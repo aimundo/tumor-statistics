@@ -335,7 +335,10 @@ In contrast to the linear functions used to model the relationship between the c
 The smooth functional relationship between the covariates and the response in GAMs is specified   using a parametric relationship that can be fit within the GLM framework, by using _basis functions_ expansions of the covariates and by estimating random coefficients for these basis functions and this step is achieved by using _basis functions_ to represent them. A _basis_ is a set of functions that spans the space where the smooths that approximate $f(x_t \mid \beta_j)$ exist [@simpson2018]. For the linear model in Equation \@ref(eq:linear-model), the basis coefficients are $\beta_1$, $\beta_2$ and $\beta_3$ and the basis vectors are $time_t$, $treatment_j$ and $time_t \times treatment_j$. The basis function then, is the combination of basis coefficients and basis vectors that map the possible relationship between the covariates and the response [@hefley2017], which in the case of Equation \@ref(eq:linear-model) is restricted to a linear family of functions.  In the case of Equation \@ref(eq:GAM), the basis function is $f(x_t\mid \beta_j)$, which means that the model allows relationships beyond linear for the covariates.
 
 ```{r,basis-functions}
-
+library(mgcv)
+library(mvnfast)
+  library(nlme)
+  library(ggsci)
 n_time = 6
  x <- seq(1,6, length.out = n_time)
  mu <- matrix(0, length(x), 2)
@@ -367,11 +370,15 @@ n_time = 6
 gm<-gam(y~s(time,k=5),data=dat)
 model_matrix<-predict(gm,type='lpmatrix')
 
-x_new <- as.data.frame(seq(0, max(dat$time), length.out = 100))
-y_pred <- predict(gm, data.frame(x = x_new)) 
+x_new <- (seq(0, max(dat$time), length.out = 100))
+y_pred <- predict(gm, newdata=dat) 
 
+
+
+plot(dat$y~dat$time)
 
 matplot(dat$time, model_matrix[,-1], type = "l", lty = 2, add = T)
+lines(y_pred ~ dat$time, col = "red", lwd = 2)
 
 ```
 
