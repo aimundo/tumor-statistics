@@ -373,12 +373,24 @@ model_matrix<-predict(gm,type='lpmatrix')
 x_new <- (seq(0, max(dat$time), length.out = 100))
 y_pred <- predict(gm, newdata=dat) 
 
+time<-c(1:6)
+
+basis1<-model_matrix[1:6,2]
+basis2<-model_matrix[1:6,3]
+basis3<-model_matrix[1:6,4]
+basis4<-model_matrix[1:6,5]
+
+plot(time,basis1,type='l')
+plot(time,basis2,type='l')
+plot(time,basis3,type='l')
+plot(time,basis4,type='l')
 
 
-plot(dat$y~dat$time)
+#plot(dat$y~dat$time)
 
-matplot(dat$time, model_matrix[,-1], type = "l", lty = 2, add = T)
-lines(y_pred ~ dat$time, col = "red", lwd = 2)
+#matplot(dat$time, model_matrix[,-1], type = "l", lty = 2, add = T)
+
+#lines(y_pred ~ dat$time, col = "red", lwd = 2)
 
 ```
 
