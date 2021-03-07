@@ -339,6 +339,8 @@ library(mgcv)
 library(mvnfast)
   library(nlme)
   library(ggsci)
+library(tidyverse)
+
 n_time = 6
  x <- seq(1,6, length.out = n_time)
  mu <- matrix(0, length(x), 2)
@@ -368,23 +370,33 @@ n_time = 6
   dat<-subset(dat,treatment==1)
   dat<-dat[,c('y','time')]
 gm<-gam(y~s(time,k=5),data=dat)
-model_matrix<-predict(gm,type='lpmatrix')
+model_matrix<-as.data.frame(predict(gm,type='lpmatrix'))
 
 x_new <- (seq(0, max(dat$time), length.out = 100))
 y_pred <- predict(gm, newdata=dat) 
 
 time<-c(1:6)
 
-basis1<-model_matrix[1:6,2]
-basis2<-model_matrix[1:6,3]
-basis3<-model_matrix[1:6,4]
-basis4<-model_matrix[1:6,5]
+basis<-model_matrix[1:6,-1] #extracting basis
+basis<-basis %>% #pivoting to long format
+  pivot_longer(
+    cols=starts_with("s")
+  )%>%
+  arrange(name) #ordering
 
-plot(time,basis1,type='l')
-plot(time,basis2,type='l')
-plot(time,basis3,type='l')
-plot(time,basis4,type='l')
+#length of dataframe to be created: number of knots by number of timepoints (minus 1 for the intercept that we won't plot)
+ln<-length(basis1)*(length(coef(gm))-1) 
 
+basis_plot<-data.frame(Basis=integer(ln),
+                       value=double(ln),
+                       time=integer(ln),
+)
+
+basis_plot$time<-rep(time) #pasting timepoints
+basis_plot$Basis<-rep(1:4,each=6) #pasting basis number values
+basis_plot$value<-basis$value #pasting basis values
+
+ggplot(basis_plot,aes(x=time,y=value))+geom_line()+facet_grid(~Basis) #plotting
 
 #plot(dat$y~dat$time)
 
