@@ -334,7 +334,11 @@ In contrast to the linear functions used to model the relationship between the c
 
 The smooth functional relationship between the covariates and the response in GAMs is specified   using a parametric relationship that can be fit within the GLM framework, by using _basis functions_ expansions of the covariates and by estimating random coefficients for these basis functions and this step is achieved by using _basis functions_ to represent them. A _basis_ is a set of functions that spans the space where the smooths that approximate $f(x_t \mid \beta_j)$ exist [@simpson2018]. For the linear model in Equation \@ref(eq:linear-model), the basis coefficients are $\beta_1$, $\beta_2$ and $\beta_3$ and the basis vectors are $time_t$, $treatment_j$ and $time_t \times treatment_j$. The basis function then, is the combination of basis coefficients and basis vectors that map the possible relationship between the covariates and the response [@hefley2017], which in the case of Equation \@ref(eq:linear-model) is restricted to a linear family of functions.  In the case of Equation \@ref(eq:GAM), the basis function is $f(x_t\mid \beta_j)$, which means that the model allows relationships beyond linear for the covariates.
 
-To further clarify the concept of basis functions and smooth functions, consider the simulated response for Group 1 in Figure @\ref(fig:quadratic-response). The simplest GAM model that can be used to estimate such response is that of a single smooth term for the time effect; i.e., a model that fits the trend trough the timeline.  Because there are six timepoints for this group, the use of five equally spaced knots ensures that the model will not have computational issues. Asking the model to use five knots to construct the smooth term means that it will have _four_ effective basis functions (as one will be used for the intercept). The choice of basis functions is already optimized in the package _mgcv_ depending on the number of knots. In Panel A of Figure \@ref(fig:basis-functions-plot), the four basis functions are shown. Each of the basis functions is composed of six different points (because there are six points on the timeline). To control the wigliness of the fit, each of the basis functions of Panel A is penalized, or multipled by a coefficient according to the penalty matrix of Panel B. In other words, the six points of each basis will be multiplied by the corresponding coefficient, thereby increasing or decreasing the original basis functions of Panel B. In Figure \@ref(fig:basis-functions-plot), Panel C shows the resulting penalized basis functions. Note that the penalizetion for basis 1 has resulted in a decrease of its overall value (because the coefficient for that basis function is negative and less than 1); on the other hand, basis 3 has increased its value roughly 2.5 times. Finally, the penalized basis functions are added at each timepoint to produce the final value of the smooth term. The resulting smooth term for the effect of _time_ is shown in Panel D (orange line) along the simulated values per group, which appear as points.
+A commonly used _basis function_ is the cubic spline, which is a smooth curve constructed from cubic polynomials joined together at the knot locations[@wood2017;@simpson2018]. Cubic splines have a long history in solving non-parametric statistical problems and are often a default choice to fit GAMs as they are a simple, flexible and powerful option to obtain visual smoothness [@wegman1983]. Therefore, this data-driven flexibility in GAMs overcomes the limitation that occurs in LMEMs and rm-ANOVA when the data is non linear.
+
+To further clarify the concept of basis functions and smooth functions, consider the simulated response for Group 1 in Figure @\ref(fig:quadratic-response). The simplest GAM model that can be used to estimate such response is that of a single smooth term for the time effect; i.e., a model that fits the trend of the group trough the timeline. The timeline can be divided equally spaced _knots_, each knot being a region where a different basis function will be used. Because there are six timepoints for this group, five knots can be used. The model with five knots to construct the smooth term means that it will have four basis functions (plus one that corresponds to the intercept). The choice of basis functions is already optimized in the package _mgcv_ depending on the number of knots. In Panel A of Figure \@ref(fig:basis-functions-plot), the four basis functions (and the intercept) are shown. Each of the basis functions is composed of six different points (because there are six points on the timeline). To control the wigliness of the fit, each of the basis functions of Panel A is penalized by multiplying it by a coefficient according to the penalty matrix of Panel B. 
+
+In other words, the six points of each basis are multiplied by the corresponding coefficient in panel B, thereby increasing or decreasing the original basis functions of Panel A. In Figure \@ref(fig:basis-functions-plot), Panel C shows the resulting penalized basis functions. Note that the penalization for basis 1 has resulted in a decrease of its overall value (because the coefficient for that basis function is negative and less than 1); on the other hand, basis 3 has roughly doubled its value. Finally, the penalized basis functions are added at each timepoint to produce the smooth term. The resulting smooth term for the effect of _time_ is shown in Panel D (orange line) along the simulated values per group, which appear as points.
 
 ```{r,basis-functions-plot,fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap="**Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for _time_ for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D. Smoother for _time_ and original datapoints. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.**"}
 
@@ -376,7 +380,9 @@ y_pred <- predict(gm, newdata=dat)
 
 time<-c(1:6)
 
-basis<-model_matrix[1:6,-1] #extracting basis
+basis<-model_matrix[1:6,] #extracting basis
+#basis<-model_matrix[1:6,-1] #extracting basis
+colnames(basis)[colnames(basis)=="(Intercept)"]<-"s(time).0"
 basis<-basis %>% #pivoting to long format
   pivot_longer(
     cols=starts_with("s")
@@ -384,7 +390,7 @@ basis<-basis %>% #pivoting to long format
   arrange(name) #ordering
 
 #length of dataframe to be created: number of knots by number of timepoints (minus 1 for the intercept that we won't plot)
-ln<-6*(length(coef(gm))-1) 
+ln<-6*(length(coef(gm))) 
 
 basis_plot<-data.frame(Basis=integer(ln),
                        value_orig=double(ln),
@@ -393,49 +399,59 @@ basis_plot<-data.frame(Basis=integer(ln),
 )
 
 basis_plot$time<-rep(time) #pasting timepoints
-basis_plot$Basis<-rep(1:4,each=6) #pasting basis number values
+basis_plot$Basis<-factor(rep(c(1:5),each=6)) #pasting basis number values
 basis_plot$value_orig<-basis$value #pasting basis values
-basis_plot$cof<-rep(coef(gm)[2:5],each=6) #pasting coefficients
+basis_plot$cof<-rep(coef(gm)[1:5],each=6) #pasting coefficients
 basis_plot<-basis_plot%>%
   mutate(mod_val=value_orig*cof)
+
+#creating labeller to change the labels in the basis plots
+
+basis_names<-c(
+  `1`="Intercept",
+  `2`="1",
+  `3`="2",
+  `4`="3",
+  `5`="4"
+)
 
 #calculating the final spline by aggregating the basis functions
 
 spl<-basis_plot%>% group_by(time)%>%summarize(spl=sum(mod_val))
 
 
-#original bases
+#original basis
 sz<-1
 p11<-ggplot(basis_plot,aes(x=time,y=value_orig,colour=as.factor(Basis)))+
   geom_line(size=sz,show.legend=FALSE)+
   geom_point(size=sz+1,show.legend = FALSE)+
   labs(y='Basis functions')+
-  facet_wrap(~Basis)+
+  facet_wrap(~Basis,labeller = as_labeller(basis_names))+
   theme_classic()+
   scale_color_aaas()
   
 
-#basis multiplied by the coefficient
+#penalized basis
 p12<-ggplot(basis_plot,aes(x=time,y=mod_val,colour=as.factor(Basis)))+
   geom_line(show.legend = FALSE,size=sz)+
   geom_point(show.legend = FALSE,size=sz+1)+
   labs(y='Penalized \n basis functions')+
   scale_y_continuous(breaks=seq(-1,1,1))+
-  facet_wrap(~Basis)+
+  facet_wrap(~Basis,labeller=as_labeller(basis_names))+
   theme_classic()+
   scale_color_aaas()
 
-#heatmap of the coefficient
+#heatmap of the penalization coefficient
 p13<-ggplot(basis_plot,aes(x=Basis,y=Basis,fill=cof))+
   geom_tile(aes(color='black'),size=sz+1,show.legend = FALSE)+
   geom_tile(size=sz+1)+
   scale_fill_gradient(low = "white", high = "red")+
   labs(x='Basis',y='Basis')+
-  geom_text(aes(label=round(cof,2),size=10),show.legend = FALSE)+
+  geom_text(aes(label=round(cof,2)),size=10,show.legend = FALSE)+
   theme_classic()+
   theme(legend.title = element_blank())
   
-#plotting simulated datapoints and spline  
+#plotting simulated datapoints and smooth term
 p14<-ggplot(data=dat,aes(x=time,y=y))+
   geom_point(size=sz+1)+
   scale_color_aaas()+
@@ -446,14 +462,11 @@ p14<-ggplot(data=dat,aes(x=time,y=y))+
 
 #Combining all
 p11+p13+p12+p14+plot_annotation(tag_levels='A')&
-  theme(plot.title = element_text(size = 30, 
-                                face = "bold"),
+  theme(
      text=element_text(size=30))
 
 ```
 
-
-In GAMs the _basis functions_ are typically evenly spaced in _knots_ over the range of the covariates. A commonly used _basis function_ is the cubic spline, which is a smooth curve constructed from cubic polynomials joined together at the knot locations[@wood2017;@simpson2018]. Cubic splines have a long history in solving non-parametric statistical problems and are often a default choice to fit GAMs as they are a simple, flexible and powerful option to obtain visual smoothness [@wegman1983]. Therefore, this data-driven flexibility in GAMs overcomes the limitation that occurs in LMEMs and rm-ANOVA when the data is non linear.
 
 The use of GAMs to analyze biomedical longitudinal data, and the impact of missing observations in the fit of the model will be examined in detail in the following section using simulation.
 
