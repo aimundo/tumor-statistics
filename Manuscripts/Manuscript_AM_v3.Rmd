@@ -338,6 +338,7 @@ The smooth functional relationship between the covariates and the response in GA
 library(mgcv)
 library(mvnfast)
   library(nlme)
+library(patchwork)
   library(ggsci)
 library(tidyverse)
 
@@ -385,19 +386,59 @@ basis<-basis %>% #pivoting to long format
   arrange(name) #ordering
 
 #length of dataframe to be created: number of knots by number of timepoints (minus 1 for the intercept that we won't plot)
-ln<-length(basis1)*(length(coef(gm))-1) 
+ln<-6*(length(coef(gm))-1) 
 
 basis_plot<-data.frame(Basis=integer(ln),
-                       value=double(ln),
+                       value_orig=double(ln),
                        time=integer(ln),
+                       cof=double(ln)
 )
 
 basis_plot$time<-rep(time) #pasting timepoints
 basis_plot$Basis<-rep(1:4,each=6) #pasting basis number values
-basis_plot$value<-basis$value #pasting basis values
+basis_plot$value_orig<-basis$value #pasting basis values
+basis_plot$cof<-rep(coef(gm)[2:5],each=6) #pasting coefficients
+basis_plot<-basis_plot%>%
+  mutate(mod_val=value_orig*cof)
 
-ggplot(basis_plot,aes(x=time,y=value))+geom_line()+facet_grid(~Basis) #plotting
+#calculating the final spline by aggregating the basis functions
 
+spl<-basis_plot%>% group_by(time)%>%summarize(spl=sum(mod_val))
+
+
+#original bases
+p1<-ggplot(basis_plot,aes(x=time,y=value_orig,colour=factor(Basis)))+
+  geom_line()+geom_point()+
+  facet_grid(~Basis)+
+  theme_classic()+
+  scale_color_aaas()
+  
+
+#basis multiplied by the coefficient
+p2<-ggplot(basis_plot,aes(x=time,y=mod_val,colour=factor(Basis)))+
+  geom_line()+geom_point()+
+  facet_grid(~Basis)+
+  theme_classic()+
+  scale_color_aaas()
+
+#heatmap of the coefficient
+p3<-ggplot(basis_plot,aes(x=Basis,y=Basis,fill=cof))+
+  geom_tile(aes(color='black'),size=2)+
+  geom_tile(size=2)+
+  scale_fill_gradient(low = "white", high = "red")+ 
+  geom_text(aes(label=round(cof,1)))+
+  theme_classic()
+
+p4<-ggplot(data=dat,aes(x=time,y=y))+
+  geom_point()+
+  geom_line(data=spl,aes(x=time,y=spl))+
+  scale_color_aaas()+
+  theme_classic()
+  
+
+
+p1+p2+p3+p4+plot_annotation(tag_levels='A')
+#plotting
 #plot(dat$y~dat$time)
 
 #matplot(dat$time, model_matrix[,-1], type = "l", lty = 2, add = T)
