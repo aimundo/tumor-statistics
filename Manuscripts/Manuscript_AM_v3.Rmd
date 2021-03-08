@@ -428,7 +428,7 @@ p3<-ggplot(basis_plot,aes(x=Basis,y=Basis,fill=cof))+
   geom_tile(aes(color='black'),size=2,show.legend = FALSE)+
   geom_tile(size=2)+
   scale_fill_gradient(low = "white", high = "red")+ 
-  geom_text(aes(label=round(cof,1)))+
+  geom_text(aes(label=round(cof,2)))+
   theme_classic()
 
 p4<-ggplot(data=dat,aes(x=time,y=y))+
