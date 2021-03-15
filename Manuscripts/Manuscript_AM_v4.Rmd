@@ -488,7 +488,12 @@ p11+p13+p12+p14+plot_annotation(tag_levels='A')&
 
 ## GAMs and covariance
 
+
+
 ## GAMs and significance
+
+
+
 
 The use of GAMs to analyze biomedical longitudinal data, and the impact of missing observations in the fit of the model will be examined in detail in the following section using simulation.
 
