@@ -101,7 +101,7 @@ Presenting the model in this manner makes clear that when treating different gro
 
 ### The Linear Mixed Model Case
 
-A linear mixed model for a longitudinal study can be written as:
+A linear mixed model (LMEM) is a class of statistical model that incorporates _fixed effects_ to model the relationship between the covariates and the response, and _random effects_ to model subject variability that is not the primary focus of the study but that might be important to distinguish [@pinheiro2006;@west2014]. A LMEM with interaction between time and treatment for a longitudinal study  can be written as:
 
 
 \begin{equation}
@@ -109,7 +109,7 @@ y_{ijt} = \beta_0+ \beta_1 \times time_{t} + \beta_2 \times treatment_{j} + \bet
 (\#eq:LMEM)
 \end{equation}
 
-When Equation \@ref(eq:linear-model) and Equation \@ref(eq:LMEM) are compared, it is apparent that the LMEM and rm-ANOVA models have the same construction regarding the _fixed effects_ of time and treatment, but that the LMEM incorporates an additional source of variation (the term $\mu_{ij}$). This term is defined as a _random effect_, which accounts for variability in each subject within each group. The _random_ component can be defined as "noise" caused by some inherent variability within the study that is not captured by the term $\varepsilon_{tij}$. 
+When Equation \@ref(eq:linear-model) and Equation \@ref(eq:LMEM) are compared, it is easily noticeable that LMEM and rm-ANOVA have the same construction regarding the _fixed effects_ of time and treatment, but that the LMEM incorporates an additional source of variation (the term $\mu_{ij}$). This term $\mu_{ij}$ is the one that corresponds to the  _random effect_, accounting for variability in each subject within each group. The _random_ component can also be understood as used to model some "noise" in the response, but that is intended to be analyzed and disentangled from the "global noise" term $\varepsilon_{tij}$ from Equation \@ref(eq:linear-model). 
 
 For example, if the blood concentration of the drug is measured in certain subjects in the early hours of the morning while other subjects are measured in the afternoon, it is possible that the difference in the collection time introduces some "noise" in the data. As the name suggests, this "random" variability needs to be modeled as a variable rather than as a constant value.  The _random effect_ $\mu_{ij}$ in Equation \@ref(eq:LMEM) is assumed to be independently normally distributed with mean zero and variance $\sigma^2_\mu$, which can be expressed as $\mu_{ij} \sim N(0,\sigma^2_\mu)$. In essence,the _random effect_ in a LMEM enables to fit models with different slopes at the subject-level[@pinheiro2006]. However,the expected linear relationship of the covariates and the response in Equation \@ref(eq:linear-model) and in Equation \@ref(eq:LMEM) is essentially the same, representing a major limitation of LMEMs to fit a non-linear response.
 
@@ -488,10 +488,13 @@ p11+p13+p12+p14+plot_annotation(tag_levels='A')&
 
 ## GAMs and covariance
 
+Although the specific methods of how GAMs model covariance and correlation is a topic beyond the scope of this work, it suffices to say that GAMs can handle correlation structures beyond compound symmetry. A detailed description on basis functions and correlations can be found in [@hefley2017]. In a practical sense, when a GAM is implemented for longitudinal data, a spline can be added to the model for the _time_ effect to account for the repeated measures over time. An example where this is covered is in the Appendix.
+
 
 
 ## GAMs and significance
 
+At the core of a biomedical longitudinal study lies the question of a significant difference between two or more treatments in different groups. Whereas in rm-ANOVA a _post-hoc_ analysis is required to answer such question by calculating some _p-values_, GAMs use a different approach to estimate significance. In essence, the idea behind the estimation of significance in GAMs by group is that if the _difference_ between the confidence intervals of the smooths is not equal to zero then a significant difference exists at that timepoint (or timepoints). The absence of a _p-value_ in this case might seem odd, but when a confidence interval comparison is put into context the validity of its rationale becomes apparent. The estimation of siginificant differences in GAMs is covered in detail in the Appendix. 
 
 
 
