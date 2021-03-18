@@ -1,5 +1,4 @@
-% Options for packages loaded elsewhere
-\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
@@ -10,13 +9,13 @@
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provide euro and other symbols
-\else % if luatex or xetex
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% Use upquote if available, for straight quotes in verbatim environments
+% use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \IfFileExists{microtype.sty}{% use microtype if available
   \usepackage[]{microtype}
@@ -38,56 +37,11 @@
 \hypersetup{
   pdftitle={The statistical analysis of non-linear longitudinal data in biomedical research using generalized additive models},
   pdfauthor={Ariel Mundo; Timothy J. Muldoon; John R. Tipton},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
+  pdfborder={0 0 0},
+  breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
 \usepackage[margin=1in]{geometry}
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs}
-% Correct order of tables after \paragraph or \subparagraph
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
-\makeatother
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
@@ -100,14 +54,25 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-% Set default figure placement to htbp
-\makeatletter
-\def\fps@figure{htbp}
-\makeatother
-\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
 \usepackage{subfig}
 \usepackage{breqn}
 \usepackage[font={small}]{caption}
@@ -141,7 +106,7 @@ Traditionally, a ``frequentist'' or ``classical'' statistical paradigm is used i
 The expected linear behavior of the response through time is a key requisite in rm-ANOVA {[}15{]}. This ``linearity assumption'' in rm-ANOVA implies that the model is misspecified when the data does not follow a linear trend, which results in unreliable inference. In biomedical research, non-linear trends are the norm rather than the exception in longitudinal studies. A particular example of this non-linear behavior in longitudinal data arises in measurements of tumor response in preclinical and clinical settings {[}1,8,16{]}. These studies have shown that the collected signal does not follow a linear trend over time, and presents extreme variability at different time points, making the fit of rm-ANOVA model inconsistent with the observed variation. Therefore, when rm-ANOVA is used to draw inference of such highly-variable data the estimates are inevitably biased, because the model is only able to accommodate linear trends that are far from adequately representing the biological phenomenon of interest.
 
 A \emph{post hoc} analysis is the statistical test used in conjunction with rm-ANOVA to perform repeated comparisons to estimate a \emph{p-value}, which in turn is used as a measure of significance.
-Although it is possible that a \emph{post hoc} analysis of rm-ANOVA is able to find ``significant'' \emph{p-values}( \emph{p}\textless0.05) from non-linear data, the validity of such metric is dependent on how adequate the model fits the data. In other words, \emph{p-values} are valid only if the model and the data have good agreement; if that is not the case, a ``Type III'' error (known as ``model misspecification'') occurs{[}17{]}. For example, model misspecification will occur when a model that is only able to explain linear responses (such as rm-ANOVA) is fitted to data that follows a quadratic trend, thereby causing the resulting \emph{p-values} and parameter estimates to be invalid {[}18{]}.
+Although it is possible that a \emph{post hoc} analysis of rm-ANOVA is able to find ``significant'' \emph{p-values}( \emph{p}\textless{}0.05) from non-linear data, the validity of such metric is dependent on how adequate the model fits the data. In other words, \emph{p-values} are valid only if the model and the data have good agreement; if that is not the case, a ``Type III'' error (known as ``model misspecification'') occurs{[}17{]}. For example, model misspecification will occur when a model that is only able to explain linear responses (such as rm-ANOVA) is fitted to data that follows a quadratic trend, thereby causing the resulting \emph{p-values} and parameter estimates to be invalid {[}18{]}.
 
 Additionally, the \emph{p-value} itself is highly variable, and multiple comparisons can inflate the false positivity rate (Type I error or \(\alpha\)) {[}19,20{]}, consequently biasing the conclusions of the study. Corrections exist to address the Type I error issue of multiple comparisons (such as Bonferroni {[}21{]}), but they in turn reduce statistical power (1-\(\beta\)){[}22{]}, and lead to increased Type II error (failing to reject the null hypothesis when the null hypothesis is false) {[}23,24{]}. Therefore, the tradeoff of \emph{post hoc} comparisons in rm-ANOVA between Type I, II and III errors might be difficult to balance in a biomedical longitudinal study where a delicate balance exists between statistical power and sample size.
 
@@ -298,8 +263,6 @@ In other words, the six points of each basis are multiplied by the corresponding
 \caption{Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D. Smoother for time and original datapoints. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.}\label{fig:basis-plot}
 \end{figure}
 
-\newpage
-
 \hypertarget{gams-and-covariance}{%
 \subsection{GAMs and covariance}\label{gams-and-covariance}}
 
@@ -313,7 +276,8 @@ At the core of a biomedical longitudinal study lies the question of a significan
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \hypertarget{references}{%
-\section{References}\label{references}}
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
 
 \hypertarget{refs}{}
 \leavevmode\hypertarget{ref-roblyer2011}{}%
@@ -431,7 +395,7 @@ At the core of a biomedical longitudinal study lies the question of a significan
 {[}38{]} R Core Team, R: A language and environment for statistical computing, R Foundation for Statistical Computing, Vienna, Austria, 2020. \url{https://www.R-project.org/}.
 
 \leavevmode\hypertarget{ref-wood2016}{}%
-{[}39{]} S.N. Wood, N., Pya, B. Säfken, Smoothing parameter and model selection for general smooth models (with discussion), Journal of the American Statistical Association. 111 (2016) 1548--1575.
+{[}39{]} S. Wood, N., Pya, B. Säfken, Smoothing parameter and model selection for general smooth models (with discussion), Journal of the American Statistical Association. 111 (2016) 1548--1575.
 
 \leavevmode\hypertarget{ref-west2014}{}%
 {[}40{]} B.T. West, K.B. Welch, A.T. Galecki, Linear mixed models: A practical guide using statistical software, CRC Press, 2014.
@@ -474,195 +438,5 @@ At the core of a biomedical longitudinal study lies the question of a significan
 
 \leavevmode\hypertarget{ref-wegman1983}{}%
 {[}53{]} E.J. Wegman, I.W. Wright, Splines in statistics, Journal of the American Statistical Association. 78 (1983) 351--365.
-
-\newpage
-
-\hypertarget{appendix-appendix}{%
-\appendix}
-
-
-\hypertarget{simulation-1}{%
-\section{Simulation}\label{simulation-1}}
-
-\hypertarget{compound-symmetry-and-independent-errors-in-linear-and-quadratic-responses}{%
-\subsection{Compound symmetry and independent errors in linear and quadratic responses}\label{compound-symmetry-and-independent-errors-in-linear-and-quadratic-responses}}
-
-This section simulated linear and quadratic data in the same manner as in Section \ref{simulation}. The linear simulations using Figure \ref{fig:linear-cases} show in panels A and D the simulated mean responses and individual datapoints. Panels C and G show a visual interpretation of ``correlation'' in the responses: In panel C, subjects that have a value of the random error \(\varepsilon\) either above or below the mean group response are more likely to have other observations that follow the same trajectory, thereby demonstrating correlation in the response. In panel G,because the errors are independent, there is no expectation that responses are likely to follow a similar pattern. Panels D and H show the predictions from the rm-ANOVA model.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{## Example with linear response}
-\NormalTok{example <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{n_time =} \DecValTok{6}\NormalTok{, }
-                    \DataTypeTok{fun_type =} \StringTok{"linear"}\NormalTok{, }
-                    \DataTypeTok{error_type =} \StringTok{"correlated"}\NormalTok{) \{}
-  
-  \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\NormalTok{(fun_type }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"linear"}\NormalTok{, }\StringTok{"quadratic"}\NormalTok{)))}
-    \KeywordTok{stop}\NormalTok{(}\StringTok{'fun_type must be either "linear", or "quadratic"'}\NormalTok{)}
-  \ControlFlowTok{if}\NormalTok{ (}\OperatorTok{!}\NormalTok{(error_type }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"correlated"}\NormalTok{, }\StringTok{"independent"}\NormalTok{)))}
-    \KeywordTok{stop}\NormalTok{(}\StringTok{'fun_type must be either "correlated", or "independent"'}\NormalTok{)}
-  
-  \KeywordTok{library}\NormalTok{(tidyverse)}
-  \KeywordTok{library}\NormalTok{(mvnfast)}
-  \KeywordTok{library}\NormalTok{(nlme)}
-  \KeywordTok{library}\NormalTok{(ggsci)}
-  
-\NormalTok{  x <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{6}\NormalTok{, }\DataTypeTok{length.out =}\NormalTok{ n_time)}
-\NormalTok{  mu <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, }\KeywordTok{length}\NormalTok{(x), }\DecValTok{2}\NormalTok{)}
-  \CommentTok{# linear response}
-  \ControlFlowTok{if}\NormalTok{ (fun_type }\OperatorTok{==}\StringTok{ "linear"}\NormalTok{) \{}
-\NormalTok{    mu[, }\DecValTok{1}\NormalTok{] <-}\StringTok{ }\OperatorTok{-}\StringTok{ }\NormalTok{(}\FloatTok{0.25}\OperatorTok{*}\NormalTok{x)}\OperatorTok{+}\DecValTok{2}  
-\NormalTok{    mu[, }\DecValTok{2}\NormalTok{] <-}\StringTok{ }\FloatTok{0.25}\OperatorTok{*}\NormalTok{x}\OperatorTok{+}\DecValTok{2}
-\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \CommentTok{# nonlinear response}
-    
-\NormalTok{    mu[, }\DecValTok{1}\NormalTok{] <-}\StringTok{  }\OperatorTok{-}\NormalTok{(}\FloatTok{0.25} \OperatorTok{*}\StringTok{ }\NormalTok{x}\OperatorTok{^}\DecValTok{2}\NormalTok{) }\FloatTok{+1.5}\OperatorTok{*}\NormalTok{x}\FloatTok{-1.25}
-\NormalTok{    mu[, }\DecValTok{2}\NormalTok{] <-}\StringTok{ }\NormalTok{(}\FloatTok{0.25} \OperatorTok{*}\StringTok{ }\NormalTok{x}\OperatorTok{^}\DecValTok{2}\NormalTok{) }\FloatTok{-1.5}\OperatorTok{*}\NormalTok{x}\FloatTok{+1.25}
-\NormalTok{  \}}
-  \CommentTok{# matplot(mu, type = 'l')}
-  
-\NormalTok{  y <-}\StringTok{ }\KeywordTok{array}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DataTypeTok{dim =} \KeywordTok{c}\NormalTok{(}\KeywordTok{length}\NormalTok{(x), }\DecValTok{2}\NormalTok{, }\DecValTok{10}\NormalTok{))}
-\NormalTok{  errors <-}\StringTok{ }\KeywordTok{array}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DataTypeTok{dim =} \KeywordTok{c}\NormalTok{(}\KeywordTok{length}\NormalTok{(x), }\DecValTok{2}\NormalTok{, }\DecValTok{10}\NormalTok{))}
-  
-  \ControlFlowTok{if}\NormalTok{ (error_type }\OperatorTok{==}\StringTok{ "independent"}\NormalTok{) \{}
-    \CommentTok{## independent errors}
-    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{) \{}
-      \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{) \{}
-\NormalTok{        errors[, i, j] <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{)}
-\NormalTok{        y[, i, j] <-}\StringTok{ }\NormalTok{mu[, i] }\OperatorTok{+}\StringTok{ }\NormalTok{errors[, i, j]}
-\NormalTok{      \}}
-\NormalTok{    \}}
-\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{) \{     }\CommentTok{# number of treatments}
-      \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{) \{  }\CommentTok{# number of subjects}
-        \CommentTok{# compound symmetry errors}
-\NormalTok{        errors[, i, j] <-}\StringTok{ }\KeywordTok{rmvn}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\KeywordTok{length}\NormalTok{(x)), }\FloatTok{0.1} \OperatorTok{*}\StringTok{ }\KeywordTok{diag}\NormalTok{(}\DecValTok{6}\NormalTok{) }\OperatorTok{+}\StringTok{ }\FloatTok{0.25} \OperatorTok{*}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{6}\NormalTok{))}
-\NormalTok{        y[, i, j] <-}\StringTok{ }\NormalTok{mu[, i] }\OperatorTok{+}\StringTok{ }\NormalTok{errors[, i, j]}
-\NormalTok{      \}}
-\NormalTok{    \}}
-\NormalTok{  \}    }
-  
-  
-  \CommentTok{## subject random effects}
-  
-  \CommentTok{## visualizing the difference between independent errors and compound symmetry}
-  \CommentTok{## why do we need to account for this -- overly confident inference}
-  
-  
-  \KeywordTok{dimnames}\NormalTok{(y) <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{time =}\NormalTok{ x, }\DataTypeTok{treatment =} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DataTypeTok{subject =} \DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)}
-  \KeywordTok{dimnames}\NormalTok{(errors) <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{time =}\NormalTok{ x, }\DataTypeTok{treatment =} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DataTypeTok{subject =} \DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)}
-  \KeywordTok{dimnames}\NormalTok{(mu) <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{time =}\NormalTok{ x, }\DataTypeTok{treatment =} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{)}
-\NormalTok{  dat <-}\StringTok{ }\KeywordTok{as.data.frame.table}\NormalTok{(y, }\DataTypeTok{responseName =} \StringTok{"y"}\NormalTok{)}
-\NormalTok{  dat_errors <-}\StringTok{ }\KeywordTok{as.data.frame.table}\NormalTok{(errors, }\DataTypeTok{responseName =} \StringTok{"errors"}\NormalTok{)}
-\NormalTok{  dat_mu <-}\StringTok{ }\KeywordTok{as.data.frame.table}\NormalTok{(mu, }\DataTypeTok{responseName =} \StringTok{"mu"}\NormalTok{)}
-\NormalTok{  dat <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(dat, dat_errors, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"time"}\NormalTok{, }\StringTok{"treatment"}\NormalTok{, }\StringTok{"subject"}\NormalTok{))}
-\NormalTok{  dat <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(dat, dat_mu, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"time"}\NormalTok{, }\StringTok{"treatment"}\NormalTok{))}
-\NormalTok{  dat}\OperatorTok{$}\NormalTok{time <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(dat}\OperatorTok{$}\NormalTok{time))}
-\NormalTok{  dat <-}\StringTok{ }\NormalTok{dat }\OperatorTok{%>%}
-\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{subject =} \KeywordTok{factor}\NormalTok{(}\KeywordTok{paste}\NormalTok{(subject, treatment, }\DataTypeTok{sep =} \StringTok{"-"}\NormalTok{)))}
-  
-  
-  \CommentTok{## repeated measures ANOVA in R}
-\NormalTok{  fit_lm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{time }\OperatorTok{+}\StringTok{ }\NormalTok{treatment }\OperatorTok{+}\StringTok{ }\NormalTok{time }\OperatorTok{*}\StringTok{ }\NormalTok{treatment, }\DataTypeTok{data =}\NormalTok{ dat)}
-\NormalTok{  dat}\OperatorTok{$}\NormalTok{preds_lm <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(fit_lm)}
-
-\NormalTok{  fit_lme <-}\StringTok{ }\KeywordTok{lme}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{treatment }\OperatorTok{+}\StringTok{ }\NormalTok{time }\OperatorTok{+}\StringTok{ }\NormalTok{treatment}\OperatorTok{:}\NormalTok{time,}
-                 \DataTypeTok{data =}\NormalTok{ dat,}
-                 \DataTypeTok{random =} \OperatorTok{~}\StringTok{ }\DecValTok{1} \OperatorTok{|}\StringTok{ }\NormalTok{subject,}
-                 \DataTypeTok{correlation =} \KeywordTok{corCompSymm}\NormalTok{(}\DataTypeTok{form =} \OperatorTok{~}\StringTok{ }\DecValTok{1} \OperatorTok{|}\StringTok{ }\NormalTok{subject)}
-\NormalTok{  )}
-  
-  
-\NormalTok{  pred_dat <-}\StringTok{ }\KeywordTok{expand.grid}\NormalTok{(}
-    \DataTypeTok{treatment =} \KeywordTok{factor}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{), }
-    \DataTypeTok{time =} \KeywordTok{unique}\NormalTok{(dat}\OperatorTok{$}\NormalTok{time)}
-\NormalTok{  )}
-  
-\NormalTok{  dat}\OperatorTok{$}\NormalTok{y_pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(fit_lme)}
-  
-  
-  \KeywordTok{return}\NormalTok{(}\KeywordTok{list}\NormalTok{(}
-    \DataTypeTok{dat =}\NormalTok{ dat,}
-    \DataTypeTok{pred_dat =}\NormalTok{ pred_dat,}
-    \DataTypeTok{fit_lm =}\NormalTok{ fit_lm,}
-    \DataTypeTok{fit_lme =}\NormalTok{ fit_lme}
-    
-\NormalTok{  ))}
-\NormalTok{\}}
-
-\NormalTok{plot_example <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(sim_dat) \{}
-  \KeywordTok{library}\NormalTok{(patchwork)}
-  \CommentTok{## Plot the simulated data}
-\NormalTok{  p1 <-}\StringTok{ }\NormalTok{sim_dat}\OperatorTok{$}\NormalTok{dat }\OperatorTok{%>%}
-\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ time, }\DataTypeTok{y =}\NormalTok{ y, }\DataTypeTok{group =}\NormalTok{ treatment, }\DataTypeTok{color =}\NormalTok{ treatment)) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{show.legend=}\OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y=}\StringTok{'response'}\NormalTok{)}\OperatorTok{+}
-\StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ time, }\DataTypeTok{y =}\NormalTok{ mu, }\DataTypeTok{color =}\NormalTok{ treatment),}\DataTypeTok{show.legend=}\OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{theme_classic}\NormalTok{() }\OperatorTok{+}
-\StringTok{    }\CommentTok{#ggtitle("Simulated data with true response function")+}
-\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{30}\NormalTok{, }
-                                  \DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
-        \DataTypeTok{text=}\KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{30}\NormalTok{))}\OperatorTok{+}
-\StringTok{    }\KeywordTok{scale_color_aaas}\NormalTok{()}
-  
-\NormalTok{  p2 <-}\StringTok{ }\NormalTok{sim_dat}\OperatorTok{$}\NormalTok{dat }\OperatorTok{%>%}
-\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ time, }\DataTypeTok{y =}\NormalTok{ y, }\DataTypeTok{group =}\NormalTok{ subject, }\DataTypeTok{color =}\NormalTok{ treatment)) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{size =} \StringTok{"Subjects"}\NormalTok{),}\DataTypeTok{show.legend =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\CommentTok{# facet_wrap(~ treatment) +}
-\StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ time, }\DataTypeTok{y =}\NormalTok{ mu, }\DataTypeTok{color =}\NormalTok{ treatment, }\DataTypeTok{size =} \StringTok{"Simulated Truth"}\NormalTok{), }\DataTypeTok{lty =} \DecValTok{1}\NormalTok{,}\DataTypeTok{show.legend =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y=}\StringTok{'response'}\NormalTok{)}\OperatorTok{+}
-\StringTok{    }\KeywordTok{scale_size_manual}\NormalTok{(}\DataTypeTok{name =} \StringTok{"Type"}\NormalTok{, }\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{"Subjects"}\NormalTok{ =}\StringTok{ }\FloatTok{0.5}\NormalTok{, }\StringTok{"Simulated Truth"}\NormalTok{ =}\StringTok{ }\DecValTok{3}\NormalTok{)) }\OperatorTok{+}
-\StringTok{    }\CommentTok{#ggtitle("Simulated data\textbackslash{}nIndividual responses with population mean") +}
-\StringTok{    }\KeywordTok{theme_classic}\NormalTok{()}\OperatorTok{+}
-\StringTok{     }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{30}\NormalTok{, }
-                                \DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
-     \DataTypeTok{text=}\KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{30}\NormalTok{))}\OperatorTok{+}
-\StringTok{    }\KeywordTok{scale_color_aaas}\NormalTok{()}
-  
-\NormalTok{   p3 <-}\StringTok{ }\NormalTok{sim_dat}\OperatorTok{$}\NormalTok{dat }\OperatorTok{%>%}
-\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ time, }\DataTypeTok{y =}\NormalTok{ errors, }\DataTypeTok{group =}\NormalTok{ subject, }\DataTypeTok{color =}\NormalTok{ treatment)) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{show.legend=}\OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y=}\StringTok{'errors'}\NormalTok{)}\OperatorTok{+}
-\StringTok{     }\KeywordTok{theme_classic}\NormalTok{()}\OperatorTok{+}
-\StringTok{    }\CommentTok{# facet_wrap(~ treatment) +}
-\StringTok{    }\CommentTok{#ggtitle("Simulated errors") +}
-\StringTok{     }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{30}\NormalTok{, }
-                                  \DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
-        \DataTypeTok{text=}\KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{30}\NormalTok{))}\OperatorTok{+}
-\StringTok{    }\KeywordTok{scale_color_aaas}\NormalTok{()}
-  
-\NormalTok{  p4 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(sim_dat}\OperatorTok{$}\NormalTok{dat, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ time, }\DataTypeTok{y =}\NormalTok{ y, }\DataTypeTok{color =}\NormalTok{ treatment)) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{geom_point}\NormalTok{()}\OperatorTok{+}\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y=}\StringTok{'response'}\NormalTok{)}\OperatorTok{+}
-\StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \KeywordTok{predict}\NormalTok{(sim_dat}\OperatorTok{$}\NormalTok{fit_lme), }\DataTypeTok{group =}\NormalTok{ subject, }\DataTypeTok{size =} \StringTok{"Subjects"}\NormalTok{)) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ sim_dat}\OperatorTok{$}\NormalTok{pred_dat, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \KeywordTok{predict}\NormalTok{(sim_dat}\OperatorTok{$}\NormalTok{fit_lme, }\DataTypeTok{level =} \DecValTok{0}\NormalTok{, }\DataTypeTok{newdata =}\NormalTok{ sim_dat}\OperatorTok{$}\NormalTok{pred_dat), }\DataTypeTok{size =} \StringTok{"Population"}\NormalTok{)) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{scale_size_manual}\NormalTok{(}\DataTypeTok{name =} \StringTok{"Predictions"}\NormalTok{, }\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{"Subjects"}\NormalTok{ =}\StringTok{ }\FloatTok{0.5}\NormalTok{, }\StringTok{"Population"}\NormalTok{ =}\StringTok{ }\DecValTok{3}\NormalTok{)) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{theme_classic}\NormalTok{() }\OperatorTok{+}
-\StringTok{    }\CommentTok{#ggtitle("Fitted Model")+}
-\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{30}\NormalTok{, }
-                                  \DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
-        \DataTypeTok{text=}\KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{30}\NormalTok{))}\OperatorTok{+}
-\StringTok{    }\KeywordTok{scale_color_aaas}\NormalTok{()}
-  
-  \KeywordTok{return}\NormalTok{((p1}\OperatorTok{+}\NormalTok{p3}\OperatorTok{+}\NormalTok{p2}\OperatorTok{+}\NormalTok{p4)}\OperatorTok{+}\KeywordTok{plot_layout}\NormalTok{(}\DataTypeTok{nrow=}\DecValTok{1}\NormalTok{)}\OperatorTok{+}\KeywordTok{plot_annotation}\NormalTok{(}\DataTypeTok{tag_levels =} \StringTok{'A'}\NormalTok{)) }
-  
-    
-\NormalTok{\}}
-
-\NormalTok{txt<-}\DecValTok{18}
-\NormalTok{A1<-}\KeywordTok{plot_example}\NormalTok{(}\KeywordTok{example}\NormalTok{(}\DataTypeTok{fun_type =} \StringTok{"linear"}\NormalTok{, }\DataTypeTok{error_type =} \StringTok{"correlated"}\NormalTok{)) }
-
-\NormalTok{B1<-}\KeywordTok{plot_example}\NormalTok{(}\KeywordTok{example}\NormalTok{(}\DataTypeTok{fun_type =} \StringTok{"linear"}\NormalTok{, }\DataTypeTok{error_type =} \StringTok{"independent"}\NormalTok{)) }
-  
-\NormalTok{C1<-}\KeywordTok{plot_example}\NormalTok{(}\KeywordTok{example}\NormalTok{(}\DataTypeTok{fun_type =} \StringTok{"quadratic"}\NormalTok{, }\DataTypeTok{error_type =} \StringTok{"correlated"}\NormalTok{)) }
-  
-\NormalTok{D1<-}\KeywordTok{plot_example}\NormalTok{(}\KeywordTok{example}\NormalTok{(}\DataTypeTok{fun_type =} \StringTok{"quadratic"}\NormalTok{, }\DataTypeTok{error_type =} \StringTok{"independent"}\NormalTok{)) }
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}[!h]
-\includegraphics{Manuscript_AM_v4_files/figure-latex/linear-cases-1} \caption{**Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimations from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model does not pick the trend of the quadratic data**}\label{fig:linear-cases}
-\end{figure}
-
-For the quadratic response case, Figure \ref{fig:quadratic-cases} shows the simulated responses using compound symmetry and independent errors.
-
-\begin{figure}[!h]
-\includegraphics{Manuscript_AM_v4_files/figure-latex/quadratic-cases-1} \caption{**Simulated quadratic responses from two groups with a rm-ANOVA model fitted. A,E:Simulated data with known mean response (lines) and individual responses (points) showing the dispersion of the data. B,F: Generated errors showing the difference in the behavior of correlated and independent errors.  C,G: Simulated known response per group (thick lines) with individual trajectories (thin lines), note that subjects with observations in the area above the mean response tend to stay in that region through the timeline. D,H: Estimations from the rm-ANOVA model for the mean group response. Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data.**}\label{fig:quadratic-cases}
-\end{figure}
 
 \end{document}
