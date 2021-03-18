@@ -7,11 +7,15 @@ author:
   Fayetteville]
 - John R. Tipton^[Department of Mathematical Sciences, University of Arkansas, Fayetteville]
 output:
-  bookdown::html_document2: default
   bookdown::pdf_document2:
     keep_tex: yes
     fig_caption: yes
-    extra_dependencies: ["subfig","breqn"]
+    extra_dependencies: 
+      subfig: null
+      breqn: null
+      caption: ["font={small}"]
+      float: null
+  bookdown::html_document2: default
   bookdown::word_document2:
     fig_caption: yes
     keep_md: yes
@@ -21,6 +25,8 @@ output:
 csl: Elsevier.csl
 bibliography: refs.bib
 ---
+
+
 
 # Background
 
@@ -131,7 +137,7 @@ In the case of LMEMs, inferences from the model are valid when missing observati
 
 This section has presented the assumptions for analyzing longitudinal data using rm-ANOVA and LMEMs and compared their differences regarding linearity, the covariance matrix and  missing data. Of notice, LMEMs offer a more robust and flexible approach than rm-ANOVA and if the data follows a linear trend, they provide an excellent choice to derive inferences from a repeated measures study. However, when the data presents high a non-linear behavior, LMEMs and rm-ANOVA fail to capture the trend of the data. To better convey the issues of linearity and correlation  in linear models fitted to non-linear data, simulation is used in the next section.
 
-## Simulation experiment on linearity and covariance structures {#simulation}
+## How does an rm-ANOVA fit looks like? A visual representation using simulation {#simulation}
 
 To demonstrate the limitations of rm-ANOVA an LMEMs for non-linear longitudinal data, this section presents a simulation experiment of a normally distributed response of two groups of 10 subjects each. An rm-ANOVA model (Equation \@ref(eq:linear-model)) is fitted to each group, using $\textsf{R}$[@r] and the package _nlme_[@nlme]. 
 Briefly, two cases for the mean responses for each group are considered: in the first case, the mean response in each group is a linear function with different intercepts and slopes; a negative slope is used for Group 1 and a positive slope is used for Group 2 (Figure \@ref(fig:l-q-response, A)). In the second case, a second-degree polynomial (quadratic) function is used for the mean response per group: the quadratic function is concave down for Group 1 and it is concave up for Group 2 (Figure \@ref(fig:l-q-response), C). In both the linear and quadratic simulated data, the groups start with the same mean value at the first time point. This is intentional in order to simulate the expected temporal evolution of some physiological quantity.
@@ -143,6 +149,7 @@ Specifically, the rationale for the chosen linear and quadratic functions is the
 set.seed(11)
 library(patchwork)
 library(tidyverse)
+knitr::opts_chunk$set(fig.pos = "!h", out.extra = "")
 ```
 
 
@@ -313,8 +320,9 @@ D<-plot_example(example(fun_type = "quadratic", error_type = "independent"))
 
 ```
 
-```{r, l-q-response, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap="**Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimations from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model does not pick the trend of the quadratic data**"}
+```{r, l-q-response, fig.width=10, fig.height=10, out.width='75%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap = "Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimations from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model does not pick the trend of the quadratic data."}
 # linear response, correlated errors (subject effect)
+par(mar = c(0.5, 0.5, 0.5, 0.5))
 A/C+plot_annotation(tag_levels = 'A')
 ```
 
@@ -347,9 +355,8 @@ The smooth functional relationship between the covariates and the response in GA
 
 A commonly used _basis function_ is the cubic spline, which is a smooth curve constructed from cubic polynomials joined together at the knot locations[@wood2017;@simpson2018]. Cubic splines have a long history in solving non-parametric statistical problems and are often a default choice to fit GAMs as they are a simple, flexible and powerful option to obtain visual smoothness [@wegman1983]. Therefore, this data-driven flexibility in GAMs overcomes the limitation that occurs in LMEMs and rm-ANOVA when the data is non linear.
 
-To further clarify the concept of basis functions and smooth functions, consider the simulated response for Group 1 in Figure @\ref(fig:l-q-response), C. The simplest GAM model that can be used to estimate such response is that of a single smooth term for the time effect; i.e., a model that fits the trend of the group trough the timeline. The timeline can be divided equally spaced _knots_, each knot being a region where a different basis function will be used. Because there are six timepoints for this group, five knots can be used. The model with five knots to construct the smooth term means that it will have four basis functions (plus one that corresponds to the intercept). The choice of basis functions is already optimized in the package _mgcv_ depending on the number of knots. In Panel A of Figure \@ref(fig:basis-plot), the four basis functions (and the intercept) are shown. Each of the basis functions is composed of six different points (because there are six points on the timeline). To control the wigliness of the fit, each of the basis functions of Panel A is penalized by multiplying it by a coefficient according to the penalty matrix of Panel B. 
+To further clarify the concept of basis functions and smooth functions, consider the simulated response for Group 1 in Figure @\ref(fig:l-q-response), C. The simplest GAM model that can be used to estimate such response is that of a single smooth term for the time effect; i.e., a model that fits a smooth to the trend of the group trough the timeline. The timeline can be divided equally spaced _knots_, each knot being a region where a different basis function will be used. Because there are six timepoints for this group, five knots can be used. The model with five knots to construct the smooth term means that it will have four basis functions (plus one that corresponds to the intercept). The choice of basis functions is already optimized in the package _mgcv_ depending on the number of knots. In Panel A of Figure \@ref(fig:basis-plot), the four basis functions (and the intercept) are shown. Each of the basis functions is composed of six different points (because there are six points on the timeline). To control the wigliness of the fit, each of the basis functions of Panel A is penalized by multiplying it by a coefficient according to the penalty matrix of Panel B. 
 
-In other words, the six points of each basis are multiplied by the corresponding coefficient in panel B, thereby increasing or decreasing the original basis functions of Panel A. In Figure \@ref(fig:basis-plot), Panel C shows the resulting penalized basis functions. Note that the penalization for basis 1 has resulted in a decrease of its overall value (because the coefficient for that basis function is negative and less than 1); on the other hand, basis 3 has roughly doubled its value. Finally, the penalized basis functions are added at each timepoint to produce the smooth term. The resulting smooth term for the effect of _time_ is shown in Panel D (orange line) along the simulated values per group, which appear as points.
 
 ```{r,basis-functions-plot, echo=FALSE,include=FALSE,message=FALSE,warning=FALSE}
 
@@ -480,25 +487,28 @@ b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
 
 ```
 
-```{r,basis-plot,fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap="**Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for _time_ for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D. Smoother for _time_ and original datapoints. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.**"}
+In other words, the six points of each basis are multiplied by the corresponding coefficient in panel B, thereby increasing or decreasing the original basis functions of Panel A. In Figure \@ref(fig:basis-plot), Panel C shows the resulting penalized basis functions. Note that the penalization for basis 1 has resulted in a decrease of its overall value (because the coefficient for that basis function is negative and less than 1); on the other hand, basis 3 has roughly doubled its value. Finally, the penalized basis functions are added at each timepoint to produce the smooth term. The resulting smooth term for the effect of _time_ is shown in Panel D (orange line) along the simulated values per group, which appear as points.
+
+
+```{r,basis-plot,fig.width=10, fig.height=10, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, fig.show='hold', fig.cap="Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D. Smoother for time and original datapoints. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points."}
+
+par(mar = c(2, 2, 2, 2))
 
 b_plot
 
 ```
 
+
 ## GAMs and covariance
 
-Although the specific methods of how GAMs model covariance and correlation is a topic beyond the scope of this work, it suffices to say that GAMs can handle correlation structures beyond compound symmetry. A detailed description on basis functions and correlations can be found in [@hefley2017]. In a practical sense, when a GAM is implemented for longitudinal data, a spline can be added to the model for the _time_ effect to account for the repeated measures over time. An example where this is covered is in the Appendix.
+Although the specific methods of how GAMs model correlation structures is a topic beyond the scope of this work, it suffices to say that GAMs can handle correlation structures beyond compound symmetry. A detailed description on basis functions and correlations can be found in [@hefley2017]. In a practical sense, when a GAM is implemented for longitudinal data, a spline can be added to the model for the _time_ effect to account for the repeated measures over time.  An example where this is covered is in the Appendix.
 
 
 
 ## Determination of significance in GAMs
 
-At the core of a biomedical longitudinal study lies the question of a significant difference between two or more treatments in different groups. Whereas in rm-ANOVA a _post-hoc_ analysis is required to answer such question by calculating some _p-values_, GAMs use a different approach to estimate significance. In essence, the idea behind the estimation of significance in GAMs by group is that if the _difference_ between the confidence intervals of the smooths is not equal to zero then a significant difference exists at that timepoint (or timepoints). The absence of a _p-value_ in this case might seem odd, but when a confidence interval comparison is put into context the validity of its rationale becomes apparent. The estimation of siginificant differences in GAMs is covered in detail in the Appendix. 
+At the core of a biomedical longitudinal study lies the question of a significant difference between the effect of two or more treatments in different groups. Whereas in rm-ANOVA a _post-hoc_ analysis is required to answer such question by calculating some _p-values_ after multiple comparisons, GAMs use a different approach to estimate significance. In essence, the idea behind the estimation of significance in GAMs across different treatment groups is that if the _difference_ between the confidence intervals of the fitted smooths for such groups is  non-zero, then a significant difference exists at that timepoint (or timepoints). The absence of a _p-value_ in this case might seem odd, but when a confidence interval comparison is put into context the validity of its rationale becomes apparent. The major advantage of the significance estimation in GAMs  is that they allow to determine significance at a specific timepoint, rather than providing a single _p-value_ for the overall treatment effect.  The estimation of siginificant differences in GAMs is covered in detail in the Appendix using simulated longitudinal data that follows previously reported trends of tumor response between multiple treatment groups [@vishwanath2009].
 
-
-
-The use of GAMs to analyze biomedical longitudinal data, and the impact of missing observations in the fit of the model will be examined in detail in the following section using simulation.
 
 
 ***
