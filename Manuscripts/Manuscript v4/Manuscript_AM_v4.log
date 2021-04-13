@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.3.18)  18 MAR 2021 16:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.3.18)  13 APR 2021 17:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -801,7 +801,7 @@ tex.map}] [2] (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm
 /t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [3] [4] [5] [6]
-<Manuscript_AM_v4_files/figure-latex/l-q-response-1.pdf, id=147, 722.7pt x 722.
+<Manuscript_AM_v4_files/figure-latex/l-q-response-1.pdf, id=148, 722.7pt x 722.
 7pt>
 File: Manuscript_AM_v4_files/figure-latex/l-q-response-1.pdf Graphic file (type
  pdf)
@@ -810,10 +810,7 @@ Package pdftex.def Info: Manuscript_AM_v4_files/figure-latex/l-q-response-1.pdf
   used on input line 252.
 (pdftex.def)             Requested size: 352.31758pt x 352.31758pt.
 [7 <./Manuscript_AM_v4_files/figure-latex/l-q-response-1.pdf>] [8]
-
-LaTeX Warning: Reference `(' on page 9 undefined on input line 288.
-
-<Manuscript_AM_v4_files/figure-latex/basis-plot-1.pdf, id=180, 722.7pt x 722.7p
+<Manuscript_AM_v4_files/figure-latex/basis-plot-1.pdf, id=182, 722.7pt x 722.7p
 t>
 File: Manuscript_AM_v4_files/figure-latex/basis-plot-1.pdf Graphic file (type p
 df)
@@ -850,7 +847,7 @@ Underfull \vbox (badness 10000) detected at line 656
  []
 
 [16]
-<Manuscript_AM_v4_files/figure-latex/linear-cases-1.pdf, id=289, 1156.32pt x 86
+<Manuscript_AM_v4_files/figure-latex/linear-cases-1.pdf, id=291, 1156.32pt x 86
 7.24pt>
 File: Manuscript_AM_v4_files/figure-latex/linear-cases-1.pdf Graphic file (type
  pdf)
@@ -859,7 +856,7 @@ Package pdftex.def Info: Manuscript_AM_v4_files/figure-latex/linear-cases-1.pdf
   used on input line 659.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
 [17 <./Manuscript_AM_v4_files/figure-latex/linear-cases-1.pdf>]
-<Manuscript_AM_v4_files/figure-latex/quadratic-cases-1.pdf, id=300, 1156.32pt x
+<Manuscript_AM_v4_files/figure-latex/quadratic-cases-1.pdf, id=302, 1156.32pt x
  867.24pt>
 File: Manuscript_AM_v4_files/figure-latex/quadratic-cases-1.pdf Graphic file (t
 ype pdf)
@@ -869,20 +866,17 @@ pdf  used on input line 665.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
 [18 <./Manuscript_AM_v4_files/figure-latex/quadratic-cases-1.pdf>] (./Manuscrip
 t_AM_v4.aux)
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `Manuscript_AM_v4.out' has not changed.
 (rerunfilecheck)             Checksum: 5D664CB242DB2DFBF0E3F99AF5968ACD;3155.
  ) 
 Here is how much of TeX's memory you used:
- 13408 strings out of 480962
- 203375 string characters out of 5905818
- 542858 words of memory out of 5000000
- 30265 multiletter control sequences out of 15000+600000
+ 13407 strings out of 480962
+ 203372 string characters out of 5905818
+ 541886 words of memory out of 5000000
+ 30264 multiletter control sequences out of 15000+600000
  473682 words of font info for 77 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 73i,11n,89p,1343b,363s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 73i,11n,89p,1461b,363s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec
 .enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm
 -mathex.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvip
@@ -909,10 +903,10 @@ TeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/aimundo/AppData/Roami
 ng/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/aimundo/AppDat
 a/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/aimundo
 /AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on Manuscript_AM_v4.pdf (18 pages, 529175 bytes).
+Output written on Manuscript_AM_v4.pdf (18 pages, 528788 bytes).
 PDF statistics:
- 403 PDF objects out of 1000 (max. 8388607)
- 352 compressed objects within 4 object streams
+ 405 PDF objects out of 1000 (max. 8388607)
+ 354 compressed objects within 4 object streams
  116 named destinations out of 1000 (max. 500000)
  133 words of extra memory for PDF output out of 10000 (max. 10000000)
 
