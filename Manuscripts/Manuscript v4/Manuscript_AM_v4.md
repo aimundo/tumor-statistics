@@ -7,6 +7,9 @@ author:
   Fayetteville]
 - John R. Tipton^[Department of Mathematical Sciences, University of Arkansas, Fayetteville]
 output:
+  bookdown::word_document2:
+    fig_caption: yes
+    keep_md: yes
   bookdown::html_document2: default
   bookdown::pdf_document2:
     keep_tex: yes
@@ -16,9 +19,6 @@ output:
       breqn: null
       caption: ["font={small}"]
       float: null
-  bookdown::word_document2:
-    fig_caption: yes
-    keep_md: yes
   link-citations: yes
   css: style.css
   '': default
@@ -77,7 +77,7 @@ In a biomedical longitudinal study, two or more groups of subjects (e.g., patien
 Mathematically speaking, a rm-ANOVA model with an interaction can be written as:
 
 \begin{equation}
-y_{ijt} = \beta_0+\beta_1 \times time_{t} +\beta_2 \times treatment_{j} +\beta_3 \times time_{t}\times treatment_{j}+\varepsilon_{ijt}\\ 
+y_{ijt} = \beta_0+\beta_1 \times time_{t} +\beta_2 \times \textrm{treatment}_{j} +\beta_3 \times time_{t}\times \textrm{treatment}_{j}+\varepsilon_{ijt}\\ 
 (\#eq:linear-model)
 \end{equation}
 
@@ -111,7 +111,7 @@ A linear mixed model (LMEM) is a class of statistical model that incorporates _f
 
 
 \begin{equation}
-y_{ijt} = \beta_0+ \beta_1 \times time_{t} + \beta_2 \times treatment_{j} + \beta_3 \times time_{t}\times treatment_{j}+\mu_{ij} +\varepsilon_{ijt}\\ 
+y_{ijt} = \beta_0+ \beta_1 \times time_{t} + \beta_2 \times \textrm{treatment}_{j} + \beta_3 \times time_{t}\times \textrm{treatment}_{j}+\mu_{ij} +\varepsilon_{ijt}\\ 
 (\#eq:LMEM)
 \end{equation}
 
@@ -145,187 +145,12 @@ Briefly, two cases for the mean responses for each group are considered: in the 
 Specifically, the rationale for the chosen linear and quadratic functions is the likelihood that a measured response in two treatment groups is similar in the initial phase of the study, but as treatment progresses a divergence in the trend of the response indicates a difference in the effect of each treatment. In other words, Group 1 can be thought as a "Control" group and Group 2 as a "Treatment" group. From the mean response per group (linear or quadratic), the variability or "error" of individual responses  within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \@ref(fig:l-q-response) B,D). A more comprehensive exploration  of the fit of rm-ANOVA for linear and non-linear longitudinal data is in Figure \@ref(fig:linear-cases) and Figure \@ref(fig:quadratic-cases) in the Appendix, where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented.
 
 
-```{r, message = FALSE,include=FALSE}
-set.seed(11)
-library(patchwork)
-library(tidyverse)
-
-knitr::opts_chunk$set(fig.pos = "!h", out.extra = "")
-```
 
 
-```{r,include=FALSE,message=FALSE,echo=FALSE}
-## Example with linear response
-example <- function(n_time = 6, 
-                    fun_type = "linear", 
-                    error_type = "correlated") {
-  
-  if (!(fun_type %in% c("linear", "quadratic")))
-    stop('fun_type must be either "linear", or "quadratic"')
-  if (!(error_type %in% c("correlated", "independent")))
-    stop('fun_type must be either "correlated", or "independent"')
-  
-  library(tidyverse)
-  library(mvnfast)
-  library(nlme)
-  library(ggsci)
-  
-  x <- seq(1,6, length.out = n_time)
-  mu <- matrix(0, length(x), 2)
-  # linear response
-  if (fun_type == "linear") {
-    mu[, 1] <- - (0.25*x)+2  
-    mu[, 2] <- 0.25*x+2
-  } else {
-    # nonlinear response
-    
-    mu[, 1] <-  -(0.25 * x^2) +1.5*x-1.25
-    mu[, 2] <- (0.25 * x^2) -1.5*x+1.25
-  }
-  # matplot(mu, type = 'l')
-  
-  y <- array(0, dim = c(length(x), 2, 10))
-  errors <- array(0, dim = c(length(x), 2, 10))
-  
-  if (error_type == "independent") {
-    ## independent errors
-    for (i in 1:2) {
-      for (j in 1:10) {
-        errors[, i, j] <- rnorm(6, 0, 0.25)
-        y[, i, j] <- mu[, i] + errors[, i, j]
-      }
-    }
-  } else {
-    for (i in 1:2) {     # number of treatments
-      for (j in 1:10) {  # number of subjects
-        # compound symmetry errors
-        errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * diag(6) + 0.25 * matrix(1, 6, 6))
-        y[, i, j] <- mu[, i] + errors[, i, j]
-      }
-    }
-  }    
-  
-  
-  ## subject random effects
-  
-  ## visualizing the difference between independent errors and compound symmetry
-  ## why do we need to account for this -- overly confident inference
-  
-  
-  dimnames(y) <- list(time = x, treatment = 1:2, subject = 1:10)
-  dimnames(errors) <- list(time = x, treatment = 1:2, subject = 1:10)
-  dimnames(mu) <- list(time = x, treatment = 1:2)
-  dat <- as.data.frame.table(y, responseName = "y")
-  dat_errors <- as.data.frame.table(errors, responseName = "errors")
-  dat_mu <- as.data.frame.table(mu, responseName = "mu")
-  dat <- left_join(dat, dat_errors, by = c("time", "treatment", "subject"))
-  dat <- left_join(dat, dat_mu, by = c("time", "treatment"))
-  dat$time <- as.numeric(as.character(dat$time))
-  dat <- dat %>%
-    mutate(subject = factor(paste(subject, treatment, sep = "-")))
-  
-  
-  ## repeated measures ANOVA in R
-  fit_lm <- lm(y ~ time + treatment + time * treatment, data = dat)
-  dat$preds_lm <- predict(fit_lm)
 
-  fit_lme <- lme(y ~ treatment + time + treatment:time,
-                 data = dat,
-                 random = ~ 1 | subject,
-                 correlation = corCompSymm(form = ~ 1 | subject)
-  )
-  
-  
-  pred_dat <- expand.grid(
-    treatment = factor(1:2), 
-    time = unique(dat$time)
-  )
-  
-  dat$y_pred <- predict(fit_lme)
-  
-  
-  return(list(
-    dat = dat,
-    pred_dat = pred_dat,
-    fit_lm = fit_lm,
-    fit_lme = fit_lme
-    
-  ))
-}
 
-plot_example <- function(sim_dat) {
-  library(patchwork)
-  ## Plot the simulated data
-  p1 <- sim_dat$dat %>%
-    ggplot(aes(x = time, y = y, group = treatment, color = treatment)) +
-    geom_point(show.legend=FALSE) +labs(y='response')+
-    geom_line(aes(x = time, y = mu, color = treatment),show.legend=FALSE) +
-    theme_classic() +
-    #ggtitle("Simulated data with true response function")+
-    theme(plot.title = element_text(size = 18, 
-                                  face = "bold"),
-        text=element_text(size=18))+
-    scale_color_aaas()
-  
-  p2 <- sim_dat$dat %>%
-    ggplot(aes(x = time, y = y, group = subject, color = treatment)) +
-    geom_line(aes(size = "Subjects"),show.legend = FALSE) +
-    # facet_wrap(~ treatment) +
-    geom_line(aes(x = time, y = mu, color = treatment, size = "Simulated Truth"), lty = 1,show.legend = FALSE) +labs(y='response')+
-    scale_size_manual(name = "Type", values=c("Subjects" = 0.5, "Simulated Truth" = 3)) +
-    #ggtitle("Simulated data\nIndividual responses with population mean") +
-    theme_classic()+
-     theme(plot.title = element_text(size = 18, 
-                                face = "bold"),
-     text=element_text(size=18))+
-    scale_color_aaas()
-  
-   p3 <- sim_dat$dat %>%
-    ggplot(aes(x = time, y = errors, group = subject, color = treatment)) +
-    geom_line(show.legend=FALSE) +labs(y='errors')+
-     theme_classic()+
-    # facet_wrap(~ treatment) +
-    #ggtitle("Simulated errors") +
-     theme(plot.title = element_text(size = 18, 
-                                  face = "bold"),
-        text=element_text(size=18))+
-    scale_color_aaas()
-  
-  p4 <- ggplot(sim_dat$dat, aes(x = time, y = y, color = treatment)) +
-    geom_point()+labs(y='response')+
-    geom_line(aes(y = predict(sim_dat$fit_lme), group = subject, size = "Subjects")) +
-    geom_line(data = sim_dat$pred_dat, aes(y = predict(sim_dat$fit_lme, level = 0, newdata = sim_dat$pred_dat), size = "Population")) +
-    scale_size_manual(name = "Predictions", values=c("Subjects" = 0.5, "Population" = 3)) +
-    theme_classic() +
-    #ggtitle("Fitted Model")+
-    theme(plot.title = element_text(size = 18, 
-                                  face = "bold"),
-        text=element_text(size=18))+
-    scale_color_aaas()
-  
-  #return((p1+p3+p2+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
-  
-  return((p1+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
-    
-}
 
-txt<-18
-A<-plot_example(example(fun_type = "linear", error_type = "correlated")) 
-
-B<-plot_example(example(fun_type = "linear", error_type = "independent")) 
-  
-C<-plot_example(example(fun_type = "quadratic", error_type = "correlated")) 
-  
-D<-plot_example(example(fun_type = "quadratic", error_type = "independent")) 
-  
-
-```
-
-```{r, l-q-response, fig.width=10, fig.height=10, out.width='75%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap = "Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimates from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model not only fails to pick the trend of the quadratic data but it also incorrectly estimates the initial conditions."}
-# linear response, correlated errors (subject effect)
-par(mar = c(0.5, 0.5, 0.5, 0.5))
-A/C+plot_annotation(tag_levels = 'A')
-```
+![(\#fig:l-q-response)Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimates from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model not only fails to pick the trend of the quadratic data but it also incorrectly estimates the initial conditions.](Manuscript_AM_v4_files/figure-docx/l-q-response-1.png){width=75% }
 
 The simulation shows that the fit produced by the rm-ANOVA model is good for linear data, as the predictions for the mean response are reasonably close to the "truth" of the simulated data  (Figure \@ref(fig:l-q-response),B). When the linearity and compound symmetry assumptions are met, the model approximates well the individual trends and the mean trends by group.
 
@@ -359,145 +184,12 @@ A commonly used _basis function_ is the cubic spline, which is a smooth curve co
 To further clarify the concept of basis functions and smooth functions, consider the simulated response for Group 1 in Figure (\@ref(fig:l-q-response), C). The simplest GAM model that can be used to estimate such response is that of a single smooth term for the time effect; i.e., a model that fits a smooth to the trend of the group through time. The timeline can be divided in equally spaced _knots_, each knot being a region where a different basis function will be used. Because there are six timepoints for this group, five knots can be used. The model with five knots to construct the smooth term means that it will have four basis functions (plus one that corresponds to the intercept). The choice of basis functions is already optimized in the package _mgcv_ depending on the number of knots. In Panel A of Figure \@ref(fig:basis-plot), the four basis functions (and the intercept) are shown. Each of the basis functions is composed of six different points (because there are six points on the timeline). To control the "wigliness" of the fit, each of the basis functions of Panel A is penalized by multiplying it by a coefficient according to the penalty matrix of Panel B. The penalty reduces the "wigliness" of the smooth fit to prevent overfitting: A weak penalty estimate will result in wiggly functions whereas a strong penalty estimate provides evidence that a linear response is appropriate.
 
 
-```{r,basis-functions-plot, echo=FALSE,include=FALSE,message=FALSE,warning=FALSE}
 
-library(mgcv)
-
-n_time = 6
- x <- seq(1,6, length.out = n_time)
- mu <- matrix(0, length(x), 2)
- mu[, 1] <-  -(0.25 * x^2) +1.5*x-1.25
- mu[, 2] <- (0.25 * x^2) -1.5*x+1.25
- y <- array(0, dim = c(length(x), 2, 10))
- errors <- array(0, dim = c(length(x), 2, 10))
- for (i in 1:2) {     # number of treatments
-     for (j in 1:10) {  # number of subjects
-         # compound symmetry errors
-         errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * diag(6) + 0.25 * matrix(1, 6, 6))
-         y[, i, j] <- mu[, i] + errors[, i, j]
-     }
- }
-  dimnames(y) <- list(time = x, treatment = 1:2, subject = 1:10)
- dimnames(errors) <- list(time = x, treatment = 1:2, subject = 1:10)
- dimnames(mu) <- list(time = x, treatment = 1:2)
- dat <- as.data.frame.table(y, responseName = "y")
- dat_errors <- as.data.frame.table(errors, responseName = "errors")
- dat_mu <- as.data.frame.table(mu, responseName = "mu")
- dat <- left_join(dat, dat_errors, by = c("time", "treatment", "subject"))
- dat <- left_join(dat, dat_mu, by = c("time", "treatment"))
- dat$time <- as.numeric(as.character(dat$time))
- dat <- dat %>%
-     mutate(subject = factor(paste(subject, treatment, sep = "-")))
-  
-  dat<-subset(dat,treatment==1)
-  dat<-dat[,c('y','time')]
-gm<-gam(y~s(time,k=5),data=dat)
-model_matrix<-as.data.frame(predict(gm,type='lpmatrix'))
-
-x_new <- (seq(0, max(dat$time), length.out = 100))
-y_pred <- predict(gm, newdata=dat) 
-
-time<-c(1:6)
-
-basis<-model_matrix[1:6,] #extracting basis
-#basis<-model_matrix[1:6,-1] #extracting basis
-colnames(basis)[colnames(basis)=="(Intercept)"]<-"s(time).0"
-basis<-basis %>% #pivoting to long format
-  pivot_longer(
-    cols=starts_with("s")
-  )%>%
-  arrange(name) #ordering
-
-#length of dataframe to be created: number of knots by number of timepoints (minus 1 for the intercept that we won't plot)
-ln<-6*(length(coef(gm))) 
-
-basis_plot<-data.frame(Basis=integer(ln),
-                       value_orig=double(ln),
-                       time=integer(ln),
-                       cof=double(ln)
-)
-
-basis_plot$time<-rep(time) #pasting timepoints
-basis_plot$Basis<-factor(rep(c(1:5),each=6)) #pasting basis number values
-basis_plot$value_orig<-basis$value #pasting basis values
-basis_plot$cof<-rep(coef(gm)[1:5],each=6) #pasting coefficients
-basis_plot<-basis_plot%>%
-  mutate(mod_val=value_orig*cof)
-
-#creating labeller to change the labels in the basis plots
-
-basis_names<-c(
-  `1`="Intercept",
-  `2`="1",
-  `3`="2",
-  `4`="3",
-  `5`="4"
-)
-
-#calculating the final spline by aggregating the basis functions
-
-spl<-basis_plot%>% group_by(time)%>%summarize(spl=sum(mod_val))
-
-
-#original basis
-sz<-1
-p11<-ggplot(basis_plot,aes(x=time,y=value_orig,colour=as.factor(Basis)))+
-  geom_line(size=sz,show.legend=FALSE)+
-  geom_point(size=sz+1,show.legend = FALSE)+
-  labs(y='Basis functions')+
-  facet_wrap(~Basis,labeller = as_labeller(basis_names))+
-  theme_classic()+
-  scale_color_aaas()
-  
-
-#penalized basis
-p12<-ggplot(basis_plot,aes(x=time,y=mod_val,colour=as.factor(Basis)))+
-  geom_line(show.legend = FALSE,size=sz)+
-  geom_point(show.legend = FALSE,size=sz+1)+
-  labs(y='Penalized \n basis functions')+
-  scale_y_continuous(breaks=seq(-1,1,1))+
-  facet_wrap(~Basis,labeller=as_labeller(basis_names))+
-  theme_classic()+
-  scale_color_aaas()
-
-#heatmap of the penalization coefficient
-x_labels<-c("Intercept","1","2","3","4")
-p13<-ggplot(basis_plot,aes(x=Basis,y=Basis,fill=cof))+
-  geom_tile(aes(color='black'),size=sz+1,show.legend = FALSE)+
-  geom_tile(size=sz+1)+
-  scale_fill_gradient(low = "white", high = "red")+
-  labs(x='Basis',y='Basis')+
-  scale_x_discrete(labels=x_labels)+
-  geom_text(aes(label=round(cof,2)),size=10,show.legend = FALSE)+
-  theme_classic()+
-  theme(legend.title = element_blank())
-  
-#plotting simulated datapoints and smooth term
-p14<-ggplot(data=dat,aes(x=time,y=y))+
-  geom_point(size=sz+1)+
-  scale_color_aaas()+
-  labs(y='Simulated \n response')+
-  geom_line(data=spl,aes(x=time,y=spl),color="#B15731",size=sz+1)+
-  theme_classic()
-  
-
-#Combining all
-b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
-  theme(
-     text=element_text(size=18))
-
-```
 
 In other words, the six points of each basis are multiplied by the corresponding coefficient in panel B, thereby increasing or decreasing the original basis functions of Panel A. In Figure \@ref(fig:basis-plot), Panel C shows the resulting penalized basis functions. Note that the penalization for basis 1 has resulted in a decrease of its overall value (because the coefficient for that basis function is negative and less than 1); on the other hand, basis 3 has roughly doubled its value. Finally, the penalized basis functions are added at each timepoint to produce the smooth term. The resulting smooth term for the effect of _time_ is shown in Panel D (orange line) along the simulated values per group, which appear as points.
 
 
-```{r,basis-plot,fig.width=10, fig.height=10, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, fig.show='hold', fig.cap="Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D. Smoother for time and original datapoints. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points."}
-
-par(mar = c(2, 2, 2, 2))
-
-b_plot
-
-```
+![(\#fig:basis-plot)Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D. Smoother for time and original datapoints. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.](Manuscript_AM_v4_files/figure-docx/basis-plot-1.png){width=75% }
 
  \newpage
  
@@ -530,7 +222,8 @@ At the core of a biomedical longitudinal study lies the question of a significan
 
 This section simulated linear and quadratic data in the same manner as in Section \@ref(simulation). The linear simulations using Figure \@ref(fig:linear-cases) show in  panels A and D the simulated mean responses and individual datapoints.  Panels C and G show a visual interpretation of "correlation" in the responses: In panel C, subjects that have a value of the random error $\varepsilon$ either above or below the mean group response are more likely to have other observations that follow the same trajectory, thereby demonstrating correlation in the response. In panel G,because the errors are independent, there is no expectation that responses are likely to follow a similar pattern.  Panels D and H show the predictions from the rm-ANOVA model.
 
-```{r,include=TRUE,message=FALSE,echo=TRUE}
+
+```r
 ## Example with linear response
 example <- function(n_time = 6, 
                     fun_type = "linear", 
@@ -692,21 +385,13 @@ B1<-plot_example(example(fun_type = "linear", error_type = "independent"))
 C1<-plot_example(example(fun_type = "quadratic", error_type = "correlated")) 
   
 D1<-plot_example(example(fun_type = "quadratic", error_type = "independent")) 
-  
-
 ```
 
 
 
-```{r, linear-cases, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap="**Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimations from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model does not pick the trend of the quadratic data**"}
-# linear response, correlated errors (subject effect)
-A1/B1+plot_annotation(tag_levels = 'A')
-```
+![(\#fig:linear-cases)**Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimations from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model does not pick the trend of the quadratic data**](Manuscript_AM_v4_files/figure-docx/linear-cases-1.png)
 
 For the quadratic response case, Figure \@ref(fig:quadratic-cases) shows the simulated responses using compound symmetry and independent errors. 
 
-```{r, quadratic-cases, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap="**Simulated quadratic responses from two groups with a rm-ANOVA model fitted. A,E:Simulated data with known mean response (lines) and individual responses (points) showing the dispersion of the data. B,F: Generated errors showing the difference in the behavior of correlated and independent errors.  C,G: Simulated known response per group (thick lines) with individual trajectories (thin lines), note that subjects with observations in the area above the mean response tend to stay in that region through the timeline. D,H: Estimations from the rm-ANOVA model for the mean group response. Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data.**"}
-# linear response, correlated errors (subject effect)
-C1/D1+plot_annotation(tag_levels = 'A')
-```
+![(\#fig:quadratic-cases)**Simulated quadratic responses from two groups with a rm-ANOVA model fitted. A,E:Simulated data with known mean response (lines) and individual responses (points) showing the dispersion of the data. B,F: Generated errors showing the difference in the behavior of correlated and independent errors.  C,G: Simulated known response per group (thick lines) with individual trajectories (thin lines), note that subjects with observations in the area above the mean response tend to stay in that region through the timeline. D,H: Estimations from the rm-ANOVA model for the mean group response. Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data.**](Manuscript_AM_v4_files/figure-docx/quadratic-cases-1.png)
 

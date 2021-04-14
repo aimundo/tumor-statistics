@@ -180,7 +180,7 @@ In a biomedical longitudinal study, two or more groups of subjects (e.g., patien
 Mathematically speaking, a rm-ANOVA model with an interaction can be written as:
 
 \begin{equation}
-y_{ijt} = \beta_0+ \beta_1 \times time_{t} + \beta_2 \times treatment_{j} + \beta_3 \times time_{t}\times treatment_{j}+\varepsilon_{ijt}\\ 
+y_{ijt} = \beta_0+\beta_1 \times time_{t} +\beta_2 \times \textrm{treatment}_{j} +\beta_3 \times time_{t}\times \textrm{treatment}_{j}+\varepsilon_{ijt}\\ 
 \label{eq:linear-model}
 \end{equation}
 
@@ -213,7 +213,7 @@ Presenting the model in this manner makes clear that when treating different gro
 A linear mixed model (LMEM) is a class of statistical model that incorporates \emph{fixed effects} to model the relationship between the covariates and the response, and \emph{random effects} to model subject variability that is not the primary focus of the study but that might be important to distinguish {[}15,40{]}. A LMEM with interaction between time and treatment for a longitudinal study can be written as:
 
 \begin{equation}
-y_{ijt} = \beta_0+ \beta_1 \times time_{t} + \beta_2 \times treatment_{j} + \beta_3 \times time_{t}\times treatment_{j}+\mu_{ij} +\varepsilon_{ijt}\\ 
+y_{ijt} = \beta_0+ \beta_1 \times time_{t} + \beta_2 \times \textrm{treatment}_{j} + \beta_3 \times time_{t}\times \textrm{treatment}_{j}+\mu_{ij} +\varepsilon_{ijt}\\ 
 \label{eq:LMEM}
 \end{equation}
 
@@ -243,7 +243,7 @@ This section has presented the assumptions for analyzing longitudinal data using
 \subsection{How does an rm-ANOVA fit looks like? A visual representation using simulation}\label{simulation}}
 
 To demonstrate the limitations of rm-ANOVA an LMEMs for non-linear longitudinal data, this section presents a simulation experiment of a normally distributed response of two groups of 10 subjects each. An rm-ANOVA model (Equation \eqref{eq:linear-model}) is fitted to each group, using \(\textsf{R}\){[}38{]} and the package \emph{nlme}{[}49{]}.
-Briefly, two cases for the mean responses for each group are considered: in the first case, the mean response in each group is a linear function with different intercepts and slopes; a negative slope is used for Group 1 and a positive slope is used for Group 2 (Figure \ref{fig:l-q-response}, A)). In the second case, a second-degree polynomial (quadratic) function is used for the mean response per group: the quadratic function is concave down for Group 1 and it is concave up for Group 2 (Figure \ref{fig:l-q-response}, C). In both the linear and quadratic simulated data, the groups start with the same mean value at the first time point. This is intentional in order to simulate the expected temporal evolution of some physiological quantity.
+Briefly, two cases for the mean responses for each group are considered: in the first case, the mean response in each group is a linear function with different intercepts and slopes; a negative slope is used for Group 1 and a positive slope is used for Group 2 (Figure \ref{fig:l-q-response}, A). In the second case, a second-degree polynomial (quadratic) function is used for the mean response per group: the quadratic function is concave down for Group 1 and it is concave up for Group 2 (Figure \ref{fig:l-q-response}, C). In both the linear and quadratic simulated data, the groups start with the same mean value at the first time point. This is intentional in order to simulate the expected temporal evolution of some physiological quantity.
 
 Specifically, the rationale for the chosen linear and quadratic functions is the likelihood that a measured response in two treatment groups is similar in the initial phase of the study, but as treatment progresses a divergence in the trend of the response indicates a difference in the effect of each treatment. In other words, Group 1 can be thought as a ``Control'' group and Group 2 as a ``Treatment'' group. From the mean response per group (linear or quadratic), the variability or ``error'' of individual responses within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \ref{fig:l-q-response} B,D). A more comprehensive exploration of the fit of rm-ANOVA for linear and non-linear longitudinal data is in Figure \ref{fig:linear-cases} and Figure \ref{fig:quadratic-cases} in the Appendix, where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented.
 
@@ -258,7 +258,7 @@ Specifically, the rationale for the chosen linear and quadratic functions is the
 
 The simulation shows that the fit produced by the rm-ANOVA model is good for linear data, as the predictions for the mean response are reasonably close to the ``truth'' of the simulated data (Figure \ref{fig:l-q-response},B). When the linearity and compound symmetry assumptions are met, the model approximates well the individual trends and the mean trends by group.
 
-However, consider the case when the data follows a non-linear trend, such as the simulated data in Figure \ref{fig:l-q-response}, C. Here, the mean response per group was simulated using a quadratic function but errors, individual responses and the rm-ANOVA model were produced in the same manner as in Figure \ref{fig:l-q-response} A and B . The mean response in the simulated data with quadratic behavior is changing in each group through the timeline, and the mean value is the same as the initial value by the fifth time point for each group. Fitting an rm-ANOVA model \eqref{eq:linear-model} to this data produces the fit that appears in panel D in Figure \ref{fig:l-q-response}.
+However, consider the case when the data follows a non-linear trend, such as the simulated data in Figure \ref{fig:l-q-response}, C. Here, the mean response per group was simulated using a quadratic function but errors, individual responses and the rm-ANOVA model were produced in the same manner as in (Figure \ref{fig:l-q-response} A and B) . The mean response in the simulated data with quadratic behavior is changing in each group through the timeline, and the mean value is the same as the initial value by the fifth time point for each group. Fitting an rm-ANOVA model \eqref{eq:linear-model} to this data produces the fit that appears in panel D in Figure \ref{fig:l-q-response}.
 
 A comparison of the fitted mean response of the rm-ANOVA model to the the simulated data in Figure ((\ref{fig:l-q-response}, D) indicates that the model is not capturing the changes within each group in a good way. Specifically, note that the fitted mean response of the rm-ANOVA model (panel D) shows that the change (increase for Treatment 1 or decrease for Treatment 2) in the response through time points 2 and 4 is not being captured by the model. Moreover, the rm-ANOVA model is not being able to capture the fact that the initial values are the same in each group, and instead fits non-parallel lines that have initial values that are markedly different from the ``true'' initial values in each case (compare panels C and D). If such change has important physiological implications,the rm-ANOVA model omits it from the fitted mean response. Thus, even though the model correctly detects a difference in treatment groups, the exact nature of this difference is not correctly identified, limiting valuable inferences from the data.
 
@@ -317,163 +317,163 @@ At the core of a biomedical longitudinal study lies the question of a significan
 
 \hypertarget{refs}{}
 \leavevmode\hypertarget{ref-roblyer2011}{}%
-{[}1{]} D. Roblyer, S. Ueda, A. Cerussi, W. Tanamai, A. Durkin, R. Mehta, D. Hsiang, J.A. Butler, C. McLaren, W.-P. Chen, others, Optical imaging of breast cancer oxyhemoglobin flare correlates with neoadjuvant chemotherapy response one day after starting treatment, Proceedings of the National Academy of Sciences. 108 (2011) 14626--14631.
+{[}1{]} D. Roblyer, S. Ueda, A. Cerussi, W. Tanamai, A. Durkin, R. Mehta, D. Hsiang, J.A. Butler, C. McLaren, W.P. Chen, B. Tromberg, Optical imaging of breast cancer oxyhemoglobin flare correlates with neoadjuvant chemotherapy response one day after starting treatment, Proceedings of the National Academy of Sciences of the United States of America. 108 (2011) 14626--14631. \url{https://doi.org/10.1073/pnas.1013103108}.
 
 \leavevmode\hypertarget{ref-tank2020}{}%
-{[}2{]} A. Tank, H.M. Peterson, V. Pera, S. Tabassum, A. Leproux, T. O'Sullivan, E. Jones, H. Cabral, N. Ko, R.S. Mehta, others, Diffuse optical spectroscopic imaging reveals distinct early breast tumor hemodynamic responses to metronomic and maximum tolerated dose regimens, Breast Cancer Research. 22 (2020) 1--10.
+{[}2{]} A. Tank, H.M. Peterson, V. Pera, S. Tabassum, A. Leproux, T. O'Sullivan, E. Jones, H. Cabral, N. Ko, R.S. Mehta, B.J. Tromberg, D. Roblyer, Diffuse optical spectroscopic imaging reveals distinct early breast tumor hemodynamic responses to metronomic and maximum tolerated dose regimens, Breast Cancer Research. 22 (2020) 1--10. \url{https://doi.org/doi:10.1186/s13058-020-01262-1}.
 
 \leavevmode\hypertarget{ref-pavlov2018}{}%
-{[}3{]} M.V. Pavlov, T.I. Kalganova, Y.S. Lyubimtseva, V.I. Plekhanov, G.Y. Golubyatnikov, O.Y. Ilyinskaya, A.G. Orlova, P.V. Subochev, D.V. Safonov, N.M. Shakhova, others, Multimodal approach in assessment of the response of breast cancer to neoadjuvant chemotherapy, Journal of Biomedical Optics. 23 (2018) 091410.
+{[}3{]} M.V. Pavlov, T.I. Kalganova, Y.S. Lyubimtseva, V.I. Plekhanov, G.Y. Golubyatnikov, O.Y. Ilyinskaya, A.G. Orlova, P.V. Subochev, D.V. Safonov, N.M. Shakhova, A.V. Maslennikova, Multimodal approach in assessment of the response of breast cancer to neoadjuvant chemotherapy, Journal of Biomedical Optics. 23 (n.d.). \url{https://doi.org/\%7B10.1117/1.JBO.23.9.091410\%7D}.
 
 \leavevmode\hypertarget{ref-demidov2018}{}%
-{[}4{]} V. Demidov, A. Maeda, M. Sugita, V. Madge, S. Sadanand, C. Flueraru, I.A. Vitkin, Preclinical longitudinal imaging of tumor microvascular radiobiological response with functional optical coherence tomography, Scientific Reports. 8 (2018) 1--12.
+{[}4{]} V. Demidov, A. Maeda, M. Sugita, V. Madge, S. Sadanand, C. Flueraru, I.A. Vitkin, Preclinical longitudinal imaging of tumor microvascular radiobiological response with functional optical coherence tomography, Scientific Reports. 8 (n.d.). \url{https://doi.org/\%7B10.1038/s41598-017-18635-w\%7D}.
 
 \leavevmode\hypertarget{ref-ritter2001}{}%
-{[}5{]} G. Ritter, L.S. Cohen, C. Williams, E.C. Richards, L.J. Old, S. Welt, Serological analysis of human anti-human antibody responses in colon cancer patients treated with repeated doses of humanized monoclonal antibody a33, Cancer Research. 61 (2001) 6851--6859.
+{[}5{]} G. Ritter, L. Cohen, C. Williams, E. Richards, L. Old, S. Welt, Serological analysis of human anti-human antibody responses in colon cancer patients treated with repeated doses of humanized monoclonal antibody A33, Cancer Research. 61 (n.d.) 6851--6859.
 
 \leavevmode\hypertarget{ref-roth2017}{}%
-{[}6{]} E.M. Roth, A.C. Goldberg, A.L. Catapano, A. Torri, G.D. Yancopoulos, N. Stahl, A. Brunet, G. Lecorps, H.M. Colhoun, Antidrug antibodies in patients treated with alirocumab, (2017).
+{[}6{]} E.M. Roth, A.C. Goldberg, A.L. Catapano, A. Torri, G.D. Yancopoulos, N. Stahl, A. Brunet, G. Lecorps, H.M. Colhoun, Antidrug Antibodies in Patients Treated with Alirocumab, New England Journal of Medicine. 376 (n.d.) 1589--1590. \url{https://doi.org/\%7B10.1056/NEJMc1616623\%7D}.
 
 \leavevmode\hypertarget{ref-jones2018}{}%
-{[}7{]} J.D. Jones, H.E. Ramser, A.E. Woessner, K.P. Quinn, In vivo multiphoton microscopy detects longitudinal metabolic changes associated with delayed skin wound healing, Communications Biology. 1 (2018) 1--8.
+{[}7{]} J.D. Jones, H.E. Ramser, A.E. Woessner, K.P. Quinn, In vivo multiphoton microscopy detects longitudinal metabolic changes associated with delayed skin wound healing, Communications Biology. 1 (n.d.). \url{https://doi.org/\%7B10.1038/s42003-018-0206-4\%7D}.
 
 \leavevmode\hypertarget{ref-skala2010}{}%
-{[}8{]} M.C. Skala, A.N. Fontanella, L. Lan, J.A. Izatt, M.W. Dewhirst, Longitudinal optical imaging of tumor metabolism and hemodynamics, Journal of Biomedical Optics. 15 (2010) 011112.
+{[}8{]} M.C. Skala, A. Fontanella, L. Lan, J.A. Izatt, M.W. Dewhirst, Longitudinal optical imaging of tumor metabolism and hemodynamics, Journal of Biomedical Optics. 15 (2010). \url{https://doi.org/10.1117/1.3285584}.
 
 \leavevmode\hypertarget{ref-greening2018}{}%
-{[}9{]} G.J. Greening, K.P. Miller, C.R. Spainhour, M.D. Cato, T.J. Muldoon, Effects of isoflurane anesthesia on physiological parameters in murine subcutaneous tumor allografts measured via diffuse reflectance spectroscopy, Biomedical Optics Express. 9 (2018) 2871--2886.
+{[}9{]} G.J. Greening, K.P. Miller, C.R. Spainhour, M.D. Cato, T.J. Muldoon, Effects of isoflurane anesthesia on physiological parameters in murine subcutaneous tumor allografts measured via diffuse reflectance spectroscopy, Biomedical Optics Express. 9 (n.d.) 2871--2886. \url{https://doi.org/\%7B10.1364/BOE.9.002871\%7D}.
 
 \leavevmode\hypertarget{ref-sio2016}{}%
-{[}10{]} T.T. Sio, P.J. Atherton, B.J. Birckhead, D.J. Schwartz, J.A. Sloan, D.K. Seisler, J.A. Martenson, C.L. Loprinzi, P.C. Griffin, R.F. Morton, others, Repeated measures analyses of dermatitis symptom evolution in breast cancer patients receiving radiotherapy in a phase 3 randomized trial of mometasone furoate vs placebo (N06C4 {[}alliance{]}), Supportive Care in Cancer. 24 (2016) 3847--3855.
+{[}10{]} T.T. Sio, P.J. Atherton, B.J. Birckhead, D.J. Schwartz, J.A. Sloan, D.K. Seisler, J.A. Martenson, C.L. Loprinzi, P.C. Griffin, R.F. Morton, J.C. Anders, T.J. Stoffel, R.E. Haselow, R.B. Mowat, M.A.N. Wittich, J.D. Bearden III, R.C. Miller, Repeated measures analyses of dermatitis symptom evolution in breast cancer patients receiving radiotherapy in a phase 3 randomized trial of mometasone furoate vs placebo (N06C4 {[}alliance{]}), Supportive Care in Cancer. 24 (n.d.) 3847--3855. \url{https://doi.org/\%7B10.1007/s00520-016-3213-3\%7D}.
 
 \leavevmode\hypertarget{ref-kamstra2015}{}%
-{[}11{]} J. Kamstra, P. Dijkstra, M. Van Leeuwen, J. Roodenburg, J. Langendijk, Mouth opening in patients irradiated for head and neck cancer: A prospective repeated measures study, Oral Oncology. 51 (2015) 548--555.
+{[}11{]} J.I. Kamstra, P.U. Dijkstra, M. van Leeuwen, J.L.N. Roodenburg, J.A. Langendijk, Mouth opening in patients irradiated for head and neck cancer: A prospective repeated measures study, Oral Oncology. 51 (n.d.) 548--555. \url{https://doi.org/\%7B10.1016/j.oraloncology.2015.01.016\%7D}.
 
 \leavevmode\hypertarget{ref-wagenmakers2008}{}%
-{[}12{]} E.-J. Wagenmakers, M. Lee, T. Lodewyckx, G.J. Iverson, Bayesian versus frequentist inference, in: Bayesian Evaluation of Informative Hypotheses, Springer, 2008: pp. 181--207.
+{[}12{]} E.-J. Wagenmakers, M. Lee, T. Lodewyckx, G.J. Iverson, Bayesian versus frequentist inference, in: H. Hoijtink, I. Klugkist, P.A. Boelen (Eds.), Bayesian Evaluation of Informative Hypotheses, Springer New York, New York, NY, 2008: pp. 181--207. \url{https://doi.org/10.1007/978-0-387-09612-4_9}.
 
 \leavevmode\hypertarget{ref-gueorguieva2004}{}%
-{[}13{]} R. Gueorguieva, J.H. Krystal, Move over anova: Progress in analyzing repeated-measures data andits reflection in papers published in the archives of general psychiatry, Archives of General Psychiatry. 61 (2004) 310--317.
+{[}13{]} R. Gueorguieva, J.H. Krystal, Move over ANOVA - Progress in analyzing repeated-measures data and its reflection in papers published in the archives of general psychiatry, Archives of General Psychiatry. 61 (2004) 310--317. \url{https://doi.org/10.1001/archpsyc.61.3.310}.
 
 \leavevmode\hypertarget{ref-schober2018}{}%
-{[}14{]} P. Schober, T.R. Vetter, Repeated measures designs and analysis of longitudinal data: If at first you do not succeed---try, try again, Anesthesia and Analgesia. 127 (2018) 569.
+{[}14{]} P. Schober, T.R. Vetter, Repeated measures designs and analysis of longitudinal data: If at first you do not succeed-try, try again, Anesthesia and Analgesia. 127 (2018) 569--575. \url{https://doi.org/10.1213/ane.0000000000003511}.
 
 \leavevmode\hypertarget{ref-pinheiro2006}{}%
-{[}15{]} J. Pinheiro, D. Bates, Mixed-effects models in s and s-plus, Springer Science \& Business Media, 2006.
+{[}15{]} J. Pinheiro, D. Bates, Mixed-effects models in S and S-PLUS, Springer Science \& Business Media, 2006. \url{https://doi.org/https://doi.org/10.1007/b98882}.
 
 \leavevmode\hypertarget{ref-vishwanath2009}{}%
-{[}16{]} K. Vishwanath, H. Yuan, W.T. Barry, M.W. Dewhirst, N. Ramanujam, Using optical spectroscopy to longitudinally monitor physiological changes within solid tumors, Neoplasia. 11 (2009) 889--900.
+{[}16{]} K. Vishwanath, H. Yuan, W.T. Barry, M.W. Dewhirst, N. Ramanujam, Using optical spectroscopy to longitudinally monitor physiological changes within solid tumors, Neoplasia. 11 (2009) 889--900. \url{https://doi.org/10.1593/neo.09580}.
 
 \leavevmode\hypertarget{ref-dennis2019}{}%
-{[}17{]} B. Dennis, J.M. Ponciano, M.L. Taper, S.R. Lele, Errors in statistical inference under model misspecification: Evidence, hypothesis testing, and aic, Frontiers in Ecology and Evolution. 7 (2019) 372.
+{[}17{]} B. Dennis, J.M. Ponciano, M.L. Taper, S.R. Lele, Errors in Statistical Inference Under Model Misspecification: Evidence, Hypothesis Testing, and AIC, Frontiers in Ecology and Evolution. 7 (n.d.). \url{https://doi.org/\%7B10.3389/fevo.2019.00372\%7D}.
 
 \leavevmode\hypertarget{ref-wang2019}{}%
-{[}18{]} B. Wang, Z. Zhou, H. Wang, X.M. Tu, C. Feng, The p-value and model specification in statistics, General Psychiatry. 32 (2019).
+{[}18{]} B. Wang, Z. Zhou, H. Wang, X.M. Tu, C. Feng, The p-value and model specification in statistics, General Psychiatry. 32 (n.d.). \url{https://doi.org/\%7B10.1136/gpsych-2019-100081\%7D}.
 
 \leavevmode\hypertarget{ref-liu2010}{}%
-{[}19{]} C. Liu, T.P. Cripe, M.-O. Kim, Statistical issues in longitudinal data analysis for treatment efficacy studies in the biomedical sciences, Molecular Therapy. 18 (2010) 1724--1730.
+{[}19{]} C. Liu, T.P. Cripe, M.-O. Kim, Statistical issues in longitudinal data analysis for treatment efficacy studies in the biomedical sciences, Molecular Therapy. 18 (2010) 1724--1730. \url{https://doi.org/10.1038/mt.2010.127}.
 
 \leavevmode\hypertarget{ref-halsey2015}{}%
-{[}20{]} L.G. Halsey, D. Curran-Everett, S.L. Vowler, G.B. Drummond, The fickle p value generates irreproducible results, Nature Methods. 12 (2015) 179--185.
+{[}20{]} L.G. Halsey, D. Curran-Everett, S.L. Vowler, G.B. Drummond, The fickle P value generates irreproducible results, Nature Methods. 12 (n.d.) 179--185. \url{https://doi.org/\%7B10.1038/nmeth.3288\%7D}.
 
 \leavevmode\hypertarget{ref-abdi2010}{}%
-{[}21{]} H. Abdi, Holm's sequential bonferroni procedure, Encyclopedia of Research Design. 1 (2010) 1--8.
+{[}21{]} H. Abdi, Holm's Sequential Bonferroni Procedure, Encyclopedia of Research Design. 1 (2010) 1--8. \url{https://doi.org/10.4135/9781412961288.n178}.
 
 \leavevmode\hypertarget{ref-nakagawa2004}{}%
-{[}22{]} S. Nakagawa, A farewell to bonferroni: The problems of low statistical power and publication bias, Behavioral Ecology. 15 (2004) 1044--1045.
+{[}22{]} S. Nakagawa, A farewell to Bonferroni: the problems of low statistical power and publication bias, Behavioral Ecology. 15 (n.d.) 1044--1045. \url{https://doi.org/\%7B10.1093/beheco/arh107\%7D}.
 
 \leavevmode\hypertarget{ref-gelman2012}{}%
-{[}23{]} A. Gelman, J. Hill, M. Yajima, Why we (usually) don't have to worry about multiple comparisons, Journal of Research on Educational Effectiveness. 5 (2012) 189--211.
+{[}23{]} A. Gelman, J. Hill, M. Yajima, Why We (Usually) Don't Have to Worry About Multiple Comparisons, Journal of Research on Educational Effectiveness. 5 (n.d.) 189--211. \url{https://doi.org/\%7B10.1080/19345747.2011.618213\%7D}.
 
 \leavevmode\hypertarget{ref-albers2019}{}%
-{[}24{]} C. Albers, The problem with unadjusted multiple and sequential statistical testing, Nature Communications. 10 (2019) 1--4.
+{[}24{]} C. Albers, The problem with unadjusted multiple and sequential statistical testing, Nature Communications. 10 (n.d.). \url{https://doi.org/\%7B10.1038/s41467-019-09941-0\%7D}.
 
 \leavevmode\hypertarget{ref-ugrinowitsch2004}{}%
-{[}25{]} C. Ugrinowitsch, G.W. Fellingham, M.D. Ricard, Limitations of ordinary least squares models in analyzing repeated measures data, Medicine and Science in Sports and Exercise. 36 (2004) 2144--2148.
+{[}25{]} C. Ugrinowitsch, G.W. Fellingham, M.D. Ricard, Limitations of ordinary least squares models in analyzing repeated measures data, Medicine and Science in Sports and Exercise. 36 (2004) 2144--2148. \url{https://doi.org/10.1249/01.mss.0000147580.40591.75}.
 
 \leavevmode\hypertarget{ref-huynh1976}{}%
-{[}26{]} H. Huynh, L.S. Feldt, Estimation of the box correction for degrees of freedom from sample data in randomized block and split-plot designs, Journal of Educational Statistics. 1 (1976) 69--82.
+{[}26{]} H. Huynh, L.S. Feldt, Estimation of the box correction for degrees of freedom from sample data in randomized block and split-plot designs, Journal of Educational Statistics. 1 (1976) 69--82. \url{https://doi.org/10.3102/10769986001001069}.
 
 \leavevmode\hypertarget{ref-greenhouse1959}{}%
-{[}27{]} S.W. Greenhouse, S. Geisser, On methods in the analysis of profile data, Psychometrika. 24 (1959) 95--112.
+{[}27{]} S.W. Greenhouse, S. Geisser, On methods in the analysis of profile data, Psychometrika. 24 (1959) 95--112. \url{https://doi.org/10.1007/bf02289823}.
 
 \leavevmode\hypertarget{ref-haverkamp2017}{}%
-{[}28{]} N. Haverkamp, A. Beauducel, Violation of the sphericity assumption and its effect on type-i error rates in repeated measures anova and multi-level linear models (mlm), Frontiers in Psychology. 8 (2017) 1841.
+{[}28{]} N. Haverkamp, A. Beauducel, Violation of the Sphericity Assumption and Its Effect on Type-I Error Rates in Repeated Measures ANOVA and Multi-Level Linear Models (MLM), Frontiers in Psychology. 8 (n.d.). \url{https://doi.org/\%7B10.3389/fpsyg.2017.01841\%7D}.
 
 \leavevmode\hypertarget{ref-keselman2001}{}%
-{[}29{]} H. Keselman, J. Algina, R.K. Kowalchuk, The analysis of repeated measures designs: A review, British Journal of Mathematical and Statistical Psychology. 54 (2001) 1--20.
+{[}29{]} H. Keselman, J. Algina, R. Kowalchuk, The analysis of repeated measures designs: A review, British Journal of Mathematica \& Statistical Psychology. 54 (n.d.) 1--20. \url{https://doi.org/\%7B10.1348/000711001159357\%7D}.
 
 \leavevmode\hypertarget{ref-charan2013}{}%
-{[}30{]} J. Charan, N. Kantharia, How to calculate sample size in animal studies?, Journal of Pharmacology \& Pharmacotherapeutics. 4 (2013) 303.
+{[}30{]} J. Charan, N. Kantharia, How to calculate sample size in animal studies?, Journal of Pharmacology and Pharmacotherapeutics. 4 (2013) 303--306. \url{https://doi.org/10.4103/0976-500X.119726}.
 
 \leavevmode\hypertarget{ref-barr2013}{}%
-{[}31{]} D.J. Barr, R. Levy, C. Scheepers, H.J. Tily, Random effects structure for confirmatory hypothesis testing: Keep it maximal, Journal of Memory and Language. 68 (2013) 255--278.
+{[}31{]} D.J. Barr, R. Levy, C. Scheepers, H.J. Tily, Random effects structure for confirmatory hypothesis testing: Keep it maximal, JournalL of Memory and Language. 68 (n.d.) 255--278. \url{https://doi.org/\%7B10.1016/j.jml.2012.11.001\%7D}.
 
 \leavevmode\hypertarget{ref-rose2012}{}%
-{[}32{]} N.L. Rose, H. Yang, S.D. Turner, G.L. Simpson, An assessment of the mechanisms for the transfer of lead and mercury from atmospherically contaminated organic soils to lake sediments with particular reference to Scotland, UK, Geochimica et Cosmochimica Acta. 82 (2012) 113--135.
+{[}32{]} N.L. Rose, H.D. Yang, S.D. Turner, G.L. Simpson, An assessment of the mechanisms for the transfer of lead and mercury from atmospherically contaminated organic soils to lake sediments with particular reference to scotland, uk, Geochimica et Cosmochimica Acta. 82 (2012) 113--135. \url{https://doi.org/10.1016/j.gca.2010.12.026}.
 
 \leavevmode\hypertarget{ref-pedersen2019}{}%
-{[}33{]} E.J. Pedersen, D.L. Miller, G.L. Simpson, N. Ross, Hierarchical generalized additive models in ecology: An introduction with mgcv, PeerJ. 7 (2019) e6876.
+{[}33{]} E.J. Pedersen, D.L. Miller, G.L. Simpson, N. Ross, Hierarchical generalized additive models in ecology: An introduction with mgcv, Peerj. 7 (2019). \url{https://doi.org/10.7717/peerj.6876}.
 
 \leavevmode\hypertarget{ref-simpson2018}{}%
-{[}34{]} G.L. Simpson, Modelling palaeoecological time series using generalised additive models, Frontiers in Ecology and Evolution. 6 (2018) 149.
+{[}34{]} G.L. Simpson, Modelling palaeoecological time series using generalised additive models, Frontiers in Ecology and Evolution. 6 (2018). \url{https://doi.org/10.3389/fevo.2018.00149}.
 
 \leavevmode\hypertarget{ref-yang2012}{}%
-{[}35{]} L. Yang, G. Qin, N. Zhao, C. Wang, G. Song, Using a generalized additive model with autoregressive terms to study the effects of daily temperature on mortality, BMC Medical Research Methodology. 12 (2012) 165.
+{[}35{]} L. Yang, G. Qin, N. Zhao, C. Wang, G. Song, Using a generalized additive model with autoregressive terms to study the effects of daily temperature on mortality, BMC Medical Research Methodology. 12 (n.d.). \url{https://doi.org/\%7B10.1186/1471-2288-12-165\%7D}.
 
 \leavevmode\hypertarget{ref-beck1998}{}%
-{[}36{]} N. Beck, S. Jackman, Beyond linearity by default: Generalized additive models, American Journal of Political Science. (1998) 596--627.
+{[}36{]} N. Beck, S. Jackman, Beyond linearity by default: Generalized additive models, American Journal of Political Science. 42 (n.d.) 596--627. \url{https://doi.org/\%7B10.2307/2991772\%7D}.
 
 \leavevmode\hypertarget{ref-wood2017}{}%
-{[}37{]} S.N. Wood, Generalized additive models: An introduction with r, CRC press, 2017.
+{[}37{]} S.N. Wood, Generalized additive models: An introduction with , second edition, CRC Press LLC, Philadelphia, PA, 2017.
 
 \leavevmode\hypertarget{ref-r}{}%
 {[}38{]} R Core Team, R: A language and environment for statistical computing, R Foundation for Statistical Computing, Vienna, Austria, 2020. \url{https://www.R-project.org/}.
 
 \leavevmode\hypertarget{ref-wood2016}{}%
-{[}39{]} S.N. Wood, N., Pya, B. Säfken, Smoothing parameter and model selection for general smooth models (with discussion), Journal of the American Statistical Association. 111 (2016) 1548--1575.
+{[}39{]} S.N. Wood, N. Pya, B. Saefken, Smoothing Parameter and Model Selection for General Smooth Models, Journal of the American Statistical Association. 111 (n.d.) 1548--1563. \url{https://doi.org/\%7B10.1080/01621459.2016.1180986\%7D}.
 
 \leavevmode\hypertarget{ref-west2014}{}%
-{[}40{]} B.T. West, K.B. Welch, A.T. Galecki, Linear mixed models: A practical guide using statistical software, CRC Press, 2014.
+{[}40{]} B.T. West, K.B. Welch, A.T. Galecki, Linear mixed models: A practical guide using statistical software, second edition, Taylor \& Francis, 2014. \url{https://books.google.com/books?id=hjT6AwAAQBAJ}.
 
 \leavevmode\hypertarget{ref-wolfinger1996}{}%
-{[}41{]} R.D. Wolfinger, Heterogeneous variance: Covariance structures for repeated measures, Journal of Agricultural, Biological, and Environmental Statistics. (1996) 205--230.
+{[}41{]} R.D. Wolfinger, Heterogeneous variance: Covariance structures for repeated measures, Journal of Agricultural, Biological, and Environmental Statistics. 1 (1996) 205--230. \url{http://www.jstor.org/stable/1400366}.
 
 \leavevmode\hypertarget{ref-weiss2005}{}%
-{[}42{]} R.E. Weiss, Modeling longitudinal data, Springer Science \& Business Media, 2005.
+{[}42{]} R.E. Weiss, Modeling longitudinal data, Springer New York, 2005. \url{https://books.google.com/books?id=MQ/_bvWDPsEAC}.
 
 \leavevmode\hypertarget{ref-geisser1958}{}%
-{[}43{]} S. Geisser, S.W. Greenhouse, others, An extension of box's results on the use of the \(F\) distribution in multivariate analysis, The Annals of Mathematical Statistics. 29 (1958) 885--891.
+{[}43{]} S. Geisser, S.W. Greenhouse, An Extension of Box's Results on the Use of the \(F\) Distribution in Multivariate Analysis, The Annals of Mathematical Statistics. 29 (1958) 885--891. \url{https://doi.org/10.1214/aoms/1177706545}.
 
 \leavevmode\hypertarget{ref-maxwell2017}{}%
-{[}44{]} S.E. Maxwell, H.D. Delaney, K. Kelley, Designing experiments and analyzing data: A model comparison perspective, Routledge, 2017.
+{[}44{]} S.E. Maxwell, H.D. Delaney, K. Kelley, Designing experiments and analyzing data: A model comparison perspective, third edition, Taylor \& Francis, 2017. \url{https://books.google.com/books?id=NmFQDwAAQBAJ}.
 
 \leavevmode\hypertarget{ref-molenberghs2004}{}%
-{[}45{]} G. Molenberghs, H. Thijs, I. Jansen, C. Beunckens, M.G. Kenward, C. Mallinckrodt, R.J. Carroll, Analyzing incomplete longitudinal clinical trial data, Biostatistics. 5 (2004) 445--464.
+{[}45{]} G. Molenberghs, H. Thijs, I. Jansen, C. Beunckens, M. Kenward, C. Mallinckrodt, R. Carroll, Analyzing incomplete longitudinal clinical trial data, Biostatistics. 5 (n.d.) 445--464. \url{https://doi.org/\%7B10.1093/biostatistics/kxh001\%7D}.
 
 \leavevmode\hypertarget{ref-scheffer2002}{}%
-{[}46{]} J. Scheffer, Dealing with missing data, (2002).
+{[}46{]} J. Scheffer, Dealing with missing data, Research Letters in the Information and Mathematical Sciences. 3 (2002) 153--160.
 
 \leavevmode\hypertarget{ref-potthoff2006}{}%
-{[}47{]} R.F. Potthoff, G.E. Tudor, K.S. Pieper, V. Hasselblad, Can one assess whether missing data are missing at random in medical studies?, Statistical Methods in Medical Research. 15 (2006) 213--234.
+{[}47{]} R.F. Potthoff, G.E. Tudor, K.S. Pieper, V. Hasselblad, Can one assess whether missing data are missing at random in medical studies?, STATISTICAL METHODS IN MEDICAL RESEARCH. 15 (n.d.) 213--234. \url{https://doi.org/\%7B10.1191/0962280206sm448oa\%7D}.
 
 \leavevmode\hypertarget{ref-ma2012}{}%
-{[}48{]} Y. Ma, M. Mazumdar, S.G. Memtsoudis, Beyond repeated-measures analysis of variance: Advanced statistical methods for the analysis of longitudinal data in anesthesia research, Regional Anesthesia \& Pain Medicine. 37 (2012) 99--105.
+{[}48{]} Y. Ma, M. Mazumdar, S.G. Memtsoudis, Beyond Repeated-Measures Analysis of Variance Advanced Statistical Methods for the Analysis of Longitudinal Data in Anesthesia Research, Regional Anesthesia and Pain Medicine. 37 (n.d.) 99--105. \url{https://doi.org/\%7B10.1097/AAP.0b013e31823ebc74\%7D}.
 
 \leavevmode\hypertarget{ref-nlme}{}%
 {[}49{]} J. Pinheiro, D. Bates, S. DebRoy, D. Sarkar, R Core Team, nlme: Linear and nonlinear mixed effects models, 2020. \url{https://CRAN.R-project.org/package=nlme}.
 
 \leavevmode\hypertarget{ref-nelder1972}{}%
-{[}50{]} J.A. Nelder, R.W. Wedderburn, Generalized linear models, Journal of the Royal Statistical Society: Series A (General). 135 (1972) 370--384.
+{[}50{]} J.A. Nelder, R.W.M. Wedderburn, Generalized linear models, Journal of the Royal Statistical Society. Series A (General). 135 (1972) 370--384. \url{http://www.jstor.org/stable/2344614}.
 
 \leavevmode\hypertarget{ref-hastie1987}{}%
-{[}51{]} T. Hastie, R. Tibshirani, Generalized additive models: Some applications, Journal of the American Statistical Association. 82 (1987) 371--386.
+{[}51{]} T. Hastie, R. Tibshirani, Generalized additive models: Some applications, Journal of the American Statistical Association. 82 (1987) 371--386. \url{https://doi.org/10.1080/01621459.1987.10478440}.
 
 \leavevmode\hypertarget{ref-hefley2017}{}%
-{[}52{]} T.J. Hefley, K.M. Broms, B.M. Brost, F.E. Buderman, S.L. Kay, H.R. Scharf, J.R. Tipton, P.J. Williams, M.B. Hooten, The basis function approach for modeling autocorrelation in ecological data, Ecology. 98 (2017) 632--646.
+{[}52{]} T.J. Hefley, K.M. Broms, B.M. Brost, F.E. Buderman, S.L. Kay, H.R. Scharf, J.R. Tipton, P.J. Williams, M.B. Hooten, The basis function approach for modeling autocorrelation in ecological data, ECOLOGY. 98 (n.d.) 632--646. \url{https://doi.org/\%7B10.1002/ecy.1674\%7D}.
 
 \leavevmode\hypertarget{ref-wegman1983}{}%
-{[}53{]} E.J. Wegman, I.W. Wright, Splines in statistics, Journal of the American Statistical Association. 78 (1983) 351--365.
+{[}53{]} E.J. Wegman, I.W. Wright, Splines in statistics, Journal of the American Statistical Association. 78 (1983) 351--365. \url{https://doi.org/10.1080/01621459.1983.10477977}.
 
 \newpage
 
