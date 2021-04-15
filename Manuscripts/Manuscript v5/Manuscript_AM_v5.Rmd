@@ -88,7 +88,7 @@ In a  biomedical research context, suppose two treatments groups are used in a s
 \begin{equation}
 y_{ijt} = \begin{cases}
 \beta_0 + \beta_1\times time_{t}+\varepsilon_{ijt}   & \mbox{if Group A}\\
-\beta_0 + \beta_1 \times time_{t} + \beta_2+\beta_3 \times time_{t}+\varepsilon_{ijt}  & \mbox{if Group B}\\
+\beta_0 + \beta_2+\beta_1 \times time_{t} +\beta_3 \times time_{t}+\varepsilon_{ijt}  & \mbox{if Group B}\\
 \end{cases}
 (\#eq:ANOVA-by-group)
 \end{equation}

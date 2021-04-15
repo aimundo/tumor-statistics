@@ -190,7 +190,7 @@ In a biomedical research context, suppose two treatments groups are used in a st
 \begin{equation}
 y_{ijt} = \begin{cases}
 \beta_0 + \beta_1\times time_{t}+\varepsilon_{ijt}   & \mbox{if Group A}\\
-\beta_0 + \beta_1 \times time_{t} + \beta_2+\beta_3 \times time_{t}+\varepsilon_{ijt}  & \mbox{if Group B}\\
+\beta_0 + \beta_2+\beta_1 \times time_{t} +\beta_3 \times time_{t}+\varepsilon_{ijt}  & \mbox{if Group B}\\
 \end{cases}
 \label{eq:ANOVA-by-group}
 \end{equation}
@@ -249,7 +249,7 @@ Specifically, the rationale for the chosen linear and quadratic functions is the
 
 \begin{figure}[!h]
 
-{\centering \includegraphics[width=0.75\linewidth,]{Manuscript_AM_v4_files/figure-latex/l-q-response-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{Manuscript_AM_v5_files/figure-latex/l-q-response-1} 
 
 }
 
@@ -291,7 +291,7 @@ In other words, the six points of each basis are multiplied by the corresponding
 
 \begin{figure}[!h]
 
-{\centering \includegraphics[width=0.75\linewidth,]{Manuscript_AM_v4_files/figure-latex/basis-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{Manuscript_AM_v5_files/figure-latex/basis-plot-1} 
 
 }
 
@@ -656,13 +656,13 @@ This section simulated linear and quadratic data in the same manner as in Sectio
 \end{Shaded}
 
 \begin{figure}[!h]
-\includegraphics{Manuscript_AM_v4_files/figure-latex/linear-cases-1} \caption{**Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimations from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model does not pick the trend of the quadratic data**}\label{fig:linear-cases}
+\includegraphics{Manuscript_AM_v5_files/figure-latex/linear-cases-1} \caption{**Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimations from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model does not pick the trend of the quadratic data**}\label{fig:linear-cases}
 \end{figure}
 
 For the quadratic response case, Figure \ref{fig:quadratic-cases} shows the simulated responses using compound symmetry and independent errors.
 
 \begin{figure}[!h]
-\includegraphics{Manuscript_AM_v4_files/figure-latex/quadratic-cases-1} \caption{**Simulated quadratic responses from two groups with a rm-ANOVA model fitted. A,E:Simulated data with known mean response (lines) and individual responses (points) showing the dispersion of the data. B,F: Generated errors showing the difference in the behavior of correlated and independent errors.  C,G: Simulated known response per group (thick lines) with individual trajectories (thin lines), note that subjects with observations in the area above the mean response tend to stay in that region through the timeline. D,H: Estimations from the rm-ANOVA model for the mean group response. Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data.**}\label{fig:quadratic-cases}
+\includegraphics{Manuscript_AM_v5_files/figure-latex/quadratic-cases-1} \caption{**Simulated quadratic responses from two groups with a rm-ANOVA model fitted. A,E:Simulated data with known mean response (lines) and individual responses (points) showing the dispersion of the data. B,F: Generated errors showing the difference in the behavior of correlated and independent errors.  C,G: Simulated known response per group (thick lines) with individual trajectories (thin lines), note that subjects with observations in the area above the mean response tend to stay in that region through the timeline. D,H: Estimations from the rm-ANOVA model for the mean group response. Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data.**}\label{fig:quadratic-cases}
 \end{figure}
 
 \end{document}
