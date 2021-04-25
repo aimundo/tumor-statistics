@@ -1,2 +1,2 @@
 # tumor-statistics
-Repository for cancer and statistics paper
+Repository that contains files for an upcoming paper on the statistical analysis of longitudinal data, and their application on biomedical engineering.
