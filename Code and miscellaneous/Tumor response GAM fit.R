@@ -58,13 +58,23 @@ n_time <- length(unique(dat_sim$Day))
 n_treatment <- length(unique(dat_sim$Group))
 
 
+#if you have n timepoints can you do n knots or should you do n-1 knots? (I read somewhere that
+#the n-1 option was preferred for computational issues)?
 
-mod1 <- gam(observation_tobit ~ s(Day, by = Group, k = 4), data  = dat_sim)
-appraise(mod1) #ALSO, THE CHECK ON THIS MODEL LOOKS WEIRD! THE RESIDUALS ARE SHOWING A TREND
+
+mod1 <- gam(observation_tobit ~ Group+s(Day, by = Group, k = 5), data  = dat_sim)
+appraise(mod1) #SIMPLEST MODEL: A SMOOTH FOR TIME AS THE COVARIATE, WHICH CAN VARY BY GROUP BUT... APPRAISING THE MODEL SHOWS A WEIRD TREND
+#ON THE RESIDUALS
+
+mod2 <- gam(observation_tobit ~ Group+s(Day,by=Group,k=5),data  = dat_sim)
+appraise(mod2)
+#THIS MODEL is accounting for a linear effect for each group, and a smooth for time by each group
+#Why is it fitting better than the "simple" model? What does this "linear" Group term mean?
+#The idea for this came from
+#https://stats.stackexchange.com/questions/486118/model-building-in-generalized-additive-mixed-models-gamms
 
 #mod2 <- gam(observation ~ s(Day, by = Group, k = 5), data  = dat_missing)
-#if you have n timepoints can you do n knots or should you do n-1 knots? (I read somewhere that
-#the n-1 option was preferred for computational issues)
+
 
 summary(mod1)
 #summary(mod2)
