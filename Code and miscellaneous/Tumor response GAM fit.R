@@ -2,9 +2,10 @@ library(mgcv)
 library(tidyverse)
 library(ggplot2)
 library(patchwork)
+library(gratia)
 
 
-## number of observations -- currently using 3
+## number of observations -- currently using 5
 ## use measurement error of sd as 5 (rough estimate)
 
 #Data are simulated from Fig. 3 (C) of Vishwanath et. al:
@@ -26,7 +27,7 @@ ggplot(dat, aes(x = Day, y = StO2, color = Group)) +
 #10 observations per time point,
 #and a standard deviation of 5% StO2
 #Because physiologically StO2 cannot go below 0%, data is generated with a cutoff value of
-#0.0001
+#0.0001 (the "observation_tobit")
 
 simulate_data <- function(dat, n = 10, sd = 5) {
     dat_sim <- dat %>%
@@ -48,7 +49,7 @@ df <- 6
 dat_sim <- simulate_data(dat, n, sd)
 
 #plotting simulated data
-ggplot(dat_sim, aes(x = Day, y = observation, color = Group)) +
+ggplot(dat_sim, aes(x = Day, y = observation_tobit, color = Group)) +
     geom_point()+
     scale_x_continuous(breaks=c(0,2,5,7,10))
 
@@ -58,7 +59,9 @@ n_treatment <- length(unique(dat_sim$Group))
 
 
 
-mod1 <- gam(observation ~ s(Day, by = Group, k = 4), data  = dat_sim)
+mod1 <- gam(observation_tobit ~ s(Day, by = Group, k = 4), data  = dat_sim)
+appraise(mod1) #ALSO, THE CHECK ON THIS MODEL LOOKS WEIRD! THE RESIDUALS ARE SHOWING A TREND
+
 #mod2 <- gam(observation ~ s(Day, by = Group, k = 5), data  = dat_missing)
 #if you have n timepoints can you do n knots or should you do n-1 knots? (I read somewhere that
 #the n-1 option was preferred for computational issues)
