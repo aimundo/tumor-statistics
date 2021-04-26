@@ -92,16 +92,17 @@ gam.check(mod1)
 #plotting smooths and simulated data
 #full data
 #I am doing something wrong here but I can't figure it out!!!!
-f_predict<-with(dat_sim,expand.grid(StO2=seq(min(observation),
-                                                       max(observation),length=100),
+f_predict<-with(dat_sim,expand.grid(StO2=seq(min(observation_tobit),
+                                                       max(observation_tobit),
+                                                        length=10),
                                                     Group=Group,Day=Day))
 
 
 f_predict<-cbind(f_predict,
-                         predict(mod1,f_predict,
+                         predict(mod2,f_predict,
                                  se.fit = TRUE,type='response'))
 
-ggplot(data=dat_sim, aes(x=Day, y=observation, group=Group)) +
+ggplot(data=dat_sim, aes(x=Day, y=observation_tobit, group=Group)) +
     facet_wrap(~Group)+
     geom_point(colour='black',size=1,alpha=0.5)+
     geom_ribbon(aes(ymin=(fit - 2*se.fit), ymax=(fit + 2*se.fit), x=Day),
@@ -110,8 +111,49 @@ ggplot(data=dat_sim, aes(x=Day, y=observation, group=Group)) +
     geom_line(aes(y=(fit),color=factor(Group)), size=1,data=f_predict,show.legend = FALSE)
 
 
-#This plot looks weird, why is it showing a non-smooth line as the fit? Is it because of the number
-#of knots?  I have been able to do this in the past but for some reason this time it doesn't work
+
+#it works now, but why do the smooths still look so rough? (the connections at the knots
+#don't look "smooth")
+
+##trying the pairwise comparisons
+
+pdat <- expand.grid(Day = seq(0, 10, length = 400),
+                    Group = c('Treatment', 'Control'))
+smooth_diff <- function(model, newdata, f1, f2, alpha = 0.05,
+                        unconditional = FALSE) {
+    xp <- predict(model, newdata = newdata, type = 'lpmatrix')
+    c1 <- grepl(f1, colnames(xp))
+    c2 <- grepl(f2, colnames(xp))
+    #r1 <- newdata[[var]] == f1
+    #r2 <- newdata[[var]] == f2
+    r1 <- with(newdata, Group == f1)
+    r2 <- with(newdata, Group == f2)
+    ## difference rows of xp for data from comparison
+    X <- xp[r1, ] - xp[r2, ]
+    ## zero out cols of X related to splines for other lochs
+    X[, ! (c1 | c2)] <- 0
+    ## zero out the parametric cols
+    X[, !grepl('^s\\(', colnames(xp))] <- 0
+    dif <- X %*% coef(model)
+    se <- sqrt(rowSums((X %*% vcov(model, unconditional = unconditional)) * X))
+    crit <- qt(alpha/2, df.residual(model), lower.tail = FALSE)
+    upr <- dif + (crit * se)
+    lwr <- dif - (crit * se)
+    data.frame(pair = paste(f1, f2, sep = '-'),
+               diff = dif,
+               se = se,
+               upper = upr,
+               lower = lwr)
+}
+comp1<-smooth_diff(mod2,pdat,'Control','Treatment')
+comp_StO2 <- cbind(Day = seq(0, 10, length = 400),
+                   rbind(comp1))
+c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) + geom_line(color='black') +
+    facet_wrap(~ pair) +
+    labs(x = NULL, y = 'Difference in StO2 trend')
+
+c1
 ##################################################################
 ############################################################
 #missing data
