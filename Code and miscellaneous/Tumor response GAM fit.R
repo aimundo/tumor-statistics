@@ -61,19 +61,41 @@ n_treatment <- length(unique(dat_sim$Group))
 #if you have n timepoints can you do n knots or should you do n-1 knots? (I read somewhere that
 #the n-1 option was preferred for computational issues)?
 
-
-mod1 <- gam(observation_tobit ~ Group+s(Day, by = Group, k = 5), data  = dat_sim)
-appraise(mod1) #SIMPLEST MODEL: A SMOOTH FOR TIME AS THE COVARIATE, WHICH CAN VARY BY GROUP BUT... APPRAISING THE MODEL SHOWS A WEIRD TREND
-#ON THE RESIDUALS
-
-mod2 <- gam(observation_tobit ~ Group+s(Day,by=Group,k=5),data  = dat_sim)
+mod2 <- gam(observation_tobit ~ s(Day,by=Group,k=5),data  = dat_sim)
 appraise(mod2)
+#SIMPLEST MODEL: A SMOOTH FOR TIME AS THE COVARIATE, WHICH CAN VARY BY GROUP BUT... APPRAISING THE MODEL SHOWS A WEIRD TREND
+#ON THE RESIDUALS
+#this model has a separate smooth for each Group.
+
+mod1 <- gam(observation_tobit ~ Group+te(Day, by = Group, k = 5), data  = dat_sim)
+appraise(mod1)
+
+
+mod3 <- gam(observation_tobit ~ Group+s(Day, by = Group, k = 5), data  = dat_sim)
+appraise(mod3)
+
+#Ok, so mod1 and mod3 are doing essentially the same thing. We have a smooth of time
+#per group, and we take the main effect of each treatment is also taken into account.
+#So this model effectively takes into account treatment and time? and the simples model
+#only takes the effect of time.
+
 #THIS MODEL is accounting for a linear effect for each group, and a smooth for time by each group
 #Why is it fitting better than the "simple" model? What does this "linear" Group term mean?
 #The idea for this came from
 #https://stats.stackexchange.com/questions/486118/model-building-in-generalized-additive-mixed-models-gamms
 
 #mod2 <- gam(observation ~ s(Day, by = Group, k = 5), data  = dat_missing)
+
+# Reading through Simon Wood's book it seems that the linear term can be used when the
+# expected contribution of a factor is linear. The simples model then creates smooths by day
+# per group, but the updated model separates a linear trend within each group from the
+# smooth over time.
+
+
+
+#mod3<-gam(observation_tobit ~ Group+s(Day,k=5),data  = dat_sim)
+
+
 
 
 summary(mod1)
@@ -108,8 +130,8 @@ f_predict <- expand_grid(Group = factor(c("Control", "Treatment")),
 
 #adds the predictions to the grid and creates a confidence interval
 f_predict<-f_predict%>%
-    mutate(fit = predict(mod2,f_predict,se.fit = TRUE,type='response')$fit,
-           se.fit = predict(mod2, f_predict,se.fit = TRUE,type='response')$se.fit)
+    mutate(fit = predict(mod1,f_predict,se.fit = TRUE,type='response')$fit,
+           se.fit = predict(mod1, f_predict,se.fit = TRUE,type='response')$se.fit)
 
 
 ggplot(data=dat_sim, aes(x=Day, y=observation_tobit, group=Group)) +
