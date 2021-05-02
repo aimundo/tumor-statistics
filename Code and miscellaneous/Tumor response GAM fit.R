@@ -230,3 +230,5 @@ c2<-ggplot(comp_StO2_m, aes(x = Day, y = diff, group = pair)) +
 
 
 c2
+
+c1+c2
