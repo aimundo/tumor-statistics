@@ -25,7 +25,7 @@ ggplot(dat, aes(x = Day, y = StO2, color = Group)) +
 
 #This function simulates data for the tumor data using a dafault number of
 #10 observations per time point,
-#and a standard deviation of 5% StO2
+#and a standard deviation of 10% StO2
 #Because physiologically StO2 cannot go below 0%, data is generated with a cutoff value of
 #0.0001 (the "observation_tobit")
 
@@ -43,7 +43,7 @@ simulate_data <- function(dat, n = 10, sd = 5) {
 
 
 n <- 10
-sd <- 5
+sd <- 10
 set.seed(11) #setting seed
 df <- 6
 dat_sim <- simulate_data(dat, n, sd)
@@ -92,23 +92,34 @@ gam.check(mod1)
 #plotting smooths and simulated data
 #full data
 #I am doing something wrong here but I can't figure it out!!!!
-f_predict<-with(dat_sim,expand.grid(StO2=seq(min(observation_tobit),
-                                                       max(observation_tobit),
-                                                        length=10),
-                                                    Group=Group,Day=Day))
+#f_predict<-with(dat_sim,expand.grid(StO2=seq(min(observation_tobit),
+#                                                        max(observation_tobit),
+#                                                         length=10),
+#                                                     Group=Group,Day=Day))
 
+ #f_predict<-cbind(f_predict,
+   #                       predict(mod2,f_predict,
+  #                                se.fit = TRUE,type='response'))
+#
 
-f_predict<-cbind(f_predict,
-                         predict(mod2,f_predict,
-                                 se.fit = TRUE,type='response'))
+#creates a dataframe wusing the lenght of the covariates
+f_predict <- expand_grid(Group = factor(c("Control", "Treatment")),
+                         Day = seq(0, 10, by = 0.1))
+
+#adds the predictions to the grid and creates a confidence interval
+f_predict<-f_predict%>%
+    mutate(fit = predict(mod2,f_predict,se.fit = TRUE,type='response')$fit,
+           se.fit = predict(mod2, f_predict,se.fit = TRUE,type='response')$se.fit)
+
 
 ggplot(data=dat_sim, aes(x=Day, y=observation_tobit, group=Group)) +
     facet_wrap(~Group)+
     geom_point(colour='black',size=1,alpha=0.5)+
     geom_ribbon(aes(ymin=(fit - 2*se.fit), ymax=(fit + 2*se.fit), x=Day),
-                data=f_predict, alpha=0.3,
+                data=f_predict, alpha=0.5,
                 inherit.aes=FALSE) +
-    geom_line(aes(y=(fit),color=factor(Group)), size=1,data=f_predict,show.legend = FALSE)
+    geom_line(aes(y=(fit),color=factor(Group)),
+              size=1,data=f_predict,show.legend = FALSE)
 
 
 
@@ -148,28 +159,74 @@ smooth_diff <- function(model, newdata, f1, f2, alpha = 0.05,
 comp1<-smooth_diff(mod2,pdat,'Control','Treatment')
 comp_StO2 <- cbind(Day = seq(0, 10, length = 400),
                    rbind(comp1))
+
 c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
-    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) + geom_line(color='black') +
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
+    geom_line(color='black',size=1) +
     facet_wrap(~ pair) +
-    labs(x = NULL, y = 'Difference in StO2 trend')
+    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))
+
 
 c1
-##################################################################
+    ##################################################################
 ############################################################
 #missing data
-missing_predict<-with(dat_missing,expand.grid(observation=seq(min(observation),
-                                                       max(observation),length=400),
-                                       Group=levels(Group),Day=Day))
+#create a sequence of 40 random numbers between 1 and 100, these numbers will
+#correspond to the row numbers to be randomly erased from the original dataset
+missing <- sample(1:100, 40)
 
-missing_predict<-cbind(missing_predict,
-                    predict(mod1,missing_predict,
-                            se.fit = TRUE,type='response'))
+#create a new dataframe from the simulated data with 40 rows randomly removed
+dat_missing <- dat_sim[-missing, ]
+
+#Count the number of remaining observations per day (original dataset had 10 per group per day)
+dat_missing %>%
+    group_by(Day, Group) %>%
+    summarize(count = n())
+
+#plot the simulated data
+ggplot(dat_missing, aes(x = Day, y = observation_tobit, color = Group)) +
+    geom_point() +
+    ggtitle("Simulated time-varying responses") +
+    scale_color_viridis_d(end = 0.75) +
+    geom_line(aes(y = StO2), alpha = 0.75) +
+    theme_bw()
 
 
-ggplot(data=dat_missing, aes(x=Day, y=observation, group=Group)) +
-    facet_wrap(~Group) +
+
+#the same model used for the full dataset
+mod_m1 <- gam(observation_tobit ~ Group+s(Day,by=Group,k=5), data  = dat_missing)
+#appraise the model
+appraise(mod_m1)
+
+
+m_predict <- expand_grid(Group = factor(c("Control", "Treatment")),
+                         Day = seq(0, 10, by = 0.1))
+
+#adds the predictions to the grid and creates a confidence interval
+m_predict<-m_predict%>%
+    mutate(fit = predict(mod_m1,m_predict,se.fit = TRUE,type='response')$fit,
+           se.fit = predict(mod_m1, m_predict,se.fit = TRUE,type='response')$se.fit)
+
+
+ggplot(data=dat_missing, aes(x=Day, y=observation_tobit, group=Group)) +
+    facet_wrap(~Group)+
     geom_point(colour='black',size=1,alpha=0.5)+
     geom_ribbon(aes(ymin=(fit - 2*se.fit), ymax=(fit + 2*se.fit), x=Day),
-                data=missing_predict, alpha=0.3,
+                data=m_predict, alpha=0.5,
                 inherit.aes=FALSE) +
-    geom_line(aes(y=(fit),color=factor(Group)), size=1,data=missing_predict,show.legend = FALSE)
+    geom_line(aes(y=(fit),color=factor(Group)),
+              size=1,data=m_predict,show.legend = FALSE)
+
+
+comp2<-smooth_diff(mod_m1,pdat,'Control','Treatment')
+comp_StO2_m <- cbind(Day = seq(0, 10, length = 400),
+                   rbind(comp2))
+
+c2<-ggplot(comp_StO2_m, aes(x = Day, y = diff, group = pair)) +
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
+    geom_line(color='black',size=1) +
+    facet_wrap(~ pair) +
+    labs(x = 'Days', y = expression(paste('Difference in StO'[2],'(missing data)' )))
+
+
+c2
