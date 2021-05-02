@@ -1,19 +1,28 @@
+---
+title: "Tumor_Response_GAM_comments"
+author: "Ariel Mundo"
+date: "5/2/2021"
+output: html_document
+---
+
+```{r,loading packages}
 library(mgcv)
 library(tidyverse)
 library(ggplot2)
 library(patchwork)
 library(gratia)
+```
 
+number of observations -- currently using 5
+use measurement error of sd as 10 (rough estimate)
 
-## number of observations -- currently using 5
-## use measurement error of sd as 5 (rough estimate)
+Data are simulated from Fig. 3 (C) of Vishwanath et. al:
+Vishwanath, Karthik, et al. "Using optical spectroscopy to
+longitudinally monitor physiological changes within solid tumors."
+Neoplasia 11.9 (2009): 889-900.
+https://www.sciencedirect.com/science/article/pii/S1476558609800420
 
-#Data are simulated from Fig. 3 (C) of Vishwanath et. al:
-#Vishwanath, Karthik, et al. "Using optical spectroscopy to
-#longitudinally monitor physiological changes within solid tumors."
-#Neoplasia 11.9 (2009): 889-900.
-#https://www.sciencedirect.com/science/article/pii/S1476558609800420
-
+```{r,simulating data}
 dat <- read_csv(here::here("data", "Vishwanath StO2.csv"))
 dat$Group<-as.factor(dat$Group)
 ## plot the mean response
@@ -61,60 +70,35 @@ n_treatment <- length(unique(dat_sim$Group))
 #if you have n timepoints can you do n knots or should you do n-1 knots? (I read somewhere that
 #the n-1 option was preferred for computational issues)?
 
-mod2 <- gam(observation_tobit ~ s(Day,by=Group,k=5),data  = dat_sim)
-appraise(mod2)
-#SIMPLEST MODEL: A SMOOTH FOR TIME AS THE COVARIATE, WHICH CAN VARY BY GROUP BUT... APPRAISING THE MODEL SHOWS A WEIRD TREND
-#ON THE RESIDUALS
-#this model has a separate smooth for each Group.
+```
 
-mod1 <- gam(observation_tobit ~ Group+te(Day, by = Group, k = 5), data  = dat_sim)
+```{r,models}
+mod_simple  <- gam(observation_tobit ~ s(Day,by=Group,k=5),data  = dat_sim)
+appraise(mod2)
+#SIMPLEST MODEL: A SMOOTH FOR TIME AS THE COVARIATE, WHICH CAN VARY BY GROUP BUT... APPRAISING THE MODEL SHOWS ISSUES ON THE RESIDUALS AND THE DATA DISTRIBUTION
+
+#Model with interaction using tensor
+mod_int1 <- gam(observation_tobit ~ Group+te(Day, by = Group, k = 5), data  = dat_sim)
 appraise(mod1)
 
-
+#Model with interaction using s
 mod3 <- gam(observation_tobit ~ Group+s(Day, by = Group, k = 5), data  = dat_sim)
 appraise(mod3)
+```
 
-#Ok, so mod1 and mod3 are doing essentially the same thing. We have a smooth of time
-#per group, and we take the main effect of each treatment is also taken into account.
-#So this model effectively takes into account treatment and time? and the simples model
-#only takes the effect of time.
+Ok, so mod1 and mod3 are doing essentially the same thing. We have a smooth of time
+per group, and we take into account the main effect of each treatment.
+So this model effectively takes into account treatment and time? and the simples model only takes the effect of time.
 
-#To avoid confounding problems the smooths are all subject to sum
-#to zero constraints, which usually means that the main effect of g should also be included
-#in the model specification (pg.327)
-
-#THIS MODEL is accounting for a linear effect for each group, and a smooth for time by each group
-#Why is it fitting better than the "simple" model? What does this "linear" Group term mean?
-#The idea for this came from
-#https://stats.stackexchange.com/questions/486118/model-building-in-generalized-additive-mixed-models-gamms
-
-#mod2 <- gam(observation ~ s(Day, by = Group, k = 5), data  = dat_missing)
-
-# Reading through Simon Wood's book it seems that the linear term can be used when the
-# expected contribution of a factor is linear. The simples model then creates smooths by day
-# per group, but the updated model separates a linear trend within each group from the
-# smooth over time.
+"To avoid confounding problems the smooths are all subject to sum to zero constraints, which usually means that the main effect of g should also be included
+in the model specification. For example, g + te(z,x,by=g)(pg.327)" (From Simon Wood's book)
 
 
-
-#mod3<-gam(observation_tobit ~ Group+s(Day,k=5),data  = dat_sim)
-
-
+The idea for this came from
+https://stats.stackexchange.com/questions/486118/model-building-in-generalized-additive-mixed-models-gamms
 
 
-summary(mod1)
-#summary(mod2)
-
-par(ask=F)
-layout(matrix(1:4, 2, 2))
-#plot(mod1, main = "Missing")
-plot(mod1, main = "Full")
-
-par(mfrow=c(1,1))
-
-gam.check(mod1)
-#gam.check(mod2)
-
+```{r, plotting model}
 #plotting smooths and simulated data
 #full data
 #I am doing something wrong here but I can't figure it out!!!!
@@ -258,3 +242,6 @@ c2<-ggplot(comp_StO2_m, aes(x = Day, y = diff, group = pair)) +
 c2
 
 c1+c2
+```
+
+
