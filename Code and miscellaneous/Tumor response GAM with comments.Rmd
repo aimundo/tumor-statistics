@@ -60,6 +60,9 @@ dat_sim <- simulate_data(dat, n, sd)
 #plotting simulated data
 ggplot(dat_sim, aes(x = Day, y = observation_tobit, color = Group)) +
     geom_point()+
+    stat_summary(aes(y = observation_tobit,
+                     group=Group), 
+                 fun=mean, geom="line")+
     scale_x_continuous(breaks=c(0,2,5,7,10))
 
 
@@ -74,21 +77,21 @@ n_treatment <- length(unique(dat_sim$Group))
 
 ```{r,models}
 mod_simple  <- gam(observation_tobit ~ s(Day,by=Group,k=5),data  = dat_sim)
-appraise(mod2)
+appraise(mod_simple)
 #SIMPLEST MODEL: A SMOOTH FOR TIME AS THE COVARIATE, WHICH CAN VARY BY GROUP BUT... APPRAISING THE MODEL SHOWS ISSUES ON THE RESIDUALS AND THE DATA DISTRIBUTION
 
 #Model with interaction using tensor
-mod_int1 <- gam(observation_tobit ~ Group+te(Day, by = Group, k = 5), data  = dat_sim)
+mod_int1 <- gam(observation_tobit ~ Group+te(Day,by=Group, k = 5), data  = dat_sim)
 appraise(mod1)
 
 #Model with interaction using s
-mod3 <- gam(observation_tobit ~ Group+s(Day, by = Group, k = 5), data  = dat_sim)
-appraise(mod3)
+mod_int2 <- gam(observation_tobit ~ s(Group)+s(Day, by = Group, k = 5), data  = dat_sim)
+appraise(mod_int2)
 ```
 
-Ok, so mod1 and mod3 are doing essentially the same thing. We have a smooth of time
-per group, and we take into account the main effect of each treatment.
-So this model effectively takes into account treatment and time? and the simples model only takes the effect of time.
+The simplest model attempts to explain how StO2 changes over time, and gives each treatment group a separate smooth. However, from the diagnostics, it is clear that there are some issues with the assumptions, because the QQ plot, the residuals vs linear predictor and the histogram show that the assumptions of normality are not met.
+
+Next, we build a model that accounts for the _interaction_ of time and treatment. In this sense, mod_int1 and mod_int2 are doing essentially the same thing: We have a smooth to explain how StO2 changes per group, but we also account separately for the "main effect" of treatment. In other words, we are trying to explain the changes in StO2 by considering how it changes over time, but also disentangling the treatment effect from the response.
 
 "To avoid confounding problems the smooths are all subject to sum to zero constraints, which usually means that the main effect of g should also be included
 in the model specification. For example, g + te(z,x,by=g)(pg.327)" (From Simon Wood's book)
