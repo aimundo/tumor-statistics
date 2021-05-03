@@ -11,39 +11,41 @@ library(tidyverse)
 library(ggplot2)
 library(patchwork)
 library(gratia)
+library (ggsci)
 ```
 
 number of observations -- currently using 5
 use measurement error of sd as 10 (rough estimate)
 
 Data are simulated from Fig. 3 (C) of Vishwanath et. al:
-Vishwanath, Karthik, et al. "Using optical spectroscopy to
-longitudinally monitor physiological changes within solid tumors."
-Neoplasia 11.9 (2009): 889-900.
+"Using optical spectroscopy to longitudinally monitor physiological changes within solid tumors." Neoplasia 11.9 (2009): 889-900.
 https://www.sciencedirect.com/science/article/pii/S1476558609800420
+
+From the figure the maximum standard deviation for the measurements is approximately 10%.
 
 ```{r,simulating data}
 dat <- read_csv(here::here("data", "Vishwanath StO2.csv"))
 dat$Group<-as.factor(dat$Group)
+
 ## plot the mean response
-ggplot(dat, aes(x = Day, y = StO2, color = Group)) +
-    geom_line()+
-    geom_point()+
+f1<-ggplot(dat, aes(x = Day, y = StO2, color = Group)) +
+    geom_line(size=1,show.legend = FALSE)+
+    geom_point(show.legend = FALSE)+
+  labs(y=expression(paste('Mean StO'[2],' (real)')))+
+  theme_classic()+
+  scale_color_aaas()+
     scale_x_continuous(breaks=c(0,2,5,7,10))
 
 
-#This function simulates data for the tumor data using a dafault number of
-#10 observations per time point,
-#and a standard deviation of 10% StO2
-#Because physiologically StO2 cannot go below 0%, data is generated with a cutoff value of
-#0.0001 (the "observation_tobit")
+#This function simulates data for the tumor data using default parameters of 10 observations per time point,and Standard deviation (sd) of 5%.
+#Because physiologically StO2 cannot go below 0%, data is  generated with a cutoff value of 0.0001 (the "StO2_sim")
 
 simulate_data <- function(dat, n = 10, sd = 5) {
     dat_sim <- dat %>%
         slice(rep(1:n(), each = n)) %>%
         group_by(Group, Day) %>%
-        mutate(observation = rnorm(n, StO2, sd),
-               observation_tobit = pmax(rnorm(n, StO2, sd), 0.0001)) %>%
+        mutate(
+               StO2_sim = pmax(rnorm(n, StO2, sd), 0.0001)) %>%
         ungroup()
 
     return(dat_sim)
@@ -51,47 +53,55 @@ simulate_data <- function(dat, n = 10, sd = 5) {
 
 
 
-n <- 10
-sd <- 10
-set.seed(11) #setting seed
+n <- 10 #number of observations
+sd <- 10 #approximate sd from paper
+set.seed(1) #setting seed
 df <- 6
 dat_sim <- simulate_data(dat, n, sd)
 
 #plotting simulated data
-ggplot(dat_sim, aes(x = Day, y = observation_tobit, color = Group)) +
+f2<-ggplot(dat_sim, aes(x = Day, y = StO2_sim, color = Group)) +
     geom_point()+
-    stat_summary(aes(y = observation_tobit,
+    stat_summary(aes(y = StO2_sim,
                      group=Group), 
-                 fun=mean, geom="line")+
+                 fun=mean, geom="line",size=1)+
+  labs(y=expression(paste('StO'[2],' (simulated)')))+
+  theme_classic()+
+  scale_color_aaas()+
     scale_x_continuous(breaks=c(0,2,5,7,10))
 
+#plot the "true" data with the simulated response
 
-n_time <- length(unique(dat_sim$Day))
-n_treatment <- length(unique(dat_sim$Group))
+f1+f2+plot_layout(guides = 'collect') &
+  ylim(c(0,75)) &
+  theme(
+     text=element_text(size=18),
+     legend.title=element_blank()
+     )&
+  scale_color_aaas()
 
 
-#if you have n timepoints can you do n knots or should you do n-1 knots? (I read somewhere that
-#the n-1 option was preferred for computational issues)?
 
 ```
 
 ```{r,models}
-mod_simple  <- gam(observation_tobit ~ s(Day,by=Group,k=5),data  = dat_sim)
+mod_simple  <- gam(StO2_sim ~ s(Day,by=Group,k=5),data  = dat_sim)
 appraise(mod_simple)
 #SIMPLEST MODEL: A SMOOTH FOR TIME AS THE COVARIATE, WHICH CAN VARY BY GROUP BUT... APPRAISING THE MODEL SHOWS ISSUES ON THE RESIDUALS AND THE DATA DISTRIBUTION
 
-#Model with interaction using tensor
-mod_int1 <- gam(observation_tobit ~ Group+te(Day,by=Group, k = 5), data  = dat_sim)
-appraise(mod1)
+#Model with interaction using tensor: there is some different specification that does not allow to plot it easily
+mod_int1 <- gam(StO2_sim ~ Group+te(Day,by=Group, k = 5),
+                data  = dat_sim)
+appraise(mod_int1)
 
 #Model with interaction using s
-mod_int2 <- gam(observation_tobit ~ s(Group)+s(Day, by = Group, k = 5), data  = dat_sim)
+mod_int2 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5), data  = dat_sim)
 appraise(mod_int2)
 ```
 
-The simplest model attempts to explain how StO2 changes over time, and gives each treatment group a separate smooth. However, from the diagnostics, it is clear that there are some issues with the assumptions, because the QQ plot, the residuals vs linear predictor and the histogram show that the assumptions of normality are not met.
+The simplest model attempts to explain how $StO_2$ changes over time, and gives each treatment group a separate smooth. However, from the diagnostics, it is clear that there are some issues because the QQ plot, the residuals vs linear predictor and the histogram show that the assumptions of normality are not met.
 
-Next, we build a model that accounts for the _interaction_ of time and treatment. In this sense, mod_int1 and mod_int2 are doing essentially the same thing: We have a smooth to explain how StO2 changes per group, but we also account separately for the "main effect" of treatment. In other words, we are trying to explain the changes in StO2 by considering how it changes over time, but also disentangling the treatment effect from the response.
+Next, we build a model that accounts for the _interaction_ of time and treatment. In this sense, mod_int1 and mod_int2 are doing essentially the same thing: We have a smooth to explain how $StO_2$ changes per group, but we also account separately for the "main effect" of treatment. In other words, we are trying to explain the changes in $StO_2$ by considering how it changes over time, but also disentangling the treatment effect from the response.
 
 "To avoid confounding problems the smooths are all subject to sum to zero constraints, which usually means that the main effect of g should also be included
 in the model specification. For example, g + te(z,x,by=g)(pg.327)" (From Simon Wood's book)
@@ -103,46 +113,47 @@ https://stats.stackexchange.com/questions/486118/model-building-in-generalized-a
 
 ```{r, plotting model}
 #plotting smooths and simulated data
-#full data
-#I am doing something wrong here but I can't figure it out!!!!
-#f_predict<-with(dat_sim,expand.grid(StO2=seq(min(observation_tobit),
-#                                                        max(observation_tobit),
-#                                                         length=10),
-#                                                     Group=Group,Day=Day))
 
- #f_predict<-cbind(f_predict,
-   #                       predict(mod2,f_predict,
-  #                                se.fit = TRUE,type='response'))
-#
-
-#creates a dataframe wusing the lenght of the covariates
+#creates a dataframe using the length of the covariates
 f_predict <- expand_grid(Group = factor(c("Control", "Treatment")),
                          Day = seq(0, 10, by = 0.1))
 
 #adds the predictions to the grid and creates a confidence interval
 f_predict<-f_predict%>%
-    mutate(fit = predict(mod1,f_predict,se.fit = TRUE,type='response')$fit,
-           se.fit = predict(mod1, f_predict,se.fit = TRUE,type='response')$se.fit)
+    mutate(fit = predict(mod_int2,f_predict,se.fit = TRUE,type='response')$fit,
+           se.fit = predict(mod_int2, f_predict,se.fit = TRUE,type='response')$se.fit)
 
-
-ggplot(data=dat_sim, aes(x=Day, y=observation_tobit, group=Group)) +
-    facet_wrap(~Group)+
-    geom_point(colour='black',size=1,alpha=0.5)+
-    geom_ribbon(aes(ymin=(fit - 2*se.fit), ymax=(fit + 2*se.fit), x=Day),
-                data=f_predict, alpha=0.5,
+#plot smooths and confidence interval
+f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
+    geom_point(aes(color=Group),size=1.5,alpha=0.5)+
+  geom_ribbon(aes( x=Day,ymin=(fit - 2*se.fit), 
+                   ymax=(fit + 2*se.fit),fill=Group),
+              alpha=0.3,
+              data=f_predict,
                 inherit.aes=FALSE) +
-    geom_line(aes(y=(fit),color=factor(Group)),
-              size=1,data=f_predict,show.legend = FALSE)
+  geom_line(aes(y=fit,
+                color=Group),
+              size=1,data=f_predict,
+              show.legend = FALSE)+
+  facet_wrap(~Group)+
+  labs(y=expression(paste('StO'[2],' (simulated)')))+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+      theme_classic()+
+      scale_color_aaas()+
+  scale_fill_aaas()
 
 
+f3 & theme(
+     text=element_text(size=18),
+     legend.title=element_blank()
+     )
 
-#it works now, but why do the smooths still look so rough? (the connections at the knots
-#don't look "smooth")
 
-##trying the pairwise comparisons
+##Pairwise comparisons
 
 pdat <- expand.grid(Day = seq(0, 10, length = 400),
                     Group = c('Treatment', 'Control'))
+
 smooth_diff <- function(model, newdata, f1, f2, alpha = 0.05,
                         unconditional = FALSE) {
     xp <- predict(model, newdata = newdata, type = 'lpmatrix')
@@ -169,18 +180,32 @@ smooth_diff <- function(model, newdata, f1, f2, alpha = 0.05,
                upper = upr,
                lower = lwr)
 }
-comp1<-smooth_diff(mod2,pdat,'Control','Treatment')
+
+comp1<-smooth_diff(mod_int2,pdat,'Control','Treatment')
+
 comp_StO2 <- cbind(Day = seq(0, 10, length = 400),
                    rbind(comp1))
 
 c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
-    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.5,fill='#993336') +
     geom_line(color='black',size=1) +
     facet_wrap(~ pair) +
-    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))
+  theme_classic()+
+    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
+  scale_x_continuous(breaks=c(0,2,5,7,10))+
+  theme(
+     text=element_text(size=18),
+     legend.title=element_blank()
+     )
+  
 
 
 c1
+```
+
+GAMs do not require equally-spaced observations and can accommodate missing observations as well. In a case where 40% of the observations are missing:
+
+```{r,missing data}
     ##################################################################
 ############################################################
 #missing data
@@ -188,26 +213,44 @@ c1
 #correspond to the row numbers to be randomly erased from the original dataset
 missing <- sample(1:100, 40)
 
-#create a new dataframe from the simulated data with 40 rows randomly removed
-dat_missing <- dat_sim[-missing, ]
+#create a new dataframe from the simulated data with 40 rows randomly removed, keep the missing values as NA
+
+ind <- which(dat_sim$StO2_sim %in% sample(dat_sim$StO2_sim, 40))
+
+#create a new dataframe, remove the StO2 column
+dat_missing <- dat_sim[,-1]
+
+#add NAs at the ind positions
+dat_missing$StO2_sim[ind]<-NA 
 
 #Count the number of remaining observations per day (original dataset had 10 per group per day)
 dat_missing %>%
-    group_by(Day, Group) %>%
-    summarize(count = n())
+    group_by(Day,Group) %>%
+    filter(!is.na(StO2_sim))%>%
+  count(Day)
 
 #plot the simulated data
-ggplot(dat_missing, aes(x = Day, y = observation_tobit, color = Group)) +
+f4<-ggplot(dat_missing, aes(x = Day, y = StO2_sim, color = Group)) +
     geom_point() +
-    ggtitle("Simulated time-varying responses") +
-    scale_color_viridis_d(end = 0.75) +
-    geom_line(aes(y = StO2), alpha = 0.75) +
-    theme_bw()
+  stat_summary(aes(y = StO2_sim,
+                     group=Group), 
+                 fun=mean, geom="line",size=1)+
+    ggtitle("Missing data") +
+  labs(y='StO2')+
+  scale_color_aaas()+
+    theme_classic()
 
 
+f2+f4+plot_layout(guides = 'collect') &
+  ylim(c(0,75)) &
+  theme(
+     text=element_text(size=18),
+     legend.title=element_blank()
+     )&
+  scale_color_aaas()
 
 #the same model used for the full dataset
-mod_m1 <- gam(observation_tobit ~ Group+s(Day,by=Group,k=5), data  = dat_missing)
+mod_m1 <- gam(StO2_sim ~ Group+s(Day,by=Group,k=5), data  = dat_missing)
 #appraise the model
 appraise(mod_m1)
 
@@ -221,7 +264,7 @@ m_predict<-m_predict%>%
            se.fit = predict(mod_m1, m_predict,se.fit = TRUE,type='response')$se.fit)
 
 
-ggplot(data=dat_missing, aes(x=Day, y=observation_tobit, group=Group)) +
+ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
     facet_wrap(~Group)+
     geom_point(colour='black',size=1,alpha=0.5)+
     geom_ribbon(aes(ymin=(fit - 2*se.fit), ymax=(fit + 2*se.fit), x=Day),
@@ -239,7 +282,13 @@ c2<-ggplot(comp_StO2_m, aes(x = Day, y = diff, group = pair)) +
     geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
     geom_line(color='black',size=1) +
     facet_wrap(~ pair) +
-    labs(x = 'Days', y = expression(paste('Difference in StO'[2],'(missing data)' )))
+    labs(x = 'Days', y = expression(paste('Difference in StO'[2],'(missing data)' )))+
+  scale_x_continuous(breaks=c(0,2,5,7,10))+
+  theme_classic()+
+  theme(
+     text=element_text(size=18),
+     legend.title=element_blank()
+     )
 
 
 c2

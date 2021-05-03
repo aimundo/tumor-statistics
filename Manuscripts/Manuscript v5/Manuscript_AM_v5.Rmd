@@ -436,7 +436,9 @@ basis_names<-c(
 
 #calculating the final spline by aggregating the basis functions
 
-spl<-basis_plot%>% group_by(time)%>%summarize(spl=sum(mod_val))
+spl<-basis_plot%>% 
+  group_by(time)%>%
+  summarize(spl=sum(mod_val))
 
 
 #original basis
@@ -484,7 +486,8 @@ p14<-ggplot(data=dat,aes(x=time,y=y))+
 #Combining all
 b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
   theme(
-     text=element_text(size=18))
+     text=element_text(size=18)
+     )
 
 ```
 
