@@ -1,11 +1,13 @@
 ---
-title: "Tumor_Response_GAM_comments"
+title: "Tumor Response GAM models with comments"
 author: "Ariel Mundo"
 date: "5/2/2021"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
-```{r,loading packages}
+```{r,loading packages,echo=FALSE,include=FALSE,message=FALSE,warning=FALSE}
 library(mgcv)
 library(tidyverse)
 library(ggplot2)
@@ -23,7 +25,7 @@ https://www.sciencedirect.com/science/article/pii/S1476558609800420
 
 From the figure the maximum standard deviation for the measurements is approximately 10%.
 
-```{r,simulating data}
+```{r,simulating data,cho=FALSE,include=FALSE,message=FALSE,warning=FALSE}
 dat <- read_csv(here::here("data", "Vishwanath StO2.csv"))
 dat$Group<-as.factor(dat$Group)
 
@@ -55,7 +57,7 @@ simulate_data <- function(dat, n = 10, sd = 5) {
 
 n <- 10 #number of observations
 sd <- 10 #approximate sd from paper
-set.seed(1) #setting seed
+set.seed(1) #set seed for reproducibility
 df <- 6
 dat_sim <- simulate_data(dat, n, sd)
 
@@ -95,7 +97,7 @@ mod_int1 <- gam(StO2_sim ~ Group+te(Day,by=Group, k = 5),
 appraise(mod_int1)
 
 #Model with interaction using s
-mod_int2 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5), data  = dat_sim)
+mod_int2 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),method='REML', data  = dat_sim)
 appraise(mod_int2)
 ```
 
@@ -104,14 +106,14 @@ The simplest model attempts to explain how $StO_2$ changes over time, and gives 
 Next, we build a model that accounts for the _interaction_ of time and treatment. In this sense, mod_int1 and mod_int2 are doing essentially the same thing: We have a smooth to explain how $StO_2$ changes per group, but we also account separately for the "main effect" of treatment. In other words, we are trying to explain the changes in $StO_2$ by considering how it changes over time, but also disentangling the treatment effect from the response.
 
 "To avoid confounding problems the smooths are all subject to sum to zero constraints, which usually means that the main effect of g should also be included
-in the model specification. For example, g + te(z,x,by=g)(pg.327)" (From Simon Wood's book)
+in the model specification. For example, g + te(z,x,by=g)(pg.327)" (From Simon Wood's book). This gives a good explanation on why mod_int1 and mod_int2 work.
 
 
 The idea for this came from
 https://stats.stackexchange.com/questions/486118/model-building-in-generalized-additive-mixed-models-gamms
 
 
-```{r, plotting model}
+```{r, plotting model,echo=FALSE,include=FALSE,message=FALSE,warning=FALSE}
 #plotting smooths and simulated data
 
 #creates a dataframe using the length of the covariates
@@ -205,7 +207,7 @@ c1
 
 GAMs do not require equally-spaced observations and can accommodate missing observations as well. In a case where 40% of the observations are missing:
 
-```{r,missing data}
+```{r,missing data,echo=FALSE,include=TRUE,message=FALSE,warning=FALSE}
     ##################################################################
 ############################################################
 #missing data
@@ -282,7 +284,9 @@ c2<-ggplot(comp_StO2_m, aes(x = Day, y = diff, group = pair)) +
     geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
     geom_line(color='black',size=1) +
     facet_wrap(~ pair) +
-    labs(x = 'Days', y = expression(paste('Difference in StO'[2],'(missing data)' )))+
+    labs(x = 'Days', 
+         y = expression(paste('Difference in StO'[2],'\n (missing data)' 
+                              )))+
   scale_x_continuous(breaks=c(0,2,5,7,10))+
   theme_classic()+
   theme(
@@ -297,4 +301,10 @@ c1+c2
 ```
 
 It is reassuring to see that we get the same diagnostics by either having a dataframe with missing observations as NA or a dataframe where the missing observations are not present at all.
+
+So two questions remains after this:
+-How do we want to present the pairwise smooth confidence interval comparison? 
+The GAMs are referred as "empirical Bayesian", but I could not find a straightforward reference that had information in detail of what the pairwise comparisons can tell at certain timepoints. Sure, they are different, but what else?
+
+-Do we want to address prediction? I recently saw a webinar from Gavin Simpson regarding this, wondered if it would be feasible to include in a concise manner.
 
