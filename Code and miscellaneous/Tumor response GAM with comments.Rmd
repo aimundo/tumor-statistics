@@ -296,4 +296,5 @@ c2
 c1+c2
 ```
 
+It is reassuring to see that we get the same diagnostics by either having a dataframe with missing observations as NA or a dataframe where the missing observations are not present at all.
 
