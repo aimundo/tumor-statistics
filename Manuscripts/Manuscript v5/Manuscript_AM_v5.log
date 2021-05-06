@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.3.18)  15 APR 2021 12:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.3.18)  5 MAY 2021 19:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -821,69 +821,83 @@ used on input line 294.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[9] [10 <./Manuscript_AM_v5_files/figure-latex/basis-plot-1.pdf>] [11] [12] [13
-] [14]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
-93.
+[9] [10 <./Manuscript_AM_v5_files/figure-latex/basis-plot-1.pdf>]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
+10.
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
+312.
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
+File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+<Manuscript_AM_v5_files/figure-latex/sim-smooth-plot-1.pdf, id=202, 722.7pt x 5
+05.89pt>
+File: Manuscript_AM_v5_files/figure-latex/sim-smooth-plot-1.pdf Graphic file (t
+ype pdf)
+<use Manuscript_AM_v5_files/figure-latex/sim-smooth-plot-1.pdf>
+Package pdftex.def Info: Manuscript_AM_v5_files/figure-latex/sim-smooth-plot-1.
+pdf  used on input line 320.
+(pdftex.def)             Requested size: 352.31758pt x 246.6223pt.
+[11 <./Manuscript_AM_v5_files/figure-latex/sim-smooth-plot-1.pdf>] [12] [13] [1
+4] [15]
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 495.
-[15]
-Underfull \vbox (badness 10000) detected at line 656
- []
-
-
-Underfull \vbox (badness 10000) detected at line 656
- []
-
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 514.
 [16]
-Underfull \vbox (badness 10000) detected at line 656
+Underfull \vbox (badness 10000) detected at line 675
  []
 
 
-Underfull \vbox (badness 10000) detected at line 656
+Underfull \vbox (badness 10000) detected at line 675
  []
 
 [17]
-<Manuscript_AM_v5_files/figure-latex/linear-cases-1.pdf, id=359, 1156.32pt x 86
+Underfull \vbox (badness 10000) detected at line 675
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 675
+ []
+
+[18]
+<Manuscript_AM_v5_files/figure-latex/linear-cases-1.pdf, id=380, 1156.32pt x 86
 7.24pt>
 File: Manuscript_AM_v5_files/figure-latex/linear-cases-1.pdf Graphic file (type
  pdf)
 <use Manuscript_AM_v5_files/figure-latex/linear-cases-1.pdf>
 Package pdftex.def Info: Manuscript_AM_v5_files/figure-latex/linear-cases-1.pdf
-  used on input line 659.
+  used on input line 678.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
-[18 <./Manuscript_AM_v5_files/figure-latex/linear-cases-1.pdf>]
-<Manuscript_AM_v5_files/figure-latex/quadratic-cases-1.pdf, id=371, 1156.32pt x
+[19 <./Manuscript_AM_v5_files/figure-latex/linear-cases-1.pdf>]
+<Manuscript_AM_v5_files/figure-latex/quadratic-cases-1.pdf, id=392, 1156.32pt x
  867.24pt>
 File: Manuscript_AM_v5_files/figure-latex/quadratic-cases-1.pdf Graphic file (t
 ype pdf)
 <use Manuscript_AM_v5_files/figure-latex/quadratic-cases-1.pdf>
 Package pdftex.def Info: Manuscript_AM_v5_files/figure-latex/quadratic-cases-1.
-pdf  used on input line 665.
+pdf  used on input line 684.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
-[19 <./Manuscript_AM_v5_files/figure-latex/quadratic-cases-1.pdf>] (./Manuscrip
+[20 <./Manuscript_AM_v5_files/figure-latex/quadratic-cases-1.pdf>] (./Manuscrip
 t_AM_v5.aux)
 Package rerunfilecheck Info: File `Manuscript_AM_v5.out' has not changed.
-(rerunfilecheck)             Checksum: 5D664CB242DB2DFBF0E3F99AF5968ACD;3155.
+(rerunfilecheck)             Checksum: 06961207E062700B8A466E2FD3E631AD;3355.
  ) 
 Here is how much of TeX's memory you used:
- 13408 strings out of 480962
- 203379 string characters out of 5905818
- 545280 words of memory out of 5000000
- 30264 multiletter control sequences out of 15000+600000
- 473682 words of font info for 77 fonts, out of 8000000 for 9000
+ 13455 strings out of 480962
+ 204562 string characters out of 5905818
+ 546128 words of memory out of 5000000
+ 30304 multiletter control sequences out of 15000+600000
+ 473987 words of font info for 78 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  73i,11n,89p,1461b,363s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec
 .enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm
--mathex.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvip
-s/lm/lm-mathsy.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/e
-nc/dvips/lm/lm-rm.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/font
-s/enc/dvips/lm/lm-mathit.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-di
-st/fonts/enc/dvips/lm/lm-ts1.enc}<c:/Users/aimundo/AppData/Roaming/TinyTeX/texm
+-ts1.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/l
+m/lm-mathex.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/
+dvips/lm/lm-mathsy.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fon
+ts/enc/dvips/lm/lm-rm.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/
+fonts/enc/dvips/lm/lm-mathit.enc}<c:/Users/aimundo/AppData/Roaming/TinyTeX/texm
 f-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/aimundo/AppData/Roaming/TinyT
 eX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/aimundo/AppData/Roamin
 g/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/aimundo/AppData
@@ -903,10 +917,10 @@ TeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/aimundo/AppData/Roami
 ng/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/aimundo/AppDat
 a/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/aimundo
 /AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on Manuscript_AM_v5.pdf (19 pages, 534187 bytes).
+Output written on Manuscript_AM_v5.pdf (20 pages, 558600 bytes).
 PDF statistics:
- 475 PDF objects out of 1000 (max. 8388607)
- 422 compressed objects within 5 object streams
- 117 named destinations out of 1000 (max. 500000)
- 133 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 496 PDF objects out of 1000 (max. 8388607)
+ 440 compressed objects within 5 object streams
+ 119 named destinations out of 1000 (max. 500000)
+ 138 words of extra memory for PDF output out of 10000 (max. 10000000)
 
