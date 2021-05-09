@@ -694,6 +694,8 @@ sim_linear_plot<-f4 & theme(
 #posthoc comparisons for the linear model
 library(multcomp)
 
+
+summary(glht(lm1, linfct = mcp(Group = 'Tukey')))
 summary(glht(lm1, linfct=mcp(Group="Tukey", interaction_average=TRUE)))
 
 ```
