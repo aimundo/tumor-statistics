@@ -603,8 +603,8 @@ f2<-ggplot(dat_sim, aes(x = Day, y = StO2_sim, color = Group)) +
 gam1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),method='REML', data  = dat_sim)
 
 #linear model
-lm1<-lm(StO2_sim ~ Day + Group + Day * Group, data = dat_sim)
-
+lm1<-lm(StO2_sim ~ factor(Day) + Group + factor(Day) * Group, data = dat_sim)
+  
 
 #lm2<-lme(StO2_sim ~ Group + Day + Group:Day,
 #                 data = dat_sim,
@@ -718,6 +718,12 @@ f2+inset_element(f1, left = 0.01, bottom = 0.7, right = 0.5, top = 1.0)+f3+f4+
   scale_color_aaas()
 
 ```
+
+What does this mean?
+https://stats.stackexchange.com/questions/377609/rm-anova-time-as-continuous-or-categorical
+
+If you treat time as a factor then you do get the changes over time!
+
 
 Because GAMs do not require equally-spaced or complete observations for all subjects, they are advantageous to analyze longitudinal data that has missing observations. Again, using the simulated $StO_2$ values from Figure (\@ref(fig:sim-smooth-plot), B), 40% of the total observations can be randomly deleted and a GAM model with interaction can be fitted to the remaining observations. 
 
