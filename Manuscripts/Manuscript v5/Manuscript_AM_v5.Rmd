@@ -606,11 +606,11 @@ gam1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),method='REML', data  = da
 lm1<-lm(StO2_sim ~ Day + Group + Day * Group, data = dat_sim)
 
 
-lm1<-lme(StO2_sim ~ Group + Day + Group:Day,
-                 data = dat_sim,
-                 random = ~ 1 | subject,
-                 correlation = corCompSymm(form = ~ 1 | subject)
-  )
+#lm2<-lme(StO2_sim ~ Group + Day + Group:Day,
+#                 data = dat_sim,
+#                 random = ~ 1 | subject,
+#                 correlation = corCompSymm(form = ~ 1 | subject)
+#  )
 
 
 
@@ -620,7 +620,7 @@ gam_predict <- expand_grid(Group = factor(c("Control", "Treatment")),
 
 #creates a dataframe using the length of the covariates for the rm-ANOVA
 lm_predict<-expand_grid(Group = factor(c("Control", "Treatment")),
-                         Day = seq(0, 10, by = 0.1),
+                         Day = c(0,2,5,7,10),
                         subject=factor(rep(1:10)),
                           )
 lm_predict$subject<-factor(paste(lm_predict$subject, lm_predict$Group, sep = "-"))
@@ -630,9 +630,17 @@ gam_predict<-gam_predict%>%
     mutate(fit = predict(gam1,gam_predict,se.fit = TRUE,type='response')$fit,
            se.fit = predict(gam1, gam_predict,se.fit = TRUE,type='response')$se.fit)
 
+#using lm
 lm_predict<-lm_predict%>%
     mutate(fit = predict(lm1,lm_predict,se.fit = TRUE,type='response')$fit,
            se.fit = predict(lm1, lm_predict,se.fit = TRUE,type='response')$se.fit)
+
+
+
+#using lme
+#lm_predict<-lm_predict%>%
+#   mutate(fit = predict(lm1,lm_predict,se.fit = TRUE,type='response',level=0),
+ #         se.fit = predict(lm1, lm_predict,se.fit = TRUE,type='response',level=0))
 
 #plot smooths and confidence interval for GAM
 f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
@@ -644,7 +652,7 @@ f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
                 inherit.aes=FALSE) +
   geom_line(aes(y=fit,
                 color=Group),
-              size=1,data=f_predict,
+              size=1,data=gam_predict,
               show.legend = FALSE)+
   #facet_wrap(~Group)+
   labs(y=expression(paste('StO'[2],' (simulated)')))+
@@ -682,6 +690,12 @@ sim_linear_plot<-f4 & theme(
      text=element_text(size=18),
      legend.title=element_blank()
      )
+
+#posthoc comparisons for the linear model
+library(multcomp)
+
+summary(glht(lm1, linfct=mcp(Group="Tukey", interaction_average=TRUE)))
+
 ```
 
 
