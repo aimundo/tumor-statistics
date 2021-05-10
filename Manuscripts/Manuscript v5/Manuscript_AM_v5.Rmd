@@ -603,8 +603,8 @@ f2<-ggplot(dat_sim, aes(x = Day, y = StO2_sim, color = Group)) +
 gam1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),method='REML', data  = dat_sim)
 
 #linear model
+lm1<-lm(StO2_sim ~ Day + Group + Day * Group, data = dat_sim)
 lm1<-lm(StO2_sim ~ factor(Day) + Group + factor(Day) * Group, data = dat_sim)
-  
 
 #lm2<-lme(StO2_sim ~ Group + Day + Group:Day,
 #                 data = dat_sim,
