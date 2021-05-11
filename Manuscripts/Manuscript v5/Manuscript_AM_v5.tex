@@ -131,6 +131,11 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+\hypertarget{abstract}{%
+\section{Abstract}\label{abstract}}
+
+In biomedical research, the outcome of longitudinal studies is frequently analyzed statistically using the repeated measures analysis or variance (rm-ANOVA). However, rm-ANOVA is restrictive as is only able to accommodate linear responses, requires equal correlation between each measurement (compound symmetry), and cannot work with missing observations. When the data fails to fullfill all the required assumptions by rm-ANOVA, the model provides biased estimates and inference. In contrast, generalized additive models (GAMs) are a class of models that overcome all of the limitations imposed by rm-ANOVA and that can be implemented in a straightforward manner using the \emph{mgcv} package in R. This paper summarizes the assumptions of rm-ANOVA and how their limit its use in longitudinal biomedical research, presents the basic theoretical framework for GAMs and provides examples of their implementation in R. The code and data used to generate this paper are available at:
+
 \hypertarget{background}{%
 \section{Background}\label{background}}
 
@@ -247,13 +252,15 @@ Briefly, two cases for the mean responses for each group are considered: in the 
 
 Specifically, the rationale for the chosen linear and quadratic functions is the likelihood that a measured response in two treatment groups is similar in the initial phase of the study, but as treatment progresses a divergence in the trend of the response indicates an effect due to treatment. In other words, Group 1 can be thought as a ``Control'' group and Group 2 as a ``Treatment'' group. From the mean response per group (linear or quadratic), the variability or ``error'' of individual responses within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \ref{fig:l-q-response} B,D). A more comprehensive exploration of the fit of rm-ANOVA for linear and non-linear longitudinal data is in Figure \ref{fig:linear-cases} and Figure \ref{fig:quadratic-cases} in the Appendix, where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented.
 
+
+
 \begin{figure}[!h]
 
 {\centering \includegraphics[width=0.75\linewidth,]{Manuscript_AM_v5_files/figure-latex/l-q-response-1} 
 
 }
 
-\caption{Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimates from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model not only fails to pick the trend of the quadratic data but it also incorrectly estimates the initial conditions.}\label{fig:l-q-response}
+\caption{(l-q-response-caption)}\label{fig:l-q-response}
 \end{figure}
 
 The simulation shows that the fit produced by the rm-ANOVA model is good for linear data, as the predictions for the mean response are reasonably close to the ``truth'' of the simulated data (Figure \ref{fig:l-q-response},B). When the linearity and compound symmetry assumptions are met, the model approximates well the individual trends and the mean trends by group.
@@ -289,29 +296,44 @@ To further clarify the concept of basis functions and smooth functions, consider
 
 In other words, the six points of each basis are multiplied by the corresponding coefficient in panel B, thereby increasing or decreasing the original basis functions of Panel A. In Figure \ref{fig:basis-plot}, Panel C shows the resulting penalized basis functions. Note that the penalization for basis 1 has resulted in a decrease of its overall value (because the coefficient for that basis function is negative and less than 1); on the other hand, basis 3 has roughly doubled its value. Finally, the penalized basis functions are added at each timepoint to produce the smooth term. The resulting smooth term for the effect of \emph{time} is shown in Panel D (orange line) along the simulated values per group, which appear as points.
 
+
+
 \begin{figure}[!h]
 
 {\centering \includegraphics[width=0.75\linewidth,]{Manuscript_AM_v5_files/figure-latex/basis-plot-1} 
 
 }
 
-\caption{Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D. Smoother for time and original datapoints. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.}\label{fig:basis-plot}
+\caption{Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D. Smoother for time and original data points. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.}\label{fig:basis-plot}
 \end{figure}
 
 \newpage
 
 \hypertarget{the-analyisis-of-longitudinal-biomedical-data-using-gams}{%
-\subsection{The analyisis of longitudinal biomedical data using GAMs}\label{the-analyisis-of-longitudinal-biomedical-data-using-gams}}
+\section{The analyisis of longitudinal biomedical data using GAMs}\label{the-analyisis-of-longitudinal-biomedical-data-using-gams}}
 
-The previous section provided the basic theoretical framework to understand the advantages of GAMs to model non-linear data. Although the specific methods of how GAMs model correlation structures is a topic beyond the scope of this paper, it suffices to say that GAMs can handle correlation structures beyond compound symmetry. A detailed description on basis functions and correlations can be found in {[}52{]}. In a practical sense, when a GAM is implemented for longitudinal data, a spline can be added to the model for the \emph{time} effect to account for the repeated measures over time. Finally, GAMs can handle missing observations that are MAR or MCAR. To demonstrate these points, this section will use simulation to generate data that follows previously reported non-linear trends in the biomedical literature.
+The previous sections provided the basic theoretical framework to understand the GAM framework and how these models are more advantageous to analyze non-linear longitudinal data when compared to LMEMs or rm-ANOVA. This section will use simulation to present the practical implementation of GAMs for longitudinal biomedical data using \(\textsf{R}\) and the package \texttt{mgcv}. The code for the simulated data and figures, and a brief guide for model selection and diagnostics appear in the Appendix.
 
-The simulated data is based on the reported longitudinal changes in oxygen saturation (\(StO_2\)) in subcutaneous tumors under chemotherapy that are reported in Figure 3(C) in {[}vishwanath2009{]}. An increase in oxygen saturation in the treatment group is observed through time, while a decrease is seen in the Control group. Following the reported trend, 10 normally distributed observations at each time point with a standard deviation (SD) of 10\% (approximately matching the SD in the figure) are simulated. The ``real'' and simulated data appear in Figure \ref{fig:sim-smooth-plot} A,B.
+\hypertarget{simulated-data}{%
+\subsection{Simulated data}\label{simulated-data}}
 
-For the data in Figure \ref{fig:sim-smooth-plot},B it is of interest to know the effect that each treatment has in oxygen saturation. In a practical sense, this implies an interaction model where smooths are created for \emph{Group} and \emph{Day}, respectively. The main thing to consider is that the interaction needs to be properly structured in the model syntax to account for the fact that one of the variables is numeric ( \emph{Day} ) and that the other is a factor ( \emph{Group} ). Because the smooths are centered at 0, the factor variable needs to be specified as a parametric term. Using the package \texttt{mgcv} The model then becomes:
+The simulated data is based on the reported longitudinal changes in oxygen saturation (\(StO_2\)) in subcutaneous tumors that appear in Figure 3(C) in {[}vishwanath2009{]}. An increase in oxygen saturation in the ``Treatment'' group (chemotherapy) is observed through time, while a decrease is seen in the ``Control'' (saline) group. Following the reported trend, 10 normally distributed observations at each time point are generated with a standard deviation (SD) of 10\% (matching the SD in the original paper).
+The simulated and real data appear in Figure \ref{fig:sim-smooth-plot}, A and the inlet, respectively.
 
-\texttt{m1\textless{}-gam(StO2\textasciitilde{}Group+s(Day,by=Group,k=5),\ method=\textquotesingle{}REML\textquotesingle{},data=dat\_sim}
+\hypertarget{an-interaction-gam-model-for-longitudinal-data}{%
+\subsection{An interaction GAM model for longitudinal data}\label{an-interaction-gam-model-for-longitudinal-data}}
 
-This syntax specifies that the object \texttt{m1} will store the model, and that the change in \(StO_2\) is modeled by independent smooths for \emph{Group} and \emph{Day} (the parenthesis preceded by \emph{s}) using 5 knots. The parametric term \emph{Group} is added to separate the effect of treatment, and the \texttt{method} chosen to select the smoothing parameters is the restricted maximum likelihood (REML) {[}37{]}. When the smooths are plotted over the raw data, it is clear that the model has been able to capture the trend of the change of \(StO_2\) for each group across time (Figure \ref{fig:sim-smooth-plot},C).
+An interaction model is typically the main interest in longitudinal biomedical data, as it takes into account the effect of treatment, time, and their combination. In a practical sense, when a GAM is implemented for longitudinal data, a smooth can be added to the model for the \emph{time} effect to account for the repeated measures over time. Although specific methods of how GAMs model correlation structures is a topic beyond the scope of this paper, it suffices to say that GAMs can handle correlation structures beyond compound symmetry. A detailed description on basis functions and correlations can be found in {[}52{]}.
+
+For the data in Figure \ref{fig:sim-smooth-plot},A it is of interest to know the effect that each treatment has in oxygen saturation. The model then needs to incorporate independent smooths for \emph{Group} and \emph{Day}, respectively. The main thing to consider is the model syntax to account for the fact that one of the variables is numeric ( \emph{Day} ) and that the other is a factor ( \emph{Group} ). Because the smooths are centered at 0, the factor variable needs to be specified as a parametric term in order to identify any differences between the groups. Using \(\textsf{R}\) and the package \texttt{mgcv} the model syntax is:
+
+\texttt{m1\textless{}-gam(StO2\_sim\textasciitilde{}Group+s(Day,by=Group,k=5),\ method=\textquotesingle{}REML\textquotesingle{},data=dat\_sim}
+
+This syntax specifies that \texttt{m1} will store the model, and that the change in the simulated oxygen saturation \texttt{StO2\_sim} is modeled using independent smooths for \emph{Group} and \emph{Day} (the parenthesis preceded by \emph{s}) using 5 knots. The parametric term \emph{Group} is added to separate the effect of treatment, and the \texttt{method} chosen to select the smoothing parameters is the restricted maximum likelihood (REML) {[}37{]}. When the smooths are plotted over the raw data, it is clear that the model has been able to capture the trend of the change of \(StO_2\) for each group across time (Figure \ref{fig:sim-smooth-plot},B). Model diagnostics can be obtained using the \texttt{gam.check} function, and the function \texttt{appraise} from the package \texttt{gratia}{[}54{]}. A guide for model selection and diagnostics is in the Appendix, and an in-depth analysis can be found in {[}37{]} and {[}55{]}.
+
+One question might be ``what is the fit that an rm-ANOVA model produces for the simulated data?''. The rm-ANOVA model, which corresponds to \eqref{eq:linear-model} is presented in Figure \ref{fig:sim-smooth-plot},C. This is a typical case of model misspecification: The slopes of each group ar different, but the model is not capturing the changes that occur at days 2 and between days 5 and 7, whereas the GAM model is able to do so (Figure \ref{fig:sim-smooth-plot},B) .
+
+Because GAMs do not require equally-spaced or complete observations for all subjects, they are advantageous to analyze longitudinal data where missingness exists. Using the simulated \(StO_2\) values from Figure (\ref{fig:sim-smooth-plot}, B), 40\% of the total observations can be randomly deleted and the same GAM model with interaction used for the full simulated data can be fitted to the remaining observations.
 
 
 
@@ -493,6 +515,12 @@ At the core of a biomedical longitudinal study lies the question of a significan
 
 \leavevmode\hypertarget{ref-wegman1983}{}%
 {[}53{]} E.J. Wegman, I.W. Wright, Splines in statistics, Journal of the American Statistical Association. 78 (1983) 351--365. \url{https://doi.org/10.1080/01621459.1983.10477977}.
+
+\leavevmode\hypertarget{ref-gratia}{}%
+{[}54{]} G.L. Simpson, Gratia: Graceful 'ggplot'-based graphics and other functions for gams fitted using 'mgcv', 2020. \url{https://CRAN.R-project.org/package=gratia}.
+
+\leavevmode\hypertarget{ref-harezlak2018}{}%
+{[}55{]} J. Harezlak, D. Ruppert, M.P. Wand, Semiparametric regression with r, Springer New York, 2018. \url{https://doi.org/10.1007/978-1-4939-8853-2}.
 
 \newpage
 
