@@ -260,7 +260,7 @@ Specifically, the rationale for the chosen linear and quadratic functions is the
 
 }
 
-\caption{(l-q-response-caption)}\label{fig:l-q-response}
+\caption{ref(l-q-response-caption)}\label{fig:l-q-response}
 \end{figure}
 
 The simulation shows that the fit produced by the rm-ANOVA model is good for linear data, as the predictions for the mean response are reasonably close to the ``truth'' of the simulated data (Figure \ref{fig:l-q-response},B). When the linearity and compound symmetry assumptions are met, the model approximates well the individual trends and the mean trends by group.
@@ -304,7 +304,7 @@ In other words, the six points of each basis are multiplied by the corresponding
 
 }
 
-\caption{Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D. Smoother for time and original data points. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.}\label{fig:basis-plot}
+\caption{Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D: Smoother for time and original data points. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.}\label{fig:basis-plot}
 \end{figure}
 
 \newpage
@@ -317,7 +317,7 @@ The previous sections provided the basic theoretical framework to understand the
 \hypertarget{simulated-data}{%
 \subsection{Simulated data}\label{simulated-data}}
 
-The simulated data is based on the reported longitudinal changes in oxygen saturation (\(StO_2\)) in subcutaneous tumors that appear in Figure 3(C) in {[}vishwanath2009{]}. An increase in oxygen saturation in the ``Treatment'' group (chemotherapy) is observed through time, while a decrease is seen in the ``Control'' (saline) group. Following the reported trend, 10 normally distributed observations at each time point are generated with a standard deviation (SD) of 10\% (matching the SD in the original paper).
+The simulated data is based on the reported longitudinal changes in oxygen saturation (\(StO_2\)) in subcutaneous tumors that appear in Figure 3(C) in {[}16{]}. An increase in oxygen saturation in the ``Treatment'' group (chemotherapy) is observed through time, while a decrease is seen in the ``Control'' (saline) group. Following the reported trend, 10 normally distributed observations at each time point are generated with a standard deviation (SD) of 10\% (matching the SD in the original paper).
 The simulated and real data appear in Figure \ref{fig:sim-smooth-plot}, A and the inlet, respectively.
 
 \hypertarget{an-interaction-gam-model-for-longitudinal-data}{%
@@ -329,7 +329,7 @@ For the data in Figure \ref{fig:sim-smooth-plot},A it is of interest to know the
 
 \texttt{m1\textless{}-gam(StO2\_sim\textasciitilde{}Group+s(Day,by=Group,k=5),\ method=\textquotesingle{}REML\textquotesingle{},data=dat\_sim}
 
-This syntax specifies that \texttt{m1} will store the model, and that the change in the simulated oxygen saturation \texttt{StO2\_sim} is modeled using independent smooths for \emph{Group} and \emph{Day} (the parenthesis preceded by \emph{s}) using 5 knots. The parametric term \emph{Group} is added to separate the effect of treatment, and the \texttt{method} chosen to select the smoothing parameters is the restricted maximum likelihood (REML) {[}37{]}. When the smooths are plotted over the raw data, it is clear that the model has been able to capture the trend of the change of \(StO_2\) for each group across time (Figure \ref{fig:sim-smooth-plot},B). Model diagnostics can be obtained using the \texttt{gam.check} function, and the function \texttt{appraise} from the package \texttt{gratia}{[}54{]}. A guide for model selection and diagnostics is in the Appendix, and an in-depth analysis can be found in {[}37{]} and {[}55{]}.
+This syntax specifies that \texttt{m1} will store the model, and that the change in the simulated oxygen saturation (\texttt{StO2\_sim}) is modeled using independent smooths for \emph{Group} and \emph{Day} (the parenthesis preceded by \emph{s}) using 5 knots. The parametric term \emph{Group} is added to separate the effect of treatment, and the \texttt{method} chosen to select the smoothing parameters is the restricted maximum likelihood (REML) {[}37{]}. When the smooths are plotted over the raw data, it is clear that the model has been able to capture the trend of the change of \(StO_2\) for each group across time (Figure \ref{fig:sim-smooth-plot},B). Model diagnostics can be obtained using the \texttt{gam.check} function, and the function \texttt{appraise} from the package \texttt{gratia}{[}54{]}. A guide for model selection and diagnostics is in the Appendix, and an in-depth analysis can be found in {[}37{]} and {[}55{]}.
 
 One question might be ``what is the fit that an rm-ANOVA model produces for the simulated data?''. The rm-ANOVA model, which corresponds to \eqref{eq:linear-model} is presented in Figure \ref{fig:sim-smooth-plot},C. This is a typical case of model misspecification: The slopes of each group ar different, but the model is not capturing the changes that occur at days 2 and between days 5 and 7, whereas the GAM model is able to do so (Figure \ref{fig:sim-smooth-plot},B) .
 
@@ -343,15 +343,30 @@ Because GAMs do not require equally-spaced or complete observations for all subj
 
 }
 
-\caption{Simulated data and smooths for oxygen saturation in tumors. A: Real data that follows previously reported trends in tumors under chemotherapy (Treatment) or saline (Control) treatment. B: Simulated data from a normal distribution with standard deviation of 10\% with 10 observations per time point. In A and B lines indicate mean oxygen saturation C: Smooths from the GAM model with interaction of Group and Treatment.Lines represent smooths for each group, shaded regions are 95\% confidence intervals.}\label{fig:sim-smooth-plot}
+\caption{Simulated data and smooths for oxygen saturation in tumors. A: Simulated data that follows previously reported trends (inset) in tumors under chemotherapy (Treatment) or saline (Control) treatment. Simulated data is from a normal distribution with standard deviation of 10\% with 10 observations per time point. Lines indicate mean oxygen saturation B: Smooths from the GAM model for the full simulated data with interaction of Group and Treatment. Lines represent smooths for each group, shaded regions are 95\% confidence intervals.C: rm-ANOVA model for the simulated data, the model does not capture the changes in each group over time. D: Smooths for the GAM model for the simulated data with 40\% of its observations missing. Lines represent smooths for each group, shaded regions are 95\% confidence intervals}\label{fig:sim-smooth-plot}
+\end{figure}
+
+
+
+\begin{figure}[!h]
+
+{\centering \includegraphics[width=0.75\linewidth,]{Manuscript_AM_v5_files/figure-latex/plot-pairwise-comp-1} 
+
+}
+
+\caption{Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset. Significant differences exist where the interval does not cover 0. B: Pairwise comparisons for the full dataset. Significant differences exist where the interval does not cover 0.}\label{fig:plot-pairwise-comp}
 \end{figure}
 
 \hypertarget{determination-of-significance-in-gams}{%
 \subsection{Determination of significance in GAMs}\label{determination-of-significance-in-gams}}
 
-At the core of a biomedical longitudinal study lies the question of a significant difference between the effect of two or more treatments in different groups. Whereas in rm-ANOVA a \emph{post-hoc} analysis is required to answer such question by calculating some \emph{p-values} after multiple comparisons, GAMs use a different approach to estimate significance. In essence, the idea behind the estimation of significance in GAMs across different treatment groups is that if the \emph{difference} between the confidence intervals of the fitted smooths for such groups is non-zero, then a significant difference exists at that timepoint (or timepoints). The absence of a \emph{p-value} in this case might seem odd, but when a confidence interval comparison is put into context the validity of its rationale becomes apparent. The major advantage of the significance estimation in GAMs is that they allow to determine significance at a specific timepoint, rather than providing a single \emph{p-value} for the overall treatment effect. The estimation of siginificant differences in GAMs is covered in detail in the Appendix using simulated longitudinal data that follows previously reported trends of tumor response between multiple treatment groups {[}16{]}.
+At the core of a biomedical longitudinal study lies the question of a significant difference between the effect of two or more treatments in different groups. Whereas in rm-ANOVA a \emph{post-hoc} analysis is required to answer such question by calculating some \emph{p-values} after multiple comparisons, GAMs can use a different approach to estimate significance. In essence, the idea behind the estimation of significance in GAMs across different treatment groups is that if the \emph{difference} between the confidence intervals of the fitted smooths for such groups is non-zero, then a significant difference exists at that time point(s). The absence of a \emph{p-value} in this case might seem odd, but when a confidence interval comparison is put into context the validity of its rationale becomes apparent. The major advantage of the significance estimation in GAMs using the confidence interval approach is that they allow to determine significance at a specific time point, rather than providing a single \emph{p-value} for the overall treatment effect.
+
+Consider the simulated data used in the previous section. Figure (@ref:sim-smooth-plot), B and D show the estimated smooths for the interaction model using the full dataset and with missing observations. If the confidence intervals are compared, it can be seen over time which Group has greater effect as therapy progresses. Specifically, Figure (@ref:plot-pairwise-comp), shows the comparison between each treatment group. Notice that the shaded region between days 0 and 4 indicates that through that time, the ``Control'' group has higher \(StO_2\), but as therapy progresses the effect is reversed and by day 5 it is the ``Treatment'' group the one that has greater contribution.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\newpage
 
 \hypertarget{references}{%
 \section{References}\label{references}}
@@ -521,8 +536,6 @@ At the core of a biomedical longitudinal study lies the question of a significan
 
 \leavevmode\hypertarget{ref-harezlak2018}{}%
 {[}55{]} J. Harezlak, D. Ruppert, M.P. Wand, Semiparametric regression with r, Springer New York, 2018. \url{https://doi.org/10.1007/978-1-4939-8853-2}.
-
-\newpage
 
 \hypertarget{appendix-appendix}{%
 \appendix}
