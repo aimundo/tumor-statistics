@@ -79,7 +79,7 @@ pdat <- expand.grid(Day = seq(0, 10, length = 400),
     #dimensions (n,1). The resulting matrix has dimensions (p,1)
     dif <- X %*% coef(gam1)
 
-    comp<-test %*% coef(gam1)[3:10]
+    #comp<-test %*% coef(gam1)[3:10]
 
 
     se <- sqrt(rowSums((X %*% vcov(gam1, unconditional = FALSE)) * X))
@@ -128,7 +128,34 @@ c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
 c1
 
 
+ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
+    geom_ribbon(aes(ymin = lower, ymax = upper),
+                alpha = 0.9,
+                fill="#f6d8ae") +
+    geom_line(color='#E79626',size=1) +
+    geom_line(data=comp_StO2,aes(y=0),size=0.5)+
+    geom_ribbon(data=comp_StO2%>%
+                    filter(lower>0),
+                aes(ymin =0, ymax =lower),
+                alpha = 0.9,
+                fill="#083d77") +
+    geom_ribbon(data=comp_StO2 %>%
+                    filter(upper<0),
+                aes(ymin =0, ymax =upper),
+                alpha = 0.9,
+                fill="#da4167") +
+    facet_wrap(~ pair) +
+    theme_classic()+
+    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    theme(
+        text=element_text(size=18),
+        legend.title=element_blank()
+    )+
+    scale_color_aaas()+
+    scale_fill_aaas()
 
+c1
 #######################
 
 ##original code for the comparisons, from Gavin Simpson's blog.
