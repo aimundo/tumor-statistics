@@ -4,9 +4,9 @@
 
 ## Compound symmetry and independent errors in linear and quadratic responses
 
-This section simulated linear and quadratic data in the same manner as in Section \@ref(simulation). The linear simulations using Figure \@ref(fig:linear-cases-appendix) show in  panels A and D the simulated mean responses and individual datapoints.  Panels C and G show a visual interpretation of "correlation" in the responses: In panel C, subjects that have a value of the random error $\varepsilon$ either above or below the mean group response are more likely to have other observations that follow the same trajectory, thereby demonstrating correlation in the response. In panel G,because the errors are independent, there is no expectation that responses are likely to follow a similar pattern.  Panels D and H show the predictions from the rm-ANOVA model.
+This section simulated linear and quadratic data in the same manner as in Section \@ref(simulation). The linear simulations using Figure \@ref(fig:linear-cases) show in  panels A and D the simulated mean responses and individual datapoints.  Panels C and G show a visual interpretation of "correlation" in the responses: In panel C, subjects that have a value of the random error $\varepsilon$ either above or below the mean group response are more likely to have other observations that follow the same trajectory, thereby demonstrating correlation in the response. In panel G,because the errors are independent, there is no expectation that responses are likely to follow a similar pattern.  Panels D and H show the predictions from the rm-ANOVA model.
 
-```{r-responses-appendix,include=TRUE,message=FALSE,echo=TRUE}
+```{r ,include=TRUE,message=FALSE,echo=TRUE}
 ## Example with linear response
 example <- function(n_time = 6, 
                     fun_type = "linear", 
@@ -17,10 +17,6 @@ example <- function(n_time = 6,
   if (!(error_type %in% c("correlated", "independent")))
     stop('fun_type must be either "correlated", or "independent"')
   
-  library(tidyverse)
-  library(mvnfast)
-  library(nlme)
-  library(ggsci)
   
   x <- seq(1,6, length.out = n_time)
   mu <- matrix(0, length(x), 2)
@@ -121,23 +117,10 @@ plot_example <- function(sim_dat) {
   
   p2 <- sim_dat$dat %>%
     ggplot(aes(x = time, y = y, group = subject, color = treatment)) +
-    geom_line(aes(size = "Subjects"),
-              show.legend = FALSE) +
+    geom_line(aes(size = "Subjects"),show.legend = FALSE) +
     # facet_wrap(~ treatment) +
-    geom_line(aes(
-      x = time, 
-      y = mu, 
-      color = treatment, 
-      size = "Simulated Truth"
-      ), 
-      lty = 1,
-      show.legend = FALSE
-      ) +
-    labs(y='response')+
-    scale_size_manual(
-      name = "Type", 
-      values=c("Subjects" = 0.5, "Simulated Truth" = 3)
-      ) +
+    geom_line(aes(x = time, y = mu, color = treatment, size = "Simulated Truth"), lty = 1,show.legend = FALSE) +labs(y='response')+
+    scale_size_manual(name = "Type", values=c("Subjects" = 0.5, "Simulated Truth" = 3)) +
     #ggtitle("Simulated data\nIndividual responses with population mean") +
     theme_classic()+
      theme(plot.title = element_text(size = 30, 
@@ -146,12 +129,8 @@ plot_example <- function(sim_dat) {
     scale_color_aaas()
   
    p3 <- sim_dat$dat %>%
-    ggplot(aes(x = time, 
-               y = errors, 
-               group = subject, 
-               color = treatment)) +
-    geom_line(show.legend=FALSE) +
-     labs(y='errors')+
+    ggplot(aes(x = time, y = errors, group = subject, color = treatment)) +
+    geom_line(show.legend=FALSE) +labs(y='errors')+
      theme_classic()+
     # facet_wrap(~ treatment) +
     #ggtitle("Simulated errors") +
@@ -160,25 +139,11 @@ plot_example <- function(sim_dat) {
         text=element_text(size=30))+
     scale_color_aaas()
   
-  p4 <- ggplot(sim_dat$dat, 
-               aes(x = time,
-                   y = y, 
-                   color = treatment)) +
-    geom_point()+
-    labs(y='response')+
-    geom_line(aes(
-      y = predict(sim_dat$fit_lme), 
-      group = subject, 
-      size = "Subjects")
-      ) +
-    geom_line(data = sim_dat$pred_dat, 
-              aes(y = predict(sim_dat$fit_lme, 
-                              level = 0, 
-                              newdata = sim_dat$pred_dat),
-                  size = "Population")) +
-    scale_size_manual(name = "Predictions", 
-                      values=c("Subjects" = 0.5, 
-                               "Population" = 3)) +
+  p4 <- ggplot(sim_dat$dat, aes(x = time, y = y, color = treatment)) +
+    geom_point()+labs(y='response')+
+    geom_line(aes(y = predict(sim_dat$fit_lme), group = subject, size = "Subjects")) +
+    geom_line(data = sim_dat$pred_dat, aes(y = predict(sim_dat$fit_lme, level = 0, newdata = sim_dat$pred_dat), size = "Population")) +
+    scale_size_manual(name = "Predictions", values=c("Subjects" = 0.5, "Population" = 3)) +
     theme_classic() +
     #ggtitle("Fitted Model")+
     theme(plot.title = element_text(size = 30, 
@@ -205,23 +170,17 @@ D1<-plot_example(example(fun_type = "quadratic", error_type = "independent"))
 
 
 
-```{r, linear-cases-appendix, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap="Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C: Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimations from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model does not pick the trend of the quadratic data."}
+```{r, linear-cases, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap="**Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimations from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model does not pick the trend of the quadratic data**"}
 # linear response, correlated errors (subject effect)
 A1/B1+plot_annotation(tag_levels = 'A')
-
 ```
 
+For the quadratic response case, Figure \@ref(fig:quadratic-cases) shows the simulated responses using compound symmetry and independent errors. 
 
-For the quadratic response case, Figure \@ref(fig:quadratic-cases-appendix) shows the simulated responses using compound symmetry and independent errors. 
-
-
-```{r, quadratic-cases-appendix, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap="Simulated quadratic responses from two groups with a rm-ANOVA model fitted. A,E:Simulated data with known mean response (lines) and individual responses (points) showing the dispersion of the data. B,F: Generated errors showing the difference in the behavior of correlated and independent errors.  C,G: Simulated known response per group (thick lines) with individual trajectories (thin lines), note that subjects with observations in the area above the mean response tend to stay in that region through the timeline. D,H: Estimations from the rm-ANOVA model for the mean group response. Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data."}
+```{r, quadratic-cases, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap="**Simulated quadratic responses from two groups with a rm-ANOVA model fitted. A,E:Simulated data with known mean response (lines) and individual responses (points) showing the dispersion of the data. B,F: Generated errors showing the difference in the behavior of correlated and independent errors.  C,G: Simulated known response per group (thick lines) with individual trajectories (thin lines), note that subjects with observations in the area above the mean response tend to stay in that region through the timeline. D,H: Estimations from the rm-ANOVA model for the mean group response. Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data.**"}
 # linear response, correlated errors (subject effect)
 C1/D1+plot_annotation(tag_levels = 'A')
-
 ```
-
-
 
 ## Basis functions and GAMs
 

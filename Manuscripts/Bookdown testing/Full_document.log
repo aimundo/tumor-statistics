@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.5.13)  13 MAY 2021 17:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.5.13)  13 MAY 2021 17:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -369,56 +369,75 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layoutvoffset=\dimen159
 \Gm@dimlist=\toks24
 )
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvr
+b.sty
+Package: fancyvrb 2021/01/20 v3.7 verbatim text (tvz,hv)
+\FV@CodeLineNo=\count278
+\FV@InFile=\read2
+\FV@TabBox=\box49
+\c@FancyVerbLine=\count279
+\FV@StepNumber=\count280
+\FV@OutFile=\write3
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/framed/framed.st
+y
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip53
+\fb@frw=\dimen160
+\fb@frh=\dimen161
+\FrameRule=\dimen162
+\FrameSep=\dimen163
+)
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.
 sty
 Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
-\LTleft=\skip53
-\LTright=\skip54
-\LTpre=\skip55
-\LTpost=\skip56
-\LTchunksize=\count278
-\LTcapwidth=\dimen160
-\LT@head=\box49
-\LT@firsthead=\box50
-\LT@foot=\box51
-\LT@lastfoot=\box52
-\LT@cols=\count279
-\LT@rows=\count280
-\c@LT@tables=\count281
-\c@LT@chunks=\count282
+\LTleft=\skip54
+\LTright=\skip55
+\LTpre=\skip56
+\LTpost=\skip57
+\LTchunksize=\count281
+\LTcapwidth=\dimen164
+\LT@head=\box50
+\LT@firsthead=\box51
+\LT@foot=\box52
+\LT@lastfoot=\box53
+\LT@cols=\count282
+\LT@rows=\count283
+\c@LT@tables=\count284
+\c@LT@chunks=\count285
 \LT@p@ftn=\toks25
 )
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktab
 s.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen161
-\lightrulewidth=\dimen162
-\cmidrulewidth=\dimen163
-\belowrulesep=\dimen164
-\belowbottomsep=\dimen165
-\aboverulesep=\dimen166
-\abovetopsep=\dimen167
-\cmidrulesep=\dimen168
-\cmidrulekern=\dimen169
-\defaultaddspace=\dimen170
-\@cmidla=\count283
-\@cmidlb=\count284
-\@aboverulesep=\dimen171
-\@belowrulesep=\dimen172
-\@thisruleclass=\count285
-\@lastruleclass=\count286
-\@thisrulewidth=\dimen173
+\heavyrulewidth=\dimen165
+\lightrulewidth=\dimen166
+\cmidrulewidth=\dimen167
+\belowrulesep=\dimen168
+\belowbottomsep=\dimen169
+\aboverulesep=\dimen170
+\abovetopsep=\dimen171
+\cmidrulesep=\dimen172
+\cmidrulekern=\dimen173
+\defaultaddspace=\dimen174
+\@cmidla=\count286
+\@cmidlb=\count287
+\@aboverulesep=\dimen175
+\@belowrulesep=\dimen176
+\@thisruleclass=\count288
+\@lastruleclass=\count289
+\@thisrulewidth=\dimen177
 )
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbo
 x.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count287
+\etb@tempcnta=\count290
 )
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/mdwtools/footnot
 e.sty
 Package: footnote 1997/01/28 1.13 Save footnotes around boxes
-\fn@notes=\box53
-\fn@width=\dimen174
+\fn@notes=\box54
+\fn@width=\dimen178
 )
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphic
 x.sty
@@ -438,8 +457,8 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 105.
 )
-\Gin@req@height=\dimen175
-\Gin@req@width=\dimen176
+\Gin@req@height=\dimen179
+\Gin@req@width=\dimen180
 )
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/grffile/grffile.
 sty
@@ -451,30 +470,30 @@ line 40.
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lineno/lineno.st
 y
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
-\linenopenalty=\count288
+\linenopenalty=\count291
 \output=\toks26
-\linenoprevgraf=\count289
-\linenumbersep=\dimen177
-\linenumberwidth=\dimen178
-\c@linenumber=\count290
-\c@pagewiselinenumber=\count291
-\c@LN@truepage=\count292
-\c@internallinenumber=\count293
-\c@internallinenumbers=\count294
-\quotelinenumbersep=\dimen179
-\bframerule=\dimen180
-\bframesep=\dimen181
-\bframebox=\box54
+\linenoprevgraf=\count292
+\linenumbersep=\dimen181
+\linenumberwidth=\dimen182
+\c@linenumber=\count293
+\c@pagewiselinenumber=\count294
+\c@LN@truepage=\count295
+\c@internallinenumber=\count296
+\c@internallinenumbers=\count297
+\quotelinenumbersep=\dimen183
+\bframerule=\dimen184
+\bframesep=\dimen185
+\bframebox=\box55
 LaTeX Info: Redefining \\ on input line 3056.
 )
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/preprint/authblk
 .sty
 Package: authblk 2001/02/27 1.3 (PWD)
-\affilsep=\skip57
-\@affilsep=\skip58
-\c@Maxaffil=\count295
-\c@authors=\count296
-\c@affil=\count297
+\affilsep=\skip58
+\@affilsep=\skip59
+\c@Maxaffil=\count298
+\c@authors=\count299
+\c@affil=\count300
 )
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/placeins/placein
 s.sty
@@ -491,17 +510,17 @@ Package: caption 2020/10/26 v3.5g Customizing captions (AR)
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption3
 .sty
 Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
-\captionmargin=\dimen182
-\captionmargin@=\dimen183
-\captionwidth=\dimen184
-\caption@tempdima=\dimen185
-\caption@indent=\dimen186
-\caption@parindent=\dimen187
-\caption@hangindent=\dimen188
+\captionmargin=\dimen186
+\captionmargin@=\dimen187
+\captionwidth=\dimen188
+\caption@tempdima=\dimen189
+\caption@indent=\dimen190
+\caption@parindent=\dimen191
+\caption@hangindent=\dimen192
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count298
-\c@continuedfloat=\count299
+\c@caption@flags=\count301
+\c@continuedfloat=\count302
 Package caption Info: hyperref package is loaded.
 Package caption Info: longtable package is loaded.
 
@@ -509,19 +528,19 @@ Package caption Info: longtable package is loaded.
 n.sty
 Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
 ))
-\c@KVtest=\count300
-\sf@farskip=\skip59
-\sf@captopadj=\dimen189
-\sf@capskip=\skip60
-\sf@nearskip=\skip61
-\c@subfigure=\count301
-\c@subfigure@save=\count302
-\c@lofdepth=\count303
-\c@subtable=\count304
-\c@subtable@save=\count305
-\c@lotdepth=\count306
-\sf@top=\skip62
-\sf@bottom=\skip63
+\c@KVtest=\count303
+\sf@farskip=\skip60
+\sf@captopadj=\dimen193
+\sf@capskip=\skip61
+\sf@nearskip=\skip62
+\c@subfigure=\count304
+\c@subfigure@save=\count305
+\c@lofdepth=\count306
+\c@subtable=\count307
+\c@subtable@save=\count308
+\c@lotdepth=\count309
+\sf@top=\skip63
+\sf@bottom=\skip64
 ) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/breqn/breqn.st
 y
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.s
@@ -531,8 +550,8 @@ Package: expl3 2021-05-07 L3 programming layer (loader)
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3back
 end-pdftex.def
 File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count307
-\l__pdf_internal_box=\box55
+\l__color_backend_stack_int=\count310
+\l__pdf_internal_box=\box56
 ))
 Package: breqn 2020/09/24 v0.98k Breaking equations
 
@@ -579,107 +598,107 @@ LaTeX Info: Redefining \genfrac on input line 149.
 )) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.st
 y
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count308
-\calc@Bcount=\count309
-\calc@Adimen=\dimen190
-\calc@Bdimen=\dimen191
-\calc@Askip=\skip64
-\calc@Bskip=\skip65
+\calc@Acount=\count311
+\calc@Bcount=\count312
+\calc@Adimen=\dimen194
+\calc@Bdimen=\dimen195
+\calc@Askip=\skip65
+\calc@Bskip=\skip66
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count310
-\calc@Cskip=\skip66
+\calc@Ccount=\count313
+\calc@Cskip=\skip67
 )
-\inf@bad=\count311
-\maxint=\count312
-\listwidth=\dimen192
-\eqnumsep=\dimen193
-\eqmargin=\dimen194
-\eqlinespacing=\skip67
-\eqlineskip=\skip68
-\eqlineskiplimit=\dimen195
+\inf@bad=\count314
+\maxint=\count315
+\listwidth=\dimen196
+\eqnumsep=\dimen197
+\eqmargin=\dimen198
+\eqlinespacing=\skip68
+\eqlineskip=\skip69
+\eqlineskiplimit=\dimen199
 \eqbinoffset=\muskip18
 \eqdelimoffset=\muskip19
-\eqindentstep=\dimen196
+\eqindentstep=\dimen256
 \eqstyle=\toks27
-\eqbreakdepth=\count313
-\eqinterlinepenalty=\count314
-\intereqpenalty=\count315
-\intereqskip=\skip69
-\prerelpenalty=\count316
-\prebinoppenalty=\count317
+\eqbreakdepth=\count316
+\eqinterlinepenalty=\count317
+\intereqpenalty=\count318
+\intereqskip=\skip70
+\prerelpenalty=\count319
+\prebinoppenalty=\count320
 \Dmedmuskip=\muskip20
 \Dthickmuskip=\muskip21
-\eqleftskip=\skip70
-\eqrightskip=\skip71
-\eq@vspan=\skip72
+\eqleftskip=\skip71
+\eqrightskip=\skip72
+\eq@vspan=\skip73
 \eq@binoffset=\muskip22
-\EQ@box=\box56
-\EQ@copy=\box57
-\EQ@numbox=\box58
-\eq@wdNum=\dimen197
-\GRP@numbox=\box59
-\grp@wdNum=\dimen198
-\eq@lines=\count318
-\eq@curline=\count319
-\eq@badness=\count320
-\EQ@vims=\count321
-\eq@dp=\dimen199
-\eq@wdL=\dimen256
-\eq@wdT=\dimen257
-\eq@wdMin=\dimen258
-\grp@wdL=\dimen259
-\grp@wdR=\dimen260
-\grp@wdT=\dimen261
-\eq@wdRmax=\dimen262
-\eq@firstht=\dimen263
-\eq@wdCond=\dimen264
-\eq@indentstep=\dimen265
-\eq@linewidth=\dimen266
-\grp@linewidth=\dimen267
-\eq@hshift=\dimen268
-\eq@given@sidespace=\dimen269
-\mathindent=\dimen270
-\eq@final@linecount=\count322
-\eq@wdR=\dimen271
+\EQ@box=\box57
+\EQ@copy=\box58
+\EQ@numbox=\box59
+\eq@wdNum=\dimen257
+\GRP@numbox=\box60
+\grp@wdNum=\dimen258
+\eq@lines=\count321
+\eq@curline=\count322
+\eq@badness=\count323
+\EQ@vims=\count324
+\eq@dp=\dimen259
+\eq@wdL=\dimen260
+\eq@wdT=\dimen261
+\eq@wdMin=\dimen262
+\grp@wdL=\dimen263
+\grp@wdR=\dimen264
+\grp@wdT=\dimen265
+\eq@wdRmax=\dimen266
+\eq@firstht=\dimen267
+\eq@wdCond=\dimen268
+\eq@indentstep=\dimen269
+\eq@linewidth=\dimen270
+\grp@linewidth=\dimen271
+\eq@hshift=\dimen272
+\eq@given@sidespace=\dimen273
+\mathindent=\dimen274
+\eq@final@linecount=\count325
+\eq@wdR=\dimen275
 \EQ@continue=\toks28
-\lr@level=\count323
+\lr@level=\count326
 \GRP@queue=\toks29
-\GRP@box=\box60
-\GRP@wholebox=\box61
-\darraycolsep=\skip73
-\cur@row=\count324
-\cur@col=\count325
-\conditionsep=\skip74
+\GRP@box=\box61
+\GRP@wholebox=\box62
+\darraycolsep=\skip74
+\cur@row=\count327
+\cur@col=\count328
+\conditionsep=\skip75
 ) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.st
 y
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count326
+\c@float@type=\count329
 \float@exts=\toks30
-\float@box=\box62
+\float@box=\box63
 \@float@everytoks=\toks31
-\@floatcapt=\box63
+\@floatcapt=\box64
 ) (./Full_document.aux)
 \openout1 = `Full_document.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
 
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/eps
 topdf-base.sty
@@ -692,7 +711,7 @@ opdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 98.
+Package hyperref Info: Link coloring OFF on input line 138.
 
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref
 .sty
@@ -706,14 +725,14 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 /gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count327
+\c@section@level=\count330
 )
-LaTeX Info: Redefining \ref on input line 98.
-LaTeX Info: Redefining \pageref on input line 98.
-LaTeX Info: Redefining \nameref on input line 98.
+LaTeX Info: Redefining \ref on input line 138.
+LaTeX Info: Redefining \pageref on input line 138.
+LaTeX Info: Redefining \nameref on input line 138.
 (./Full_document.out) (./Full_document.out)
-\@outlinefile=\write3
-\openout3 = `Full_document.out'.
+\@outlinefile=\write4
+\openout4 = `Full_document.out'.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -753,162 +772,244 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 9
-9.
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 1
+39.
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 9
-9.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
+39.
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 9
-9.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
+39.
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-99.
+139.
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-99.
+139.
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 99.
+(Font)              <12> on input line 139.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 99.
+(Font)              <8> on input line 139.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 99.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 99.
-
+(Font)              <6> on input line 139.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 139
+.
 
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 99.
-
+LaTeX Font Info:    Trying to load font information for U+msb on input line 139
+.
 
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 99.
+(Font)              <5> on input line 139.
 (./Full_document.toc
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 4.
 )
-\tf@toc=\write4
-\openout4 = `Full_document.toc'.
+\tf@toc=\write5
+\openout5 = `Full_document.toc'.
 
 [1
 
 {c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdf
 tex.map}] [2] [3] [4] [5] [6]
-
-LaTeX Warning: Reference `fig:linear-cases' on page 7 undefined on input line 2
-26.
-
-
-LaTeX Warning: Reference `fig:quadratic-cases' on page 7 undefined on input lin
-e 226.
-
-<Full_document_files/figure-latex/l-q-response-1.pdf, id=166, 722.7pt x 722.7pt
+<Full_document_files/figure-latex/l-q-response-1.pdf, id=178, 722.7pt x 722.7pt
 >
 File: Full_document_files/figure-latex/l-q-response-1.pdf Graphic file (type pd
 f)
 <use Full_document_files/figure-latex/l-q-response-1.pdf>
 Package pdftex.def Info: Full_document_files/figure-latex/l-q-response-1.pdf  u
-sed on input line 232.
+sed on input line 272.
 (pdftex.def)             Requested size: 352.31758pt x 352.31758pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [7] [8 <./Full_document_files/figure-latex/l-q-response-1.pdf>]
-<Full_document_files/figure-latex/basis-plot-1.pdf, id=203, 722.7pt x 722.7pt>
+<Full_document_files/figure-latex/basis-plot-1.pdf, id=217, 722.7pt x 722.7pt>
 File: Full_document_files/figure-latex/basis-plot-1.pdf Graphic file (type pdf)
 
 <use Full_document_files/figure-latex/basis-plot-1.pdf>
 Package pdftex.def Info: Full_document_files/figure-latex/basis-plot-1.pdf  use
-d on input line 278.
+d on input line 318.
 (pdftex.def)             Requested size: 352.31758pt x 352.31758pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [9]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-92.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
+32.
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [10 <./Full_document_files/figure-latex/basis-plot-1.pdf>]
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-307.
+347.
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-<Full_document_files/figure-latex/sim-smooth-plot-1.pdf, id=230, 722.7pt x 505.
+<Full_document_files/figure-latex/sim-smooth-plot-1.pdf, id=244, 722.7pt x 505.
 89pt>
 File: Full_document_files/figure-latex/sim-smooth-plot-1.pdf Graphic file (type
  pdf)
 <use Full_document_files/figure-latex/sim-smooth-plot-1.pdf>
 Package pdftex.def Info: Full_document_files/figure-latex/sim-smooth-plot-1.pdf
-  used on input line 319.
+  used on input line 359.
 (pdftex.def)             Requested size: 352.31758pt x 246.6223pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Full_document_files/figure-latex/plot-pairwise-comp-1.pdf, id=231, 722.7pt x 5
+<Full_document_files/figure-latex/plot-pairwise-comp-1.pdf, id=245, 722.7pt x 5
 05.89pt>
 File: Full_document_files/figure-latex/plot-pairwise-comp-1.pdf Graphic file (t
 ype pdf)
 <use Full_document_files/figure-latex/plot-pairwise-comp-1.pdf>
 Package pdftex.def Info: Full_document_files/figure-latex/plot-pairwise-comp-1.
-pdf  used on input line 330.
+pdf  used on input line 370.
 (pdftex.def)             Requested size: 352.31758pt x 246.6223pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [11] [12 <./Full_document_files/figure-latex/sim-smooth-plot-1.pdf>] [13 <./Ful
 l_document_files/figure-latex/plot-pairwise-comp-1.pdf>] [14] [15] [16]
-
-LaTeX Warning: Reference `fig:linear-cases-appendix' on page 17 undefined on in
-put line 536.
-
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 581.
 [17]
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 732--732
-[]        \T1/lmtt/m/n/10 errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * di
-ag(6) + 0.25 * matrix(1, 6, 6))[] 
+Underfull \vbox (badness 10000) detected at line 742
  []
 
-[18] [19] [20]
 
-LaTeX Warning: Reference `fig:quadratic-cases-appendix' on page 21 undefined on
- input line 738.
+Underfull \vbox (badness 10000) detected at line 742
+ []
 
-[21] (./Full_document.aux)
+[18]
+Underfull \vbox (badness 10000) detected at line 742
+ []
 
-LaTeX Warning: There were undefined references.
 
+Underfull \vbox (badness 10000) detected at line 742
+ []
+
+[19]
+<Full_document_files/figure-latex/linear-cases-1.pdf, id=462, 1156.32pt x 867.2
+4pt>
+File: Full_document_files/figure-latex/linear-cases-1.pdf Graphic file (type pd
+f)
+<use Full_document_files/figure-latex/linear-cases-1.pdf>
+Package pdftex.def Info: Full_document_files/figure-latex/linear-cases-1.pdf  u
+sed on input line 745.
+(pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<Full_document_files/figure-latex/quadratic-cases-1.pdf, id=464, 1156.32pt x 86
+7.24pt>
+File: Full_document_files/figure-latex/quadratic-cases-1.pdf Graphic file (type
+ pdf)
+<use Full_document_files/figure-latex/quadratic-cases-1.pdf>
+Package pdftex.def Info: Full_document_files/figure-latex/quadratic-cases-1.pdf
+  used on input line 751.
+(pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[20]
+Underfull \vbox (badness 10000) detected at line 890
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 890
+ []
+
+[21 <./Full_document_files/figure-latex/linear-cases-1.pdf>]
+Underfull \vbox (badness 10000) detected at line 890
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 890
+ []
+
+[22 <./Full_document_files/figure-latex/quadratic-cases-1.pdf>]
+Underfull \vbox (badness 10000) detected at line 890
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 890
+ []
+
+[23]
+<Full_document_files/figure-latex/basis-plot-Appendix-1.pdf, id=493, 469.755pt 
+x 325.215pt>
+File: Full_document_files/figure-latex/basis-plot-Appendix-1.pdf Graphic file (
+type pdf)
+<use Full_document_files/figure-latex/basis-plot-Appendix-1.pdf>
+Package pdftex.def Info: Full_document_files/figure-latex/basis-plot-Appendix-1
+.pdf  used on input line 892.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[24] [25 <./Full_document_files/figure-latex/basis-plot-Appendix-1.pdf>]
+Underfull \vbox (badness 2564) detected at line 1055
+ []
+
+[26]
+Underfull \vbox (badness 10000) detected at line 1055
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 1055
+ []
+
+[27] [28]
+<Full_document_files/figure-latex/missing-data-Appendix-1.pdf, id=522, 469.755p
+t x 325.215pt>
+File: Full_document_files/figure-latex/missing-data-Appendix-1.pdf Graphic file
+ (type pdf)
+<use Full_document_files/figure-latex/missing-data-Appendix-1.pdf>
+Package pdftex.def Info: Full_document_files/figure-latex/missing-data-Appendix
+-1.pdf  used on input line 1108.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[29 <./Full_document_files/figure-latex/missing-data-Appendix-1.pdf>]
+<Full_document_files/figure-latex/sim-smooth-plot-Appendix-1.pdf, id=535, 722.7
+pt x 505.89pt>
+File: Full_document_files/figure-latex/sim-smooth-plot-Appendix-1.pdf Graphic f
+ile (type pdf)
+<use Full_document_files/figure-latex/sim-smooth-plot-Appendix-1.pdf>
+Package pdftex.def Info: Full_document_files/figure-latex/sim-smooth-plot-Appen
+dix-1.pdf  used on input line 1170.
+(pdftex.def)             Requested size: 352.31758pt x 246.6223pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[30] [31 <./Full_document_files/figure-latex/sim-smooth-plot-Appendix-1.pdf>] (
+./Full_document.aux)
 Package rerunfilecheck Info: File `Full_document.out' has not changed.
-(rerunfilecheck)             Checksum: 235DB96C33FFE0A3538201D0377F7124;4070.
+(rerunfilecheck)             Checksum: E09A8C0144C7122D92D22AE23CC4E614;4479.
  ) 
 Here is how much of TeX's memory you used:
- 13380 strings out of 480806
- 204052 string characters out of 5903166
- 523804 words of memory out of 5000000
- 30369 multiletter control sequences out of 15000+600000
- 478361 words of font info for 76 fonts, out of 8000000 for 9000
+ 13924 strings out of 480806
+ 214380 string characters out of 5903166
+ 555738 words of memory out of 5000000
+ 30881 multiletter control sequences out of 15000+600000
+ 478998 words of font info for 78 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 69i,9n,79p,1458b,491s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts
-1.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/l
-m-ec.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/l
+ 69i,9n,79p,1458b,489s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec
+.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm
+-ts1.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/l
 m/lm-mathex.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/
 dvips/lm/lm-mathsy.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fon
 ts/enc/dvips/lm/lm-rm.enc}{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/
@@ -930,11 +1031,13 @@ type1/public/lm/lmri10.pfb><c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist
 mf-dist/fonts/type1/public/lm/lmss10.pfb><c:/Users/aimundo/AppData/Roaming/Tiny
 TeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb><c:/Users/aimundo/AppData/Roamin
 g/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/aimundo/AppData
-/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Full_document.pdf (21 pages, 492179 bytes).
+/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/aimundo/
+AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/a
+imundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
+Output written on Full_document.pdf (31 pages, 693668 bytes).
 PDF statistics:
- 545 PDF objects out of 1000 (max. 8388607)
- 491 compressed objects within 5 object streams
- 129 named destinations out of 1000 (max. 500000)
- 165 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 658 PDF objects out of 1000 (max. 8388607)
+ 580 compressed objects within 6 object streams
+ 146 named destinations out of 1000 (max. 500000)
+ 206 words of extra memory for PDF output out of 10000 (max. 10000000)
 
