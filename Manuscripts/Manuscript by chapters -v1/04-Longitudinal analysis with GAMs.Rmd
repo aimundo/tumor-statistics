@@ -1,6 +1,6 @@
 \newpage
  
-# The analyisis of longitudinal biomedical data using GAMs
+# The analyisis of longitudinal biomedical data using GAMs{#longitudinal-GAMs}
 
 The previous sections provided the basic theoretical framework to understand the GAM framework and how these models are more advantageous to analyze non-linear longitudinal data when compared to LMEMs or rm-ANOVA. This section will use simulation to present the practical implementation of GAMs for longitudinal biomedical data using $\textsf{R}$ and the package `mgcv`. The code for the simulated data and figures, and a brief guide for model selection and diagnostics appear in the Appendix.
 
@@ -31,17 +31,25 @@ dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
 
 
 ## plot the mean response
-f1<-ggplot(dat, aes(x = Day, y = StO2, color = Group)) +
-    geom_line(size=1,show.legend = FALSE)+
-    geom_point(show.legend = FALSE,size=1.5,alpha=0.5)+
-  labs(y=expression(paste(StO[2],' (real)')))+
+f1<-ggplot(dat, 
+           aes(x = Day, 
+               y = StO2, 
+               color = Group)) +
+    geom_line(size=1,
+              show.legend = FALSE)+
+    geom_point(show.legend = FALSE,
+               size=1.5,
+               alpha=0.5)+
+  labs(y=expression(paste(StO[2],
+                          ' (real)')))+
   theme_classic()+
   scale_color_aaas()+
     scale_x_continuous(breaks=c(0,5,10))+
     scale_y_continuous(breaks=c(0,40))+
   plot_layout(tag_level = 'new')+
   theme(
-    plot.background = element_rect(fill = "transparent", color = NA),
+    plot.background = element_rect(fill = "transparent", 
+                                   color = NA),
     axis.text=element_text(size=14)
   )
 

@@ -75,19 +75,19 @@ In the case of LMEMs, inferences from the model are valid when missing observati
 
 This section has presented the assumptions for analyzing longitudinal data using rm-ANOVA and LMEMs and compared their differences regarding linearity, the covariance matrix and  missing data. In particular, LMEMs offer a more robust and flexible approach than rm-ANOVA and if the data follows a linear trend, they provide an excellent choice to derive inferences from a repeated measures study. However, when the data presents high a non-linear behavior, LMEMs and rm-ANOVA fail to capture the trend of the data. To better convey the issues of linearity and correlation  in linear models fitted to non-linear data, simulation is used in the next section.
 
-## What does an rm-ANOVA fit looks like? A visual representation using simulated data {#simulation}
+## What does an rm-ANOVA fit looks like? A visual representation using simulated data{#simulation}
 
 To demonstrate the limitations of rm-ANOVA an LMEMs for non-linear longitudinal data, this section presents a simulation experiment of a normally distributed response of two groups of 10 subjects each. An rm-ANOVA model (Equation \@ref(eq:linear-model)) is fitted to each group, using $\textsf{R}$[@r] and the package _nlme_[@nlme]. 
 Briefly, two cases for the mean responses for each group are considered: in the first case, the mean response in each group is a linear function with different intercepts and slopes; a negative slope is used for Group 1 and a positive slope is used for Group 2 (Figure \@ref(fig:l-q-response), A). In the second case, a second-degree polynomial (quadratic) function is used for the mean response per group: the quadratic function is concave down for Group 1 and it is concave up for Group 2 (Figure \@ref(fig:l-q-response), C). In both the linear and quadratic simulated data, the groups start with the same mean value at the first time point. This is intentional in order to simulate the expected temporal evolution of some physiological quantity.
 
-Specifically, the rationale for the chosen linear and quadratic functions is the likelihood that a measured response in two treatment groups is similar in the initial phase of the study, but as treatment progresses a divergence in the trend of the response indicates an effect due to treatment. In other words, Group 1 can be thought as a "Control" group and Group 2 as a "Treatment" group. From the mean response per group (linear or quadratic), the variability or "error" of individual responses  within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \@ref(fig:l-q-response) B,D). A more comprehensive exploration  of the fit of rm-ANOVA for linear and non-linear longitudinal data is in Figure \@ref(fig:linear-cases) and Figure \@ref(fig:quadratic-cases) in the Appendix, where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented.
+Specifically, the rationale for the chosen linear and quadratic functions is the likelihood that a measured response in two treatment groups is similar in the initial phase of the study, but as treatment progresses a divergence in the trend of the response indicates an effect due to treatment. In other words, Group 1 can be thought as a "Control" group and Group 2 as a "Treatment" group. From the mean response per group (linear or quadratic), the variability or "error" of individual responses  within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \@ref(fig:l-q-response) B,D). A more comprehensive exploration  of the fit of rm-ANOVA for linear and non-linear longitudinal appears in Figure \@ref(fig:linear-cases-Appendix) and Figure \@ref(fig:quadratic-cases-Appendix) in the Appendix, where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented.
 
 
 
 ```{r,include=FALSE,message=FALSE,echo=FALSE}
 ## Example with linear response. This function generates either linear or quadratic mean responses with correlated or uncorrelated errors and fits a linear model to the data.
-example <- function(n_time = 6, 
-                    fun_type = "linear", 
+example <- function(n_time = 6, #number of time points
+                    fun_type = "linear", #type of reponse
                     error_type = "correlated") {
   
   if (!(fun_type %in% c("linear", "quadratic")))
@@ -97,22 +97,29 @@ example <- function(n_time = 6,
   
   
   x <- seq(1,6, length.out = n_time)
+  
+  #Create mean response matrix: linear or quadratic
   mu <- matrix(0, length(x), 2)
   # linear response
   if (fun_type == "linear") {
     mu[, 1] <- - (0.25*x)+2  
     mu[, 2] <- 0.25*x+2
   } else {
-    # nonlinear response
+    # quadratic response (non-linear)
     
     mu[, 1] <-  -(0.25 * x^2) +1.5*x-1.25
     mu[, 2] <- (0.25 * x^2) -1.5*x+1.25
   }
-  # matplot(mu, type = 'l')
   
+  #create an array where individual observations per each time point for each group are to be stored. Currently using 10 observations per timepoint
   y <- array(0, dim = c(length(x), 2, 10))
-  errors <- array(0, dim = c(length(x), 2, 10))
   
+  #Create array to store the "errors" for each group at each timepoint. The "errors" are the 
+  #between-group variability in the response.
+  errors <- array(0, dim = c(length(x), 2, 10))
+  #create an array where 10 observations per each time point for each group are to be stored
+  
+  #The following cycles create independent or correlated responses. To each value of mu (mean response per group) a randomly generated error (correlated or uncorrelated) is added and thus the individual response is created.
   if (error_type == "independent") {
     ## independent errors
     for (i in 1:2) {
@@ -124,7 +131,7 @@ example <- function(n_time = 6,
   } else {
     for (i in 1:2) {     # number of treatments
       for (j in 1:10) {  # number of subjects
-        # compound symmetry errors
+        # compound symmetry errors: variance covariance matrix
         errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * diag(6) + 0.25 * matrix(1, 6, 6))
         y[, i, j] <- mu[, i] + errors[, i, j]
       }
@@ -137,99 +144,112 @@ example <- function(n_time = 6,
   ## visualizing the difference between independent errors and compound symmetry
   ## why do we need to account for this -- overly confident inference
   
+#labelling y and errors  
+  dimnames(y) <- list(time = x, 
+                      treatment = 1:2, 
+                      subject = 1:10)
+
+  dimnames(errors) <- list(time = x, 
+                           treatment = 1:2, 
+                           subject = 1:10)
   
-  dimnames(y) <- list(time = x, treatment = 1:2, subject = 1:10)
-  dimnames(errors) <- list(time = x, treatment = 1:2, subject = 1:10)
-  dimnames(mu) <- list(time = x, treatment = 1:2)
-  dat <- as.data.frame.table(y, responseName = "y")
-  dat_errors <- as.data.frame.table(errors, responseName = "errors")
-  dat_mu <- as.data.frame.table(mu, responseName = "mu")
-  dat <- left_join(dat, dat_errors, by = c("time", "treatment", "subject"))
-  dat <- left_join(dat, dat_mu, by = c("time", "treatment"))
+  #labeling the mean response
+  dimnames(mu) <- list(time = x, 
+                       treatment = 1:2)
+  
+  #convert y, mu and errors to  dataframes with time, treatment and subject columns
+  dat <- as.data.frame.table(y, 
+                             responseName = "y")
+  dat_errors <- as.data.frame.table(errors, 
+                                    responseName = "errors")
+  dat_mu <- as.data.frame.table(mu, 
+                                responseName = "mu")
+  
+  #join the dataframes to show mean response and errors per subject
+  dat <- left_join(dat, dat_errors, 
+                   by = c("time", "treatment", "subject"))
+  dat <- left_join(dat, dat_mu, 
+                   by = c("time", "treatment"))
+  #add time
   dat$time <- as.numeric(as.character(dat$time))
+  #label subjects per group
   dat <- dat %>%
-    mutate(subject = factor(paste(subject, treatment, sep = "-")))
+    mutate(subject = factor(paste(subject, 
+                                  treatment, 
+                                  sep = "-")))
   
   
   ## repeated measures ANOVA in R
-  fit_lm <- lm(y ~ time + treatment + time * treatment, data = dat)
-  dat$preds_lm <- predict(fit_lm)
-
+#time and treatment interaction model, compound symmetry required by the model
   fit_lme <- lme(y ~ treatment + time + treatment:time,
                  data = dat,
                  random = ~ 1 | subject,
                  correlation = corCompSymm(form = ~ 1 | subject)
   )
   
-  
+  #create a prediction frame where the model can be used for plotting purposes
   pred_dat <- expand.grid(
     treatment = factor(1:2), 
     time = unique(dat$time)
   )
   
+  #add model predictions to the dataframe that has the simulated data
   dat$y_pred <- predict(fit_lme)
   
-  
+  #return everything in a list
   return(list(
     dat = dat,
     pred_dat = pred_dat,
-    fit_lm = fit_lm,
     fit_lme = fit_lme
     
   ))
 }
+##################Section for plotting#################################
+#######################################################################
+#This function will create the plots for either a "linear" or "quadratic" response
 
 plot_example <- function(sim_dat) {
-  library(patchwork)
-  ## Plot the simulated data
+  ## Plot the simulated data (scatterplot)
   p1 <- sim_dat$dat %>%
-    ggplot(aes(x = time, y = y, group = treatment, color = treatment)) +
-    geom_point(show.legend=FALSE,size=1.5,alpha=0.5) +
+    ggplot(aes(x = time, 
+               y = y, 
+               group = treatment, 
+               color = treatment)
+           ) +
+    geom_point(show.legend=FALSE) +
     labs(y='response')+
-    geom_line(aes(x = time, y = mu, color = treatment,size=1),show.legend=FALSE) +
+    geom_line(aes(x = time, 
+                  y = mu, 
+                  color = treatment),
+              show.legend=FALSE) +
     theme_classic() +
-    #ggtitle("Simulated data with true response function")+
-    theme(plot.title = element_text(size = 18, 
+    theme(plot.title = element_text(size = 30, 
                                   face = "bold"),
-        text=element_text(size=18))+
+        text=element_text(size=30))+
     scale_color_aaas()
   
-  p2 <- sim_dat$dat %>%
-    ggplot(aes(x = time, y = y, group = subject, color = treatment)) +
-    geom_line(aes(size = "Subjects"),show.legend = FALSE) +
-    # facet_wrap(~ treatment) +
-    geom_line(aes(x = time, y = mu, color = treatment, size = "Simulated Truth"),
-              lty = 1,show.legend = FALSE) +labs(y='response')+
-    scale_size_manual(name = "Type", values=c("Subjects" = 0.5, "Simulated Truth" = 3)) +
-    #ggtitle("Simulated data\nIndividual responses with population mean") +
-    theme_classic()+
-     theme(plot.title = element_text(size = 18, 
-                                face = "bold"),
-     text=element_text(size=18))+
-    scale_color_aaas()
-  
-   p3 <- sim_dat$dat %>%
-    ggplot(aes(x = time, y = errors, group = subject, color = treatment)) +
-    geom_line(show.legend=FALSE) +labs(y='errors')+
-     theme_classic()+
-     theme(plot.title = element_text(size = 18, 
-                                  face = "bold"),
-        text=element_text(size=18))+
-    scale_color_aaas()
-  
-  p4 <- ggplot(sim_dat$dat, aes(x = time, y = y, color = treatment)) +
-    geom_point(size=1.5,alpha=0.5)+labs(y='response')+
-    geom_line(aes(y = predict(sim_dat$fit_lme), group = subject, size = "Subjects")) +
-    geom_line(data = sim_dat$pred_dat, aes(y = predict(sim_dat$fit_lme, level = 0, newdata = sim_dat$pred_dat), size = "Population")) +
-    scale_size_manual(name = "Predictions", values=c("Subjects" = 0.5, "Population" = 3)) +
+ 
+   #plot the model predictions
+  p4 <- ggplot(sim_dat$dat, 
+               aes(x = time, 
+                   y = y, 
+                   color = treatment)) +
+    geom_point()+
+    labs(y='response')+
+    geom_line(aes(y = predict(sim_dat$fit_lme), 
+                  group = subject, size = "Subjects")) +
+    geom_line(data = sim_dat$pred_dat, 
+              aes(y = predict(sim_dat$fit_lme, 
+                              level = 0, 
+                              newdata = sim_dat$pred_dat), 
+                  size = "Population")) +
+    scale_size_manual(name = "Predictions", 
+                      values=c("Subjects" = 0.5, "Population" = 3)) +
     theme_classic() +
-    #ggtitle("Fitted Model")+
-    theme(plot.title = element_text(size = 18, 
+    theme(plot.title = element_text(size = 30, 
                                   face = "bold"),
-        text=element_text(size=18))+
+        text=element_text(size=30))+
     scale_color_aaas()
-  
-  #return((p1+p3+p2+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
   
   return((p1+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
     
@@ -237,19 +257,16 @@ plot_example <- function(sim_dat) {
 
 txt<-18
 A<-plot_example(example(fun_type = "linear", error_type = "correlated")) 
-
-B<-plot_example(example(fun_type = "linear", error_type = "independent")) 
   
 C<-plot_example(example(fun_type = "quadratic", error_type = "correlated")) 
   
-D<-plot_example(example(fun_type = "quadratic", error_type = "independent")) 
   
 
 ```
 
 (ref:l-q-response-caption) Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimates from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model not only fails to pick the trend of the quadratic data but it also incorrectly estimates the initial conditions.
 
-```{r, l-q-response, fig.width=10, fig.height=10, out.width='75%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap ='ref(l-q-response-caption)' }
+```{r, l-q-response, fig.width=10, fig.height=10, out.width='75%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap ='(ref:l-q-response-caption)'}
 # linear response, correlated errors (subject effect)
 par(mar = c(0.5, 0.5, 0.5, 0.5))
 A/C+plot_annotation(tag_levels = 'A')

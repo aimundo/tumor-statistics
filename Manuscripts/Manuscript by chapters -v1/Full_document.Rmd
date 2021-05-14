@@ -5,6 +5,7 @@ header-includes:
     \usepackage{placeins}
 output:  
   bookdown::pdf_document2:
+    pandoc_args: --listings
     keep_tex: yes
     fig_caption: yes
     extra_dependencies:
@@ -41,7 +42,7 @@ library(ggsci)
 library(mgcv)
 library(gratia)
 
-knitr::opts_chunk$set(fig.pos = "!h", out.extra = "",error=TRUE)
+knitr::opts_chunk$set(fig.pos = 'H', out.extra = "",error=TRUE)
 ```
 
 

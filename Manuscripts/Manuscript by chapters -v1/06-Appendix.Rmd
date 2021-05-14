@@ -1,0 +1,784 @@
+# (APPENDIX) Appendix {-} 
+
+# Simulation
+
+## Compound symmetry and independent errors in linear and quadratic responses
+
+This section simulated linear and quadratic data in the same manner as in Section \@ref(simulation). The linear simulations using Figure \@ref(fig:linear-cases-Appendix) show in  panels A and D the simulated mean responses and individual data points.  Panels C and G show a visual interpretation of "correlation" in the responses: In panel C, subjects that have a value of the random error $\varepsilon$ either above or below the mean group response are more likely to have other observations that follow the same trajectory, thereby demonstrating correlation in the response. In panel G,because the errors are independent, there is no expectation that responses are likely to follow a similar pattern.  Panels D and H show the predictions from the rm-ANOVA model.
+
+The following code produces a more comprehensive exploration of Figure \@ref(fig:l-q-response) in the main manuscript.
+
+```{r, responses-Appendix,include=TRUE,message=FALSE,echo=TRUE}
+
+####################Section for calculations######################################
+################################################################################
+
+## Example with linear response
+
+#This function simulates data using a linear or quadratic mean response and each with correlated
+#or uncorrelated errors. Each group has a different slope/concavity.
+example <- function(n_time = 6, #number of time points
+                    fun_type = "linear", #type of response
+                    error_type = "correlated") {
+  
+  if (!(fun_type %in% c("linear", "quadratic")))
+    stop('fun_type must be either "linear", or "quadratic"')
+  if (!(error_type %in% c("correlated", "independent")))
+    stop('fun_type must be either "correlated", or "independent"')
+  
+  
+  x <- seq(1,6, length.out = n_time)
+  
+  #Create mean response matrix: linear or quadratic
+  mu <- matrix(0, length(x), 2)
+  # linear response
+  if (fun_type == "linear") {
+    mu[, 1] <- - (0.25*x)+2  
+    mu[, 2] <- 0.25*x+2
+  } else {
+    # quadratic response (non-linear)
+    
+    mu[, 1] <-  -(0.25 * x^2) +1.5*x-1.25
+    mu[, 2] <- (0.25 * x^2) -1.5*x+1.25
+  }
+  
+  #create an array where individual observations per each time point for each group are to be stored. Currently using 10 observations per timepoint
+  y <- array(0, dim = c(length(x), 2, 10))
+  
+  #Create array to store the "errors" for each group at each timepoint. The "errors" are the 
+  #between-group variability in the response.
+  errors <- array(0, dim = c(length(x), 2, 10))
+  #create an array where 10 observations per each time point for each group are to be stored
+  
+  #The following cycles create independent or correlated responses. To each value of mu (mean response per group) a randomly generated error (correlated or uncorrelated) is added and thus the individual response is created.
+  if (error_type == "independent") {
+    ## independent errors
+    for (i in 1:2) {
+      for (j in 1:10) {
+        errors[, i, j] <- rnorm(6, 0, 0.25)
+        y[, i, j] <- mu[, i] + errors[, i, j]
+      }
+    }
+  } else {
+    for (i in 1:2) {     # number of treatments
+      for (j in 1:10) {  # number of subjects
+        # compound symmetry errors: variance covariance matrix
+        errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * diag(6) + 0.25 * matrix(1, 6, 6))
+        y[, i, j] <- mu[, i] + errors[, i, j]
+      }
+    }
+  }    
+  
+  
+  ## subject random effects
+  
+  ## visualizing the difference between independent errors and compound symmetry
+  ## why do we need to account for this -- overly confident inference
+  
+#labelling y and errors  
+  dimnames(y) <- list(time = x, 
+                      treatment = 1:2, 
+                      subject = 1:10)
+
+  dimnames(errors) <- list(time = x, 
+                           treatment = 1:2, 
+                           subject = 1:10)
+  
+  #labeling the mean response
+  dimnames(mu) <- list(time = x, 
+                       treatment = 1:2)
+  
+  #convert y, mu and errors to  dataframes with time, treatment and subject columns
+  dat <- as.data.frame.table(y, 
+                             responseName = "y")
+  dat_errors <- as.data.frame.table(errors, 
+                                    responseName = "errors")
+  dat_mu <- as.data.frame.table(mu, 
+                                responseName = "mu")
+  
+  #join the dataframes to show mean response and errors per subject
+  dat <- left_join(dat, dat_errors, 
+                   by = c("time", "treatment", "subject"))
+  dat <- left_join(dat, dat_mu, 
+                   by = c("time", "treatment"))
+  #add time
+  dat$time <- as.numeric(as.character(dat$time))
+  #label subjects per group
+  dat <- dat %>%
+    mutate(subject = factor(paste(subject, 
+                                  treatment, 
+                                  sep = "-")))
+  
+  
+  ## repeated measures ANOVA in R
+#time and treatment interaction model, compound symmetry required by the model
+  fit_lme <- lme(y ~ treatment + time + treatment:time,
+                 data = dat,
+                 random = ~ 1 | subject,
+                 correlation = corCompSymm(form = ~ 1 | subject)
+  )
+  
+  #create a prediction frame where the model can be used for plotting purposes
+  pred_dat <- expand.grid(
+    treatment = factor(1:2), 
+    time = unique(dat$time)
+  )
+  
+  #add model predictions to the dataframe that has the simulated data
+  dat$y_pred <- predict(fit_lme)
+  
+  #return everything in a list
+  return(list(
+    dat = dat,
+    pred_dat = pred_dat,
+    fit_lme = fit_lme
+    
+  ))
+}
+##################Section for plotting#################################
+#######################################################################
+#This function will create the plots for either a "linear" or "quadratic" response
+
+plot_example <- function(sim_dat) {
+  ## Plot the simulated data (scatterplot)
+  p1 <- sim_dat$dat %>%
+    ggplot(aes(x = time, 
+               y = y, 
+               group = treatment, 
+               color = treatment)
+           ) +
+    geom_point(show.legend=FALSE) +
+    labs(y='response')+
+    geom_line(aes(x = time, 
+                  y = mu, 
+                  color = treatment),
+              show.legend=FALSE) +
+    theme_classic() +
+    theme(plot.title = element_text(size = 30, 
+                                  face = "bold"),
+        text=element_text(size=30))+
+    scale_color_aaas()
+  
+  #plot the simulated data with trajectories per each subject
+  p2 <- sim_dat$dat %>%
+    ggplot(aes(x = time, 
+               y = y, 
+               group = subject, 
+               color = treatment)
+           ) +
+    geom_line(aes(size = "Subjects"),
+              show.legend = FALSE) +
+    # facet_wrap(~ treatment) +
+    geom_line(aes(x = time, 
+                  y = mu, 
+                  color = treatment,
+                  size = "Simulated Truth"), 
+              lty = 1,show.legend = FALSE) +
+    labs(y='response')+
+    scale_size_manual(name = "Type", values=c("Subjects" = 0.5, "Simulated Truth" = 3)) +
+    theme_classic()+
+     theme(plot.title = element_text(size = 30, 
+                                face = "bold"),
+     text=element_text(size=30))+
+    scale_color_aaas()
+  
+  #plot the errors
+   p3 <- sim_dat$dat %>%
+    ggplot(aes(x = time, 
+               y = errors,
+               group = subject, 
+               color = treatment)) +
+    geom_line(show.legend=FALSE) +
+     labs(y='errors')+
+     theme_classic()+
+     theme(plot.title = element_text(size = 30, 
+                                  face = "bold"),
+        text=element_text(size=30))+
+    scale_color_aaas()
+  
+   #plot the model predictions
+  p4 <- ggplot(sim_dat$dat, 
+               aes(x = time, 
+                   y = y, 
+                   color = treatment)) +
+    geom_point()+
+    labs(y='response')+
+    geom_line(aes(y = predict(sim_dat$fit_lme), 
+                  group = subject, size = "Subjects")) +
+    geom_line(data = sim_dat$pred_dat, 
+              aes(y = predict(sim_dat$fit_lme, 
+                              level = 0, 
+                              newdata = sim_dat$pred_dat), 
+                  size = "Population")) +
+    scale_size_manual(name = "Predictions", 
+                      values=c("Subjects" = 0.5, "Population" = 3)) +
+    theme_classic() +
+    theme(plot.title = element_text(size = 30, 
+                                  face = "bold"),
+        text=element_text(size=30))+
+    scale_color_aaas()
+  
+  return((p1+p3+p2+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
+  
+    
+}
+
+txt<-18
+
+#Store each plot in a separate object
+A1<-plot_example(example(fun_type = "linear", error_type = "correlated")) 
+
+B1<-plot_example(example(fun_type = "linear", error_type = "independent")) 
+  
+C1<-plot_example(example(fun_type = "quadratic", error_type = "correlated")) 
+  
+D1<-plot_example(example(fun_type = "quadratic", error_type = "independent")) 
+  
+
+```
+
+
+(ref:linear-cases-appendix) Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimations from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model does not pick the trend of the quadratic data.
+
+
+```{r, linear-cases-Appendix, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:linear-cases-appendix)'}
+# linear response, correlated errors (subject effect)
+A1/B1+plot_annotation(tag_levels = 'A')
+```
+
+For the quadratic response case, Figure \@ref(fig:quadratic-cases-Appendix) shows the simulated responses using compound symmetry and independent errors. 
+
+
+(ref:quadratic-caption-appendix) Simulated quadratic responses from two groups with a rm-ANOVA model fitted. A,E:Simulated data with known mean response (lines) and individual responses (points) showing the dispersion of the data. B,F: Generated errors showing the difference in the behavior of correlated and independent errors.  C,G: Simulated known response per group (thick lines) with individual trajectories (thin lines), note that subjects with observations in the area above the mean response tend to stay in that region through the timeline. D,H: Estimations from the rm-ANOVA model for the mean group response. Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data.
+
+
+```{r, quadratic-cases-Appendix, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:quadratic-caption-appendix)'}
+# linear response, correlated errors (subject effect)
+C1/D1+plot_annotation(tag_levels = 'A')
+```
+
+
+## Basis functions and GAMs
+
+This code produces Figure \@ref(fig:basis-plot) from the main manuscript. Briefly, a non-linear (quadratic) response is simulated a gam model is fitted and the basis are extracted in order to explain how the smooth is constructed. The code for data simulation is used again here for the sake of keeping the same structure, although the data can be simulated in a more simple fashion.
+
+```{r,basis-Appendix, echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
+#generate the response: the same initial procedure from the previous section to simulate
+#the response
+n_time = 6
+ x <- seq(1,6, length.out = n_time)
+ mu <- matrix(0, length(x), 2)
+ mu[, 1] <-  -(0.25 * x^2) +1.5*x-1.25 #mean response
+ mu[, 2] <- (0.25 * x^2) -1.5*x+1.25 #mean response
+ y <- array(0, dim = c(length(x), 2, 10))
+ errors <- array(0, dim = c(length(x), 2, 10))
+ for (i in 1:2) {     # number of treatments
+     for (j in 1:10) {  # number of subjects
+         # compound symmetry errors
+         errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * diag(6) + 0.25 * matrix(1, 6, 6))
+         y[, i, j] <- mu[, i] + errors[, i, j]
+     }
+ }
+ 
+ #label each table
+  dimnames(y) <- list(time = x, treatment = 1:2, subject = 1:10)
+ dimnames(errors) <- list(time = x, treatment = 1:2, subject = 1:10)
+ dimnames(mu) <- list(time = x, treatment = 1:2)
+ 
+ #Convert to dataframes with subject, time and group columns
+ dat <- as.data.frame.table(y, responseName = "y")
+ dat_errors <- as.data.frame.table(errors, responseName = "errors")
+ dat_mu <- as.data.frame.table(mu, responseName = "mu")
+ dat <- left_join(dat, dat_errors, by = c("time", "treatment", "subject"))
+ dat <- left_join(dat, dat_mu, by = c("time", "treatment"))
+ dat$time <- as.numeric(as.character(dat$time))
+ 
+ #label subject per group
+ dat <- dat %>%
+     mutate(subject = factor(paste(subject, treatment, sep = "-")))
+  
+ #extract  "Group 1" to fit the GAM
+  dat<-subset(dat,treatment==1)
+ #keep just the response and timepoint columns
+   dat<-dat[,c('y','time')]
+
+   #GAM model of time, 5 knots
+gm<-gam(y~s(time,k=5),data=dat)
+
+#model_matrix (also known as) 'design matrix'
+#will contain the smooths used to create  model 'gm'
+model_matrix<-as.data.frame(predict(gm,type='lpmatrix'))
+
+
+time<-c(1:6)
+
+basis<-model_matrix[1:6,] #extracting basis (because the values are repeated after every 6 rows)
+#basis<-model_matrix[1:6,-1] #extracting basis
+colnames(basis)[colnames(basis)=="(Intercept)"]<-"s(time).0"
+basis<-basis %>% #pivoting to long format
+  pivot_longer(
+    cols=starts_with("s")
+  )%>%
+  arrange(name) #ordering
+
+#length of dataframe to be created: number of knots by number of timepoints (minus 1 for the intercept that we won't plot)
+ln<-6*(length(coef(gm))) 
+
+basis_plot<-data.frame(Basis=integer(ln),
+                       value_orig=double(ln),
+                       time=integer(ln),
+                       cof=double(ln)
+)
+
+basis_plot$time<-rep(time) #pasting timepoints
+basis_plot$Basis<-factor(rep(c(1:5),each=6)) #pasting basis number values
+basis_plot$value_orig<-basis$value #pasting basis values
+basis_plot$cof<-rep(coef(gm)[1:5],each=6) #pasting coefficients
+basis_plot<-basis_plot%>%
+  mutate(mod_val=value_orig*cof) #the create the predicted values the bases need to be 
+#multiplied by the coefficients
+
+#creating labeller to change the labels in the basis plots
+
+basis_names<-c(
+  `1`="Intercept",
+  `2`="1",
+  `3`="2",
+  `4`="3",
+  `5`="4"
+)
+
+#calculating the final smooth by aggregating the basis functions
+
+smooth<-basis_plot%>% 
+  group_by(time)%>%
+  summarize(smooth=sum(mod_val))
+
+
+#original basis
+sz<-1
+p11<-ggplot(basis_plot,
+            aes(x=time,
+                y=value_orig,
+                colour=as.factor(Basis)
+                )
+            )+
+  geom_line(size=sz,
+            show.legend=FALSE)+
+  geom_point(size=sz+1,
+             show.legend = FALSE)+
+  labs(y='Basis functions')+
+  facet_wrap(~Basis,
+             labeller = as_labeller(basis_names)
+             )+
+  theme_classic()+
+  scale_color_aaas()
+  
+
+#penalized basis
+p12<-ggplot(basis_plot,
+            aes(x=time,
+                y=mod_val,
+                colour=as.factor(Basis)
+                )
+            )+
+  geom_line(show.legend = FALSE,
+            size=sz)+
+  geom_point(show.legend = FALSE,
+             size=sz+1)+
+  labs(y='Penalized \n basis functions')+
+  scale_y_continuous(breaks=seq(-1,1,1))+
+  facet_wrap(~Basis,
+             labeller=as_labeller(basis_names)
+             )+
+  theme_classic()+
+  scale_color_aaas()
+
+#heatmap of the penalization coefficient
+x_labels<-c("Intercept","1","2","3","4")
+p13<-ggplot(basis_plot,
+            aes(x=Basis,
+                y=Basis,
+                fill=cof))+
+  geom_tile(aes(color='black'),
+            size=sz+1,
+            show.legend = FALSE)+
+  geom_tile(size=sz+1)+
+  scale_fill_gradient(low = "white", high = "red")+
+  labs(x='Basis',
+       y='Basis')+
+  scale_x_discrete(labels=x_labels)+
+  geom_text(aes(label=round(cof,2)),
+            size=10,
+            show.legend = FALSE)+
+  theme_classic()+
+  theme(legend.title = element_blank())
+  
+#plotting simulated datapoints and smooth term
+p14<-ggplot(data=dat,
+            aes(x=time,y=y))+
+  geom_point(size=sz+1)+
+  scale_color_aaas()+
+  labs(y='Simulated \n response')+
+  geom_line(data=smooth,
+            aes(x=time,
+                y=smooth),
+            color="#B15731",
+            size=sz+1)+
+  theme_classic()
+  
+
+#Combining all
+b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
+  theme(
+     text=element_text(size=18)
+     )
+```
+
+(ref:basis-caption-appendix) Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D: Smoother for time and original data points. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.
+
+```{r,basis-plot-appendix,fig.width=10, fig.height=10, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, fig.show='hold', fig.cap='(ref:basis-caption-appendix)'}
+
+par(mar = c(2, 2, 2, 2))
+
+b_plot
+
+```
+
+
+## Data simulation and GAM models
+
+This section describes how to fit GAMs to longitudinal data using simulated data. First, data is simulated according to Section \@ref(longitudinal-GAMs). 
+
+```{r,sim-tumor-response-Appendix,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
+
+dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
+            Day=rep(c(0,2,5,7,10),times=2),
+            Group=as.factor(rep(c("Control","Treatment"),each=5))
+            )
+
+
+## plot the mean response
+f1<-ggplot(dat, 
+           aes(x = Day, 
+               y = StO2, 
+               color = Group)) +
+    geom_line(size=1,
+              show.legend = FALSE)+
+    geom_point(show.legend = FALSE,
+               size=1.5,
+               alpha=0.5)+
+  labs(y=expression(paste(StO[2],
+                          ' (real)')))+
+  theme_classic()+
+  scale_color_aaas()+
+    scale_x_continuous(breaks=c(0,5,10))+
+    scale_y_continuous(breaks=c(0,40))+
+  plot_layout(tag_level = 'new')+
+  theme(
+    plot.background = element_rect(fill = "transparent", 
+                                   color = NA),
+    axis.text=element_text(size=14)
+  )
+
+
+#This function simulates data for the tumor data using default parameters of 10 observations per time point,and Standard deviation (sd) of 5%.
+#Because physiologically StO2 cannot go below 0%, data is  generated with a cutoff value of 0.0001 (the "StO2_sim")
+
+simulate_data <- function(dat, n = 10, sd = 5) {
+    dat_sim <- dat %>%
+        slice(rep(1:n(), each = n)) %>%
+        group_by(Group, Day) %>%
+        mutate(
+               StO2_sim = pmax(rnorm(n, StO2, sd), 0.0001),
+               subject=rep(1:10),
+               subject=factor(paste(subject, Group, sep = "-"))
+               ) %>%
+        ungroup()
+
+    return(dat_sim)
+}
+
+
+#subject = factor(paste(subject, treatment, sep = "-")))
+
+n <- 10 #number of observations
+sd <- 10 #approximate sd from paper
+set.seed(1) #set seed for reproducibility
+df <- 6
+dat_sim <- simulate_data(dat, n, sd)
+
+#plotting simulated data
+f2<-ggplot(dat_sim, 
+           aes(x = Day, 
+               y = StO2_sim, 
+               color = Group)) +
+    geom_point(show.legend=FALSE,
+               size=1.5,
+               alpha=0.5)+
+    stat_summary(aes(y = StO2_sim,
+                     group=Group), 
+                 fun=mean, geom="line",
+                 size=1,
+                 show.legend = FALSE)+
+  labs(y=expression(atop(StO[2],
+                         '(simulated)')))+
+  theme_classic()+
+  theme(
+    axis.text=element_text(size=22)
+  )+
+  scale_color_aaas()+
+    scale_x_continuous(breaks=c(0,2,5,7,10))
+  
+
+```
+
+### Workflow for GAMs
+
+Next, a series of increasingly complex GAMs are fitted to the simulated data. The first model is a model that only accounts for different smooths by day. The model syntax specifies that `gam_00` is the object that will contain all the model information, and that the model attempts to explain changes in `StO2_sim` (simulated $\mbox{StO}_2$) using a smooth per `Day`. The model will use 5 knots (`k=5`) for the smooth. And that the smooth is constructed using gaussian process basis (`bs="gp"`). The smoothing parameter estimation method used is the restricted maximum likelihood (`REML`).
+
+
+```{r, first-GAM, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
+
+gam_00<-gam(StO2_sim ~ s(Day, k = 5,bs="gp"),
+            method='REML',
+            data  = dat_sim)
+
+```
+
+To obtain model diagnostics, two methodologies can be used: 1) graphical diagnostics, and 2) a model check. In the first case, the function `appraise` from the package _gratia_ can be used to obtain a single plot will all the diagnostic information. For model check, the function `gam.check` from  _mgcv_ provides detailed information about the model. 
+
+#### Graphical diagnostics
+
+```{r, first-GAM-diag, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
+#need to add figure number and caption
+appr1<-appraise(gam_00)
+sm1<-draw(gam_00)
+
+visual_check<-appr1+sm1
+
+visual_check
+```
+
+From the `appraise` plot, the major indicators concern about the model are the QQ plot of residuals and the histogram of residuals. The QQ plot shows that the errors are not reasonably located along the 45$^{\circ}$ line, as there are multiple points that deviate from the trend, which is more noticeable in the tails. The histogram also shows that the variation (residuals) is not following the assumption of a normal distribution. 
+
+The `draw` function permits to plot the smooths as `ggplot2` objects. Because this model specifies only one smooth for the time covariate (Day) the plot only contains only one smooth. Note that the smooth show an almost linear profile.
+
+#### Model check
+```{r, first-GAM-check, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
+#need to add figure number and caption
+gam.check(gam_00)
+
+summary(gam_00)
+
+```
+
+Special attention must be paid to the 'k-index' from `gam.check`. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data, which is indicated by a low (<1) value. From the model, it can be seen that the k-index is effectively <0.3, which indicates that the model is not capturing the variability in the data. The 'edf' (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
+
+From the `summary` function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is 'identity' as the model does not make any transformation on the predictors. The 'significance of smooth terms' _p-value_ indicates if each smooth is adding significance to the model. Here, the _p-value_ is low but we have seen that there are issues with the model from the previous outputs. Finally, the 'deviance explained' indicates how much of the data the model is able to capture.
+
+
+The major flaw of `gam_00` is that is not taking into account the fact that the data is nested in groups. The next iteration is a model where a different smooth of time (Day) is assigned for each group using `by=Group` in the model syntax.
+
+
+```{r, second-GAM, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
+
+gam_01<-gam(StO2_sim ~ s(Day, by=Group,k = 5,bs="gp"),
+            method='REML',
+            data  = dat_sim)
+```
+
+Diagnostics for this model indicate that the k-index is still below 1, and that the residuals are still not normally distributed. Moreover, if the smooths are plotted via the `draw()` function, it can be seen that their profile is fairly linear, which is not capturing the trends observed in the data. From `summary()`, the deviance explained by the model is ~43%.
+
+
+As indicated in Section \@ref(longitudinal-GAMs), in order to differentiate between each group, a parametric term needs to be added to the model in order to account for the interaction of _Day_ and _Group_. 
+
+The resulting model is model `gam1` from the main manuscript. By running `appraise()` we see that the trend on the QQ plot has improved and that the histogram of the residuals appears to be reasonably distributed. From running `gam.check`, the k-index is now at an acceptable value (~1.02), and `summary` now indicates that the model is able to capture 87% of the data.
+
+**Need to add the AIC comparison for the three models**
+
+```{r,smooth-plot-Appendix,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
+
+#GAM for StO2
+
+gam1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5,bs="gp"),
+            method='REML',
+            data  = dat_sim)
+
+
+#linear model
+lm1<-lm(StO2_sim ~ Day + Group + Day * Group, data = dat_sim)
+
+
+#creates a dataframe using the length of the covariates for the GAM
+gam_predict <- expand_grid(Group = factor(c("Control", "Treatment")),
+                         Day = seq(0, 10, by = 0.1),
+                         subject=factor(rep(1:10)))
+
+#creates a dataframe using the length of the covariates for rm-ANOVA
+lm_predict<-expand_grid(Group = factor(c("Control", "Treatment")),
+                         Day = c(0:10),
+                        subject=factor(rep(1:10)),
+                          )
+lm_predict$subject<-factor(paste(lm_predict$subject, lm_predict$Group, sep = "-"))
+
+#adds the predictions to the grid and creates a confidence interval for GAM
+gam_predict<-gam_predict%>%
+    mutate(fit = predict(gam1,gam_predict,se.fit = TRUE,type='response')$fit,
+           se.fit = predict(gam1, gam_predict,se.fit = TRUE,type='response')$se.fit)
+
+#using lm
+lm_predict<-lm_predict%>%
+    mutate(fit = predict(lm1,lm_predict,se.fit = TRUE,type='response')$fit,
+           se.fit = predict(lm1, lm_predict,se.fit = TRUE,type='response')$se.fit)
+
+#plot smooths and confidence interval for GAM
+f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
+    geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legend = FALSE)+
+  geom_ribbon(aes( x=Day,ymin=(fit - 2*se.fit), 
+                   ymax=(fit + 2*se.fit),
+                   fill=Group
+                   ),
+              alpha=0.3,
+              data=gam_predict,
+            show.legend=FALSE,
+                inherit.aes=FALSE) +
+  geom_line(aes(y=fit,
+                color=Group),
+              size=1,data=gam_predict,
+              show.legend = FALSE)+
+  #facet_wrap(~Group)+
+  labs(y=expression(atop(StO[2],'complete')))+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+      theme_classic()+
+  theme(
+    axis.text=element_text(size=22)
+  )+
+      scale_color_aaas()+
+  scale_fill_aaas()
+ 
+#plot linear fit for rm-ANOVA
+f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
+    geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legend = FALSE)+
+  geom_ribbon(aes( x=Day,ymin=(fit - 2*se.fit), 
+                   ymax=(fit + 2*se.fit),fill=Group),
+              alpha=0.3,
+              data=lm_predict,
+              show.legend = FALSE,
+                inherit.aes=FALSE) +
+  geom_line(aes(y=fit,
+                color=Group),
+              size=1,data=lm_predict,
+              show.legend = FALSE)+
+  #facet_wrap(~Group)+
+  labs(y=expression(paste('StO'[2],' (simulated)')))+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+      theme_classic()+
+  theme(
+    axis.text=element_text(size=22)
+  )+
+      scale_color_aaas()+
+  scale_fill_aaas()
+ 
+
+
+#posthoc comparisons for the linear model
+library(multcomp)
+
+
+#summary(glht(lm1, linfct = mcp(Group = 'Tukey')))
+#summary(glht(lm1, linfct=mcp(Group="Tukey", interaction_average=TRUE)))
+
+```
+
+
+
+```{r,missing-data-Appendix,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
+#missing data
+#create a sequence of 40 random numbers between 1 and 100, these numbers will
+#correspond to the row numbers to be randomly erased from the original dataset
+missing <- sample(1:100, 40)
+
+#create a new dataframe from the simulated data with 40 rows randomly removed, keep the missing values as NA
+
+ind <- which(dat_sim$StO2_sim %in% sample(dat_sim$StO2_sim, 40))
+
+#create a new dataframe, remove the StO2 column
+dat_missing <- dat_sim[,-1]
+
+#add NAs at the ind positions
+dat_missing$StO2_sim[ind]<-NA 
+
+#Count the number of remaining observations per day (original dataset had 10 per group per day)
+dat_missing %>%
+    group_by(Day,Group) %>%
+    filter(!is.na(StO2_sim))%>%
+  count(Day)
+
+
+#the same model used for the full dataset
+mod_m1 <- gam(StO2_sim ~ Group+s(Day,by=Group,k=5), data  = dat_missing,family=scat)
+#appraise the model
+appraise(mod_m1)
+
+
+m_predict <- expand_grid(Group = factor(c("Control", "Treatment")),
+                         Day = seq(0, 10, by = 0.1))
+
+#adds the predictions to the grid and creates a confidence interval
+m_predict<-m_predict%>%
+    mutate(fit = predict(mod_m1,m_predict,se.fit = TRUE,type='response')$fit,
+           se.fit = predict(mod_m1, m_predict,se.fit = TRUE,type='response')$se.fit)
+
+
+f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
+    geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legend = FALSE)+
+  geom_ribbon(aes( x=Day,ymin=(fit - 2*se.fit), 
+                   ymax=(fit + 2*se.fit),
+                   fill=Group
+                   ),
+              alpha=0.3,
+              data=m_predict,
+            show.legend=FALSE,
+                inherit.aes=FALSE) +
+  geom_line(aes(y=fit,
+                color=Group),
+              size=1,data=m_predict,
+              show.legend = TRUE)+
+  #facet_wrap(~Group)+
+  labs(y=expression(atop(StO[2],'missing')))+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+      theme_classic()+
+  theme(
+    axis.text=element_text(size=22)
+  )+
+      scale_color_aaas()+
+  scale_fill_aaas()
+
+
+
+```
+
+
+(ref:sim-plot-caption-Appendix) Simulated data and smooths for oxygen saturation in tumors. A: Simulated data that follows previously reported trends (inset) in tumors under chemotherapy (Treatment) or saline (Control) treatment. Simulated data is from  a normal distribution with standard deviation of 10% with 10 observations per time point. Lines indicate mean oxygen saturation B: Smooths from the GAM model for the full simulated data with interaction of Group and Treatment. Lines represent trends for each group, shaded regions are 95% confidence intervals. C: rm-ANOVA model for the simulated data, the model does not capture the changes in each group over time. D: Smooths for the GAM model for the simulated data with 40% of its observations missing. Lines represent trends for each group, shaded regions are 95% confidence intervals.
+
+```{r,sim-smooth-plot-Appendix,fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=TRUE,message=FALSE, warning=FALSE,fig.cap='(ref:sim-plot-caption-Appendix)'}
+
+
+mult_plot<-f2+inset_element(
+  f1, left = 0.01, 
+  bottom = 0.5, 
+  right = 0.5, 
+  top = 1.0)+
+  f3+f4+f6+
+   plot_annotation(tag_levels='A')&
+   ylim(c(-5,75)) &
+  theme(
+     text=element_text(size=18)
+     )&
+  scale_color_aaas()
+
+mult_plot
+
+```
+

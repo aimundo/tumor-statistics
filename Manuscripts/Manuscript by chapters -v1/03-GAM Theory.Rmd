@@ -23,7 +23,6 @@ To further clarify the concept of basis functions and smooth functions, consider
 
 
 ```{r,basis-functions-plot, echo=FALSE,include=FALSE,message=FALSE,warning=FALSE}
-#generate the response
 n_time = 6
  x <- seq(1,6, length.out = n_time)
  mu <- matrix(0, length(x), 2)
@@ -38,9 +37,13 @@ n_time = 6
          y[, i, j] <- mu[, i] + errors[, i, j]
      }
  }
+ 
+ #label each table
   dimnames(y) <- list(time = x, treatment = 1:2, subject = 1:10)
  dimnames(errors) <- list(time = x, treatment = 1:2, subject = 1:10)
  dimnames(mu) <- list(time = x, treatment = 1:2)
+ 
+ #Convert to dataframes with subject, time and group columns
  dat <- as.data.frame.table(y, responseName = "y")
  dat_errors <- as.data.frame.table(errors, responseName = "errors")
  dat_mu <- as.data.frame.table(mu, responseName = "mu")
@@ -48,21 +51,26 @@ n_time = 6
  dat <- left_join(dat, dat_mu, by = c("time", "treatment"))
  dat$time <- as.numeric(as.character(dat$time))
  
- #add subject column
+ #label subject per group
  dat <- dat %>%
      mutate(subject = factor(paste(subject, treatment, sep = "-")))
   
+ #extract  "Group 1" to fit the GAM
   dat<-subset(dat,treatment==1)
-  dat<-dat[,c('y','time')]
+ #keep just the response and timepoint columns
+   dat<-dat[,c('y','time')]
+
+   #GAM model of time, 5 knots
 gm<-gam(y~s(time,k=5),data=dat)
+
+#model_matrix (also known as) 'design matrix'
+#will contain the smooths used to create  model 'gm'
 model_matrix<-as.data.frame(predict(gm,type='lpmatrix'))
 
-x_new <- (seq(0, max(dat$time), length.out = 100))
-y_pred <- predict(gm, newdata=dat) 
 
 time<-c(1:6)
 
-basis<-model_matrix[1:6,] #extracting basis
+basis<-model_matrix[1:6,] #extracting basis (because the values are repeated after every 6 rows)
 #basis<-model_matrix[1:6,-1] #extracting basis
 colnames(basis)[colnames(basis)=="(Intercept)"]<-"s(time).0"
 basis<-basis %>% #pivoting to long format
@@ -85,7 +93,8 @@ basis_plot$Basis<-factor(rep(c(1:5),each=6)) #pasting basis number values
 basis_plot$value_orig<-basis$value #pasting basis values
 basis_plot$cof<-rep(coef(gm)[1:5],each=6) #pasting coefficients
 basis_plot<-basis_plot%>%
-  mutate(mod_val=value_orig*cof)
+  mutate(mod_val=value_orig*cof) #the create the predicted values the bases need to be 
+#multiplied by the coefficients
 
 #creating labeller to change the labels in the basis plots
 
@@ -97,52 +106,83 @@ basis_names<-c(
   `5`="4"
 )
 
-#calculating the final spline by aggregating the basis functions
+#calculating the final smooth by aggregating the basis functions
 
-spl<-basis_plot%>% 
+smooth<-basis_plot%>% 
   group_by(time)%>%
-  summarize(spl=sum(mod_val))
+  summarize(smooth=sum(mod_val))
 
 
 #original basis
 sz<-1
-p11<-ggplot(basis_plot,aes(x=time,y=value_orig,colour=as.factor(Basis)))+
-  geom_line(size=sz,show.legend=FALSE)+
-  geom_point(size=sz+1,show.legend = FALSE)+
+p11<-ggplot(basis_plot,
+            aes(x=time,
+                y=value_orig,
+                colour=as.factor(Basis)
+                )
+            )+
+  geom_line(size=sz,
+            show.legend=FALSE)+
+  geom_point(size=sz+1,
+             show.legend = FALSE)+
   labs(y='Basis functions')+
-  facet_wrap(~Basis,labeller = as_labeller(basis_names))+
+  facet_wrap(~Basis,
+             labeller = as_labeller(basis_names)
+             )+
   theme_classic()+
   scale_color_aaas()
   
 
 #penalized basis
-p12<-ggplot(basis_plot,aes(x=time,y=mod_val,colour=as.factor(Basis)))+
-  geom_line(show.legend = FALSE,size=sz)+
-  geom_point(show.legend = FALSE,size=sz+1)+
+p12<-ggplot(basis_plot,
+            aes(x=time,
+                y=mod_val,
+                colour=as.factor(Basis)
+                )
+            )+
+  geom_line(show.legend = FALSE,
+            size=sz)+
+  geom_point(show.legend = FALSE,
+             size=sz+1)+
   labs(y='Penalized \n basis functions')+
   scale_y_continuous(breaks=seq(-1,1,1))+
-  facet_wrap(~Basis,labeller=as_labeller(basis_names))+
+  facet_wrap(~Basis,
+             labeller=as_labeller(basis_names)
+             )+
   theme_classic()+
   scale_color_aaas()
 
 #heatmap of the penalization coefficient
 x_labels<-c("Intercept","1","2","3","4")
-p13<-ggplot(basis_plot,aes(x=Basis,y=Basis,fill=cof))+
-  geom_tile(aes(color='black'),size=sz+1,show.legend = FALSE)+
+p13<-ggplot(basis_plot,
+            aes(x=Basis,
+                y=Basis,
+                fill=cof))+
+  geom_tile(aes(color='black'),
+            size=sz+1,
+            show.legend = FALSE)+
   geom_tile(size=sz+1)+
   scale_fill_gradient(low = "white", high = "red")+
-  labs(x='Basis',y='Basis')+
+  labs(x='Basis',
+       y='Basis')+
   scale_x_discrete(labels=x_labels)+
-  geom_text(aes(label=round(cof,2)),size=10,show.legend = FALSE)+
+  geom_text(aes(label=round(cof,2)),
+            size=10,
+            show.legend = FALSE)+
   theme_classic()+
   theme(legend.title = element_blank())
   
 #plotting simulated datapoints and smooth term
-p14<-ggplot(data=dat,aes(x=time,y=y))+
+p14<-ggplot(data=dat,
+            aes(x=time,y=y))+
   geom_point(size=sz+1)+
   scale_color_aaas()+
   labs(y='Simulated \n response')+
-  geom_line(data=spl,aes(x=time,y=spl),color="#B15731",size=sz+1)+
+  geom_line(data=smooth,
+            aes(x=time,
+                y=smooth),
+            color="#B15731",
+            size=sz+1)+
   theme_classic()
   
 
@@ -151,6 +191,7 @@ b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
   theme(
      text=element_text(size=18)
      )
+
 
 ```
 

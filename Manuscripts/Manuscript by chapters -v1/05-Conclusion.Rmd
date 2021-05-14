@@ -1,0 +1,4 @@
+
+# Conclusion
+
+The traditional methods to analyze biomedical longitudinal data (rm-ANOVA, LMEMs) are restrictive when the data does not follow a linear pattern and their use in such situations leads to unreliable inference and biased estimates. GAMs present a suitable alternative to analyze non-linear longitudinal biomedical data, as they overcome the limitations of linearity, compound symmetry, and missing observations imposed by traditional methods. By presenting the implementation of GAMs using simulated data that follows previously reported trends in the literature, we aim at encouraging biomedical researchers to consider different statistical tools to analyze longitudinal data. Finally, by providing the data and code used in this paper we hope to address the need of creating and sharing reproducible work in biomedical research.
