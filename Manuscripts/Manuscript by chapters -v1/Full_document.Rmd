@@ -3,7 +3,6 @@ title: '**The statistical analysis of non-linear longitudinal data in biomedical
 subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
 header-includes:
     \usepackage{placeins}
-    \usepackage{solarized-light}
 output:  
   bookdown::pdf_document2:
     pandoc_args: --listings
