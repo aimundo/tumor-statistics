@@ -1,6 +1,8 @@
 # (APPENDIX) Appendix {-} 
 
-# Simulation
+# Code for Manuscript data
+
+This section presents the code used to generate figures, models and simulated data from Sections 3 and 4 from the main manuscript.
 
 ## Compound symmetry and independent errors in linear and quadratic responses
 
@@ -446,12 +448,13 @@ b_plot
 ```
 
 
-## Data simulation and GAM models
+# Longitudinal biomedical data simulation and GAMs{#tumor-data-simulation}
 
-This section describes how to fit GAMs to longitudinal data using simulated data. First, data is simulated according to Section \@ref(longitudinal-GAMs). 
+This section describes how to fit GAMs to longitudinal data using simulated data. First, data is simulated according to Section \@ref(longitudinal-GAMs), where reported data of oxygen saturation ($\mbox{StO}_2$) in tumors under either chemotherapy or saline control is used as a starting point to generate individual responses in each group.
 
 ```{r,sim-tumor-response-Appendix,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
 
+#Dataframe that contains the original reported trends
 dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
             Day=rep(c(0,2,5,7,10),times=2),
             Group=as.factor(rep(c("Control","Treatment"),each=5))
@@ -533,9 +536,13 @@ f2<-ggplot(dat_sim,
 
 ```
 
-### Workflow for GAMs
+## A basic Workflow for GAMs
 
-Next, a series of increasingly complex GAMs are fitted to the simulated data. The first model is a model that only accounts for different smooths by day. The model syntax specifies that `gam_00` is the object that will contain all the model information, and that the model attempts to explain changes in `StO2_sim` (simulated $\mbox{StO}_2$) using a smooth per `Day`. The model will use 5 knots (`k=5`) for the smooth. And that the smooth is constructed using gaussian process basis (`bs="gp"`). The smoothing parameter estimation method used is the restricted maximum likelihood (`REML`).
+This section shows a basic workflow to fit a series of increasingly complex GAMs to the simulated data from the previous section. Graphical and parameter diagnostics for goodness of fit are discussed, as well as model comparison via AIC (Aikake Information Criterion). 
+
+### First model
+
+The first model fitted to the data is one that only accounts for different smooths by day. The model syntax specifies that `gam_00` is the object that will contain all the model information, and that the model attempts to explain changes in `StO2_sim` (simulated $\mbox{StO}_2$) using a smooth per `Day`. The model will use 5 knots (`k=5`) for the smooth. And that the smooth is constructed using gaussian process basis (`bs="gp"`). The smoothing parameter estimation method used is the restricted maximum likelihood (`REML`).
 
 
 ```{r, first-GAM, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
@@ -546,25 +553,27 @@ gam_00<-gam(StO2_sim ~ s(Day, k = 5,bs="gp"),
 
 ```
 
-To obtain model diagnostics, two methodologies can be used: 1) graphical diagnostics, and 2) a model check. In the first case, the function `appraise` from the package _gratia_ can be used to obtain a single plot will all the diagnostic information. For model check, the function `gam.check` from  _mgcv_ provides detailed information about the model. 
+To obtain model diagnostics, two methodologies are to be used: 1) graphical diagnostics, and 2) a model check. In the first case, the functions `appraise` and `draw` from the package _gratia_ can be used to obtain a single output with all the graphical diagnostics. For model check, the functions `gam.check` and `summary` from  _mgcv_ provide detailed information about the model fit and its parameters. 
+
+(ref:first-GAM-caption) Graphical diagnostics for the first GAM model. Left: Graphical diagnostics provided by the function `appraise` from the package _gratia_. Right: Fitted smooth for the model, provided by the function `draw`.
 
 #### Graphical diagnostics
 
-```{r, first-GAM-diag, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
+```{r, first-GAM-diag, fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:first-GAM-caption)'}
 #need to add figure number and caption
 appr1<-appraise(gam_00)
 sm1<-draw(gam_00)
-
 visual_check<-appr1+sm1
 
-visual_check
+visual_check 
 ```
 
-From the `appraise` plot, the major indicators concern about the model are the QQ plot of residuals and the histogram of residuals. The QQ plot shows that the errors are not reasonably located along the 45$^{\circ}$ line, as there are multiple points that deviate from the trend, which is more noticeable in the tails. The histogram also shows that the variation (residuals) is not following the assumption of a normal distribution. 
+From the output of the function `appraise` in Figure \@ref(fig:first-GAM-diag), the major indicators of concern about the model are the QQ plot of residuals and the histogram of residuals. The QQ plot shows that the errors are not reasonably located along the 45$^{\circ}$ line (which indicates normality), as there are multiple points that deviate from the trend, specially in the tails. The histogram also shows that the variation (residuals) is not following the assumption of a normal distribution. 
 
-The `draw` function permits to plot the smooths as `ggplot2` objects. Because this model specifies only one smooth for the time covariate (Day) the plot only contains only one smooth. Note that the smooth show an almost linear profile.
+The `draw` function permits to plot the smooths as `ggplot2` objects, which eases subsequent manipulation, if desired. Because model `gam_00` specifies only one smooth for the time covariate (Day), the plot only contains only one smooth. Note that the smooth shows an almost linear profile.
 
 #### Model check
+
 ```{r, first-GAM-check, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
 #need to add figure number and caption
 gam.check(gam_00)
@@ -573,12 +582,13 @@ summary(gam_00)
 
 ```
 
-Special attention must be paid to the 'k-index' from `gam.check`. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data, which is indicated by a low (<1) value. From the model, it can be seen that the k-index is effectively <0.3, which indicates that the model is not capturing the variability in the data. The 'edf' (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
+Special attention must be paid to the 'k-index' from `gam.check`. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trens in the data, this is indicated by a low k-index value (<1). From the output, it can be seen that the k-index is effectively <0.3, which indicates that the model is not capturing the variability in the data. The 'edf' (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
 
-From the `summary` function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is 'identity' as the model does not make any transformation on the predictors. The 'significance of smooth terms' _p-value_ indicates if each smooth is adding significance to the model. Here, the _p-value_ is low but we have seen that there are issues with the model from the previous outputs. Finally, the 'deviance explained' indicates how much of the data the model is able to capture.
+From the `summary` function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is 'identity' as the model does not make any transformation on the predictors. The 'significance of smooth terms' _p-value_ indicates if each smooth is adding significance to the model. Here, the _p-value_ is low but we have seen that there are issues with the model from the previous outputs. Finally, the 'deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to ~12%.
 
+### Second model
 
-The major flaw of `gam_00` is that is not taking into account the fact that the data is nested in groups. The next iteration is a model where a different smooth of time (Day) is assigned for each group using `by=Group` in the model syntax.
+The major flaw of `gam_00` is that this model is not taking into account the fact that the data is nested in groups. The next iteration is a model where a different smooth of time (Day) is assigned for each group using `by=Group` in the model syntax.
 
 
 ```{r, second-GAM, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
@@ -586,18 +596,30 @@ The major flaw of `gam_00` is that is not taking into account the fact that the 
 gam_01<-gam(StO2_sim ~ s(Day, by=Group,k = 5,bs="gp"),
             method='REML',
             data  = dat_sim)
+
+gam.check(gam_01)
+summary(gam_01)
 ```
 
-Diagnostics for this model indicate that the k-index is still below 1, and that the residuals are still not normally distributed. Moreover, if the smooths are plotted via the `draw()` function, it can be seen that their profile is fairly linear, which is not capturing the trends observed in the data. From `summary()`, the deviance explained by the model is ~43%.
+Diagnostics for this model indicate that the k-index is still below 1 (0.32 from `gam.check`), and that the residuals are still not following a normal distribution (Figure  \@ref(fig:second-GAM-diag)). Moreover, the smooths (plotted via the `draw()` function) appear with a fairly linear profile, which indicates they are still not capturing the trends observed in the data. From `summary()`, the deviance explained by the model is ~43%.
 
+(ref:second-GAM-caption) Graphical diagnostics for the second GAM model. Left: Graphical diagnostics provided by the function `appraise` from the package _gratia_. Right: Fitted smooth for the model, provided by the function `draw`.
 
-As indicated in Section \@ref(longitudinal-GAMs), in order to differentiate between each group, a parametric term needs to be added to the model in order to account for the interaction of _Day_ and _Group_. 
+```{r, second-GAM-diag, fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:second-GAM-caption)'}
+#need to add figure number and caption
+appr2<-appraise(gam_01)
+sm2<-draw(gam_01)
 
-The resulting model is model `gam1` from the main manuscript. By running `appraise()` we see that the trend on the QQ plot has improved and that the histogram of the residuals appears to be reasonably distributed. From running `gam.check`, the k-index is now at an acceptable value (~1.02), and `summary` now indicates that the model is able to capture 87% of the data.
+visual_check2<-appr2+sm2
 
-**Need to add the AIC comparison for the three models**
+visual_check2
+```
 
-```{r,smooth-plot-Appendix,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
+### Third model
+
+Model `gam_00` was built for didactic purposes to cover the simplest case, but it does not account for the nesting of the data by Group, which is apparent from the type of smooth fitted, the model diagnostics, and, the low variance explained by the model. On the other hand, `gam_01` takes into account the nesting within each group and provides better variance explanation, but as indicated in Section \@ref(longitudinal-GAMs), in order to differentiate between each group a parametric term needs to be added to the model for the interaction of _Day_ and _Group_. 
+
+```{r,final-model-Appendix,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
 
 #GAM for StO2
 
@@ -605,7 +627,47 @@ gam1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5,bs="gp"),
             method='REML',
             data  = dat_sim)
 
+gam.check(gam1)
+summary(gam1)
+```
 
+The resulting model is model `gam1`, which is the model fitted in the main manuscript. By using `appraise()` and `draw` on this model (Figure  \@ref(fig:final-GAM-diag)) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group . From `gam.check`, the k-index is now at an acceptable value (~1.02), and `summary` now indicates that the model is able to capture 87% of the variance data.
+
+(ref:final-GAM-caption) Graphical diagnostics for the final GAM model. Left: Graphical diagnostics provided by the function `appraise` from the package _gratia_. Right: Fitted smooths for the model, provided by the function `draw`.
+
+
+```{r, final-GAM-diag, fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:final-GAM-caption)'}
+#need to add figure number and caption
+appr3<-appraise(gam1)
+sm3<-draw(gam1)
+
+visual_check3<-appr3+sm3
+
+visual_check3
+```
+
+
+### Comparing models via AIC
+
+One final  comparison that can be made for model selection involves the use of the Aikake Information Criterion (AIC). This metric is used to estimate information loss, which we want to minimize with an appropriate model. Therefore, when 2 or more models are compared, the model with lower AIC is preferred. In R, the comparison is done using the `AIC` function.
+
+```{r,model-selection-AIC}
+
+AIC(gam_00,gam_01,gam1)
+
+```
+
+The output in this case is expected: model `gam1` has a lower AIC (711.46) whereas the initial two models have higher AICs (891 and 850). The AIC should not be considered as the only estimator of model goodness, instead to be used as complimentary information to the graphical diagnostics and model checks described above.
+
+# GAM and Linear model plots and Missing data
+
+This section covers the code used to generate Figure \@ref(fig:sim-smooth-plot), where the simulated data, fit of the "final" GAM (`gam1`), linear model  and GAM on data with missing observations are presented. Note that panel A in Figure \@ref(fig:sim-smooth-plot) and the inlet are generated in the code chunk where the data is simulated in Section \@ref(tumor-data-simulation), and are called later to build the figure.
+
+## GAM and Linear model plots
+
+This code chunk creates panels B and D in Figure \@ref(fig:sim-smooth-plot). Note that this code uses the final GAM from the previous section (`gam1`), so the simulated data and the model should be generated before running this section. 
+
+```{r, plotting-appendix, echo=TRUE, include=TRUE, message=FALSE, warning=FALSE}
 #linear model
 lm1<-lm(StO2_sim ~ Day + Group + Day * Group, data = dat_sim)
 
@@ -691,7 +753,9 @@ library(multcomp)
 
 ```
 
+## Working with Missing data in GAMs
 
+This code chunk randomly deletes 40% of the total observations in the original simulated data, and then an interaction GAM is fitted. Model diagnostics are presented, and an object that stores the fitted smooths is saved to be called in the final code chunk to build the figure.
 
 ```{r,missing-data-Appendix,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
 #missing data

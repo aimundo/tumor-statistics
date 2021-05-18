@@ -76,7 +76,6 @@ simulate_data <- function(dat, n = 10, sd = 5) {
 
 n <- 10 #number of observations
 sd <- 10 #approximate sd from paper
-set.seed(1) #set seed for reproducibility
 df <- 6
 dat_sim <- simulate_data(dat, n, sd)
 

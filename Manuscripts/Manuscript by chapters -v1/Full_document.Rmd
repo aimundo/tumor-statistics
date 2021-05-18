@@ -3,6 +3,7 @@ title: '**The statistical analysis of non-linear longitudinal data in biomedical
 subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
 header-includes:
     \usepackage{placeins}
+    \usepackage{solarized-light}
 output:  
   bookdown::pdf_document2:
     pandoc_args: --listings
@@ -28,7 +29,7 @@ bibliography: refs.bib
 
 # Abstract
 
-In biomedical research, the outcome of a longitudinal study has been traditionally analyzed using the _repeated measures analysis of variance_ (rm-ANOVA) or more recently, a _linear mixed model_ (LMEM). Although LMEMs are less restrictive that rm-ANOVA in terms of correlation and missing observations, both methodologies share an assumption of linearity in the measured response, which results in biased estimates and unreliable inference when they are used to analyze data where the trends are non-linear. In contrast, generalized additive models (GAMs), are a class of models that relax the linearity assumption and allow the data to determine the fit of the model while permitting missing observations and different correlation structures. Although not commonly used in biomedical research, GAMs present an excellent choice to analyze non-linear longitudinal data. This paper summarizes the limitations of linear models (rm-ANOVA in particular), presents the basic theory of GAMs, and demonstrates their implementation in $\textsf{R}$ via the package _mgcv_ using simulated data that follows longitudinal trends reported in biomedical literature. To promote reproducibility in biomedical research, the code and data used to generate this paper are available at:________.
+In biomedical research, the outcome of longitudinal studies has been traditionally analyzed using the _repeated measures analysis of variance_ (rm-ANOVA) or more recently, a _linear mixed model_ (LMEM). Although LMEMs are less restrictive that rm-ANOVA in terms of correlation and missing observations, both methodologies share an assumption of linearity in the measured response, which results in biased estimates and unreliable inference when they are used to analyze data where the trends are non-linear. In contrast, generalized additive models (GAMs), are a class of models that relax the linearity assumption and allow the data to determine the fit of the model while permitting missing observations and different correlation structures, thereby being an excellent choice to analyze non-linear longitudinal data. This paper summarizes the limitations of LMEMs and rm-ANOVA, presents the basic theory of GAMs, and demonstrates their implementation in $\textsf{R}$ via the package _mgcv_ using simulated data that follows longitudinal trends reported in biomedical literature. To promote reproducibility in biomedical research, the code and data used to generate this paper are available at:________.
 
 
 ```{r libraries, message = FALSE,include=FALSE}
@@ -41,6 +42,7 @@ library(nlme)
 library(ggsci)
 library(mgcv)
 library(gratia)
+set.seed(1) #set seed for reproducibility
 
 knitr::opts_chunk$set(fig.pos = 'H', out.extra = "",error=TRUE)
 ```

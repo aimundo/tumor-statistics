@@ -86,7 +86,7 @@
 \lstset{
   breaklines=true
 }
-\usepackage{placeins}
+\usepackage{placeins} \usepackage{solarized-light}
 \usepackage{subfig}
 \usepackage{breqn}
 \usepackage[font={small}]{caption}
@@ -113,7 +113,7 @@
 \hypertarget{abstract}{%
 \section{Abstract}\label{abstract}}
 
-In biomedical research, the outcome of a longitudinal study has been traditionally analyzed using the \emph{repeated measures analysis of variance} (rm-ANOVA) or more recently, a \emph{linear mixed model} (LMEM). Although LMEMs are less restrictive that rm-ANOVA in terms of correlation and missing observations, both methodologies share an assumption of linearity in the measured response, which results in biased estimates and unreliable inference when they are used to analyze data where the trends are non-linear. In contrast, generalized additive models (GAMs), are a class of models that relax the linearity assumption and allow the data to determine the fit of the model while permitting missing observations and different correlation structures. Although not commonly used in biomedical research, GAMs present an excellent choice to analyze non-linear longitudinal data. This paper summarizes the limitations of linear models (rm-ANOVA in particular), presents the basic theory of GAMs, and demonstrates their implementation in \(\textsf{R}\) via the package \emph{mgcv} using simulated data that follows longitudinal trends reported in biomedical literature. To promote reproducibility in biomedical research, the code and data used to generate this paper are available at:\_\_\_\_\_\_\_\_.
+In biomedical research, the outcome of longitudinal studies has been traditionally analyzed using the \emph{repeated measures analysis of variance} (rm-ANOVA) or more recently, a \emph{linear mixed model} (LMEM). Although LMEMs are less restrictive that rm-ANOVA in terms of correlation and missing observations, both methodologies share an assumption of linearity in the measured response, which results in biased estimates and unreliable inference when they are used to analyze data where the trends are non-linear. In contrast, generalized additive models (GAMs), are a class of models that relax the linearity assumption and allow the data to determine the fit of the model while permitting missing observations and different correlation structures, thereby being an excellent choice to analyze non-linear longitudinal data. This paper summarizes the limitations of LMEMs and rm-ANOVA, presents the basic theory of GAMs, and demonstrates their implementation in \(\textsf{R}\) via the package \emph{mgcv} using simulated data that follows longitudinal trends reported in biomedical literature. To promote reproducibility in biomedical research, the code and data used to generate this paper are available at:\_\_\_\_\_\_\_\_.
 
 \hypertarget{background}{%
 \section{Background}\label{background}}
@@ -537,8 +537,10 @@ The traditional methods to analyze biomedical longitudinal data (rm-ANOVA, LMEMs
 \appendix}
 
 
-\hypertarget{simulation-1}{%
-\section{Simulation}\label{simulation-1}}
+\hypertarget{code-for-manuscript-data}{%
+\section{Code for Manuscript data}\label{code-for-manuscript-data}}
+
+This section presents the code used to generate figures, models and simulated data from Sections 3 and 4 from the main manuscript.
 
 \hypertarget{compound-symmetry-and-independent-errors-in-linear-and-quadratic-responses}{%
 \subsection{Compound symmetry and independent errors in linear and quadratic responses}\label{compound-symmetry-and-independent-errors-in-linear-and-quadratic-responses}}
@@ -976,12 +978,13 @@ b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
 \caption{Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D: Smoother for time and original data points. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.}\label{fig:basis-plot-appendix}
 \end{figure}
 
-\hypertarget{data-simulation-and-gam-models}{%
-\subsection{Data simulation and GAM models}\label{data-simulation-and-gam-models}}
+\hypertarget{tumor-data-simulation}{%
+\section{Longitudinal biomedical data simulation and GAMs}\label{tumor-data-simulation}}
 
-This section describes how to fit GAMs to longitudinal data using simulated data. First, data is simulated according to Section \ref{longitudinal-GAMs}.
+This section describes how to fit GAMs to longitudinal data using simulated data. First, data is simulated according to Section \ref{longitudinal-GAMs}, where reported data of oxygen saturation (\(\mbox{StO}_2\)) in tumors under either chemotherapy or saline control is used as a starting point to generate individual responses in each group.
 
 \begin{lstlisting}[language=R]
+#Dataframe that contains the original reported trends
 dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
             Day=rep(c(0,2,5,7,10),times=2),
             Group=as.factor(rep(c("Control","Treatment"),each=5))
@@ -1061,10 +1064,15 @@ f2<-ggplot(dat_sim,
     scale_x_continuous(breaks=c(0,2,5,7,10))
 \end{lstlisting}
 
-\hypertarget{workflow-for-gams}{%
-\subsubsection{Workflow for GAMs}\label{workflow-for-gams}}
+\hypertarget{a-basic-workflow-for-gams}{%
+\subsection{A basic Workflow for GAMs}\label{a-basic-workflow-for-gams}}
 
-Next, a series of increasingly complex GAMs are fitted to the simulated data. The first model is a model that only accounts for different smooths by day. The model syntax specifies that \passthrough{\lstinline!gam\_00!} is the object that will contain all the model information, and that the model attempts to explain changes in \passthrough{\lstinline!StO2\_sim!} (simulated \(\mbox{StO}_2\)) using a smooth per \passthrough{\lstinline!Day!}. The model will use 5 knots (\passthrough{\lstinline!k=5!}) for the smooth. And that the smooth is constructed using gaussian process basis (\passthrough{\lstinline!bs="gp"!}). The smoothing parameter estimation method used is the restricted maximum likelihood (\passthrough{\lstinline!REML!}).
+This section shows a basic workflow to fit a series of increasingly complex GAMs to the simulated data from the previous section. Graphical and parameter diagnostics for goodness of fit are discussed, as well as model comparison via AIC (Aikake Information Criterion).
+
+\hypertarget{first-model}{%
+\subsubsection{First model}\label{first-model}}
+
+The first model fitted to the data is one that only accounts for different smooths by day. The model syntax specifies that \passthrough{\lstinline!gam\_00!} is the object that will contain all the model information, and that the model attempts to explain changes in \passthrough{\lstinline!StO2\_sim!} (simulated \(\mbox{StO}_2\)) using a smooth per \passthrough{\lstinline!Day!}. The model will use 5 knots (\passthrough{\lstinline!k=5!}) for the smooth. And that the smooth is constructed using gaussian process basis (\passthrough{\lstinline!bs="gp"!}). The smoothing parameter estimation method used is the restricted maximum likelihood (\passthrough{\lstinline!REML!}).
 
 \begin{lstlisting}[language=R]
 gam_00<-gam(StO2_sim ~ s(Day, k = 5,bs="gp"),
@@ -1072,26 +1080,25 @@ gam_00<-gam(StO2_sim ~ s(Day, k = 5,bs="gp"),
             data  = dat_sim)
 \end{lstlisting}
 
-To obtain model diagnostics, two methodologies can be used: 1) graphical diagnostics, and 2) a model check. In the first case, the function \passthrough{\lstinline!appraise!} from the package \emph{gratia} can be used to obtain a single plot will all the diagnostic information. For model check, the function \passthrough{\lstinline!gam.check!} from \emph{mgcv} provides detailed information about the model.
+To obtain model diagnostics, two methodologies are to be used: 1) graphical diagnostics, and 2) a model check. In the first case, the functions \passthrough{\lstinline!appraise!} and \passthrough{\lstinline!draw!} from the package \emph{gratia} can be used to obtain a single output with all the graphical diagnostics. For model check, the functions \passthrough{\lstinline!gam.check!} and \passthrough{\lstinline!summary!} from \emph{mgcv} provide detailed information about the model fit and its parameters.
+
+
 
 \hypertarget{graphical-diagnostics}{%
 \paragraph{Graphical diagnostics}\label{graphical-diagnostics}}
 
-\begin{lstlisting}[language=R]
-#need to add figure number and caption
-appr1<-appraise(gam_00)
-sm1<-draw(gam_00)
+\begin{figure}[H]
 
-visual_check<-appr1+sm1
+{\centering \includegraphics[width=0.75\linewidth,]{Full_document_files/figure-latex/first-GAM-diag-1} 
 
-visual_check
-\end{lstlisting}
+}
 
-\includegraphics{Full_document_files/figure-latex/first-GAM-diag-1}
+\caption{Graphical diagnostics for the first GAM model. Left: Graphical diagnostics provided by the function \passthrough{\lstinline!appraise!} from the package \emph{gratia}. Right: Fitted smooth for the model, provided by the function \passthrough{\lstinline!draw!}.}\label{fig:first-GAM-diag}
+\end{figure}
 
-From the \passthrough{\lstinline!appraise!} plot, the major indicators concern about the model are the QQ plot of residuals and the histogram of residuals. The QQ plot shows that the errors are not reasonably located along the 45\(^{\circ}\) line, as there are multiple points that deviate from the trend, which is more noticeable in the tails. The histogram also shows that the variation (residuals) is not following the assumption of a normal distribution.
+From the output of the function \passthrough{\lstinline!appraise!} in Figure \ref{fig:first-GAM-diag}, the major indicators of concern about the model are the QQ plot of residuals and the histogram of residuals. The QQ plot shows that the errors are not reasonably located along the 45\(^{\circ}\) line (which indicates normality), as there are multiple points that deviate from the trend, specially in the tails. The histogram also shows that the variation (residuals) is not following the assumption of a normal distribution.
 
-The \passthrough{\lstinline!draw!} function permits to plot the smooths as \passthrough{\lstinline!ggplot2!} objects. Because this model specifies only one smooth for the time covariate (Day) the plot only contains only one smooth. Note that the smooth show an almost linear profile.
+The \passthrough{\lstinline!draw!} function permits to plot the smooths as \passthrough{\lstinline!ggplot2!} objects, which eases subsequent manipulation, if desired. Because model \passthrough{\lstinline!gam\_00!} specifies only one smooth for the time covariate (Day), the plot only contains only one smooth. Note that the smooth shows an almost linear profile.
 
 \hypertarget{model-check}{%
 \paragraph{Model check}\label{model-check}}
@@ -1149,25 +1156,90 @@ summary(gam_00)
 ## -REML = 440.41  Scale est. = 414.26    n = 100
 \end{lstlisting}
 
-Special attention must be paid to the `k-index' from \passthrough{\lstinline!gam.check!}. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data, which is indicated by a low (\textless1) value. From the model, it can be seen that the k-index is effectively \textless0.3, which indicates that the model is not capturing the variability in the data. The `edf' (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
+Special attention must be paid to the `k-index' from \passthrough{\lstinline!gam.check!}. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trens in the data, this is indicated by a low k-index value (\textless1). From the output, it can be seen that the k-index is effectively \textless0.3, which indicates that the model is not capturing the variability in the data. The `edf' (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
 
-From the \passthrough{\lstinline!summary!} function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is `identity' as the model does not make any transformation on the predictors. The `significance of smooth terms' \emph{p-value} indicates if each smooth is adding significance to the model. Here, the \emph{p-value} is low but we have seen that there are issues with the model from the previous outputs. Finally, the `deviance explained' indicates how much of the data the model is able to capture.
+From the \passthrough{\lstinline!summary!} function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is `identity' as the model does not make any transformation on the predictors. The `significance of smooth terms' \emph{p-value} indicates if each smooth is adding significance to the model. Here, the \emph{p-value} is low but we have seen that there are issues with the model from the previous outputs. Finally, the `deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to \textasciitilde12\%.
 
-The major flaw of \passthrough{\lstinline!gam\_00!} is that is not taking into account the fact that the data is nested in groups. The next iteration is a model where a different smooth of time (Day) is assigned for each group using \passthrough{\lstinline!by=Group!} in the model syntax.
+\hypertarget{second-model}{%
+\subsubsection{Second model}\label{second-model}}
+
+The major flaw of \passthrough{\lstinline!gam\_00!} is that this model is not taking into account the fact that the data is nested in groups. The next iteration is a model where a different smooth of time (Day) is assigned for each group using \passthrough{\lstinline!by=Group!} in the model syntax.
 
 \begin{lstlisting}[language=R]
 gam_01<-gam(StO2_sim ~ s(Day, by=Group,k = 5,bs="gp"),
             method='REML',
             data  = dat_sim)
+
+gam.check(gam_01)
 \end{lstlisting}
 
-Diagnostics for this model indicate that the k-index is still below 1, and that the residuals are still not normally distributed. Moreover, if the smooths are plotted via the \passthrough{\lstinline!draw()!} function, it can be seen that their profile is fairly linear, which is not capturing the trends observed in the data. From \passthrough{\lstinline!summary()!}, the deviance explained by the model is \textasciitilde43\%.
+\includegraphics{Full_document_files/figure-latex/second-GAM-1}
 
-As indicated in Section \ref{longitudinal-GAMs}, in order to differentiate between each group, a parametric term needs to be added to the model in order to account for the interaction of \emph{Day} and \emph{Group}.
+\begin{lstlisting}
+## 
+## Method: REML   Optimizer: outer newton
+## full convergence after 10 iterations.
+## Gradient range [-0.0001703751,9.561998e-05]
+## (score 418.612 & scale 270.7177).
+## Hessian positive definite, eigenvalue range [0.0001702821,48.50255].
+## Model rank =  9 / 9 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index<1) may
+## indicate that k is too low, especially if edf is close to k'.
+## 
+##                         k'  edf k-index p-value    
+## s(Day):GroupControl   4.00 1.00    0.32  <2e-16 ***
+## s(Day):GroupTreatment 4.00 1.72    0.32  <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{lstlisting}
 
-The resulting model is model \passthrough{\lstinline!gam1!} from the main manuscript. By running \passthrough{\lstinline!appraise()!} we see that the trend on the QQ plot has improved and that the histogram of the residuals appears to be reasonably distributed. From running \passthrough{\lstinline!gam.check!}, the k-index is now at an acceptable value (\textasciitilde1.02), and \passthrough{\lstinline!summary!} now indicates that the model is able to capture 87\% of the data.
+\begin{lstlisting}[language=R]
+summary(gam_01)
+\end{lstlisting}
 
-\textbf{Need to add the AIC comparison for the three models}
+\begin{lstlisting}
+## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## StO2_sim ~ s(Day, by = Group, k = 5, bs = "gp")
+## 
+## Parametric coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   21.929      1.645   13.33   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Approximate significance of smooth terms:
+##                         edf Ref.df      F p-value    
+## s(Day):GroupControl   1.001  1.001  4.099  0.0456 *  
+## s(Day):GroupTreatment 1.715  1.979 35.551  <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## R-sq.(adj) =  0.415   Deviance explained = 43.1%
+## -REML = 418.61  Scale est. = 270.72    n = 100
+\end{lstlisting}
+
+Diagnostics for this model indicate that the k-index is still below 1 (0.32 from \passthrough{\lstinline!gam.check!}), and that the residuals are still not following a normal distribution (Figure \ref{fig:second-GAM-diag}). Moreover, the smooths (plotted via the \passthrough{\lstinline!draw()!} function) appear with a fairly linear profile, which indicates they are still not capturing the trends observed in the data. From \passthrough{\lstinline!summary()!}, the deviance explained by the model is \textasciitilde43\%.
+
+
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.75\linewidth,]{Full_document_files/figure-latex/second-GAM-diag-1} 
+
+}
+
+\caption{Graphical diagnostics for the second GAM model. Left: Graphical diagnostics provided by the function \passthrough{\lstinline!appraise!} from the package \emph{gratia}. Right: Fitted smooth for the model, provided by the function \passthrough{\lstinline!draw!}.}\label{fig:second-GAM-diag}
+\end{figure}
+
+\hypertarget{third-model}{%
+\subsubsection{Third model}\label{third-model}}
+
+Model \passthrough{\lstinline!gam\_00!} was built for didactic purposes to cover the simplest case, but it does not account for the nesting of the data by Group, which is apparent from the type of smooth fitted, the model diagnostics, and, the low variance explained by the model. On the other hand, \passthrough{\lstinline!gam\_01!} takes into account the nesting within each group and provides better variance explanation, but as indicated in Section \ref{longitudinal-GAMs}, in order to differentiate between each group a parametric term needs to be added to the model for the interaction of \emph{Day} and \emph{Group}.
 
 \begin{lstlisting}[language=R]
 #GAM for StO2
@@ -1176,7 +1248,100 @@ gam1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5,bs="gp"),
             method='REML',
             data  = dat_sim)
 
+gam.check(gam1)
+\end{lstlisting}
 
+\includegraphics{Full_document_files/figure-latex/final-model-Appendix-1}
+
+\begin{lstlisting}
+## 
+## Method: REML   Optimizer: outer newton
+## full convergence after 9 iterations.
+## Gradient range [-1.003557e-07,3.562136e-08]
+## (score 362.7587 & scale 64.03804).
+## Hessian positive definite, eigenvalue range [0.9494021,48.08513].
+## Model rank =  10 / 10 
+## 
+## Basis dimension (k) checking results. Low p-value (k-index<1) may
+## indicate that k is too low, especially if edf is close to k'.
+## 
+##                         k'  edf k-index p-value
+## s(Day):GroupControl   4.00 3.83    1.02    0.52
+## s(Day):GroupTreatment 4.00 3.84    1.02    0.59
+\end{lstlisting}
+
+\begin{lstlisting}[language=R]
+summary(gam1)
+\end{lstlisting}
+
+\begin{lstlisting}
+## 
+## Family: gaussian 
+## Link function: identity 
+## 
+## Formula:
+## StO2_sim ~ Group + s(Day, by = Group, k = 5, bs = "gp")
+## 
+## Parametric coefficients:
+##                Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)       9.781      1.132   8.643 1.85e-13 ***
+## GroupTreatment   24.296      1.600  15.181  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Approximate significance of smooth terms:
+##                         edf Ref.df     F p-value    
+## s(Day):GroupControl   3.825  3.971 16.81  <2e-16 ***
+## s(Day):GroupTreatment 3.835  3.974 78.84  <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## R-sq.(adj) =  0.862   Deviance explained = 87.4%
+## -REML = 362.76  Scale est. = 64.038    n = 100
+\end{lstlisting}
+
+The resulting model is model \passthrough{\lstinline!gam1!}, which is the model fitted in the main manuscript. By using \passthrough{\lstinline!appraise()!} and \passthrough{\lstinline!draw!} on this model (Figure \ref{fig:final-GAM-diag}) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group . From \passthrough{\lstinline!gam.check!}, the k-index is now at an acceptable value (\textasciitilde1.02), and \passthrough{\lstinline!summary!} now indicates that the model is able to capture 87\% of the variance data.
+
+
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.75\linewidth,]{Full_document_files/figure-latex/final-GAM-diag-1} 
+
+}
+
+\caption{Graphical diagnostics for the final GAM model. Left: Graphical diagnostics provided by the function \passthrough{\lstinline!appraise!} from the package \emph{gratia}. Right: Fitted smooths for the model, provided by the function \passthrough{\lstinline!draw!}.}\label{fig:final-GAM-diag}
+\end{figure}
+
+\hypertarget{comparing-models-via-aic}{%
+\subsubsection{Comparing models via AIC}\label{comparing-models-via-aic}}
+
+One final comparison that can be made for model selection involves the use of the Aikake Information Criterion (AIC). This metric is used to estimate information loss, which we want to minimize with an appropriate model. Therefore, when 2 or more models are compared, the model with lower AIC is preferred. In R, the comparison is done using the \passthrough{\lstinline!AIC!} function.
+
+\begin{lstlisting}[language=R]
+AIC(gam_00,gam_01,gam1)
+\end{lstlisting}
+
+\begin{lstlisting}
+##               df      AIC
+## gam_00  3.536147 891.1671
+## gam_01  4.980481 850.0698
+## gam1   10.945191 711.4662
+\end{lstlisting}
+
+The output in this case is expected: model \passthrough{\lstinline!gam1!} has a lower AIC (711.46) whereas the initial two models have higher AICs (891 and 850). The AIC should not be considered as the only estimator of model goodness, instead to be used as complimentary information to the graphical diagnostics and model checks described above.
+
+\hypertarget{gam-and-linear-model-plots-and-missing-data}{%
+\section{GAM and Linear model plots and Missing data}\label{gam-and-linear-model-plots-and-missing-data}}
+
+This section covers the code used to generate Figure \ref{fig:sim-smooth-plot}, where the simulated data, fit of the ``final'' GAM (\passthrough{\lstinline!gam1!}), linear model and GAM on data with missing observations are presented. Note that panel A in Figure \ref{fig:sim-smooth-plot} and the inlet are generated in the code chunk where the data is simulated in Section \ref{tumor-data-simulation}, and are called later to build the figure.
+
+\hypertarget{gam-and-linear-model-plots}{%
+\subsection{GAM and Linear model plots}\label{gam-and-linear-model-plots}}
+
+This code chunk creates panels B and D in Figure \ref{fig:sim-smooth-plot}. Note that this code uses the final GAM from the previous section (\passthrough{\lstinline!gam1!}), so the simulated data and the model should be generated before running this section.
+
+\begin{lstlisting}[language=R]
 #linear model
 lm1<-lm(StO2_sim ~ Day + Group + Day * Group, data = dat_sim)
 
@@ -1261,6 +1426,11 @@ library(multcomp)
 #summary(glht(lm1, linfct=mcp(Group="Tukey", interaction_average=TRUE)))
 \end{lstlisting}
 
+\hypertarget{working-with-missing-data-in-gams}{%
+\subsection{Working with Missing data in GAMs}\label{working-with-missing-data-in-gams}}
+
+This code chunk randomly deletes 40\% of the total observations in the original simulated data, and then an interaction GAM is fitted. Model diagnostics are presented, and an object that stores the fitted smooths is saved to be called in the final code chunk to build the figure.
+
 \begin{lstlisting}[language=R]
 #missing data
 #create a sequence of 40 random numbers between 1 and 100, these numbers will
@@ -1289,16 +1459,16 @@ dat_missing %>%
 ## # Groups:   Day, Group [10]
 ##      Day Group         n
 ##    <dbl> <fct>     <int>
-##  1     0 Control       4
-##  2     0 Treatment     3
-##  3     2 Control       9
-##  4     2 Treatment     3
-##  5     5 Control       5
-##  6     5 Treatment     7
-##  7     7 Control       1
-##  8     7 Treatment     7
+##  1     0 Control       2
+##  2     0 Treatment     4
+##  3     2 Control       6
+##  4     2 Treatment     5
+##  5     5 Control       6
+##  6     5 Treatment     4
+##  7     7 Control       3
+##  8     7 Treatment     5
 ##  9    10 Control       3
-## 10    10 Treatment     6
+## 10    10 Treatment     8
 \end{lstlisting}
 
 \begin{lstlisting}[language=R]
