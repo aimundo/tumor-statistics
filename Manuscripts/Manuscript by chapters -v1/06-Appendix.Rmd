@@ -159,7 +159,7 @@ plot_example <- function(sim_dat) {
     theme(plot.title = element_text(size = 30, 
                                   face = "bold"),
         text=element_text(size=30))+
-    scale_color_aaas()
+    thm
   
   #plot the simulated data with trajectories per each subject
   p2 <- sim_dat$dat %>%
@@ -182,7 +182,7 @@ plot_example <- function(sim_dat) {
      theme(plot.title = element_text(size = 30, 
                                 face = "bold"),
      text=element_text(size=30))+
-    scale_color_aaas()
+    thm
   
   #plot the errors
    p3 <- sim_dat$dat %>%
@@ -196,7 +196,7 @@ plot_example <- function(sim_dat) {
      theme(plot.title = element_text(size = 30, 
                                   face = "bold"),
         text=element_text(size=30))+
-    scale_color_aaas()
+    thm
   
    #plot the model predictions
   p4 <- ggplot(sim_dat$dat, 
@@ -212,13 +212,14 @@ plot_example <- function(sim_dat) {
                               level = 0, 
                               newdata = sim_dat$pred_dat), 
                   size = "Population")) +
+    guides(color = guide_legend(override.aes = list(size = 2)))+
     scale_size_manual(name = "Predictions", 
                       values=c("Subjects" = 0.5, "Population" = 3)) +
     theme_classic() +
     theme(plot.title = element_text(size = 30, 
                                   face = "bold"),
         text=element_text(size=30))+
-    scale_color_aaas()
+    thm
   
   return((p1+p3+p2+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
   
@@ -374,7 +375,7 @@ p11<-ggplot(basis_plot,
              labeller = as_labeller(basis_names)
              )+
   theme_classic()+
-  scale_color_aaas()
+  thm
   
 
 #penalized basis
@@ -394,24 +395,22 @@ p12<-ggplot(basis_plot,
              labeller=as_labeller(basis_names)
              )+
   theme_classic()+
-  scale_color_aaas()
+  thm
 
 #heatmap of the penalization coefficient
 x_labels<-c("Intercept","1","2","3","4")
 p13<-ggplot(basis_plot,
             aes(x=Basis,
-                y=Basis,
-                fill=cof))+
-  geom_tile(aes(color='black'),
-            size=sz+1,
-            show.legend = FALSE)+
-  geom_tile(size=sz+1)+
-  scale_fill_gradient(low = "white", high = "red")+
+                y=Basis))+
+  geom_tile(aes(fill = cof), 
+            colour = "black") +
+    scale_fill_gradient(low = "white",
+                        high = "#B50A2AFF")+ #color picked from KikiMedium
   labs(x='Basis',
        y='Basis')+
   scale_x_discrete(labels=x_labels)+
   geom_text(aes(label=round(cof,2)),
-            size=10,
+            size=7,
             show.legend = FALSE)+
   theme_classic()+
   theme(legend.title = element_blank())
@@ -425,7 +424,7 @@ p14<-ggplot(data=dat,
   geom_line(data=smooth,
             aes(x=time,
                 y=smooth),
-            color="#B15731",
+            color="#6C581DFF",
             size=sz+1)+
   theme_classic()
   
@@ -435,6 +434,7 @@ b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
   theme(
      text=element_text(size=18)
      )
+
 ```
 
 (ref:basis-caption-appendix) Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D: Smoother for time and original data points. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.
@@ -474,7 +474,7 @@ f1<-ggplot(dat,
   labs(y=expression(paste(StO[2],
                           ' (real)')))+
   theme_classic()+
-  scale_color_aaas()+
+  thm+
     scale_x_continuous(breaks=c(0,5,10))+
     scale_y_continuous(breaks=c(0,40))+
   plot_layout(tag_level = 'new')+
@@ -507,7 +507,6 @@ simulate_data <- function(dat, n = 10, sd = 5) {
 
 n <- 10 #number of observations
 sd <- 10 #approximate sd from paper
-set.seed(1) #set seed for reproducibility
 df <- 6
 dat_sim <- simulate_data(dat, n, sd)
 
@@ -530,7 +529,7 @@ f2<-ggplot(dat_sim,
   theme(
     axis.text=element_text(size=22)
   )+
-  scale_color_aaas()+
+  thm+
     scale_x_continuous(breaks=c(0,2,5,7,10))
   
 
@@ -716,8 +715,8 @@ f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      scale_color_aaas()+
-  scale_fill_aaas()
+      thm+
+  thm1
  
 #plot linear fit for rm-ANOVA
 f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
@@ -739,8 +738,8 @@ f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      scale_color_aaas()+
-  scale_fill_aaas()
+      thm+
+  thm1
  
 
 
@@ -816,8 +815,8 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      scale_color_aaas()+
-  scale_fill_aaas()
+      thm+
+  thm1
 
 
 
@@ -840,7 +839,7 @@ mult_plot<-f2+inset_element(
   theme(
      text=element_text(size=18)
      )&
-  scale_color_aaas()
+  thm
 
 mult_plot
 

@@ -80,7 +80,7 @@ This section has presented the assumptions for analyzing longitudinal data using
 To demonstrate the limitations of rm-ANOVA an LMEMs for non-linear longitudinal data, this section presents a simulation experiment of a normally distributed response of two groups of 10 subjects each. An rm-ANOVA model (Equation \@ref(eq:linear-model)) is fitted to each group, using $\textsf{R}$[@r] and the package _nlme_[@nlme]. 
 Briefly, two cases for the mean responses for each group are considered: in the first case, the mean response in each group is a linear function with different intercepts and slopes; a negative slope is used for Group 1 and a positive slope is used for Group 2 (Figure \@ref(fig:l-q-response), A). In the second case, a second-degree polynomial (quadratic) function is used for the mean response per group: the quadratic function is concave down for Group 1 and it is concave up for Group 2 (Figure \@ref(fig:l-q-response), C). In both the linear and quadratic simulated data, the groups start with the same mean value at the first time point. This is intentional in order to simulate the expected temporal evolution of some physiological quantity.
 
-Specifically, the rationale for the chosen linear and quadratic functions is the likelihood that a measured response in two treatment groups is similar in the initial phase of the study, but as treatment progresses a divergence in the trend of the response indicates an effect due to treatment. In other words, Group 1 can be thought as a "Control" group and Group 2 as a "Treatment" group. From the mean response per group (linear or quadratic), the variability or "error" of individual responses  within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \@ref(fig:l-q-response) B,D). A more comprehensive exploration  of the fit of rm-ANOVA for linear and non-linear longitudinal appears in Figure \@ref(fig:linear-cases-Appendix) and Figure \@ref(fig:quadratic-cases-Appendix) in the Appendix, where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented.
+Specifically, the rationale for the chosen linear and quadratic functions is the likelihood that a measured response in two treatment groups is similar in the initial phase of the study, but as therapy progresses a divergence in the trend of the response indicates a treatment effect. In other words, Group 1 can be thought as a "Control" group and Group 2 as a "Treatment" group. From the mean response per group (linear or quadratic), the variability or "error" of individual responses  within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \@ref(fig:l-q-response) B,D). A more comprehensive exploration  of the fit of rm-ANOVA for linear and non-linear longitudinal appears in Figure \@ref(fig:linear-cases-Appendix) and Figure \@ref(fig:quadratic-cases-Appendix) in the Appendix, where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented.
 
 
 
@@ -227,7 +227,7 @@ plot_example <- function(sim_dat) {
     theme(plot.title = element_text(size = 30, 
                                   face = "bold"),
         text=element_text(size=30))+
-    scale_color_aaas()
+    thm
   
  
    #plot the model predictions
@@ -244,13 +244,14 @@ plot_example <- function(sim_dat) {
                               level = 0, 
                               newdata = sim_dat$pred_dat), 
                   size = "Population")) +
+    guides(color = guide_legend(override.aes = list(size = 2)))+
     scale_size_manual(name = "Predictions", 
                       values=c("Subjects" = 0.5, "Population" = 3)) +
     theme_classic() +
     theme(plot.title = element_text(size = 30, 
                                   face = "bold"),
         text=element_text(size=30))+
-    scale_color_aaas()
+    thm
   
   return((p1+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
     

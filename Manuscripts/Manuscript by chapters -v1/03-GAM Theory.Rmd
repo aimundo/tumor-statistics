@@ -130,7 +130,7 @@ p11<-ggplot(basis_plot,
              labeller = as_labeller(basis_names)
              )+
   theme_classic()+
-  scale_color_aaas()
+  thm
   
 
 #penalized basis
@@ -150,24 +150,22 @@ p12<-ggplot(basis_plot,
              labeller=as_labeller(basis_names)
              )+
   theme_classic()+
-  scale_color_aaas()
+  thm
 
 #heatmap of the penalization coefficient
 x_labels<-c("Intercept","1","2","3","4")
 p13<-ggplot(basis_plot,
             aes(x=Basis,
-                y=Basis,
-                fill=cof))+
-  geom_tile(aes(color='black'),
-            size=sz+1,
-            show.legend = FALSE)+
-  geom_tile(size=sz+1)+
-  scale_fill_gradient(low = "white", high = "red")+
+                y=Basis))+
+  geom_tile(aes(fill = cof), 
+            colour = "black") +
+    scale_fill_gradient(low = "white",
+                        high = "#B50A2AFF")+ #color picked from KikiMedium
   labs(x='Basis',
        y='Basis')+
   scale_x_discrete(labels=x_labels)+
   geom_text(aes(label=round(cof,2)),
-            size=10,
+            size=7,
             show.legend = FALSE)+
   theme_classic()+
   theme(legend.title = element_blank())
@@ -181,7 +179,7 @@ p14<-ggplot(data=dat,
   geom_line(data=smooth,
             aes(x=time,
                 y=smooth),
-            color="#B15731",
+            color="#6C581DFF",
             size=sz+1)+
   theme_classic()
   

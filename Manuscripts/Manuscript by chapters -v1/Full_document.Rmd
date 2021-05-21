@@ -4,11 +4,6 @@ subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
 header-includes:
     \usepackage{placeins}
 output:  
-  bookdown::html_document2:
-    css: "style.css" #style for the HTML document
-  bookdown::word_document2:
-    fig_caption: yes #figure caption
-    keep_md: yes
   bookdown::pdf_document2:
     #template: my-template.tex #if a custom template that removes the additional "and" in the author information is desired
     pandoc_args: --listings #calls the listings package to fit code in the page margins
@@ -21,6 +16,11 @@ output:
       float: null #allows for control of placement of figures
     includes:
       in_header: preamble.sty #additional LaTeX formatting
+  bookdown::word_document2:
+    fig_caption: yes #figure caption
+    keep_md: yes
+  bookdown::html_document2:
+    css: "style.css" #style for the HTML document
 csl: elsevier-with-titles.csl #style for references
 bibliography: refs.bib #references
 link-citations: yes #adds links to the citations
@@ -43,9 +43,13 @@ library(nlme)
 library(ggsci)
 library(mgcv)
 library(gratia)
+library(ghibli)
 set.seed(1) #set seed for reproducibility
 
 knitr::opts_chunk$set(fig.pos = 'H', out.extra = "",error=TRUE)
+
+thm<-scale_color_ghibli_d("PonyoMedium",direction=1) #global theme for plotting
+thm1<-scale_fill_ghibli_d("PonyoMedium",direction=1) #global theme for plotting
 
 #this function will remove the default "author information" that is the Pandoc Latex template. Otherwise, and additional "and" will appear at the end of the author list.Or, the custom template that is in the YAML header and that has the "author" line deleted may be used as well. An explanation in detail is provided at:
 #https://github.com/rstudio/bookdown/issues/1158

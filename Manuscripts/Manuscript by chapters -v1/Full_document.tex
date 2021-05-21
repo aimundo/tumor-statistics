@@ -300,7 +300,7 @@ This section has presented the assumptions for analyzing longitudinal data using
 To demonstrate the limitations of rm-ANOVA an LMEMs for non-linear longitudinal data, this section presents a simulation experiment of a normally distributed response of two groups of 10 subjects each. An rm-ANOVA model (Equation \eqref{eq:linear-model}) is fitted to each group, using \(\textsf{R}\){[}\protect\hyperlink{ref-r}{38}{]} and the package \emph{nlme}{[}\protect\hyperlink{ref-nlme}{49}{]}.
 Briefly, two cases for the mean responses for each group are considered: in the first case, the mean response in each group is a linear function with different intercepts and slopes; a negative slope is used for Group 1 and a positive slope is used for Group 2 (Figure \ref{fig:l-q-response}, A). In the second case, a second-degree polynomial (quadratic) function is used for the mean response per group: the quadratic function is concave down for Group 1 and it is concave up for Group 2 (Figure \ref{fig:l-q-response}, C). In both the linear and quadratic simulated data, the groups start with the same mean value at the first time point. This is intentional in order to simulate the expected temporal evolution of some physiological quantity.
 
-Specifically, the rationale for the chosen linear and quadratic functions is the likelihood that a measured response in two treatment groups is similar in the initial phase of the study, but as treatment progresses a divergence in the trend of the response indicates an effect due to treatment. In other words, Group 1 can be thought as a ``Control'' group and Group 2 as a ``Treatment'' group. From the mean response per group (linear or quadratic), the variability or ``error'' of individual responses within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \ref{fig:l-q-response} B,D). A more comprehensive exploration of the fit of rm-ANOVA for linear and non-linear longitudinal appears in Figure \ref{fig:linear-cases-Appendix} and Figure \ref{fig:quadratic-cases-Appendix} in the Appendix, where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented.
+Specifically, the rationale for the chosen linear and quadratic functions is the likelihood that a measured response in two treatment groups is similar in the initial phase of the study, but as therapy progresses a divergence in the trend of the response indicates a treatment effect. In other words, Group 1 can be thought as a ``Control'' group and Group 2 as a ``Treatment'' group. From the mean response per group (linear or quadratic), the variability or ``error'' of individual responses within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \ref{fig:l-q-response} B,D). A more comprehensive exploration of the fit of rm-ANOVA for linear and non-linear longitudinal appears in Figure \ref{fig:linear-cases-Appendix} and Figure \ref{fig:quadratic-cases-Appendix} in the Appendix, where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented.
 
 
 
@@ -824,7 +824,7 @@ plot_example <- function(sim_dat) {
     theme(plot.title = element_text(size = 30, 
                                   face = "bold"),
         text=element_text(size=30))+
-    scale_color_aaas()
+    thm
   
   #plot the simulated data with trajectories per each subject
   p2 <- sim_dat$dat %>%
@@ -847,7 +847,7 @@ plot_example <- function(sim_dat) {
      theme(plot.title = element_text(size = 30, 
                                 face = "bold"),
      text=element_text(size=30))+
-    scale_color_aaas()
+    thm
   
   #plot the errors
    p3 <- sim_dat$dat %>%
@@ -861,7 +861,7 @@ plot_example <- function(sim_dat) {
      theme(plot.title = element_text(size = 30, 
                                   face = "bold"),
         text=element_text(size=30))+
-    scale_color_aaas()
+    thm
   
    #plot the model predictions
   p4 <- ggplot(sim_dat$dat, 
@@ -877,13 +877,14 @@ plot_example <- function(sim_dat) {
                               level = 0, 
                               newdata = sim_dat$pred_dat), 
                   size = "Population")) +
+    guides(color = guide_legend(override.aes = list(size = 2)))+
     scale_size_manual(name = "Predictions", 
                       values=c("Subjects" = 0.5, "Population" = 3)) +
     theme_classic() +
     theme(plot.title = element_text(size = 30, 
                                   face = "bold"),
         text=element_text(size=30))+
-    scale_color_aaas()
+    thm
   
   return((p1+p3+p2+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
   
@@ -1031,7 +1032,7 @@ p11<-ggplot(basis_plot,
              labeller = as_labeller(basis_names)
              )+
   theme_classic()+
-  scale_color_aaas()
+  thm
   
 
 #penalized basis
@@ -1051,24 +1052,22 @@ p12<-ggplot(basis_plot,
              labeller=as_labeller(basis_names)
              )+
   theme_classic()+
-  scale_color_aaas()
+  thm
 
 #heatmap of the penalization coefficient
 x_labels<-c("Intercept","1","2","3","4")
 p13<-ggplot(basis_plot,
             aes(x=Basis,
-                y=Basis,
-                fill=cof))+
-  geom_tile(aes(color='black'),
-            size=sz+1,
-            show.legend = FALSE)+
-  geom_tile(size=sz+1)+
-  scale_fill_gradient(low = "white", high = "red")+
+                y=Basis))+
+  geom_tile(aes(fill = cof), 
+            colour = "black") +
+    scale_fill_gradient(low = "white",
+                        high = "#B50A2AFF")+ #color picked from KikiMedium
   labs(x='Basis',
        y='Basis')+
   scale_x_discrete(labels=x_labels)+
   geom_text(aes(label=round(cof,2)),
-            size=10,
+            size=7,
             show.legend = FALSE)+
   theme_classic()+
   theme(legend.title = element_blank())
@@ -1082,7 +1081,7 @@ p14<-ggplot(data=dat,
   geom_line(data=smooth,
             aes(x=time,
                 y=smooth),
-            color="#B15731",
+            color="#6C581DFF",
             size=sz+1)+
   theme_classic()
   
@@ -1131,7 +1130,7 @@ f1<-ggplot(dat,
   labs(y=expression(paste(StO[2],
                           ' (real)')))+
   theme_classic()+
-  scale_color_aaas()+
+  thm+
     scale_x_continuous(breaks=c(0,5,10))+
     scale_y_continuous(breaks=c(0,40))+
   plot_layout(tag_level = 'new')+
@@ -1164,7 +1163,6 @@ simulate_data <- function(dat, n = 10, sd = 5) {
 
 n <- 10 #number of observations
 sd <- 10 #approximate sd from paper
-set.seed(1) #set seed for reproducibility
 df <- 6
 dat_sim <- simulate_data(dat, n, sd)
 
@@ -1187,7 +1185,7 @@ f2<-ggplot(dat_sim,
   theme(
     axis.text=element_text(size=22)
   )+
-  scale_color_aaas()+
+  thm+
     scale_x_continuous(breaks=c(0,2,5,7,10))
 \end{lstlisting}
 
@@ -1245,16 +1243,16 @@ gam.check(gam_00)
 ## 
 ## Method: REML   Optimizer: outer newton
 ## full convergence after 6 iterations.
-## Gradient range [-4.142968e-08,2.799316e-12]
-## (score 440.4108 & scale 414.2575).
-## Hessian positive definite, eigenvalue range [0.04576008,49.0005].
+## Gradient range [-0.0001585015,0.0008415702]
+## (score 436.939 & scale 387.386).
+## Hessian positive definite, eigenvalue range [0.0001600441,48.99916].
 ## Model rank =  5 / 5 
 ## 
 ## Basis dimension (k) checking results. Low p-value (k-index<1) may
 ## indicate that k is too low, especially if edf is close to k'.
 ## 
-##          k'  edf k-index p-value    
-## s(Day) 4.00 1.31    0.26  <2e-16 ***
+##        k' edf k-index p-value    
+## s(Day)  4   1    0.37  <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{lstlisting}
@@ -1273,18 +1271,18 @@ summary(gam_00)
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   21.929      2.035   10.77   <2e-16 ***
+## (Intercept)   21.578      1.968   10.96   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Approximate significance of smooth terms:
-##          edf Ref.df     F p-value   
-## s(Day) 1.314  1.536 9.151 0.00253 **
+##          edf Ref.df     F  p-value    
+## s(Day) 1.002  1.004 21.54 1.09e-05 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## R-sq.(adj) =  0.105   Deviance explained = 11.7%
-## -REML = 440.41  Scale est. = 414.26    n = 100
+## R-sq.(adj) =  0.172   Deviance explained = 18.1%
+## -REML = 436.94  Scale est. = 387.39    n = 100
 \end{lstlisting}
 
 Special attention must be paid to the `k-index' from \passthrough{\lstinline!gam.check!}. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trens in the data, this is indicated by a low k-index value (\textless1). From the output, it can be seen that the k-index is effectively \textless0.3, which indicates that the model is not capturing the variability in the data. The `edf' (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
@@ -1309,18 +1307,18 @@ gam.check(gam_01)
 \begin{lstlisting}
 ## 
 ## Method: REML   Optimizer: outer newton
-## full convergence after 10 iterations.
-## Gradient range [-0.0001703751,9.561998e-05]
-## (score 418.612 & scale 270.7177).
-## Hessian positive definite, eigenvalue range [0.0001702821,48.50255].
+## full convergence after 8 iterations.
+## Gradient range [-0.0001335263,0.001505324]
+## (score 415.0769 & scale 254.693).
+## Hessian positive definite, eigenvalue range [9.414522e-05,48.49849].
 ## Model rank =  9 / 9 
 ## 
 ## Basis dimension (k) checking results. Low p-value (k-index<1) may
 ## indicate that k is too low, especially if edf is close to k'.
 ## 
-##                         k'  edf k-index p-value    
-## s(Day):GroupControl   4.00 1.00    0.32  <2e-16 ***
-## s(Day):GroupTreatment 4.00 1.72    0.32  <2e-16 ***
+##                       k' edf k-index p-value    
+## s(Day):GroupControl    4   1    0.46  <2e-16 ***
+## s(Day):GroupTreatment  4   1    0.46  <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{lstlisting}
@@ -1339,19 +1337,19 @@ summary(gam_01)
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   21.929      1.645   13.33   <2e-16 ***
+## (Intercept)   21.578      1.596   13.52   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Approximate significance of smooth terms:
 ##                         edf Ref.df      F p-value    
-## s(Day):GroupControl   1.001  1.001  4.099  0.0456 *  
-## s(Day):GroupTreatment 1.715  1.979 35.551  <2e-16 ***
+## s(Day):GroupControl   1.004  1.008  1.083   0.299    
+## s(Day):GroupTreatment 1.000  1.001 83.768  <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## R-sq.(adj) =  0.415   Deviance explained = 43.1%
-## -REML = 418.61  Scale est. = 270.72    n = 100
+## R-sq.(adj) =  0.456   Deviance explained = 46.7%
+## -REML = 415.08  Scale est. = 254.69    n = 100
 \end{lstlisting}
 
 Diagnostics for this model indicate that the k-index is still below 1 (0.32 from \passthrough{\lstinline!gam.check!}), and that the residuals are still not following a normal distribution (Figure \ref{fig:second-GAM-diag}). Moreover, the smooths (plotted via the \passthrough{\lstinline!draw()!} function) appear with a fairly linear profile, which indicates they are still not capturing the trends observed in the data. From \passthrough{\lstinline!summary()!}, the deviance explained by the model is \textasciitilde43\%.
@@ -1392,17 +1390,19 @@ gam.check(gam1)
 ## 
 ## Method: REML   Optimizer: outer newton
 ## full convergence after 9 iterations.
-## Gradient range [-1.003557e-07,3.562136e-08]
-## (score 362.7587 & scale 64.03804).
-## Hessian positive definite, eigenvalue range [0.9494021,48.08513].
+## Gradient range [-1.291119e-06,1.637752e-06]
+## (score 374.509 & scale 96.64781).
+## Hessian positive definite, eigenvalue range [0.02491842,48.04328].
 ## Model rank =  10 / 10 
 ## 
 ## Basis dimension (k) checking results. Low p-value (k-index<1) may
 ## indicate that k is too low, especially if edf is close to k'.
 ## 
-##                         k'  edf k-index p-value
-## s(Day):GroupControl   4.00 3.83    1.02    0.52
-## s(Day):GroupTreatment 4.00 3.84    1.02    0.59
+##                         k'  edf k-index p-value  
+## s(Day):GroupControl   4.00 3.84    0.85   0.075 .
+## s(Day):GroupTreatment 4.00 1.24    0.85   0.085 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{lstlisting}
 
 \begin{lstlisting}[language=R]
@@ -1419,20 +1419,20 @@ summary(gam1)
 ## 
 ## Parametric coefficients:
 ##                Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)       9.781      1.132   8.643 1.85e-13 ***
-## GroupTreatment   24.296      1.600  15.181  < 2e-16 ***
+## (Intercept)      10.503      1.390   7.554 2.87e-11 ***
+## GroupTreatment   22.150      1.966  11.266  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Approximate significance of smooth terms:
-##                         edf Ref.df     F p-value    
-## s(Day):GroupControl   3.825  3.971 16.81  <2e-16 ***
-## s(Day):GroupTreatment 3.835  3.974 78.84  <2e-16 ***
+##                         edf Ref.df       F  p-value    
+## s(Day):GroupControl   3.843  3.976   7.975 8.99e-06 ***
+## s(Day):GroupTreatment 1.236  1.419 159.701  < 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## R-sq.(adj) =  0.862   Deviance explained = 87.4%
-## -REML = 362.76  Scale est. = 64.038    n = 100
+## R-sq.(adj) =  0.794   Deviance explained = 80.6%
+## -REML = 374.51  Scale est. = 96.648    n = 100
 \end{lstlisting}
 
 The resulting model is model \passthrough{\lstinline!gam1!}, which is the model fitted in the main manuscript. By using \passthrough{\lstinline!appraise()!} and \passthrough{\lstinline!draw!} on this model (Figure \ref{fig:final-GAM-diag}) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group . From \passthrough{\lstinline!gam.check!}, the k-index is now at an acceptable value (\textasciitilde1.02), and \passthrough{\lstinline!summary!} now indicates that the model is able to capture 87\% of the variance data.
@@ -1462,10 +1462,10 @@ AIC(gam_00,gam_01,gam1)
 \end{lstlisting}
 
 \begin{lstlisting}
-##               df      AIC
-## gam_00  3.536147 891.1671
-## gam_01  4.980481 850.0698
-## gam1   10.945191 711.4662
+##              df      AIC
+## gam_00 3.004277 883.7160
+## gam_01 4.008467 842.7602
+## gam1   8.395441 750.3446
 \end{lstlisting}
 
 The output in this case is expected: model \passthrough{\lstinline!gam1!} has a lower AIC (711.46) whereas the initial two models have higher AICs (891 and 850). The AIC should not be considered as the only estimator of model goodness, instead to be used as complimentary information to the graphical diagnostics and model checks described above.
@@ -1529,8 +1529,8 @@ f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      scale_color_aaas()+
-  scale_fill_aaas()
+      thm+
+  thm1
  
 #plot linear fit for rm-ANOVA
 f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
@@ -1552,8 +1552,8 @@ f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      scale_color_aaas()+
-  scale_fill_aaas()
+      thm+
+  thm1
  
 
 
@@ -1600,14 +1600,14 @@ dat_missing %>%
 ##    <dbl> <fct>     <int>
 ##  1     0 Control       2
 ##  2     0 Treatment     4
-##  3     2 Control       6
-##  4     2 Treatment     5
-##  5     5 Control       6
-##  6     5 Treatment     4
-##  7     7 Control       3
-##  8     7 Treatment     5
-##  9    10 Control       3
-## 10    10 Treatment     8
+##  3     2 Control       7
+##  4     2 Treatment     4
+##  5     5 Control       2
+##  6     5 Treatment     8
+##  7     7 Control       5
+##  8     7 Treatment     8
+##  9    10 Control       4
+## 10    10 Treatment     5
 \end{lstlisting}
 
 \begin{lstlisting}[language=R]
@@ -1650,8 +1650,8 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      scale_color_aaas()+
-  scale_fill_aaas()
+      thm+
+  thm1
 \end{lstlisting}
 
 
@@ -1668,7 +1668,7 @@ mult_plot<-f2+inset_element(
   theme(
      text=element_text(size=18)
      )&
-  scale_color_aaas()
+  thm
 
 mult_plot
 \end{lstlisting}

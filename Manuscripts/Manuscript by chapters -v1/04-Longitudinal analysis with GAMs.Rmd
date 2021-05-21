@@ -43,7 +43,7 @@ f1<-ggplot(dat,
   labs(y=expression(paste(StO[2],
                           ' (real)')))+
   theme_classic()+
-  scale_color_aaas()+
+  thm+
     scale_x_continuous(breaks=c(0,5,10))+
     scale_y_continuous(breaks=c(0,40))+
   plot_layout(tag_level = 'new')+
@@ -90,7 +90,7 @@ f2<-ggplot(dat_sim, aes(x = Day, y = StO2_sim, color = Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-  scale_color_aaas()+
+  thm+
     scale_x_continuous(breaks=c(0,2,5,7,10))
   
 
@@ -156,8 +156,8 @@ f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      scale_color_aaas()+
-  scale_fill_aaas()
+      thm+
+  thm1
  
 #plot linear fit for rm-ANOVA
 f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
@@ -179,8 +179,8 @@ f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      scale_color_aaas()+
-  scale_fill_aaas()
+  thm+
+  thm1
  
 
 
@@ -255,8 +255,8 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      scale_color_aaas()+
-  scale_fill_aaas()
+  thm+
+  thm1
 
 
 
@@ -278,7 +278,7 @@ mult_plot<-f2+inset_element(
   theme(
      text=element_text(size=18)
      )&
-  scale_color_aaas()
+  thm
 
 mult_plot
 
@@ -336,19 +336,19 @@ comp_StO2_full <- cbind(Day = seq(0, 10, length = 400),
 c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.9,
-                fill='#fdf05d') +
-    geom_line(color='#755006',size=1) +
+                fill='#278B9AFF') +
+    geom_line(color='#E75B64FF',size=1) +
     geom_line(data=comp_StO2_full,aes(y=0),size=0.5)+
     geom_ribbon(data=comp_StO2_full%>%
                     filter(lower>0),
                 aes(ymin =0, ymax =lower),
-                alpha = 0.5,
-                fill='#003049') +
+                alpha = 0.9,
+                fill='#4C413FFF') +
     geom_ribbon(data=comp_StO2_full %>%
                     filter(upper<0),
                     aes(ymin =0, ymax =upper),
-                alpha = 0.5,
-                fill='#c1121f') +
+                alpha = 0.9,
+                fill='#5A6F80FF') +
     facet_wrap(~ pair) +
     theme_classic()+
     labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
@@ -382,19 +382,19 @@ missing_plot<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
 c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.9,
-                fill='#fdf05d') +
-    geom_line(color='#755006',size=1) +
+                fill='#278B9AFF') +
+    geom_line(color='#E75B64FF',size=1) +
     geom_line(data=comp_StO2_missing,aes(y=0),size=0.5)+
     geom_ribbon(data=comp_StO2_missing%>%
                     filter(lower>0),
                 aes(ymin =0, ymax =lower),
-                alpha = 0.5,
-                fill='#003049') +
+                alpha = 0.9,
+                fill='#4C413FFF') +
     geom_ribbon(data=comp_StO2_missing %>%
                     filter(upper<0),
                     aes(ymin =0, ymax =upper),
-                alpha = 0.5,
-                fill='#c1121f') +
+                alpha = 0.9,
+                fill='#5A6F80FF') +
     facet_wrap(~ pair) +
     theme_classic()+
     labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
