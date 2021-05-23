@@ -44,14 +44,19 @@ library(ggsci)
 library(mgcv)
 library(gratia)
 library(ghibli)
+library(viridis)
 set.seed(1) #set seed for reproducibility
 
 knitr::opts_chunk$set(fig.pos = 'H', out.extra = "",error=TRUE)
 
-thm<-scale_color_ghibli_d("PonyoMedium",direction=1) #global theme for plotting
-thm1<-scale_fill_ghibli_d("PonyoMedium",direction=1) #global theme for plotting
+#global themes for plotting
+thm<-scale_color_viridis_d(option="magma",begin=0.1,end=0.7)
+thm1<-scale_fill_viridis_d(option="magma",begin=0.1,end=0.7)#global theme for plotting
 
-#this function will remove the default "author information" that is the Pandoc Latex template. Otherwise, and additional "and" will appear at the end of the author list.Or, the custom template that is in the YAML header and that has the "author" line deleted may be used as well. An explanation in detail is provided at:
+#thm<-scale_color_ghibli_d("MarnieMedium2",direction=-1) #global theme for plotting
+#thm1<-scale_fill_ghibli_d("MarnieMedium2",direction=-1) #global theme for plotting
+
+#this function will remove the default "author information" that is the Pandoc LaTeX template. Otherwise, and additional "and" will appear at the end of the author list.Or, the custom template that is in the YAML header and that has the "author" line deleted may be used as well. An explanation in detail is provided at:
 #https://github.com/rstudio/bookdown/issues/1158
 remove_author <- function(x) {
   # identify empty author line
