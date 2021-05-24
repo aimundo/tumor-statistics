@@ -411,8 +411,8 @@ Because GAMs do not require equally-spaced or complete observations for all subj
 \caption{Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset. B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the interval does not cover 0. In both cases the effect of treatment is significant after day 5.}\label{fig:plot-pairwise-comp}
 \end{figure}
 
-\hypertarget{determination-of-significance-in-gams-for-longitudinal-data}{%
-\subsection{Determination of significance in GAMs for longitudinal data}\label{determination-of-significance-in-gams-for-longitudinal-data}}
+\hypertarget{GAM-significance}{%
+\subsection{Determination of significance in GAMs for longitudinal data}\label{GAM-significance}}
 
 At the core of a biomedical longitudinal study lies the question of a significant difference between the effect of two or more treatments in different groups. Whereas in rm-ANOVA a \emph{post-hoc} analysis is required to answer such question by calculating some \emph{p-values} after multiple comparisons, GAMs can use a different approach to estimate significance. In essence, the idea behind the estimation of significance in GAMs across different treatment groups is that if the \emph{difference} between the confidence intervals of the fitted smooths for such groups is non-zero, then a significant difference exists at that time point(s). The absence of a \emph{p-value} in this case might seem odd, but the confidence interval comparison can be conceptualized in the following manner: Different trends in each group are an indication of an effect by the treatment. This is what happens for the simulated data in Figure \ref{fig:sim-smooth-plot}, A where the chemotherapy causes \(\mbox{StO}_2\) to increase over time.
 
@@ -1209,12 +1209,28 @@ To obtain model diagnostics, two methodologies are to be used: 1) graphical diag
 
 
 
+\begin{lstlisting}[language=R]
+layout1 <- c(
+  area(1, 1),
+  area( 1, 2),
+  area(2, 1),
+  area(2, 2),
+  area(1, 3, 2)
+)
+
+layout2 <- c(
+  area(1, 1),
+  area( 1, 2),
+  area(2, 1),
+  area(2, 2),
+  area(1, 3, 2),
+  area(1,4,2),
+  area(1,5,1)
+)
+\end{lstlisting}
+
 \hypertarget{graphical-diagnostics}{%
 \paragraph{Graphical diagnostics}\label{graphical-diagnostics}}
-
-\begin{lstlisting}
-## Error: The given dimensions cannot hold all panels. Please increase `ncol` or `nrow`
-\end{lstlisting}
 
 \begin{figure}[H]
 
@@ -1356,10 +1372,6 @@ Diagnostics for this model indicate that the k-index is still below 1 (0.32 from
 
 
 
-\begin{lstlisting}
-## Error: The given dimensions cannot hold all panels. Please increase `ncol` or `nrow`
-\end{lstlisting}
-
 \begin{figure}[H]
 
 {\centering \includegraphics[width=0.75\linewidth,]{Full_document_files/figure-latex/second-GAM-diag-1} 
@@ -1439,10 +1451,6 @@ The resulting model is model \passthrough{\lstinline!gam1!}, which is the model 
 
 
 
-\begin{lstlisting}
-## Error: The given dimensions cannot hold all panels. Please increase `ncol` or `nrow`
-\end{lstlisting}
-
 \begin{figure}[H]
 
 {\centering \includegraphics[width=0.75\linewidth,]{Full_document_files/figure-latex/final-GAM-diag-1} 
@@ -1469,6 +1477,111 @@ AIC(gam_00,gam_01,gam1)
 \end{lstlisting}
 
 The output in this case is expected: model \passthrough{\lstinline!gam1!} has a lower AIC (711.46) whereas the initial two models have higher AICs (891 and 850). The AIC should not be considered as the only estimator of model goodness, instead to be used as complimentary information to the graphical diagnostics and model checks described above.
+
+\hypertarget{pairwise-comparisons-of-smooth-confidence-intervals}{%
+\paragraph{Pairwise comparisons of smooth confidence intervals}\label{pairwise-comparisons-of-smooth-confidence-intervals}}
+
+The estimation of significant differences between each treatment group can be achieved via pairwise comparisons of the smooth confidence intervals as described in section \ref{GAM-significance}. In this case, the ``design matrix'' is used to estimate the pairwise comparisons (see main manuscript for details and associated references). Briefly, the ``design matrix'' (also known as the ``Xp matrix'') from the selected model (\passthrough{\lstinline!gam1!}) is used to calculate a 95\% confidence interval of the difference between the smooth terms for each group. This approach allows to estimate the time intervals where a significant difference exists between the groups (confidence interval above or below 0).
+
+\begin{lstlisting}[language=R]
+##Pairwise comparisons
+
+
+##matrix that contains the basis functions evaluated at the points in pdat
+    xp <- predict(gam1, newdata = pdat, type = 'lpmatrix')
+
+    
+#Find columns in xp where the name contains "Control"
+    c1 <- grepl('Control', colnames(xp))
+
+#Find columns in xp where the name contains 'Treatment'
+    c2 <- grepl('Treatment', colnames(xp))
+
+#Find rows in pdat that correspond to either 'Control' or 'Treatment'
+    r1 <- with(pdat, Group == 'Control')
+    r2 <- with(pdat, Group == 'Treatment')
+
+# In xp: find the rows that correspond to Control or Treatment, those that do not match will be
+    #set to zero. Then, substract the values from the rows corresponding to 'Control' from those that correspond
+    #to 'Treatment'
+    X <- xp[r1, ] - xp[r2, ]
+
+    ## remove columns that do not contain name 'Control' or 'Treatment'
+    X[, ! (c1 | c2)] <- 0
+    ## zero out the parametric cols, those that do not contain in the characters 's('
+    X[, !grepl('^s\\(', colnames(xp))] <- 0
+
+    #Multiply matrix by model coefficients. X has (p,n) (rows, columns) and the coefficient matrix has
+    #dimensions (n,1). The resulting matrix has dimensions (p,1)
+    dif <- X %*% coef(gam1)
+
+    #comp<-test %*% coef(gam1)[3:10]
+
+#Calculate standard error for the computed differences using the variance-covariance matrix
+    #of the model
+    se <- sqrt(rowSums((X %*% vcov(gam1, unconditional = FALSE)) * X))
+    crit <- qt(0.05/2, df.residual(gam1), lower.tail = FALSE)
+    #upper  limits
+    upr <- dif + (crit * se)
+    #lower limits
+    lwr <- dif - (crit * se)
+    #put all components in a dataframe for plotting
+    comp1<-data.frame(pair = paste('Control', 'Treatment', sep = '-'),
+               diff = dif,
+               se = se,
+               upper = upr,
+               lower = lwr)
+
+
+
+#add time point sequence
+comp_StO2 <- cbind(Day = seq(0, 10, length = 400),
+                   rbind(comp1))
+
+#plot the difference
+c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
+  #ribbon for difference confidence interval  
+  geom_ribbon(aes(ymin = lower, ymax = upper),
+                alpha = 0.5,
+                fill='#DB3A07FF') +
+    geom_line(color='black',size=1) +
+    geom_line(data=comp_StO2,aes(y=0),size=0.5)+
+  #highlight area under the curve where "Control" is higher
+  geom_ribbon(data=comp_StO2%>%
+                    filter(lower>0),
+                aes(ymin =0, ymax =lower),
+                alpha = 0.5,
+                fill='#30123BFF') +
+  #highlight area under the curve where "Treatment" is higher
+  geom_ribbon(data=comp_StO2 %>%
+                    filter(upper<0),
+                    aes(ymin =0, ymax =upper),
+                alpha = 0.5,
+                fill='#7A0403FF') +
+    facet_wrap(~ pair) +
+    theme_classic()+
+    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    theme(
+        text=element_text(size=18),
+        legend.title=element_blank()
+    )
+\end{lstlisting}
+
+
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.75\linewidth,]{Full_document_files/figure-latex/pairwise-comp-workflow-fig-1} 
+
+}
+
+\caption{Smooth pairwise comparisons for model \passthrough{\lstinline!gam1!} using a 95\% confidence interval for the difference between smooths.}\label{fig:pairwise-comp-workflow-fig}
+\end{figure}
+
+Of notice, a convenient wrapper for the function described above exists in the package \passthrough{\lstinline!gratia!}. In this package, \passthrough{\lstinline!difference\_smooths!} is a function that makes the comparisons and produces Figure \ref{fig:pairwise-comp-workflow-fig} when is used on a fitted model. The function syntax and an example can be found at:
+
+\url{https://cran.r-project.org/web/packages/gratia/gratia.pdf}
 
 \hypertarget{gam-and-linear-model-plots-and-missing-data}{%
 \section{GAM and Linear model plots and Missing data}\label{gam-and-linear-model-plots-and-missing-data}}
@@ -1558,7 +1671,7 @@ f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
 
 
 #posthoc comparisons for the linear model
-library(multcomp)
+#library(multcomp)
 
 
 #summary(glht(lm1, linfct = mcp(Group = 'Tukey')))
@@ -1568,7 +1681,7 @@ library(multcomp)
 \hypertarget{working-with-missing-data-in-gams}{%
 \subsection{Working with Missing data in GAMs}\label{working-with-missing-data-in-gams}}
 
-This code chunk randomly deletes 40\% of the total observations in the original simulated data, and then an interaction GAM is fitted. Model diagnostics are presented, and an object that stores the fitted smooths is saved to be called in the final code chunk to build the figure.
+This code chunk first randomly deletes 40\% of the total observations in the original simulated data, and then an interaction GAM is fitted to the remaining data. Model diagnostics are presented, and an object that stores the fitted smooths is saved to be called in the final code chunk to build the figure.
 
 \begin{lstlisting}[language=R]
 #missing data
@@ -1680,6 +1793,143 @@ mult_plot
 }
 
 \caption{Simulated data and smooths for oxygen saturation in tumors. A: Simulated data that follows previously reported trends (inset) in tumors under chemotherapy (Treatment) or saline (Control) treatment. Simulated data is from a normal distribution with standard deviation of 10\% with 10 observations per time point. Lines indicate mean oxygen saturation B: Smooths from the GAM model for the full simulated data with interaction of Group and Treatment. Lines represent trends for each group, shaded regions are 95\% confidence intervals. C: rm-ANOVA model for the simulated data, the model does not capture the changes in each group over time. D: Smooths for the GAM model for the simulated data with 40\% of its observations missing. Lines represent trends for each group, shaded regions are 95\% confidence intervals.}\label{fig:sim-smooth-plot-Appendix}
+\end{figure}
+
+\hypertarget{pairwise-comparisons-in-gams-full-and-missing-data-cases}{%
+\subsection{Pairwise comparisons in GAMs: full and missing data cases}\label{pairwise-comparisons-in-gams-full-and-missing-data-cases}}
+
+The next code chunk reproduces Figure \ref{fig:plot-pairwise-comp}. Here pairwise comparisons are made for the full and missing datasets.
+
+\begin{lstlisting}[language=R]
+##Pairwise comparisons
+
+pdat <- expand.grid(Day = seq(0, 10, length = 400),
+                    Group = c('Control', 'Treatment'))
+
+#this function takes the model, grid and groups to be compared using the lpmatrix
+
+smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
+                        unconditional = FALSE) {
+    xp <- predict(model, newdata = newdata, type = 'lpmatrix')
+    #Find columns in xp where the name contains "Control"
+    col1 <- grepl(g1, colnames(xp))
+    #Find columns in xp where the name contains 'Treatment'
+    col2 <- grepl(g2, colnames(xp))
+    #r1 <- newdata[[var]] == f1
+    #r2 <- newdata[[var]] == f2
+    row1 <- with(newdata, Group == g1)
+    row2 <- with(newdata, Group == g2)
+    ## difference rows of xp for data from comparison
+    X <- xp[row1, ] - xp[row2, ]
+    ## zero out cols of X related to splines for other lochs
+    X[, ! (col1 | col2)] <- 0
+    ## zero out the parametric cols
+    X[, !grepl('^s\\(', colnames(xp))] <- 0
+    dif <- X %*% coef(model)
+    se <- sqrt(rowSums((X %*% vcov(model, unconditional = unconditional)) * X))
+    crit <- qt(alpha/2, df.residual(model), lower.tail = FALSE)
+    upr <- dif + (crit * se)
+    lwr <- dif - (crit * se)
+    data.frame(pair = paste(g1, g2, sep = '-'),
+               diff = dif,
+               se = se,
+               upper = upr,
+               lower = lwr)
+}
+
+comp1<-smooth_diff(gam1,pdat,'Control','Treatment')
+
+comp_StO2_full <- cbind(Day = seq(0, 10, length = 400),
+                   rbind(comp1)) %>%
+  mutate(interval=case_when(
+    upper>0 & lower<0~"no-diff",
+    upper<0~"less",
+    lower>0~"greater"
+  ))
+
+c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
+    geom_ribbon(aes(ymin = lower, ymax = upper),
+                alpha = 0.5,
+                fill='#DB3A07FF') +
+    geom_line(color='#E75B64FF',size=1) +
+    geom_line(data=comp_StO2_full,aes(y=0),size=0.5)+
+    geom_ribbon(data=comp_StO2_full%>%
+                    filter(lower>0),
+                aes(ymin =0, ymax =lower),
+                alpha = 0.5,
+                fill='#30123BFF') +
+    geom_ribbon(data=comp_StO2_full %>%
+                    filter(upper<0),
+                    aes(ymin =0, ymax =upper),
+                alpha = 0.5,
+                fill='#7A0403FF') +
+    facet_wrap(~ pair) +
+    theme_classic()+
+    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    theme(
+        text=element_text(size=18),
+        legend.title=element_blank()
+    )
+
+
+
+###for missing data
+comp2<-smooth_diff(mod_m1,pdat,'Control','Treatment')
+comp_StO2_missing <- cbind(Day = seq(0, 10, length = 400),
+                   rbind(comp2))
+
+missing_plot<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
+    geom_line(color='black',size=1) +
+    facet_wrap(~ pair) +
+    labs(x = 'Days', 
+         y = expression(paste('Difference in StO'[2],'\n (missing data)' 
+                              )))+
+  scale_x_continuous(breaks=c(0,2,5,7,10))+
+  theme_classic()+
+  theme(
+     text=element_text(size=18),
+     legend.title=element_blank()
+     )
+
+c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
+    geom_ribbon(aes(ymin = lower, ymax = upper),
+                alpha = 0.5,
+                fill='#DB3A07FF') +
+    geom_line(color='#E75B64FF',size=1) +
+    geom_line(data=comp_StO2_missing,aes(y=0),size=0.5)+
+    geom_ribbon(data=comp_StO2_missing%>%
+                    filter(lower>0),
+                aes(ymin =0, ymax =lower),
+                alpha = 0.5,
+                fill='#30123BFF') +
+    geom_ribbon(data=comp_StO2_missing %>%
+                    filter(upper<0),
+                    aes(ymin =0, ymax =upper),
+                alpha = 0.5,
+                fill='#7A0403FF') +
+    facet_wrap(~ pair) +
+    theme_classic()+
+    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    theme(
+        text=element_text(size=18),
+        legend.title=element_blank()
+    )
+
+pair_comp<-c1+c2
+\end{lstlisting}
+
+Smooth pairwise comparisons for model \passthrough{\lstinline!gam1!} using a 95\% confidence interval for the difference between smooths. Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset. B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the interval does not cover 0. In both cases the effect of treatment is significant after day 5.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.75\linewidth,]{Full_document_files/figure-latex/plot-pairwise-comp-Appendix-1} 
+
+}
+
+\caption{Smooth pairwise comparisons for model \passthrough{\lstinline!gam1!} using a 95\% confidence interval for the difference between smooths.}\label{fig:plot-pairwise-comp-Appendix}
 \end{figure}
 
 \end{document}

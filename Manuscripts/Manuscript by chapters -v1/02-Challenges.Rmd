@@ -270,7 +270,7 @@ C<-plot_example(example(fun_type = "quadratic", error_type = "correlated"))
 
 ```{r, l-q-response, fig.width=10, fig.height=10, out.width='75%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap ='(ref:l-q-response-caption)'}
 # linear response, correlated errors (subject effect)
-par(mar = c(0.5, 0.5, 0.5, 0.5))
+#par(mar = c(0.5, 0.5, 0.5, 0.5))
 A/C+plot_annotation(tag_levels = 'A')
 ```
 
