@@ -16,7 +16,7 @@ This section simulated linear and quadratic data in the same manner as in Sectio
 The following code produces a more comprehensive exploration of Figure \@ref(fig:l-q-response) in the main manuscript.
 
 ```{r, responses-Appendix,include=TRUE,message=FALSE,echo=TRUE}
-
+set.seed(1)
 ####################Section for calculations######################################
 ################################################################################
 
@@ -562,6 +562,8 @@ To obtain model diagnostics, two methodologies are to be used: 1) graphical diag
 (ref:first-GAM-caption) Graphical diagnostics for the first GAM model. Left: Graphical diagnostics provided by the function `appraise` from the package _gratia_. Right: Fitted smooth for the model, provided by the function `draw`.
 
 ```{r, plotting layouts,echo=TRUE, include=TRUE}
+
+#see https://patchwork.data-imaginist.com/reference/area.html
 layout1 <- c(
   area(1, 1),
   area( 1, 2),
@@ -570,17 +572,16 @@ layout1 <- c(
   area(1, 3, 2)
 )
 
+
 layout2 <- c(
   area(1, 1),
   area( 1, 2),
   area(2, 1),
   area(2, 2),
-  area(1, 3, 2),
-  area(1,4,2),
-  area(1,5,1)
+  area(1,3,2,5)
 )
 
-
+#plot(layout2)
 ```
 
 #### Graphical diagnostics
@@ -649,23 +650,23 @@ Model `gam_00` was built for didactic purposes to cover the simplest case, but i
 
 #GAM for StO2
 
-gam1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5,bs="gp"),
+m1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5,bs="gp"),
             method='REML',
             data  = dat_sim)
 
-gam.check(gam1)
-summary(gam1)
+gam.check(m1)
+summary(m1)
 ```
 
-The resulting model is model `gam1`, which is the model fitted in the main manuscript. By using `appraise()` and `draw` on this model (Figure  \@ref(fig:final-GAM-diag)) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group . From `gam.check`, the k-index is now at an acceptable value (~1.02), and `summary` now indicates that the model is able to capture 87% of the variance data.
+The resulting model is`m1`, which is the model fitted in the main manuscript. By using `appraise()` and `draw` on this model (Figure  \@ref(fig:final-GAM-diag)) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group . From `gam.check`, the k-index is now at an acceptable value (~1.02), and `summary` now indicates that the model is able to capture 87% of the variance data.
 
 (ref:final-GAM-caption) Graphical diagnostics for the final GAM model. Left: Graphical diagnostics provided by the function `appraise` from the package _gratia_. Right: Fitted smooths for the model, provided by the function `draw`.
 
 
 ```{r, final-GAM-diag, fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:final-GAM-caption)'}
 
-appr3<-appraise(gam1)
-sm3<-draw(gam1)
+appr3<-appraise(m1)
+sm3<-draw(m1)
 
 visual_check3<-appr3+sm3
 
@@ -888,6 +889,7 @@ This code chunk first randomly deletes 40% of the total observations in the orig
 #missing data
 #create a sequence of 40 random numbers between 1 and 100, these numbers will
 #correspond to the row numbers to be randomly erased from the original dataset
+set.seed(1)
 missing <- sample(1:100, 40)
 
 #create a new dataframe from the simulated data with 40 rows randomly removed, keep the missing values as NA
@@ -1016,7 +1018,7 @@ smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
                lower = lwr)
 }
 
-comp1<-smooth_diff(gam1,pdat,'Control','Treatment')
+comp1<-smooth_diff(m1,pdat,'Control','Treatment')
 
 comp_StO2_full <- cbind(Day = seq(0, 10, length = 400),
                    rbind(comp1)) %>%

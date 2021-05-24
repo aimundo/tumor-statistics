@@ -174,7 +174,7 @@ p13<-ggplot(basis_plot,
 p14<-ggplot(data=dat,
             aes(x=time,y=y))+
   geom_point(size=sz+1)+
-  scale_color_aaas()+
+  thm1+
   labs(y='Simulated \n response')+
   geom_line(data=smooth,
             aes(x=time,
