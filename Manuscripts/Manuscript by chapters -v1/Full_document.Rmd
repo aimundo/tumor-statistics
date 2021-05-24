@@ -40,10 +40,8 @@ library(patchwork)
 library(tidyverse)
 library(mvnfast)
 library(nlme)
-library(ggsci)
 library(mgcv)
 library(gratia)
-library(ghibli)
 library(viridis)
 set.seed(1) #set seed for reproducibility
 
