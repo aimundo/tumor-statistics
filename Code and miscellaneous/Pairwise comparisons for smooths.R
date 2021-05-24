@@ -45,12 +45,6 @@ pdat <- expand.grid(Day = seq(0, 10, length = 400),
 ##matrix that contains the basis functions evaluated at the points in pdat
     xp <- predict(gam1, newdata = pdat, type = 'lpmatrix')
 
-    #remove intercept column and group identifying column
-    xp<-xp[,-c(1:2)]
-
-    control<-xp[1:400,]
-    treatment<-xp[401:800,]
-
 
 #Find columns in xp where the name contains "Control"
     c1 <- grepl('Control', colnames(xp))
@@ -72,7 +66,7 @@ pdat <- expand.grid(Day = seq(0, 10, length = 400),
 
     ## remove columns that do not contain name 'Control' or 'Treatment'
     X[, ! (c1 | c2)] <- 0
-    ## zero out the parametric cols, those that do not contain in the name 's()'
+    ## zero out the parametric cols, those that do not contain in the characters 's('
     X[, !grepl('^s\\(', colnames(xp))] <- 0
 
     #Multiply matrix by model coefficients. X has (p,n) (rows, columns) and the coefficient matrix has
@@ -81,11 +75,15 @@ pdat <- expand.grid(Day = seq(0, 10, length = 400),
 
     #comp<-test %*% coef(gam1)[3:10]
 
-
+#Calculate standard error for the computed differences using the variance-covariance matrix
+    #of the model
     se <- sqrt(rowSums((X %*% vcov(gam1, unconditional = FALSE)) * X))
     crit <- qt(0.05/2, df.residual(gam1), lower.tail = FALSE)
+    #upper  limits
     upr <- dif + (crit * se)
+    #lower limits
     lwr <- dif - (crit * se)
+    #put all components in a dataframe for plotting
     comp1<-data.frame(pair = paste('Control', 'Treatment', sep = '-'),
                diff = dif,
                se = se,
@@ -94,11 +92,11 @@ pdat <- expand.grid(Day = seq(0, 10, length = 400),
 
 
 
-
+#add time point sequence
 comp_StO2 <- cbind(Day = seq(0, 10, length = 400),
                    rbind(comp1))
 
-
+#plot the difference
 c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.5,
