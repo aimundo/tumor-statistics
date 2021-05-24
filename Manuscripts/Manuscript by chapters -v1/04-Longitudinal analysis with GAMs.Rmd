@@ -185,7 +185,7 @@ f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
 
 
 #posthoc comparisons for the linear model
-library(multcomp)
+#library(multcomp)
 
 
 #summary(glht(lm1, linfct = mcp(Group = 'Tukey')))
@@ -335,20 +335,20 @@ comp_StO2_full <- cbind(Day = seq(0, 10, length = 400),
 
 c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
     geom_ribbon(aes(ymin = lower, ymax = upper),
-                alpha = 0.9,
-                fill='#278B9AFF') +
+                alpha = 0.5,
+                fill='#E1DD37FF') +
     geom_line(color='#E75B64FF',size=1) +
     geom_line(data=comp_StO2_full,aes(y=0),size=0.5)+
     geom_ribbon(data=comp_StO2_full%>%
                     filter(lower>0),
                 aes(ymin =0, ymax =lower),
-                alpha = 0.9,
-                fill='#4C413FFF') +
+                alpha = 0.5,
+                fill='#30123BFF') +
     geom_ribbon(data=comp_StO2_full %>%
                     filter(upper<0),
                     aes(ymin =0, ymax =upper),
-                alpha = 0.9,
-                fill='#5A6F80FF') +
+                alpha = 0.5,
+                fill='#7A0403FF') +
     facet_wrap(~ pair) +
     theme_classic()+
     labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
@@ -381,20 +381,20 @@ missing_plot<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
 
 c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
     geom_ribbon(aes(ymin = lower, ymax = upper),
-                alpha = 0.9,
-                fill='#278B9AFF') +
+                alpha = 0.5,
+                fill='#E1DD37FF') +
     geom_line(color='#E75B64FF',size=1) +
     geom_line(data=comp_StO2_missing,aes(y=0),size=0.5)+
     geom_ribbon(data=comp_StO2_missing%>%
                     filter(lower>0),
                 aes(ymin =0, ymax =lower),
-                alpha = 0.9,
-                fill='#4C413FFF') +
+                alpha = 0.5,
+                fill='#30123BFF') +
     geom_ribbon(data=comp_StO2_missing %>%
                     filter(upper<0),
                     aes(ymin =0, ymax =upper),
-                alpha = 0.9,
-                fill='#5A6F80FF') +
+                alpha = 0.5,
+                fill='#7A0403FF') +
     facet_wrap(~ pair) +
     theme_classic()+
     labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
@@ -419,7 +419,7 @@ pair_comp+plot_annotation(tag_levels='A')&
 ```
 
 
-## Determination of significance in GAMs for longitudinal data
+## Determination of significance in GAMs for longitudinal data{#GAM-sig}
 
 At the core of a biomedical longitudinal study lies the question of a significant difference between the effect of two or more treatments in different groups. Whereas in rm-ANOVA a _post-hoc_ analysis is required to answer such question by calculating some _p-values_ after multiple comparisons, GAMs can use a different approach to estimate significance. In essence, the idea behind the estimation of significance in GAMs across different treatment groups is that if the _difference_ between the confidence intervals of the fitted smooths for such groups is  non-zero, then a significant difference exists at that time point(s). The absence of a _p-value_ in this case might seem odd, but the confidence interval comparison can be conceptualized in the following manner: Different trends in each group are an indication of an effect by the treatment. This is what happens for the simulated data in Figure \@ref(fig:sim-smooth-plot), A where the chemotherapy causes $\mbox{StO}_2$ to increase over time. 
 

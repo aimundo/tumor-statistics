@@ -658,6 +658,85 @@ AIC(gam_00,gam_01,gam1)
 
 The output in this case is expected: model `gam1` has a lower AIC (711.46) whereas the initial two models have higher AICs (891 and 850). The AIC should not be considered as the only estimator of model goodness, instead to be used as complimentary information to the graphical diagnostics and model checks described above.
 
+#### Pairwise comparisons of smooth confidence intervals
+
+The estimation of significant differences between each treatment group can be achieved via pairwise comparisons of the smooth confidence intervals as described in section \@ref(GAM-significance). In this case, the "design matrix" is used to estimate the pairwise comparisons (see Manuscript for details and associated references). Briefly, the "design matrix" from `gam1` is used to estimate a 95% confidence interval of the difference between the smooth terms for each group. This approach allows to estimate the time intervals where a significant difference exists between the groups (confidence interval above or below 0).
+
+```{r,pairwise-comp-workflow,echo=FALSE,include=FALSE,message=FALSE,warning=FALSE}
+##Pairwise comparisons
+
+pdat <- expand.grid(Day = seq(0, 10, length = 400),
+                    Group = c('Control', 'Treatment'))
+
+#this function takes the model, grid and groups to be compared using the lpmatrix
+
+smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
+                        unconditional = FALSE) {
+    xp <- predict(model, newdata = newdata, type = 'lpmatrix')
+    #Find columns in xp where the name contains "Control"
+    col1 <- grepl(g1, colnames(xp))
+    #Find columns in xp where the name contains 'Treatment'
+    col2 <- grepl(g2, colnames(xp))
+    #r1 <- newdata[[var]] == f1
+    #r2 <- newdata[[var]] == f2
+    row1 <- with(newdata, Group == g1)
+    row2 <- with(newdata, Group == g2)
+    ## difference rows of xp for data from comparison
+    X <- xp[row1, ] - xp[row2, ]
+    ## zero out cols of X related to splines for other lochs
+    X[, ! (col1 | col2)] <- 0
+    ## zero out the parametric cols
+    X[, !grepl('^s\\(', colnames(xp))] <- 0
+    dif <- X %*% coef(model)
+    se <- sqrt(rowSums((X %*% vcov(model, unconditional = unconditional)) * X))
+    crit <- qt(alpha/2, df.residual(model), lower.tail = FALSE)
+    upr <- dif + (crit * se)
+    lwr <- dif - (crit * se)
+    data.frame(pair = paste(g1, g2, sep = '-'),
+               diff = dif,
+               se = se,
+               upper = upr,
+               lower = lwr)
+}
+
+comp1<-smooth_diff(gam1,pdat,'Control','Treatment')
+
+comp_StO2_full <- cbind(Day = seq(0, 10, length = 400),
+                   rbind(comp1)) %>%
+  mutate(interval=case_when(
+    upper>0 & lower<0~"no-diff",
+    upper<0~"less",
+    lower>0~"greater"
+  ))
+
+c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
+    geom_ribbon(aes(ymin = lower, ymax = upper),
+                alpha = 0.5,
+                fill='#E1DD37FF') +
+    geom_line(color='#E75B64FF',size=1) +
+    geom_line(data=comp_StO2_full,aes(y=0),size=0.5)+
+    geom_ribbon(data=comp_StO2_full%>%
+                    filter(lower>0),
+                aes(ymin =0, ymax =lower),
+                alpha = 0.5,
+                fill='#30123BFF') +
+    geom_ribbon(data=comp_StO2_full %>%
+                    filter(upper<0),
+                    aes(ymin =0, ymax =upper),
+                alpha = 0.5,
+                fill='#7A0403FF') +
+    facet_wrap(~ pair) +
+    theme_classic()+
+    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    theme(
+        text=element_text(size=18),
+        legend.title=element_blank()
+    )
+
+```
+
+
 # GAM and Linear model plots and Missing data
 
 This section covers the code used to generate Figure \@ref(fig:sim-smooth-plot), where the simulated data, fit of the "final" GAM (`gam1`), linear model  and GAM on data with missing observations are presented. Note that panel A in Figure \@ref(fig:sim-smooth-plot) and the inlet are generated in the code chunk where the data is simulated in Section \@ref(tumor-data-simulation), and are called later to build the figure.
@@ -744,7 +823,7 @@ f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
 
 
 #posthoc comparisons for the linear model
-library(multcomp)
+#library(multcomp)
 
 
 #summary(glht(lm1, linfct = mcp(Group = 'Tukey')))
@@ -845,3 +924,140 @@ mult_plot
 
 ```
 
+
+## Pairwise comparisons in GAMs: full and missing data cases
+
+The next code chunk reproduces Figure \@ref(fig:plot-pairwise-comp). Here pairwise comparisons
+
+
+```{r,pairwise-comp-Appendix,echo=FALSE,include=FALSE,message=FALSE,warning=FALSE}
+##Pairwise comparisons
+
+pdat <- expand.grid(Day = seq(0, 10, length = 400),
+                    Group = c('Control', 'Treatment'))
+
+#this function takes the model, grid and groups to be compared using the lpmatrix
+
+smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
+                        unconditional = FALSE) {
+    xp <- predict(model, newdata = newdata, type = 'lpmatrix')
+    #Find columns in xp where the name contains "Control"
+    col1 <- grepl(g1, colnames(xp))
+    #Find columns in xp where the name contains 'Treatment'
+    col2 <- grepl(g2, colnames(xp))
+    #r1 <- newdata[[var]] == f1
+    #r2 <- newdata[[var]] == f2
+    row1 <- with(newdata, Group == g1)
+    row2 <- with(newdata, Group == g2)
+    ## difference rows of xp for data from comparison
+    X <- xp[row1, ] - xp[row2, ]
+    ## zero out cols of X related to splines for other lochs
+    X[, ! (col1 | col2)] <- 0
+    ## zero out the parametric cols
+    X[, !grepl('^s\\(', colnames(xp))] <- 0
+    dif <- X %*% coef(model)
+    se <- sqrt(rowSums((X %*% vcov(model, unconditional = unconditional)) * X))
+    crit <- qt(alpha/2, df.residual(model), lower.tail = FALSE)
+    upr <- dif + (crit * se)
+    lwr <- dif - (crit * se)
+    data.frame(pair = paste(g1, g2, sep = '-'),
+               diff = dif,
+               se = se,
+               upper = upr,
+               lower = lwr)
+}
+
+comp1<-smooth_diff(gam1,pdat,'Control','Treatment')
+
+comp_StO2_full <- cbind(Day = seq(0, 10, length = 400),
+                   rbind(comp1)) %>%
+  mutate(interval=case_when(
+    upper>0 & lower<0~"no-diff",
+    upper<0~"less",
+    lower>0~"greater"
+  ))
+
+c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
+    geom_ribbon(aes(ymin = lower, ymax = upper),
+                alpha = 0.5,
+                fill='#E1DD37FF') +
+    geom_line(color='#E75B64FF',size=1) +
+    geom_line(data=comp_StO2_full,aes(y=0),size=0.5)+
+    geom_ribbon(data=comp_StO2_full%>%
+                    filter(lower>0),
+                aes(ymin =0, ymax =lower),
+                alpha = 0.5,
+                fill='#30123BFF') +
+    geom_ribbon(data=comp_StO2_full %>%
+                    filter(upper<0),
+                    aes(ymin =0, ymax =upper),
+                alpha = 0.5,
+                fill='#7A0403FF') +
+    facet_wrap(~ pair) +
+    theme_classic()+
+    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    theme(
+        text=element_text(size=18),
+        legend.title=element_blank()
+    )
+
+
+
+###for missing data
+comp2<-smooth_diff(mod_m1,pdat,'Control','Treatment')
+comp_StO2_missing <- cbind(Day = seq(0, 10, length = 400),
+                   rbind(comp2))
+
+missing_plot<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
+    geom_line(color='black',size=1) +
+    facet_wrap(~ pair) +
+    labs(x = 'Days', 
+         y = expression(paste('Difference in StO'[2],'\n (missing data)' 
+                              )))+
+  scale_x_continuous(breaks=c(0,2,5,7,10))+
+  theme_classic()+
+  theme(
+     text=element_text(size=18),
+     legend.title=element_blank()
+     )
+
+c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
+    geom_ribbon(aes(ymin = lower, ymax = upper),
+                alpha = 0.5,
+                fill='#E1DD37FF') +
+    geom_line(color='#E75B64FF',size=1) +
+    geom_line(data=comp_StO2_missing,aes(y=0),size=0.5)+
+    geom_ribbon(data=comp_StO2_missing%>%
+                    filter(lower>0),
+                aes(ymin =0, ymax =lower),
+                alpha = 0.5,
+                fill='#30123BFF') +
+    geom_ribbon(data=comp_StO2_missing %>%
+                    filter(upper<0),
+                    aes(ymin =0, ymax =upper),
+                alpha = 0.5,
+                fill='#7A0403FF') +
+    facet_wrap(~ pair) +
+    theme_classic()+
+    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    theme(
+        text=element_text(size=18),
+        legend.title=element_blank()
+    )
+
+pair_comp<-c1+c2
+```
+
+(ref:pairwise-comp-caption) Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset.  B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the interval does not cover 0. In both cases the effect of treatment is significant after day 5.
+
+```{r,plot-pairwise-comp-Appendix,fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:pairwise-comp-caption)'}
+
+pair_comp+plot_annotation(tag_levels='A')&
+  theme(
+     text=element_text(size=18)
+     )
+
+```
