@@ -75,12 +75,13 @@ An rm-ANOVA model assumes complete observations for all subjects, and therefore 
 
 ## What does an rm-ANOVA fit looks like? A visual representation using simulated data{#simulation}
 
-To visually demonstrate the limitations of rm-ANOVA an LMEMs for non-linear longitudinal data, this section presents a simulation experiment of a normally distributed response of two groups of 10 subjects each. An rm-ANOVA model (Equation \@ref(eq:linear-model)) is fitted to each group, using $\textsf{R}$[@r] and the package _nlme_[@nlme]. 
+To visually demonstrate the limitations of rm-ANOVA an LMEMs for non-linear longitudinal data, this section presents a simulation experiment of a normally distributed response of two groups of 10 subjects each. An rm-ANOVA model (Equation \@ref(eq:linear-model)), and a LMEM  (Equation \@ref(eq:LMEM)) are fitted to each group, using $\textsf{R}$[@r] and the package _nlme_[@nlme]. 
+
 Briefly, two cases for the mean responses for each group are considered: in the first case, the mean response in each group is a linear function with different intercepts and slopes; a negative slope is used for Group 1 and a positive slope is used for Group 2 (Figure \@ref(fig:l-q-response), A). In the second case, a second-degree polynomial (quadratic) function is used for the mean response per group: the quadratic function is concave down for Group 1 and it is concave up for Group 2 (Figure \@ref(fig:l-q-response), C). In both the linear and quadratic simulated data, the groups start with the same mean value at the first time point. This is intentional in order to simulate the expected temporal evolution of some physiological quantity, which is typical in biomedical experiments.
 
 Specifically, the rationale for the chosen linear and quadratic functions is the likelihood that a measured response in two treatment groups is similar in the initial phase of the study, but as therapy progresses a divergence in the trend of the response indicates a treatment effect. In other words, Group 1 can be thought as a "Control" group and Group 2 as a "Treatment" group. From the mean response per group (linear or quadratic), the variability or "error" of individual responses  within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \@ref(fig:l-q-response) B,D). 
 
-A more comprehensive exploration  of the fit of rm-ANOVA for linear and non-linear longitudinal appears in Figure \@ref(fig:linear-cases-Appendix) and Figure \@ref(fig:quadratic-cases-Appendix) in the Appendix, where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented. We are aware that the simulated data used in this section present an extreme case that might not occur frequently in biomedical research, but they are used as a representation of the consequences of modeling non-linear data with a linear model such as rm-ANOVA or LMEMs. Of notice, Section \@ref(longitudinal-GAMs) uses simulated data that does follow reported trends in the biomedical literature.
+A more comprehensive exploration  of the fit of rm-ANOVA and LMEMs for linear and non-linear longitudinal appears in Figure \@ref(fig:linear-cases-Appendix) and Figure \@ref(fig:quadratic-cases-Appendix) in the Appendix, where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented. We are aware that the simulated data used in this section present an extreme case that might not occur frequently in biomedical research, but they are used as a representation of the consequences of modeling non-linear data with a linear model such as rm-ANOVA or LMEMs. Of notice, Section \@ref(longitudinal-GAMs) uses simulated data that does follow reported trends in the biomedical literature.
 
 
 
@@ -179,13 +180,19 @@ example <- function(n_time = 6, #number of time points
                                   sep = "-")))
   
   
-  ## repeated measures ANOVA in R
-#time and treatment interaction model, compound symmetry required by the model
+   ## repeated measures ANOVA in R
+#time and treatment interaction model
+  fit_anova <- lm(y ~ time + treatment + time * treatment, data = dat)
+  
+  
+  #LMEM with compound symmetry
+  
   fit_lme <- lme(y ~ treatment + time + treatment:time,
                  data = dat,
                  random = ~ 1 | subject,
                  correlation = corCompSymm(form = ~ 1 | subject)
   )
+  
   
   #create a prediction frame where the model can be used for plotting purposes
   pred_dat <- expand.grid(
@@ -194,13 +201,16 @@ example <- function(n_time = 6, #number of time points
   )
   
   #add model predictions to the dataframe that has the simulated data
-  dat$y_pred <- predict(fit_lme)
+  dat$pred_anova <- predict(fit_anova)
+  dat$pred_lmem <- predict(fit_lme)
+
   
   #return everything in a list
   return(list(
     dat = dat,
     pred_dat = pred_dat,
-    fit_lme = fit_lme
+    fit_lme = fit_lme,
+    fit_anova=fit_anova
     
   ))
 }
@@ -230,7 +240,32 @@ plot_example <- function(sim_dat) {
     thm
   
  
-   #plot the model predictions
+   #plot the model predictions for rm-ANOVA
+  p2 <- ggplot(sim_dat$dat, 
+               aes(x = time, 
+                   y = y, 
+                   color = treatment)) +
+    geom_point(show.legend=FALSE)+
+    labs(y='response')+
+    geom_line(aes(y = predict(sim_dat$fit_anova), 
+                  group = subject, size = "Subjects"),show.legend = FALSE) +
+    geom_line(data = sim_dat$pred_dat, 
+              aes(y = predict(sim_dat$fit_anova, 
+                              level = 0, 
+                              newdata = sim_dat$pred_dat), 
+                  size = "Population"),
+              show.legend=FALSE) +
+    guides(color = guide_legend(override.aes = list(size = 2)))+
+    scale_size_manual(name = "Predictions", 
+                      values=c("Subjects" = 0.5, "Population" = 3)) +
+    theme_classic() +
+    theme(plot.title = element_text(size = 30, 
+                                  face = "bold"),
+        text=element_text(size=30))+
+    thm
+  
+  
+   #plot the model predictions for LMEM
   p4 <- ggplot(sim_dat$dat, 
                aes(x = time, 
                    y = y, 
@@ -253,7 +288,7 @@ plot_example <- function(sim_dat) {
         text=element_text(size=30))+
     thm
   
-  return((p1+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
+  return((p1+p2+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
     
 }
 
@@ -263,10 +298,9 @@ A<-plot_example(example(fun_type = "linear", error_type = "correlated"))
 C<-plot_example(example(fun_type = "quadratic", error_type = "correlated")) 
   
   
-
 ```
 
-(ref:l-q-response-caption) Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimates from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model not only fails to pick the trend of the quadratic data but it also incorrectly estimates the initial conditions.
+(ref:l-q-response-caption) Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a LMEM and a rm-ANOVA model. A, D: Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,E: Estimates from the rm-ANOVA model for the mean group response (linear of quadratic). Points represent the original raw data. The rm-ANOVA model not only fails to pick the trend of the quadratic data but also assigns a global estimate that does not take between-subject variation. C, F: Estimates from the LMEM model in the linear and quadratic case.The LMEM incorporates a random effect for each subject, but this model and the rm-ANOVA model are unable to follow the trend of the data in each group and grossly bias the initial estimates for each group.
 
 ```{r, l-q-response, fig.width=10, fig.height=10, out.width='75%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap ='(ref:l-q-response-caption)'}
 # linear response, correlated errors (subject effect)
@@ -274,10 +308,10 @@ C<-plot_example(example(fun_type = "quadratic", error_type = "correlated"))
 A/C+plot_annotation(tag_levels = 'A')
 ```
 
-The simulation shows that the fit produced by the rm-ANOVA model is good for linear data, as the predictions for the mean response are reasonably close to the "truth" of the simulated data  (Figure \@ref(fig:l-q-response),B). When the linearity and compound symmetry assumptions are met, the model approximates well the individual trends and the mean trends by group.
+The simulation shows that the fit produced by the LMEM and the rm-ANOVA model is good for linear data, as the predictions for the mean response are reasonably close to the "truth" of the simulated data  (Figure \@ref(fig:l-q-response),B, E). When the linearity and compound symmetry assumptions are met, the model approximates well the individual trends and the mean trends by group.
 
-However, consider the case when the data follows a non-linear trend, such as the simulated data in Figure \@ref(fig:l-q-response), C. Here, the mean response per group was simulated using a quadratic function but errors, individual responses and the rm-ANOVA model were produced in the same manner as in (Figure \@ref(fig:l-q-response) A and B) . The mean response in the simulated data with quadratic behavior is changing in each group through the timeline, and the mean value is the same as the initial value by the fifth time point for each group. Fitting an rm-ANOVA model \@ref(eq:linear-model) to this data  produces the fit that appears in panel D in Figure \@ref(fig:l-q-response).
+However, consider the case when the data follows a non-linear trend, such as the simulated data in Figure \@ref(fig:l-q-response), C. Here, the mean response per group was simulated using a quadratic function but errors, individual responses and the rm-ANOVA model were produced in the same manner as in (Figure \@ref(fig:l-q-response) A and B) . The mean response in the simulated data with quadratic behavior is changing in each group through the timeline, and the mean value is the same as the initial value by the fifth time point for each group. Fitting an rm-ANOVA model \@ref(eq:linear-model) or a LMEM \@ref(eq:LMEM) to this data  produces the fit that appears in panels E and F in Figure \@ref(fig:l-q-response).
 
-A comparison of the fitted mean response of the rm-ANOVA model to the the simulated data in Figure ((\@ref(fig:l-q-response), D) indicates that the model is not capturing the changes within each group.  Specifically, note that the fitted mean response of the rm-ANOVA model (panel D) shows that the change (increase for Treatment 1 or decrease for Treatment 2) in the response through time points 2 and 4 is not being captured by the model. Moreover, the rm-ANOVA model is not being able to capture the fact that the initial values are the same in each group, and instead fits non-parallel lines that have initial values that are markedly different from the "true" initial values in each case (compare panels C and D). If such a change has important physiological implications,the rm-ANOVA model omits it from the fitted mean response. Thus, even though the model correctly detects a difference in treatment groups, the exact nature of this difference is not correctly identified, limiting valuable inferences from the data.  
+A comparison of the fitted mean response of the LMEM and the rm-ANOVA model to the simulated data in Figure ((\@ref(fig:l-q-response), E, F) indicates that the models are not capturing the changes within each group.  Specifically, note that the fitted mean response of both models (panel E, F) show that the change (increase for Treatment 1 or decrease for Treatment 2) in the response through time points 2 and 4 is not being captured. The LMEM is only able to account for between-subject variation by providing different intercepts to each subject, but both models are not able to capture the fact that the initial values are the same in each group, and instead fit non-parallel lines that have initial values that are markedly different from the "true" initial values in each case (compare panel D with panels E and F). If such a change has important physiological implications,both rm-ANOVA and LMEMs omit it from the fitted mean response. Thus, even though the model correctly detects a divergence between treatment groups, the exact nature of this difference is not correctly identified, limiting valuable inferences from the data.  
 
 This section has used simulation to better convey the limitations of linearity and correlation in the response in non-linear data. Although the model fitted to the simulated data was an rm-ANOVA model, the main issue of an expected linear trend in the response is the same in the case of a LMEM. In the following section, we present generalized additive models (GAMs) as a data-driven  alternative method to analyze longitudinal non-linear data.

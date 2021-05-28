@@ -1,21 +1,22 @@
-\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
 ]{article}
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provides euro and other symbols
-\else % if luatex or xelatex
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \IfFileExists{microtype.sty}{% use microtype if available
   \usepackage[]{microtype}
@@ -36,19 +37,25 @@
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
   pdftitle={The statistical analysis of non-linear longitudinal data in biomedical research using generalized additive models},
-  pdfborder={0 0 0},
-  breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}
 \lstset{defaultdialect=[5.3]Lua}
 \lstset{defaultdialect=[x86masm]Assembler}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
-\usepackage{graphicx,grffile}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -57,25 +64,14 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{5}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-  \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-  \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-
-% set default figure placement to htbp
+% Set default figure placement to htbp
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
 \usepackage{lineno}
 \usepackage{authblk}
 
@@ -142,6 +138,29 @@
 \usepackage{breqn}
 \usepackage[font={small}]{caption}
 \usepackage{float}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 \title{\textbf{The statistical analysis of non-linear longitudinal data in biomedical research using generalized additive models}}
 \usepackage{etoolbox}
@@ -175,7 +194,7 @@ Traditionally, a ``frequentist'' or ``classical'' statistical paradigm is used i
 The expected linear behavior of the response through time is a key requisite in rm-ANOVA {[}\protect\hyperlink{ref-pinheiro2006}{15}{]}. This ``linearity assumption'' in rm-ANOVA implies that the model is misspecified when the data does not follow a linear trend, which results in unreliable inference. In biomedical research, non-linear trends are the norm rather than the exception in longitudinal studies. A particular example of this non-linear behavior in longitudinal data arises in measurements of tumor response to chemo and/or radiotherapy in preclinical and clinical settings {[}\protect\hyperlink{ref-roblyer2011}{1},\protect\hyperlink{ref-skala2010}{8},\protect\hyperlink{ref-vishwanath2009}{16}{]}. These studies have shown that the collected signal does not follow a linear trend over time, and presents extreme variability at different time points, making the fit of rm-ANOVA model inconsistent with the observed variation. Therefore, when rm-ANOVA is used to draw inference of such highly-variable data the estimates are inevitably biased, because the model is only able to accommodate linear trends that are far from adequately representing the biological phenomenon of interest.
 
 A \emph{post hoc} analysis is the statistical test used in conjunction with rm-ANOVA to perform repeated comparisons to estimate a \emph{p-value}, which in turn is used as a measure of significance.
-Although it is possible that a \emph{post hoc} analysis of rm-ANOVA is able to find ``significant'' \emph{p-values}( \emph{p}\textless{}0.05) from non-linear data, the validity of such metric is dependent on how adequate the model fits the data. In other words, \emph{p-values} are valid only if the model and the data have good agreement; if that is not the case, a ``Type III'' error (known as ``model misspecification'') occurs{[}\protect\hyperlink{ref-dennis2019}{17}{]}. For example, model misspecification will occur when a model that is only able to explain linear responses (such as rm-ANOVA) is fitted to data that follows a quadratic trend, thereby causing the resulting \emph{p-values} and parameter estimates to be invalid {[}\protect\hyperlink{ref-wang2019}{18}{]}.
+Although it is possible that a \emph{post hoc} analysis of rm-ANOVA is able to find ``significant'' \emph{p-values}( \emph{p}\textless0.05) from non-linear data, the validity of such metric is dependent on how adequate the model fits the data. In other words, \emph{p-values} are valid only if the model and the data have good agreement; if that is not the case, a ``Type III'' error (known as ``model misspecification'') occurs{[}\protect\hyperlink{ref-dennis2019}{17}{]}. For example, model misspecification will occur when a model that is only able to explain linear responses (such as rm-ANOVA) is fitted to data that follows a quadratic trend, thereby causing the resulting \emph{p-values} and parameter estimates to be invalid {[}\protect\hyperlink{ref-wang2019}{18}{]}.
 
 Additionally, the \emph{p-value} itself is highly variable, and multiple comparisons can inflate the false positivity rate (Type I error or \(\alpha\)) {[}\protect\hyperlink{ref-liu2010}{19},\protect\hyperlink{ref-halsey2015}{20}{]}, consequently biasing the conclusions of the study. Corrections exist to address the Type I error issue of multiple comparisons (such as Bonferroni {[}\protect\hyperlink{ref-abdi2010}{21}{]}), but they in turn reduce statistical power (1-\(\beta\)){[}\protect\hyperlink{ref-nakagawa2004}{22}{]}, and lead to increased Type II error (failing to reject the null hypothesis when the null hypothesis is false) {[}\protect\hyperlink{ref-gelman2012}{23},\protect\hyperlink{ref-albers2019}{24}{]}. Therefore, the tradeoff of \emph{post hoc} comparisons in rm-ANOVA between Type I, II and III errors might be difficult to resolve in a biomedical longitudinal study where a delicate balance exists between statistical power and sample size.
 
@@ -366,7 +385,7 @@ For the data in Figure \ref{fig:sim-smooth-plot},A it is of interest to know the
 
 This syntax specifies that \passthrough{\lstinline!m1!} will store the model, and that the change in the simulated oxygen saturation (\passthrough{\lstinline!StO2\_sim!}) is modeled using independent smooths for \emph{Group} and \emph{Day} (the parenthesis preceded by \emph{s}) using 5 knots. The smooth is constructed using gaussian process smooths, which is indicated by \passthrough{\lstinline!bs="gp"!}. These splines are used to model temporal trends and might be particularly suited for long-term studies where the correlation between measurements changes as a function of the time intervals {[}\protect\hyperlink{ref-simpson2018}{34}{]}. The parametric term \emph{Group} is added to quantify differences in the effect of treatment between groups, and the \passthrough{\lstinline!method!} chosen to select the smoothing parameters is the restricted maximum likelihood (REML) {[}\protect\hyperlink{ref-wood2017}{37}{]}. When the smooths are plotted over the raw data, it is clear that the model has been able to capture the trend of the change of \(\mbox{StO}_2\) for each group across time (Figure \ref{fig:sim-smooth-plot},B). Model diagnostics can be obtained using the \passthrough{\lstinline!gam.check!} function, and the function \passthrough{\lstinline!appraise!} from the package \emph{gratia}{[}\protect\hyperlink{ref-gratia}{54}{]}. A guide for model selection and diagnostics is in the Appendix, and an in-depth analysis can be found in {[}\protect\hyperlink{ref-wood2017}{37}{]} and {[}\protect\hyperlink{ref-harezlak2018}{55}{]}.
 
-One question that might arise at this point is ``what is the fit that an rm-ANOVA model produces for the simulated data?''. The rm-ANOVA model, which corresponds to Equation \eqref{eq:linear-model} is presented in Figure \ref{fig:sim-smooth-plot},C. This is a typical case of model misspecification: The slopes of each group are different, which would lead to a \emph{p-value} indicating significance for the treatment and time effects, but the model is not capturing the changes that occur at days 2 and between days 5 and 7, whereas the GAM model is able to do so (Figure \ref{fig:sim-smooth-plot},B) .
+One question that might arise at this point is ``what is the fit that an rm-ANOVA model produces for the simulated data?'' The rm-ANOVA model, which corresponds to Equation \eqref{eq:linear-model} is presented in Figure \ref{fig:sim-smooth-plot},C. This is a typical case of model misspecification: The slopes of each group are different, which would lead to a \emph{p-value} indicating significance for the treatment and time effects, but the model is not capturing the changes that occur at days 2 and between days 5 and 7, whereas the GAM model is able to do so (Figure \ref{fig:sim-smooth-plot},B) .
 
 Because GAMs do not require equally-spaced or complete observations for all subjects, they are advantageous to analyze longitudinal data where missingness exists. The rationale behind this is that GAMs are able to pick the trend in the data even when some observations are missing. However, this usually causes the resulting smooths to have wider confidence intervals and less ability to pick certain trends. Consider the simulated \(\mbox{StO}_2\) values from Figure (\ref{fig:sim-smooth-plot}, B). If 40\% of the total observations are randomly deleted and the same interaction GAM fitted for the complete dataset is used, the resulting smooths are still able to show a different trend for each group, but the ``Treatment'' smooth takes an overall more linear profile (\ref{fig:sim-smooth-plot}, D). Although the confidence intervals have increased for both smooths, the model still shows different trends with as little as 4 observations per group at certain time points.
 
@@ -418,170 +437,228 @@ The traditional methods to analyze biomedical longitudinal data (rm-ANOVA, LMEMs
 \section{References}\label{references}}
 
 \hypertarget{refs}{}
+\begin{CSLReferences}{0}{0}
 \leavevmode\hypertarget{ref-roblyer2011}{}%
-{[}1{]} D. Roblyer, S. Ueda, A. Cerussi, W. Tanamai, A. Durkin, R. Mehta, D. Hsiang, J.A. Butler, C. McLaren, W.P. Chen, B. Tromberg, Optical imaging of breast cancer oxyhemoglobin flare correlates with neoadjuvant chemotherapy response one day after starting treatment, Proceedings of the National Academy of Sciences of the United States of America. 108 (2011) 14626--14631. \url{https://doi.org/10.1073/pnas.1013103108}.
+\CSLLeftMargin{{[}1{]} }
+\CSLRightInline{D. Roblyer, S. Ueda, A. Cerussi, W. Tanamai, A. Durkin, R. Mehta, D. Hsiang, J.A. Butler, C. McLaren, W.P. Chen, B. Tromberg, Optical imaging of breast cancer oxyhemoglobin flare correlates with neoadjuvant chemotherapy response one day after starting treatment, Proceedings of the National Academy of Sciences of the United States of America. 108 (2011) 14626--14631. \url{https://doi.org/10.1073/pnas.1013103108}.}
 
 \leavevmode\hypertarget{ref-tank2020}{}%
-{[}2{]} A. Tank, H.M. Peterson, V. Pera, S. Tabassum, A. Leproux, T. O'Sullivan, E. Jones, H. Cabral, N. Ko, R.S. Mehta, B.J. Tromberg, D. Roblyer, Diffuse optical spectroscopic imaging reveals distinct early breast tumor hemodynamic responses to metronomic and maximum tolerated dose regimens, Breast Cancer Research. 22 (2020) 1--10. \url{https://doi.org/doi:10.1186/s13058-020-01262-1}.
+\CSLLeftMargin{{[}2{]} }
+\CSLRightInline{A. Tank, H.M. Peterson, V. Pera, S. Tabassum, A. Leproux, T. O'Sullivan, E. Jones, H. Cabral, N. Ko, R.S. Mehta, B.J. Tromberg, D. Roblyer, Diffuse optical spectroscopic imaging reveals distinct early breast tumor hemodynamic responses to metronomic and maximum tolerated dose regimens, Breast Cancer Research. 22 (2020) 1--10. \url{https://doi.org/doi:10.1186/s13058-020-01262-1}.}
 
 \leavevmode\hypertarget{ref-pavlov2018}{}%
-{[}3{]} M.V. Pavlov, T.I. Kalganova, Y.S. Lyubimtseva, V.I. Plekhanov, G.Y. Golubyatnikov, O.Y. Ilyinskaya, A.G. Orlova, P.V. Subochev, D.V. Safonov, N.M. Shakhova, A.V. Maslennikova, Multimodal approach in assessment of the response of breast cancer to neoadjuvant chemotherapy, Journal of Biomedical Optics. 23 (n.d.). \href{https://doi.org/\%7B10.1117/1.JBO.23.9.091410\%7D}{https://doi.org/\{10.1117/1.JBO.23.9.091410\}}.
+\CSLLeftMargin{{[}3{]} }
+\CSLRightInline{M.V. Pavlov, T.I. Kalganova, Y.S. Lyubimtseva, V.I. Plekhanov, G.Y. Golubyatnikov, O.Y. Ilyinskaya, A.G. Orlova, P.V. Subochev, D.V. Safonov, N.M. Shakhova, A.V. Maslennikova, {Multimodal approach in assessment of the response of breast cancer to neoadjuvant chemotherapy}, {Journal of Biomedical Optics}. {23} (2018). \url{https://doi.org/\%7B10.1117/1.JBO.23.9.091410\%7D}.}
 
 \leavevmode\hypertarget{ref-demidov2018}{}%
-{[}4{]} V. Demidov, A. Maeda, M. Sugita, V. Madge, S. Sadanand, C. Flueraru, I.A. Vitkin, Preclinical longitudinal imaging of tumor microvascular radiobiological response with functional optical coherence tomography, Scientific Reports. 8 (n.d.). \href{https://doi.org/\%7B10.1038/s41598-017-18635-w\%7D}{https://doi.org/\{10.1038/s41598-017-18635-w\}}.
+\CSLLeftMargin{{[}4{]} }
+\CSLRightInline{V. Demidov, A. Maeda, M. Sugita, V. Madge, S. Sadanand, C. Flueraru, I.A. Vitkin, {Preclinical longitudinal imaging of tumor microvascular radiobiological response with functional optical coherence tomography}, {Scientific Reports}. {8} (2018). \url{https://doi.org/\%7B10.1038/s41598-017-18635-w\%7D}.}
 
 \leavevmode\hypertarget{ref-ritter2001}{}%
-{[}5{]} G. Ritter, L. Cohen, C. Williams, E. Richards, L. Old, S. Welt, Serological analysis of human anti-human antibody responses in colon cancer patients treated with repeated doses of humanized monoclonal antibody A33, Cancer Research. 61 (n.d.) 6851--6859.
+\CSLLeftMargin{{[}5{]} }
+\CSLRightInline{G. Ritter, L. Cohen, C. Williams, E. Richards, L. Old, S. Welt, {Serological analysis of human anti-human antibody responses in colon cancer patients treated with repeated doses of humanized monoclonal antibody A33}, {Cancer Research}. {61} (2001) 6851--6859.}
 
 \leavevmode\hypertarget{ref-roth2017}{}%
-{[}6{]} E.M. Roth, A.C. Goldberg, A.L. Catapano, A. Torri, G.D. Yancopoulos, N. Stahl, A. Brunet, G. Lecorps, H.M. Colhoun, Antidrug Antibodies in Patients Treated with Alirocumab, New England Journal of Medicine. 376 (n.d.) 1589--1590. \href{https://doi.org/\%7B10.1056/NEJMc1616623\%7D}{https://doi.org/\{10.1056/NEJMc1616623\}}.
+\CSLLeftMargin{{[}6{]} }
+\CSLRightInline{E.M. Roth, A.C. Goldberg, A.L. Catapano, A. Torri, G.D. Yancopoulos, N. Stahl, A. Brunet, G. Lecorps, H.M. Colhoun, {Antidrug Antibodies in Patients Treated with Alirocumab}, {New England Journal of Medicine}. {376} (2017) 1589--1590. \url{https://doi.org/\%7B10.1056/NEJMc1616623\%7D}.}
 
 \leavevmode\hypertarget{ref-jones2018}{}%
-{[}7{]} J.D. Jones, H.E. Ramser, A.E. Woessner, K.P. Quinn, In vivo multiphoton microscopy detects longitudinal metabolic changes associated with delayed skin wound healing, Communications Biology. 1 (n.d.). \href{https://doi.org/\%7B10.1038/s42003-018-0206-4\%7D}{https://doi.org/\{10.1038/s42003-018-0206-4\}}.
+\CSLLeftMargin{{[}7{]} }
+\CSLRightInline{J.D. Jones, H.E. Ramser, A.E. Woessner, K.P. Quinn, {In vivo multiphoton microscopy detects longitudinal metabolic changes associated with delayed skin wound healing}, {Communications Biology}. {1} (2018). \url{https://doi.org/\%7B10.1038/s42003-018-0206-4\%7D}.}
 
 \leavevmode\hypertarget{ref-skala2010}{}%
-{[}8{]} M.C. Skala, A. Fontanella, L. Lan, J.A. Izatt, M.W. Dewhirst, Longitudinal optical imaging of tumor metabolism and hemodynamics, Journal of Biomedical Optics. 15 (2010). \url{https://doi.org/10.1117/1.3285584}.
+\CSLLeftMargin{{[}8{]} }
+\CSLRightInline{M.C. Skala, A. Fontanella, L. Lan, J.A. Izatt, M.W. Dewhirst, Longitudinal optical imaging of tumor metabolism and hemodynamics, Journal of Biomedical Optics. 15 (2010). \url{https://doi.org/10.1117/1.3285584}.}
 
 \leavevmode\hypertarget{ref-greening2018}{}%
-{[}9{]} G.J. Greening, K.P. Miller, C.R. Spainhour, M.D. Cato, T.J. Muldoon, Effects of isoflurane anesthesia on physiological parameters in murine subcutaneous tumor allografts measured via diffuse reflectance spectroscopy, Biomedical Optics Express. 9 (n.d.) 2871--2886. \href{https://doi.org/\%7B10.1364/BOE.9.002871\%7D}{https://doi.org/\{10.1364/BOE.9.002871\}}.
+\CSLLeftMargin{{[}9{]} }
+\CSLRightInline{G.J. Greening, K.P. Miller, C.R. Spainhour, M.D. Cato, T.J. Muldoon, {Effects of isoflurane anesthesia on physiological parameters in murine subcutaneous tumor allografts measured via diffuse reflectance spectroscopy}, {Biomedical Optics Express}. {9} (2018) 2871--2886. \url{https://doi.org/\%7B10.1364/BOE.9.002871\%7D}.}
 
 \leavevmode\hypertarget{ref-sio2016}{}%
-{[}10{]} T.T. Sio, P.J. Atherton, B.J. Birckhead, D.J. Schwartz, J.A. Sloan, D.K. Seisler, J.A. Martenson, C.L. Loprinzi, P.C. Griffin, R.F. Morton, J.C. Anders, T.J. Stoffel, R.E. Haselow, R.B. Mowat, M.A.N. Wittich, J.D. Bearden III, R.C. Miller, Repeated measures analyses of dermatitis symptom evolution in breast cancer patients receiving radiotherapy in a phase 3 randomized trial of mometasone furoate vs placebo (N06C4 {[}alliance{]}), Supportive Care in Cancer. 24 (n.d.) 3847--3855. \href{https://doi.org/\%7B10.1007/s00520-016-3213-3\%7D}{https://doi.org/\{10.1007/s00520-016-3213-3\}}.
+\CSLLeftMargin{{[}10{]} }
+\CSLRightInline{T.T. Sio, P.J. Atherton, B.J. Birckhead, D.J. Schwartz, J.A. Sloan, D.K. Seisler, J.A. Martenson, C.L. Loprinzi, P.C. Griffin, R.F. Morton, J.C. Anders, T.J. Stoffel, R.E. Haselow, R.B. Mowat, M.A.N. Wittich, J.D. Bearden III, R.C. Miller, {Repeated measures analyses of dermatitis symptom evolution in breast cancer patients receiving radiotherapy in a phase 3 randomized trial of mometasone furoate vs placebo (N06C4 {{[}}alliance{]})}, {Supportive Care in Cancer}. {24} (2016) 3847--3855. \url{https://doi.org/\%7B10.1007/s00520-016-3213-3\%7D}.}
 
 \leavevmode\hypertarget{ref-kamstra2015}{}%
-{[}11{]} J.I. Kamstra, P.U. Dijkstra, M. van Leeuwen, J.L.N. Roodenburg, J.A. Langendijk, Mouth opening in patients irradiated for head and neck cancer: A prospective repeated measures study, Oral Oncology. 51 (n.d.) 548--555. \href{https://doi.org/\%7B10.1016/j.oraloncology.2015.01.016\%7D}{https://doi.org/\{10.1016/j.oraloncology.2015.01.016\}}.
+\CSLLeftMargin{{[}11{]} }
+\CSLRightInline{J.I. Kamstra, P.U. Dijkstra, M. van Leeuwen, J.L.N. Roodenburg, J.A. Langendijk, {Mouth opening in patients irradiated for head and neck cancer: A prospective repeated measures study}, {Oral Oncology}. {51} (2015) 548--555. \url{https://doi.org/\%7B10.1016/j.oraloncology.2015.01.016\%7D}.}
 
 \leavevmode\hypertarget{ref-wagenmakers2008}{}%
-{[}12{]} E.-J. Wagenmakers, M. Lee, T. Lodewyckx, G.J. Iverson, Bayesian versus frequentist inference, in: H. Hoijtink, I. Klugkist, P.A. Boelen (Eds.), Bayesian Evaluation of Informative Hypotheses, Springer New York, New York, NY, 2008: pp. 181--207. \url{https://doi.org/10.1007/978-0-387-09612-4_9}.
+\CSLLeftMargin{{[}12{]} }
+\CSLRightInline{E.-J. Wagenmakers, M. Lee, T. Lodewyckx, G.J. Iverson, Bayesian versus frequentist inference, in: H. Hoijtink, I. Klugkist, P.A. Boelen (Eds.), Bayesian Evaluation of Informative Hypotheses, Springer New York, New York, NY, 2008: pp. 181--207. \url{https://doi.org/10.1007/978-0-387-09612-4_9}.}
 
 \leavevmode\hypertarget{ref-gueorguieva2004}{}%
-{[}13{]} R. Gueorguieva, J.H. Krystal, Move over ANOVA - Progress in analyzing repeated-measures data and its reflection in papers published in the archives of general psychiatry, Archives of General Psychiatry. 61 (2004) 310--317. \url{https://doi.org/10.1001/archpsyc.61.3.310}.
+\CSLLeftMargin{{[}13{]} }
+\CSLRightInline{R. Gueorguieva, J.H. Krystal, {Move over ANOVA - Progress in analyzing repeated-measures data and its reflection in papers published in the archives of general psychiatry}, Archives of General Psychiatry. 61 (2004) 310--317. \url{https://doi.org/10.1001/archpsyc.61.3.310}.}
 
 \leavevmode\hypertarget{ref-schober2018}{}%
-{[}14{]} P. Schober, T.R. Vetter, Repeated measures designs and analysis of longitudinal data: If at first you do not succeed-try, try again, Anesthesia and Analgesia. 127 (2018) 569--575. \url{https://doi.org/10.1213/ane.0000000000003511}.
+\CSLLeftMargin{{[}14{]} }
+\CSLRightInline{P. Schober, T.R. Vetter, Repeated measures designs and analysis of longitudinal data: If at first you do not succeed-try, try again, Anesthesia and Analgesia. 127 (2018) 569--575. \url{https://doi.org/10.1213/ane.0000000000003511}.}
 
 \leavevmode\hypertarget{ref-pinheiro2006}{}%
-{[}15{]} J. Pinheiro, D. Bates, Mixed-effects models in S and S-PLUS, Springer Science \& Business Media, 2006. \url{https://doi.org/https://doi.org/10.1007/b98882}.
+\CSLLeftMargin{{[}15{]} }
+\CSLRightInline{J. Pinheiro, D. Bates, {Mixed-effects models in S and S-PLUS}, Springer Science \& Business Media, 2006. https://doi.org/\url{https://doi.org/10.1007/b98882}.}
 
 \leavevmode\hypertarget{ref-vishwanath2009}{}%
-{[}16{]} K. Vishwanath, H. Yuan, W.T. Barry, M.W. Dewhirst, N. Ramanujam, Using optical spectroscopy to longitudinally monitor physiological changes within solid tumors, Neoplasia. 11 (2009) 889--900. \url{https://doi.org/10.1593/neo.09580}.
+\CSLLeftMargin{{[}16{]} }
+\CSLRightInline{K. Vishwanath, H. Yuan, W.T. Barry, M.W. Dewhirst, N. Ramanujam, Using optical spectroscopy to longitudinally monitor physiological changes within solid tumors, Neoplasia. 11 (2009) 889--900. \url{https://doi.org/10.1593/neo.09580}.}
 
 \leavevmode\hypertarget{ref-dennis2019}{}%
-{[}17{]} B. Dennis, J.M. Ponciano, M.L. Taper, S.R. Lele, Errors in Statistical Inference Under Model Misspecification: Evidence, Hypothesis Testing, and AIC, Frontiers in Ecology and Evolution. 7 (n.d.). \href{https://doi.org/\%7B10.3389/fevo.2019.00372\%7D}{https://doi.org/\{10.3389/fevo.2019.00372\}}.
+\CSLLeftMargin{{[}17{]} }
+\CSLRightInline{B. Dennis, J.M. Ponciano, M.L. Taper, S.R. Lele, {Errors in Statistical Inference Under Model Misspecification: Evidence, Hypothesis Testing, and AIC}, {Frontiers in Ecology and Evolution}. {7} (2019). \url{https://doi.org/\%7B10.3389/fevo.2019.00372\%7D}.}
 
 \leavevmode\hypertarget{ref-wang2019}{}%
-{[}18{]} B. Wang, Z. Zhou, H. Wang, X.M. Tu, C. Feng, The p-value and model specification in statistics, General Psychiatry. 32 (n.d.). \href{https://doi.org/\%7B10.1136/gpsych-2019-100081\%7D}{https://doi.org/\{10.1136/gpsych-2019-100081\}}.
+\CSLLeftMargin{{[}18{]} }
+\CSLRightInline{B. Wang, Z. Zhou, H. Wang, X.M. Tu, C. Feng, {The p-value and model specification in statistics}, {General Psychiatry}. {32} (2019). \url{https://doi.org/\%7B10.1136/gpsych-2019-100081\%7D}.}
 
 \leavevmode\hypertarget{ref-liu2010}{}%
-{[}19{]} C. Liu, T.P. Cripe, M.-O. Kim, Statistical issues in longitudinal data analysis for treatment efficacy studies in the biomedical sciences, Molecular Therapy. 18 (2010) 1724--1730. \url{https://doi.org/10.1038/mt.2010.127}.
+\CSLLeftMargin{{[}19{]} }
+\CSLRightInline{C. Liu, T.P. Cripe, M.-O. Kim, Statistical issues in longitudinal data analysis for treatment efficacy studies in the biomedical sciences, Molecular Therapy. 18 (2010) 1724--1730. \url{https://doi.org/10.1038/mt.2010.127}.}
 
 \leavevmode\hypertarget{ref-halsey2015}{}%
-{[}20{]} L.G. Halsey, D. Curran-Everett, S.L. Vowler, G.B. Drummond, The fickle P value generates irreproducible results, Nature Methods. 12 (n.d.) 179--185. \href{https://doi.org/\%7B10.1038/nmeth.3288\%7D}{https://doi.org/\{10.1038/nmeth.3288\}}.
+\CSLLeftMargin{{[}20{]} }
+\CSLRightInline{L.G. Halsey, D. Curran-Everett, S.L. Vowler, G.B. Drummond, {The fickle P value generates irreproducible results}, {Nature Methods}. {12} (2015) 179--185. \url{https://doi.org/\%7B10.1038/nmeth.3288\%7D}.}
 
 \leavevmode\hypertarget{ref-abdi2010}{}%
-{[}21{]} H. Abdi, Holm's Sequential Bonferroni Procedure, Encyclopedia of Research Design. 1 (2010) 1--8. \url{https://doi.org/10.4135/9781412961288.n178}.
+\CSLLeftMargin{{[}21{]} }
+\CSLRightInline{H. Abdi, {Holm's Sequential Bonferroni Procedure}, Encyclopedia of Research Design. 1 (2010) 1--8. \url{https://doi.org/10.4135/9781412961288.n178}.}
 
 \leavevmode\hypertarget{ref-nakagawa2004}{}%
-{[}22{]} S. Nakagawa, A farewell to Bonferroni: the problems of low statistical power and publication bias, Behavioral Ecology. 15 (n.d.) 1044--1045. \href{https://doi.org/\%7B10.1093/beheco/arh107\%7D}{https://doi.org/\{10.1093/beheco/arh107\}}.
+\CSLLeftMargin{{[}22{]} }
+\CSLRightInline{S. Nakagawa, {A farewell to Bonferroni: the problems of low statistical power and publication bias}, {Behavioral Ecology}. {15} (2004) 1044--1045. \url{https://doi.org/\%7B10.1093/beheco/arh107\%7D}.}
 
 \leavevmode\hypertarget{ref-gelman2012}{}%
-{[}23{]} A. Gelman, J. Hill, M. Yajima, Why We (Usually) Don't Have to Worry About Multiple Comparisons, Journal of Research on Educational Effectiveness. 5 (n.d.) 189--211. \href{https://doi.org/\%7B10.1080/19345747.2011.618213\%7D}{https://doi.org/\{10.1080/19345747.2011.618213\}}.
+\CSLLeftMargin{{[}23{]} }
+\CSLRightInline{A. Gelman, J. Hill, M. Yajima, {Why We (Usually) Don't Have to Worry About Multiple Comparisons}, {Journal of Research on Educational Effectiveness}. {5} (2012) 189--211. \url{https://doi.org/\%7B10.1080/19345747.2011.618213\%7D}.}
 
 \leavevmode\hypertarget{ref-albers2019}{}%
-{[}24{]} C. Albers, The problem with unadjusted multiple and sequential statistical testing, Nature Communications. 10 (n.d.). \href{https://doi.org/\%7B10.1038/s41467-019-09941-0\%7D}{https://doi.org/\{10.1038/s41467-019-09941-0\}}.
+\CSLLeftMargin{{[}24{]} }
+\CSLRightInline{C. Albers, {The problem with unadjusted multiple and sequential statistical testing}, {Nature Communications}. {10} (2019). \url{https://doi.org/\%7B10.1038/s41467-019-09941-0\%7D}.}
 
 \leavevmode\hypertarget{ref-ugrinowitsch2004}{}%
-{[}25{]} C. Ugrinowitsch, G.W. Fellingham, M.D. Ricard, Limitations of ordinary least squares models in analyzing repeated measures data, Medicine and Science in Sports and Exercise. 36 (2004) 2144--2148. \url{https://doi.org/10.1249/01.mss.0000147580.40591.75}.
+\CSLLeftMargin{{[}25{]} }
+\CSLRightInline{C. Ugrinowitsch, G.W. Fellingham, M.D. Ricard, Limitations of ordinary least squares models in analyzing repeated measures data, Medicine and Science in Sports and Exercise. 36 (2004) 2144--2148. \url{https://doi.org/10.1249/01.mss.0000147580.40591.75}.}
 
 \leavevmode\hypertarget{ref-huynh1976}{}%
-{[}26{]} H. Huynh, L.S. Feldt, Estimation of the box correction for degrees of freedom from sample data in randomized block and split-plot designs, Journal of Educational Statistics. 1 (1976) 69--82. \url{https://doi.org/10.3102/10769986001001069}.
+\CSLLeftMargin{{[}26{]} }
+\CSLRightInline{H. Huynh, L.S. Feldt, Estimation of the box correction for degrees of freedom from sample data in randomized block and split-plot designs, Journal of Educational Statistics. 1 (1976) 69--82. \url{https://doi.org/10.3102/10769986001001069}.}
 
 \leavevmode\hypertarget{ref-greenhouse1959}{}%
-{[}27{]} S.W. Greenhouse, S. Geisser, On methods in the analysis of profile data, Psychometrika. 24 (1959) 95--112. \url{https://doi.org/10.1007/bf02289823}.
+\CSLLeftMargin{{[}27{]} }
+\CSLRightInline{S.W. Greenhouse, S. Geisser, On methods in the analysis of profile data, Psychometrika. 24 (1959) 95--112. \url{https://doi.org/10.1007/bf02289823}.}
 
 \leavevmode\hypertarget{ref-haverkamp2017}{}%
-{[}28{]} N. Haverkamp, A. Beauducel, Violation of the Sphericity Assumption and Its Effect on Type-I Error Rates in Repeated Measures ANOVA and Multi-Level Linear Models (MLM), Frontiers in Psychology. 8 (n.d.). \href{https://doi.org/\%7B10.3389/fpsyg.2017.01841\%7D}{https://doi.org/\{10.3389/fpsyg.2017.01841\}}.
+\CSLLeftMargin{{[}28{]} }
+\CSLRightInline{N. Haverkamp, A. Beauducel, {Violation of the Sphericity Assumption and Its Effect on Type-I Error Rates in Repeated Measures ANOVA and Multi-Level Linear Models (MLM)}, {Frontiers in Psychology}. {8} (2017). \url{https://doi.org/\%7B10.3389/fpsyg.2017.01841\%7D}.}
 
 \leavevmode\hypertarget{ref-keselman2001}{}%
-{[}29{]} H. Keselman, J. Algina, R. Kowalchuk, The analysis of repeated measures designs: A review, British Journal of Mathematica \& Statistical Psychology. 54 (n.d.) 1--20. \href{https://doi.org/\%7B10.1348/000711001159357\%7D}{https://doi.org/\{10.1348/000711001159357\}}.
+\CSLLeftMargin{{[}29{]} }
+\CSLRightInline{H. Keselman, J. Algina, R. Kowalchuk, {The analysis of repeated measures designs: A review}, {British Journal of Mathematica \& Statistical Psychology}. {54} (2001) 1--20. \url{https://doi.org/\%7B10.1348/000711001159357\%7D}.}
 
 \leavevmode\hypertarget{ref-charan2013}{}%
-{[}30{]} J. Charan, N. Kantharia, How to calculate sample size in animal studies?, Journal of Pharmacology and Pharmacotherapeutics. 4 (2013) 303--306. \url{https://doi.org/10.4103/0976-500X.119726}.
+\CSLLeftMargin{{[}30{]} }
+\CSLRightInline{Jaykaran. Charan, N. Kantharia, {How to calculate sample size in animal studies?}, Journal of Pharmacology and Pharmacotherapeutics. 4 (2013) 303--306. \url{https://doi.org/10.4103/0976-500X.119726}.}
 
 \leavevmode\hypertarget{ref-barr2013}{}%
-{[}31{]} D.J. Barr, R. Levy, C. Scheepers, H.J. Tily, Random effects structure for confirmatory hypothesis testing: Keep it maximal, JournalL of Memory and Language. 68 (n.d.) 255--278. \href{https://doi.org/\%7B10.1016/j.jml.2012.11.001\%7D}{https://doi.org/\{10.1016/j.jml.2012.11.001\}}.
+\CSLLeftMargin{{[}31{]} }
+\CSLRightInline{D.J. Barr, R. Levy, C. Scheepers, H.J. Tily, {Random effects structure for confirmatory hypothesis testing: Keep it maximal}, {JournalL of Memory and Language}. {68} (2013) 255--278. \url{https://doi.org/\%7B10.1016/j.jml.2012.11.001\%7D}.}
 
 \leavevmode\hypertarget{ref-rose2012}{}%
-{[}32{]} N.L. Rose, H.D. Yang, S.D. Turner, G.L. Simpson, An assessment of the mechanisms for the transfer of lead and mercury from atmospherically contaminated organic soils to lake sediments with particular reference to scotland, uk, Geochimica et Cosmochimica Acta. 82 (2012) 113--135. \url{https://doi.org/10.1016/j.gca.2010.12.026}.
+\CSLLeftMargin{{[}32{]} }
+\CSLRightInline{N.L. Rose, H.D. Yang, S.D. Turner, G.L. Simpson, An assessment of the mechanisms for the transfer of lead and mercury from atmospherically contaminated organic soils to lake sediments with particular reference to scotland, UK, Geochimica Et Cosmochimica Acta. 82 (2012) 113--135. \url{https://doi.org/10.1016/j.gca.2010.12.026}.}
 
 \leavevmode\hypertarget{ref-pedersen2019}{}%
-{[}33{]} E.J. Pedersen, D.L. Miller, G.L. Simpson, N. Ross, Hierarchical generalized additive models in ecology: An introduction with mgcv, Peerj. 7 (2019). \url{https://doi.org/10.7717/peerj.6876}.
+\CSLLeftMargin{{[}33{]} }
+\CSLRightInline{E.J. Pedersen, D.L. Miller, G.L. Simpson, N. Ross, Hierarchical generalized additive models in ecology: An introduction with mgcv, Peerj. 7 (2019). \url{https://doi.org/10.7717/peerj.6876}.}
 
 \leavevmode\hypertarget{ref-simpson2018}{}%
-{[}34{]} G.L. Simpson, Modelling palaeoecological time series using generalised additive models, Frontiers in Ecology and Evolution. 6 (2018). \url{https://doi.org/10.3389/fevo.2018.00149}.
+\CSLLeftMargin{{[}34{]} }
+\CSLRightInline{G.L. Simpson, Modelling palaeoecological time series using generalised additive models, Frontiers in Ecology and Evolution. 6 (2018). \url{https://doi.org/10.3389/fevo.2018.00149}.}
 
 \leavevmode\hypertarget{ref-yang2012}{}%
-{[}35{]} L. Yang, G. Qin, N. Zhao, C. Wang, G. Song, Using a generalized additive model with autoregressive terms to study the effects of daily temperature on mortality, BMC Medical Research Methodology. 12 (n.d.). \href{https://doi.org/\%7B10.1186/1471-2288-12-165\%7D}{https://doi.org/\{10.1186/1471-2288-12-165\}}.
+\CSLLeftMargin{{[}35{]} }
+\CSLRightInline{L. Yang, G. Qin, N. Zhao, C. Wang, G. Song, {Using a generalized additive model with autoregressive terms to study the effects of daily temperature on mortality}, {BMC Medical Research Methodology}. {12} (2012). \url{https://doi.org/\%7B10.1186/1471-2288-12-165\%7D}.}
 
 \leavevmode\hypertarget{ref-beck1998}{}%
-{[}36{]} N. Beck, S. Jackman, Beyond linearity by default: Generalized additive models, American Journal of Political Science. 42 (n.d.) 596--627. \href{https://doi.org/\%7B10.2307/2991772\%7D}{https://doi.org/\{10.2307/2991772\}}.
+\CSLLeftMargin{{[}36{]} }
+\CSLRightInline{N. Beck, S. Jackman, Beyond linearity by default: Generalized additive models, American Journal of Political Science. (1998) 596--627.}
 
 \leavevmode\hypertarget{ref-wood2017}{}%
-{[}37{]} S.N. Wood, Generalized additive models: An introduction with , second edition, CRC Press LLC, Philadelphia, PA, 2017.
+\CSLLeftMargin{{[}37{]} }
+\CSLRightInline{S.N. Wood, Generalized additive models: An introduction with {}, second edition, CRC Press LLC, Philadelphia, PA, 2017.}
 
 \leavevmode\hypertarget{ref-r}{}%
-{[}38{]} R Core Team, R: A language and environment for statistical computing, R Foundation for Statistical Computing, Vienna, Austria, 2020. \url{https://www.R-project.org/}.
+\CSLLeftMargin{{[}38{]} }
+\CSLRightInline{R Core Team, R: A language and environment for statistical computing, R Foundation for Statistical Computing, Vienna, Austria, 2020. \url{https://www.R-project.org/}.}
 
 \leavevmode\hypertarget{ref-wood2016}{}%
-{[}39{]} S.N. Wood, N. Pya, B. Saefken, Smoothing Parameter and Model Selection for General Smooth Models, Journal of the American Statistical Association. 111 (n.d.) 1548--1563. \href{https://doi.org/\%7B10.1080/01621459.2016.1180986\%7D}{https://doi.org/\{10.1080/01621459.2016.1180986\}}.
+\CSLLeftMargin{{[}39{]} }
+\CSLRightInline{S.N. Wood, N. Pya, B. Saefken, {Smoothing Parameter and Model Selection for General Smooth Models}, {Journal of the American Statistical Association}. {111} (2016) 1548--1563. \url{https://doi.org/\%7B10.1080/01621459.2016.1180986\%7D}.}
 
 \leavevmode\hypertarget{ref-west2014}{}%
-{[}40{]} B. West, K. Welch, A. Galecki, Linear mixed models: A practical guide using statistical software, second edition, Taylor \& Francis, 2014. \url{https://books.google.com/books?id=hjT6AwAAQBAJ}.
+\CSLLeftMargin{{[}40{]} }
+\CSLRightInline{B.T. West, K.B. Welch, A.T. Galecki, Linear mixed models: A practical guide using statistical software, second edition, Taylor \& Francis, 2014. \url{https://books.google.com/books?id=hjT6AwAAQBAJ}.}
 
 \leavevmode\hypertarget{ref-wolfinger1996}{}%
-{[}41{]} R.D. Wolfinger, Heterogeneous variance: Covariance structures for repeated measures, Journal of Agricultural, Biological, and Environmental Statistics. 1 (1996) 205--230. \url{http://www.jstor.org/stable/1400366}.
+\CSLLeftMargin{{[}41{]} }
+\CSLRightInline{R.D. Wolfinger, Heterogeneous variance: Covariance structures for repeated measures, Journal of Agricultural, Biological, and Environmental Statistics. 1 (1996) 205--230. \url{http://www.jstor.org/stable/1400366}.}
 
 \leavevmode\hypertarget{ref-weiss2005}{}%
-{[}42{]} R. Weiss, Modeling longitudinal data, Springer New York, 2005. \url{https://books.google.com/books?id=MQ/_bvWDPsEAC}.
+\CSLLeftMargin{{[}42{]} }
+\CSLRightInline{R.E. Weiss, Modeling longitudinal data, Springer New York, 2005. \url{https://books.google.com/books?id=MQ/_bvWDPsEAC}.}
 
 \leavevmode\hypertarget{ref-geisser1958}{}%
-{[}43{]} S. Geisser, S.W. Greenhouse, An Extension of Box's Results on the Use of the \(F\) Distribution in Multivariate Analysis, The Annals of Mathematical Statistics. 29 (1958) 885--891. \url{https://doi.org/10.1214/aoms/1177706545}.
+\CSLLeftMargin{{[}43{]} }
+\CSLRightInline{S. Geisser, S.W. Greenhouse, {An Extension of Box's Results on the Use of the \(F\) Distribution in Multivariate Analysis}, The Annals of Mathematical Statistics. 29 (1958) 885--891. \url{https://doi.org/10.1214/aoms/1177706545}.}
 
 \leavevmode\hypertarget{ref-maxwell2017}{}%
-{[}44{]} S. Maxwell, H. Delaney, K. Kelley, Designing experiments and analyzing data: A model comparison perspective, third edition, Taylor \& Francis, 2017. \url{https://books.google.com/books?id=NmFQDwAAQBAJ}.
+\CSLLeftMargin{{[}44{]} }
+\CSLRightInline{S.E. Maxwell, H.D. Delaney, K. Kelley, Designing experiments and analyzing data: A model comparison perspective, third edition, Taylor \& Francis, 2017. \url{https://books.google.com/books?id=NmFQDwAAQBAJ}.}
 
 \leavevmode\hypertarget{ref-molenberghs2004}{}%
-{[}45{]} G. Molenberghs, H. Thijs, I. Jansen, C. Beunckens, M. Kenward, C. Mallinckrodt, R. Carroll, Analyzing incomplete longitudinal clinical trial data, Biostatistics. 5 (n.d.) 445--464. \href{https://doi.org/\%7B10.1093/biostatistics/kxh001\%7D}{https://doi.org/\{10.1093/biostatistics/kxh001\}}.
+\CSLLeftMargin{{[}45{]} }
+\CSLRightInline{G. Molenberghs, H. Thijs, I. Jansen, C. Beunckens, M. Kenward, C. Mallinckrodt, R. Carroll, {Analyzing incomplete longitudinal clinical trial data}, {Biostatistics}. {5} (2004) 445--464. \url{https://doi.org/\%7B10.1093/biostatistics/kxh001\%7D}.}
 
 \leavevmode\hypertarget{ref-scheffer2002}{}%
-{[}46{]} J. Scheffer, Dealing with missing data, Research Letters in the Information and Mathematical Sciences. 3 (2002) 153--160.
+\CSLLeftMargin{{[}46{]} }
+\CSLRightInline{J. Scheffer, Dealing with missing data, Research Letters in the Information and Mathematical Sciences. 3 (2002) 153--160.}
 
 \leavevmode\hypertarget{ref-potthoff2006}{}%
-{[}47{]} R.F. Potthoff, G.E. Tudor, K.S. Pieper, V. Hasselblad, Can one assess whether missing data are missing at random in medical studies?, STATISTICAL METHODS IN MEDICAL RESEARCH. 15 (n.d.) 213--234. \href{https://doi.org/\%7B10.1191/0962280206sm448oa\%7D}{https://doi.org/\{10.1191/0962280206sm448oa\}}.
+\CSLLeftMargin{{[}47{]} }
+\CSLRightInline{R.F. Potthoff, G.E. Tudor, K.S. Pieper, V. Hasselblad, {Can one assess whether missing data are missing at random in medical studies?}, {STATISTICAL METHODS IN MEDICAL RESEARCH}. {15} (2006) 213--234. \url{https://doi.org/\%7B10.1191/0962280206sm448oa\%7D}.}
 
 \leavevmode\hypertarget{ref-ma2012}{}%
-{[}48{]} Y. Ma, M. Mazumdar, S.G. Memtsoudis, Beyond Repeated-Measures Analysis of Variance Advanced Statistical Methods for the Analysis of Longitudinal Data in Anesthesia Research, Regional Anesthesia and Pain Medicine. 37 (n.d.) 99--105. \href{https://doi.org/\%7B10.1097/AAP.0b013e31823ebc74\%7D}{https://doi.org/\{10.1097/AAP.0b013e31823ebc74\}}.
+\CSLLeftMargin{{[}48{]} }
+\CSLRightInline{Y. Ma, M. Mazumdar, S.G. Memtsoudis, {Beyond Repeated-Measures Analysis of Variance Advanced Statistical Methods for the Analysis of Longitudinal Data in Anesthesia Research}, {Regional Anesthesia and Pain Medicine}. {37} (2012) 99--105. \url{https://doi.org/\%7B10.1097/AAP.0b013e31823ebc74\%7D}.}
 
 \leavevmode\hypertarget{ref-nlme}{}%
-{[}49{]} J. Pinheiro, D. Bates, S. DebRoy, D. Sarkar, R Core Team, nlme: Linear and nonlinear mixed effects models, 2020. \url{https://CRAN.R-project.org/package=nlme}.
+\CSLLeftMargin{{[}49{]} }
+\CSLRightInline{J. Pinheiro, D. Bates, S. DebRoy, D. Sarkar, R Core Team, {nlme}: Linear and nonlinear mixed effects models, 2020. \url{https://CRAN.R-project.org/package=nlme}.}
 
 \leavevmode\hypertarget{ref-nelder1972}{}%
-{[}50{]} J.A. Nelder, R.W.M. Wedderburn, Generalized linear models, Journal of the Royal Statistical Society. Series A (General). 135 (1972) 370--384. \url{http://www.jstor.org/stable/2344614}.
+\CSLLeftMargin{{[}50{]} }
+\CSLRightInline{J.A. Nelder, R.W.M. Wedderburn, Generalized linear models, Journal of the Royal Statistical Society. Series A (General). 135 (1972) 370--384. \url{http://www.jstor.org/stable/2344614}.}
 
 \leavevmode\hypertarget{ref-hastie1987}{}%
-{[}51{]} T. Hastie, R. Tibshirani, Generalized additive models: Some applications, Journal of the American Statistical Association. 82 (1987) 371--386. \url{https://doi.org/10.1080/01621459.1987.10478440}.
+\CSLLeftMargin{{[}51{]} }
+\CSLRightInline{T. Hastie, R. Tibshirani, Generalized additive models: Some applications, Journal of the American Statistical Association. 82 (1987) 371--386. \url{https://doi.org/10.1080/01621459.1987.10478440}.}
 
 \leavevmode\hypertarget{ref-hefley2017}{}%
-{[}52{]} T.J. Hefley, K.M. Broms, B.M. Brost, F.E. Buderman, S.L. Kay, H.R. Scharf, J.R. Tipton, P.J. Williams, M.B. Hooten, The basis function approach for modeling autocorrelation in ecological data, ECOLOGY. 98 (n.d.) 632--646. \href{https://doi.org/\%7B10.1002/ecy.1674\%7D}{https://doi.org/\{10.1002/ecy.1674\}}.
+\CSLLeftMargin{{[}52{]} }
+\CSLRightInline{T.J. Hefley, K.M. Broms, B.M. Brost, F.E. Buderman, S.L. Kay, H.R. Scharf, J.R. Tipton, P.J. Williams, M.B. Hooten, {The basis function approach for modeling autocorrelation in ecological data}, {ECOLOGY}. {98} (2017) 632--646. \url{https://doi.org/\%7B10.1002/ecy.1674\%7D}.}
 
 \leavevmode\hypertarget{ref-wegman1983}{}%
-{[}53{]} E.J. Wegman, I.W. Wright, Splines in statistics, Journal of the American Statistical Association. 78 (1983) 351--365. \url{https://doi.org/10.1080/01621459.1983.10477977}.
+\CSLLeftMargin{{[}53{]} }
+\CSLRightInline{E.J. Wegman, I.W. Wright, Splines in statistics, Journal of the American Statistical Association. 78 (1983) 351--365. \url{https://doi.org/10.1080/01621459.1983.10477977}.}
 
 \leavevmode\hypertarget{ref-gratia}{}%
-{[}54{]} G.L. Simpson, Gratia: Graceful 'ggplot'-based graphics and other functions for gams fitted using 'mgcv', 2020. \url{https://CRAN.R-project.org/package=gratia}.
+\CSLLeftMargin{{[}54{]} }
+\CSLRightInline{G.L. Simpson, Gratia: Graceful 'ggplot'-based graphics and other functions for GAMs fitted using 'mgcv', 2020. \url{https://CRAN.R-project.org/package=gratia}.}
 
 \leavevmode\hypertarget{ref-harezlak2018}{}%
-{[}55{]} J. Harezlak, D. Ruppert, M.P. Wand, Semiparametric regression with r, Springer New York, 2018. \url{https://doi.org/10.1007/978-1-4939-8853-2}.
+\CSLLeftMargin{{[}55{]} }
+\CSLRightInline{J. Harezlak, D. Ruppert, M.P. Wand, Semiparametric regression with r, Springer New York, 2018. \url{https://doi.org/10.1007/978-1-4939-8853-2}.}
+
+\end{CSLReferences}
 
 \hypertarget{appendix-appendix}{%
 \appendix}
@@ -1232,9 +1309,9 @@ summary(gam_00)
 ## -REML = 437.64  Scale est. = 390.17    n = 100
 \end{lstlisting}
 
-Special attention must be paid to the `k-index' from \passthrough{\lstinline!gam.check!}. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trens in the data, this is indicated by a low k-index value (\textless{}1). From the output, it can be seen that the k-index is effectively \textless{}0.3, which indicates that the model is not capturing the variability in the data. The `edf' (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
+Special attention must be paid to the `k-index' from \passthrough{\lstinline!gam.check!}. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trens in the data, this is indicated by a low k-index value (\textless1). From the output, it can be seen that the k-index is effectively \textless0.3, which indicates that the model is not capturing the variability in the data. The `edf' (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
 
-From the \passthrough{\lstinline!summary!} function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is `identity' as the model does not make any transformation on the predictors. The `significance of smooth terms' \emph{p-value} indicates if each smooth is adding significance to the model. Here, the \emph{p-value} is low but we have seen that there are issues with the model from the previous outputs. Finally, the `deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to \textasciitilde{}12\%.
+From the \passthrough{\lstinline!summary!} function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is `identity' as the model does not make any transformation on the predictors. The `significance of smooth terms' \emph{p-value} indicates if each smooth is adding significance to the model. Here, the \emph{p-value} is low but we have seen that there are issues with the model from the previous outputs. Finally, the `deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to \textasciitilde12\%.
 
 \hypertarget{second-model}{%
 \subsubsection{Second model}\label{second-model}}
@@ -1299,7 +1376,7 @@ summary(gam_01)
 ## -REML = 414.21  Scale est. = 246.41    n = 100
 \end{lstlisting}
 
-Diagnostics for this model indicate that the k-index is still below 1 (0.32 from \passthrough{\lstinline!gam.check!}), and that the residuals are still not following a normal distribution (Figure \ref{fig:second-GAM-diag}). Moreover, the smooths (plotted via the \passthrough{\lstinline!draw()!} function) appear with a fairly linear profile, which indicates they are still not capturing the trends observed in the data. From \passthrough{\lstinline!summary()!}, the deviance explained by the model is \textasciitilde{}43\%.
+Diagnostics for this model indicate that the k-index is still below 1 (0.32 from \passthrough{\lstinline!gam.check!}), and that the residuals are still not following a normal distribution (Figure \ref{fig:second-GAM-diag}). Moreover, the smooths (plotted via the \passthrough{\lstinline!draw()!} function) appear with a fairly linear profile, which indicates they are still not capturing the trends observed in the data. From \passthrough{\lstinline!summary()!}, the deviance explained by the model is \textasciitilde43\%.
 
 
 
@@ -1376,7 +1453,7 @@ summary(m1)
 ## -REML =  368.7  Scale est. = 78.468    n = 100
 \end{lstlisting}
 
-The resulting model is\passthrough{\lstinline!m1!}, which is the model fitted in the main manuscript. By using \passthrough{\lstinline!appraise()!} and \passthrough{\lstinline!draw!} on this model (Figure \ref{fig:final-GAM-diag}) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group . From \passthrough{\lstinline!gam.check!}, the k-index is now at an acceptable value (\textasciitilde{}1.02), and \passthrough{\lstinline!summary!} now indicates that the model is able to capture 87\% of the variance data.
+The resulting model is\passthrough{\lstinline!m1!}, which is the model fitted in the main manuscript. By using \passthrough{\lstinline!appraise()!} and \passthrough{\lstinline!draw!} on this model (Figure \ref{fig:final-GAM-diag}) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group . From \passthrough{\lstinline!gam.check!}, the k-index is now at an acceptable value (\textasciitilde1.02), and \passthrough{\lstinline!summary!} now indicates that the model is able to capture 87\% of the variance data.
 
 
 
@@ -1417,7 +1494,7 @@ The estimation of significant differences between each treatment group can be ac
 
 
 ##matrix that contains the basis functions evaluated at the points in pdat
-    xp <- predict(gam1, newdata = pdat, type = 'lpmatrix')
+    xp <- predict(m1, newdata = pdat, type = 'lpmatrix')
 
     
 #Find columns in xp where the name contains "Control"

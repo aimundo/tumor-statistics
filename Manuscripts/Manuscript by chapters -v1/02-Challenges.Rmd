@@ -180,12 +180,18 @@ example <- function(n_time = 6, #number of time points
   
   
   ## repeated measures ANOVA in R
-#time and treatment interaction model, compound symmetry required by the model
+#time and treatment interaction model
+  fit_anova <- lm(y ~ time + treatment + time * treatment, data = dat)
+  
+  
+  #LMEM with compound symmetry
+  
   fit_lme <- lme(y ~ treatment + time + treatment:time,
                  data = dat,
                  random = ~ 1 | subject,
                  correlation = corCompSymm(form = ~ 1 | subject)
   )
+  
   
   #create a prediction frame where the model can be used for plotting purposes
   pred_dat <- expand.grid(
@@ -194,13 +200,16 @@ example <- function(n_time = 6, #number of time points
   )
   
   #add model predictions to the dataframe that has the simulated data
-  dat$y_pred <- predict(fit_lme)
+  dat$pred_anova <- predict(fit_anova)
+  dat$pred_lmem <- predict(fit_lme)
+
   
   #return everything in a list
   return(list(
     dat = dat,
     pred_dat = pred_dat,
-    fit_lme = fit_lme
+    fit_lme = fit_lme,
+    fit_anova=fit_anova
     
   ))
 }
@@ -230,7 +239,31 @@ plot_example <- function(sim_dat) {
     thm
   
  
-   #plot the model predictions
+   #plot the model predictions for rm-ANOVA
+  p2 <- ggplot(sim_dat$dat, 
+               aes(x = time, 
+                   y = y, 
+                   color = treatment)) +
+    geom_point()+
+    labs(y='response')+
+    geom_line(aes(y = predict(sim_dat$fit_anova), 
+                  group = subject, size = "Subjects")) +
+    geom_line(data = sim_dat$pred_dat, 
+              aes(y = predict(sim_dat$fit_anova, 
+                              level = 0, 
+                              newdata = sim_dat$pred_dat), 
+                  size = "Population")) +
+    guides(color = guide_legend(override.aes = list(size = 2)))+
+    scale_size_manual(name = "Predictions", 
+                      values=c("Subjects" = 0.5, "Population" = 3)) +
+    theme_classic() +
+    theme(plot.title = element_text(size = 30, 
+                                  face = "bold"),
+        text=element_text(size=30))+
+    thm
+  
+  
+   #plot the model predictions for LMEM
   p4 <- ggplot(sim_dat$dat, 
                aes(x = time, 
                    y = y, 
@@ -253,7 +286,7 @@ plot_example <- function(sim_dat) {
         text=element_text(size=30))+
     thm
   
-  return((p1+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
+  return((p1+p2+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
     
 }
 

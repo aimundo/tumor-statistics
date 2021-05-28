@@ -82,7 +82,7 @@ example <- function(n_time = 6, #number of time points
   ## visualizing the difference between independent errors and compound symmetry
   ## why do we need to account for this -- overly confident inference
   
-#labelling y and errors  
+#labeling y and errors  
   dimnames(y) <- list(time = x, 
                       treatment = 1:2, 
                       subject = 1:10)
@@ -117,8 +117,11 @@ example <- function(n_time = 6, #number of time points
                                   sep = "-")))
   
   
-  ## repeated measures ANOVA in R
-#time and treatment interaction model, compound symmetry required by the model
+  ## repeated measures ANOVA 
+  
+  fit_anova <- lm(y ~ time + treatment + time * treatment, data = dat)
+  
+#LMEM: time and treatment interaction model, compound symmetry 
   fit_lme <- lme(y ~ treatment + time + treatment:time,
                  data = dat,
                  random = ~ 1 | subject,
@@ -132,14 +135,15 @@ example <- function(n_time = 6, #number of time points
   )
   
   #add model predictions to the dataframe that has the simulated data
-  dat$y_pred <- predict(fit_lme)
-  
+  dat$pred_anova <- predict(fit_anova)
+  dat$pred_lmem <- predict(fit_lme)
+
   #return everything in a list
   return(list(
     dat = dat,
     pred_dat = pred_dat,
+    fit_anova=fit_anova,
     fit_lme = fit_lme
-    
   ))
 }
 ##################Section for plotting#################################
@@ -148,6 +152,7 @@ example <- function(n_time = 6, #number of time points
 
 plot_example <- function(sim_dat) {
   ## Plot the simulated data (scatterplot)
+  
   p1 <- sim_dat$dat %>%
     ggplot(aes(x = time, 
                y = y, 
@@ -203,8 +208,34 @@ plot_example <- function(sim_dat) {
         text=element_text(size=30))+
     thm
   
-   #plot the model predictions
+   #plot the model predictions for rm-ANOVA
   p4 <- ggplot(sim_dat$dat, 
+               aes(x = time, 
+                   y = y, 
+                   color = treatment)) +
+    geom_point(show.legend=FALSE)+
+    labs(y='response')+
+    geom_line(aes(y = predict(sim_dat$fit_anova), 
+                  group = subject, size = "Subjects"),show.legend = FALSE) +
+    geom_line(data = sim_dat$pred_dat, 
+              aes(y = predict(sim_dat$fit_anova, 
+                              level = 0, 
+                              newdata = sim_dat$pred_dat), 
+                  size = "Population"),
+              show.legend=FALSE) +
+    guides(color = guide_legend(override.aes = list(size = 2)))+
+    scale_size_manual(name = "Predictions", 
+                      values=c("Subjects" = 0.5, "Population" = 3)) +
+    theme_classic() +
+    theme(plot.title = element_text(size = 30, 
+                                  face = "bold"),
+        text=element_text(size=30))+
+    thm
+   
+   
+   
+   #plot the LMEM predictions
+  p5 <- ggplot(sim_dat$dat, 
                aes(x = time, 
                    y = y, 
                    color = treatment)) +
@@ -226,7 +257,7 @@ plot_example <- function(sim_dat) {
         text=element_text(size=30))+
     thm
   
-  return((p1+p3+p2+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
+  return((p1+p3+p2+p4+p5)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
   
     
 }
@@ -246,7 +277,7 @@ D1<-plot_example(example(fun_type = "quadratic", error_type = "independent"))
 ```
 
 
-(ref:linear-cases-appendix) Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model. A, C:Simulated data with known mean response (linear or quadratic, thin lines) and individual responses (points) showing the dispersion of the data. B,D: Estimations from the rm-ANOVA model for the mean group response (linear of quadratic). Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. The rm-ANOVA model does not pick the trend of the quadratic data.
+(ref:linear-cases-appendix) Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are able to capture the trend of the data.
 
 
 ```{r, linear-cases-Appendix, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:linear-cases-appendix)'}
@@ -257,7 +288,7 @@ A1/B1+plot_annotation(tag_levels = 'A')
 For the quadratic response case, Figure \@ref(fig:quadratic-cases-Appendix) shows the simulated responses using compound symmetry and independent errors. 
 
 
-(ref:quadratic-caption-appendix) Simulated quadratic responses from two groups with a rm-ANOVA model fitted. A,E:Simulated data with known mean response (lines) and individual responses (points) showing the dispersion of the data. B,F: Generated errors showing the difference in the behavior of correlated and independent errors.  C,G: Simulated known response per group (thick lines) with individual trajectories (thin lines), note that subjects with observations in the area above the mean response tend to stay in that region through the timeline. D,H: Estimations from the rm-ANOVA model for the mean group response. Thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data.
+(ref:quadratic-caption-appendix) Simulated quadratic responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are not able to capture the changes in each group over time.
 
 
 ```{r, quadratic-cases-Appendix, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:quadratic-caption-appendix)'}
@@ -545,12 +576,12 @@ This section shows a basic workflow to fit a series of increasingly complex GAMs
 
 ### First model
 
-The first model fitted to the data is one that only accounts for different smooths by day. The model syntax specifies that `gam_00` is the object that will contain all the model information, and that the model attempts to explain changes in `StO2_sim` (simulated $\mbox{StO}_2$) using a smooth per `Day`. The model will use 5 knots (`k=5`) for the smooth. And that the smooth is constructed using gaussian process basis (`bs="gp"`). The smoothing parameter estimation method used is the restricted maximum likelihood (`REML`).
+The first model fitted to the data is one that only accounts for different smooths by day. The model syntax specifies that `gam_00` is the object that will contain all the model information, and that the model attempts to explain changes in `StO2_sim` (simulated $\mbox{StO}_2$) using a smooth per `Day`. The model will use 5 knots (`k=5`) for the smooth. The smooth is constructed by default using thin plate regression splines. The smoothing parameter estimation method used is the restricted maximum likelihood (`REML`).
 
 
 ```{r, first-GAM, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
 
-gam_00<-gam(StO2_sim ~ s(Day, k = 5,bs="gp"),
+gam_00<-gam(StO2_sim ~ s(Day, k = 5),
             method='REML',
             data  = dat_sim)
 
@@ -619,7 +650,7 @@ The major flaw of `gam_00` is that this model is not taking into account the fac
 
 ```{r, second-GAM, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
 
-gam_01<-gam(StO2_sim ~ s(Day, by=Group,k = 5,bs="gp"),
+gam_01<-gam(StO2_sim ~ s(Day, by=Group,k = 5),
             method='REML',
             data  = dat_sim)
 
@@ -649,7 +680,7 @@ Model `gam_00` was built for didactic purposes to cover the simplest case, but i
 
 #GAM for StO2
 
-m1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5,bs="gp"),
+m1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),
             method='REML',
             data  = dat_sim)
 
@@ -1101,9 +1132,9 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
 pair_comp<-c1+c2
 ```
 
-(ref:pairwise-comp-caption) Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset.  B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the interval does not cover 0. In both cases the effect of treatment is significant after day 5.
+(ref:pairwise-caption-both) Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset.  B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the interval does not cover 0. In both cases the effect of treatment is significant after day 5.
 
-```{r,plot-pairwise-comp-Appendix,fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:pairwise-comp-caption)'}
+```{r,plot-pairwise-comp-Appendix,fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:pairwise-caption-both)'}
 
 pair_comp+plot_annotation(tag_levels='A')&
   theme(

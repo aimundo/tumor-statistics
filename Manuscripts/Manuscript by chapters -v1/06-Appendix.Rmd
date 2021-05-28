@@ -695,7 +695,7 @@ The estimation of significant differences between each treatment group can be ac
 
 
 ##matrix that contains the basis functions evaluated at the points in pdat
-    xp <- predict(gam1, newdata = pdat, type = 'lpmatrix')
+    xp <- predict(m1, newdata = pdat, type = 'lpmatrix')
 
     
 #Find columns in xp where the name contains "Control"

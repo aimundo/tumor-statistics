@@ -4,6 +4,11 @@ subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
 header-includes:
     \usepackage{placeins}
 output:  
+  bookdown::html_document2:
+    css: "style.css" #style for the HTML document
+  bookdown::word_document2:
+    fig_caption: yes #figure caption
+    keep_md: yes
   bookdown::pdf_document2:
     #template: my-template.tex #if a custom template that removes the additional "and" in the author information is desired
     pandoc_args: --listings #calls the listings package to fit code in the page margins
@@ -16,11 +21,6 @@ output:
       float: null #allows for control of placement of figures
     includes:
       in_header: preamble.sty #additional LaTeX formatting
-  bookdown::word_document2:
-    fig_caption: yes #figure caption
-    keep_md: yes
-  bookdown::html_document2:
-    css: "style.css" #style for the HTML document
 csl: elsevier-with-titles.csl #style for references
 bibliography: refs.bib #references
 link-citations: yes #adds links to the citations
