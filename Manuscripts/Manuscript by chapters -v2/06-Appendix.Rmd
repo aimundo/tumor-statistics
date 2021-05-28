@@ -402,7 +402,7 @@ p12<-ggplot(basis_plot,
   theme_classic()+
   thm
 
-#heatmap of the penalization coefficient
+#heatmap of the coefficients
 x_labels<-c("Intercept","1","2","3","4")
 p13<-ggplot(basis_plot,
             aes(x=Basis,
@@ -964,7 +964,7 @@ mult_plot<-f2+inset_element(
   top = 1.0)+
   f3+f4+f6+
    plot_annotation(tag_levels='A')&
-   ylim(c(-5,75)) &
+   ylim(c(-7,75)) &
   theme(
      text=element_text(size=18)
      )&
