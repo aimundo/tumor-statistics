@@ -1,0 +1,6 @@
+# Discussion
+
+Biomedical longitudinal non-linear data is particularly challenging to analyze due to the likelihood of missing observations and different correlation structures in the data. We have visually demonstrated in Section \@ref(simulation) that rm-ANOVA models and LMEMs yield biased estimates when they are used to fit non-linear data, in what is known as "Type III" error [@dennis2019]. This is particularly important because although the _p-value_ is the common measure of statistical significance, the validity of its interpretation is determined by the agreement of the data and the model. Guidelines for statistical reporting in biomedical journals exist (the SAMPL guidelines) [@lang2015] but they have not been widely adopted and in the case of longitudinal data, we consider that researchers would benefit from reporting a visual assessment of the correspondence between the model fit and the data, instead of simply reporting an $R^2$ value.
+
+In this paper we have introduced GAMs as a method to analyze non-linear longitudinal data.  
+Reproducibility is still an issue in biomedical research [@begley2015] [@weissgerber2018], and 
