@@ -1,4 +1,4 @@
-# GAMs as a special case of Generalized Linear Models
+# GAMs as a special case of Generalized Linear Models{#GAM-theory}
 
 ## GAMs and Basis Functions
 
