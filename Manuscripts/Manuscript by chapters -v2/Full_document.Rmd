@@ -4,14 +4,14 @@ subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
 header-includes:
     \usepackage{placeins}
 output:  
-  bookdown::html_document2:
-    css: "style.css" #style for the HTML document
   bookdown::word_document2:
     fig_caption: yes #figure caption
     keep_md: yes
+  bookdown::html_document2:
+    css: "style.css" #style for the HTML document
   bookdown::pdf_document2:
     #template: my-template.tex #if a custom template that removes the additional "and" in the author information is desired
-    pandoc_args: --listings #calls the listings package to fit code in the page margins
+    pandoc_args: --listings #calls the listings package to fit code within the page margins
     keep_tex: yes #keep LaTeX file for submission
     fig_caption: yes #allows captions in figures
     extra_dependencies:
@@ -107,6 +107,7 @@ options(bookdown.post.latex = remove_author)
 
 
 ```{r child='07-Appendix.Rmd'}
+
 ```
 
 

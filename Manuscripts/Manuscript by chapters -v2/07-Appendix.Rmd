@@ -16,6 +16,7 @@ This section simulated linear and quadratic data in the same manner as in Sectio
 The following code produces a more comprehensive exploration of Figure \@ref(fig:l-q-response) in the main manuscript.
 
 ```{r, responses-Appendix,include=TRUE,message=FALSE,echo=TRUE}
+
 set.seed(1)
 ##########Section for calculations###########
 
@@ -304,6 +305,7 @@ This code produces Figure \@ref(fig:basis-plot) from the main manuscript. Briefl
 ```{r,basis-Appendix, echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
 #generate the response: the same initial procedure from the previous section to simulate
 #the response
+set.seed(1)
 n_time = 6
  x <- seq(1,6, length.out = n_time)
  mu <- matrix(0, length(x), 2)
@@ -479,16 +481,14 @@ b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
 par(mar = c(2, 2, 2, 2))
 
 b_plot
-
 ```
-
 
 # Longitudinal biomedical data simulation and GAMs{#tumor-data-simulation}
 
 This section describes how to fit GAMs to longitudinal data using simulated data. First, data is simulated according to Section \@ref(longitudinal-GAMs), where reported data of oxygen saturation ($\mbox{StO}_2$) in tumors under either chemotherapy or saline control is used as a starting point to generate individual responses in each group.
 
 ```{r,sim-tumor-response-Appendix,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
-
+set.seed(1)
 #Dataframe that contains the original reported trends
 dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
             Day=rep(c(0,2,5,7,10),times=2),
@@ -539,7 +539,6 @@ simulate_data <- function(dat, n = 10, sd = 5) {
 
 
 #subject = factor(paste(subject, treatment, sep = "-")))
-
 n <- 10 #number of observations
 sd <- 10 #approximate sd from paper
 df <- 6
@@ -641,7 +640,7 @@ summary(gam_00)
 
 Special attention must be paid to the 'k-index' from `gam.check`. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trens in the data, this is indicated by a low k-index value (<1). From the output, it can be seen that the k-index is effectively <0.3, which indicates that the model is not capturing the variability in the data. The 'edf' (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
 
-From the `summary` function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is 'identity' as the model does not make any transformation on the predictors. The 'significance of smooth terms' _p-value_ indicates if each smooth is adding significance to the model. Here, the _p-value_ is low but we have seen that there are issues with the model from the previous outputs. Finally, the 'deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to $\approx$12%.
+From the `summary` function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is 'identity' as the model does not make any transformation on the predictors. The 'significance of smooth terms' _p-value_ indicates if each smooth is adding significance to the model. Here, the _p-value_ is low but we have seen that there are issues with the model from the previous outputs. Finally, the 'deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to $\approx$ 12%.
 
 ### Second model
 
@@ -658,7 +657,7 @@ gam.check(gam_01)
 summary(gam_01)
 ```
 
-Diagnostics for this model indicate that the k-index is still below 1 (0.32 from `gam.check`), and that the residuals are still not following a normal distribution (Figure  \@ref(fig:second-GAM-diag)). Moreover, the smooths (plotted via the `draw()` function) appear with a fairly linear profile, which indicates they are still not capturing the trends observed in the data. From `summary()`, the deviance explained by the model is $\approx$43%.
+Diagnostics for this model indicate that the k-index is still below 1 (0.32 from `gam.check`), and that the residuals are still not following a normal distribution (Figure  \@ref(fig:second-GAM-diag)). Moreover, the smooths (plotted via the `draw()` function) appear with a fairly linear profile, which indicates they are still not capturing the trends observed in the data. From `summary()`, the deviance explained by the model is $\approx$ 43%.
 
 (ref:second-GAM-caption) Graphical diagnostics for the second GAM model. Left: Graphical diagnostics provided by the function `appraise` from the package _gratia_. Right: Fitted smooth for the model, provided by the function `draw`.
 
@@ -688,7 +687,7 @@ gam.check(m1)
 summary(m1)
 ```
 
-The resulting model is`m1`, which is the model fitted in the main manuscript. By using `appraise()` and `draw` on this model (Figure  \@ref(fig:final-GAM-diag)) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group . From `gam.check`, the k-index is now at an acceptable value ($\approx$1.02), and `summary` now indicates that the model is able to capture 87% of the variance data.
+The resulting model is`m1`, which is the model fitted in the main manuscript. By using `appraise()` and `draw` on this model (Figure  \@ref(fig:final-GAM-diag)) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group . From `gam.check`, the k-index is now at an acceptable value ($\approx$ 1.02), and `summary` now indicates that the model is able to capture 87% of the variance data.
 
 (ref:final-GAM-caption) Graphical diagnostics for the final GAM model. Left: Graphical diagnostics provided by the function `appraise` from the package _gratia_. Right: Fitted smooths for the model, provided by the function `draw`.
 
@@ -710,7 +709,7 @@ One final  comparison that can be made for model selection involves the use of t
 
 ```{r,model-selection-AIC}
 
-AIC(gam_00,gam_01,gam1)
+AIC(gam_00,gam_01,m1)
 
 ```
 
@@ -718,14 +717,15 @@ The output in this case is expected: model `gam1` has a lower AIC (711.46) where
 
 #### Pairwise comparisons of smooth confidence intervals
 
-The estimation of significant differences between each treatment group can be achieved via pairwise comparisons of the smooth confidence intervals as described in section \@ref(GAM-significance). In this case, the "design matrix" is used to estimate the pairwise comparisons (see main manuscript for details and associated references). Briefly, the "design matrix" (also known as the "Xp matrix") from the selected model (`gam1`) is used to calculate a 95% confidence interval of the difference between the smooth terms for each group. This approach allows to estimate the time intervals where a significant difference exists between the groups (confidence interval above or below 0). 
+The estimation of significant differences between each treatment group can be achieved via pairwise comparisons of the smooth confidence intervals as described in section \@ref(GAM-significance). In this case, the "design matrix" is used to estimate the pairwise comparisons (see main manuscript for details and associated references). Briefly, the "design matrix" (also known as the "Xp matrix") from the selected model (`m1`) is used to calculate a 95% confidence interval of the difference between the smooth terms for each group. This approach allows to estimate the time intervals where a significant difference exists between the groups (confidence interval above or below 0). **All pairwise comparisons in this paper have been centered at the response scale to ease interpretation **.
 
 ```{r,pairwise-comp-workflow,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
 ##Pairwise comparisons
-
+pdat <- expand.grid(Day = seq(0, 10, length = 400),
+                    Group = c('Control', 'Treatment'))
 
 ##matrix that contains the basis functions evaluated at the points in pdat
-    xp <- predict(gam1, newdata = pdat, type = 'lpmatrix')
+    xp <- predict(m1, newdata = pdat, type = 'lpmatrix')
 
     
 #Find columns in xp where the name contains "Control"
@@ -746,18 +746,18 @@ The estimation of significant differences between each treatment group can be ac
     ## remove columns that do not contain name 'Control' or 'Treatment'
     X[, ! (c1 | c2)] <- 0
     ## zero out the parametric cols, those that do not contain in the characters 's('
-    X[, !grepl('^s\\(', colnames(xp))] <- 0
+    #X[, !grepl('^s\\(', colnames(xp))] <- 0
 
     #Multiply matrix by model coefficients. X has (p,n) (rows, columns) and the coefficient matrix has
     #dimensions (n,1). The resulting matrix has dimensions (p,1)
-    dif <- X %*% coef(gam1)
+    dif <- X %*% coef(m1)
 
     #comp<-test %*% coef(gam1)[3:10]
 
 #Calculate standard error for the computed differences using the variance-covariance matrix
     #of the model
-    se <- sqrt(rowSums((X %*% vcov(gam1, unconditional = FALSE)) * X))
-    crit <- qt(0.05/2, df.residual(gam1), lower.tail = FALSE)
+    se <- sqrt(rowSums((X %*% vcov(m1, unconditional = FALSE)) * X))
+    crit <- qt(0.05/2, df.residual(m1), lower.tail = FALSE)
     #upper  limits
     upr <- dif + (crit * se)
     #lower limits
@@ -807,7 +807,7 @@ c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
 
 ```
 
-(ref:pairwise-comp-caption) Smooth pairwise comparisons for model `gam1` using a 95% confidence interval for the difference between smooths. 
+(ref:pairwise-comp-caption) Smooth pairwise comparisons for model `m1` using a 95% confidence interval for the difference between smooths. 
 
 ```{r, pairwise-comp-workflow-fig, fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:pairwise-comp-caption)'}
 c1
@@ -817,13 +817,16 @@ Of notice, a convenient wrapper for the function described above exists in the p
 
 https://cran.r-project.org/web/packages/gratia/gratia.pdf
 
+Keep in mind that this function **does not** center the pairwise comparison at the response scale, so it has to be shifted in order to be compared to the raw data.
+
+
 # GAM and Linear model plots and Missing data
 
-This section covers the code used to generate Figure \@ref(fig:sim-smooth-plot), where the simulated data, fit of the "final" GAM (`gam1`), linear model  and GAM on data with missing observations are presented. Note that panel A in Figure \@ref(fig:sim-smooth-plot) and the inlet are generated in the code chunk where the data is simulated in Section \@ref(tumor-data-simulation), and are called later to build the figure.
+This section covers the code used to generate Figure \@ref(fig:sim-smooth-plot), where the simulated data, fit of the "final" GAM (`m1`), linear model  and GAM on data with missing observations are presented. Note that panel A in Figure \@ref(fig:sim-smooth-plot) and the inlet are generated in the code chunk where the data is simulated in Section \@ref(tumor-data-simulation), and are called later to build the figure.
 
 ## GAM and Linear model plots
 
-This code chunk creates panels B and D in Figure \@ref(fig:sim-smooth-plot). Note that this code uses the final GAM from the previous section (`gam1`), so the simulated data and the model should be generated before running this section. 
+This code chunk creates panels B and D in Figure \@ref(fig:sim-smooth-plot). Note that this code uses the final GAM from the previous section (`m1`), so the simulated data and the model should be generated before running this section. 
 
 ```{r, plotting-appendix, echo=TRUE, include=TRUE, message=FALSE, warning=FALSE}
 #linear model
@@ -844,8 +847,8 @@ lm_predict$subject<-factor(paste(lm_predict$subject, lm_predict$Group, sep = "-"
 
 #adds the predictions to the grid and creates a confidence interval for GAM
 gam_predict<-gam_predict%>%
-    mutate(fit = predict(gam1,gam_predict,se.fit = TRUE,type='response')$fit,
-           se.fit = predict(gam1, gam_predict,se.fit = TRUE,type='response')$se.fit)
+    mutate(fit = predict(m1,gam_predict,se.fit = TRUE,type='response')$fit,
+           se.fit = predict(m1, gam_predict,se.fit = TRUE,type='response')$se.fit)
 
 #using lm
 lm_predict<-lm_predict%>%
@@ -919,7 +922,7 @@ This code chunk first randomly deletes 40% of the total observations in the orig
 #missing data
 #create a sequence of 40 random numbers between 1 and 100, these numbers will
 #correspond to the row numbers to be randomly erased from the original dataset
-set.seed(1)
+
 missing <- sample(1:100, 40)
 
 #create a new dataframe from the simulated data with 40 rows randomly removed, keep the missing values as NA
@@ -1022,12 +1025,10 @@ pdat <- expand.grid(Day = seq(0, 10, length = 400),
 smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
                         unconditional = FALSE) {
     xp <- predict(model, newdata = newdata, type = 'lpmatrix')
-    #Find columns in xp where the name contains "Control"
+    #Find columns in xp where the name contains "Control" and "Treatment"
     col1 <- grepl(g1, colnames(xp))
-    #Find columns in xp where the name contains 'Treatment'
     col2 <- grepl(g2, colnames(xp))
-    #r1 <- newdata[[var]] == f1
-    #r2 <- newdata[[var]] == f2
+    #Find rows in xp that correspond to each treatment
     row1 <- with(newdata, Group == g1)
     row2 <- with(newdata, Group == g2)
     ## difference rows of xp for data from comparison
@@ -1035,7 +1036,7 @@ smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
     ## zero out cols of X related to splines for other lochs
     X[, ! (col1 | col2)] <- 0
     ## zero out the parametric cols
-    X[, !grepl('^s\\(', colnames(xp))] <- 0
+    #X[, !grepl('^s\\(', colnames(xp))] <- 0
     dif <- X %*% coef(model)
     se <- sqrt(rowSums((X %*% vcov(model, unconditional = unconditional)) * X))
     crit <- qt(alpha/2, df.residual(model), lower.tail = FALSE)
@@ -1110,11 +1111,11 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
                 fill='#DB3A07FF') +
     geom_line(color='#E75B64FF',size=1) +
     geom_line(data=comp_StO2_missing,aes(y=0),size=0.5)+
-    geom_ribbon(data=comp_StO2_missing%>%
-                    filter(lower>0),
-                aes(ymin =0, ymax =lower),
-                alpha = 0.5,
-                fill='#30123BFF') +
+    # geom_ribbon(data=comp_StO2_missing%>%
+    #                 filter(lower>0),
+    #             aes(ymin =0, ymax =lower),
+    #             alpha = 0.5,
+    #             fill='#30123BFF') +
     geom_ribbon(data=comp_StO2_missing %>%
                     filter(upper<0),
                     aes(ymin =0, ymax =upper),

@@ -23,6 +23,7 @@ To further clarify the concept of basis functions and smooth functions, consider
 
 
 ```{r,basis-functions-plot, echo=FALSE,include=FALSE,message=FALSE,warning=FALSE}
+set.seed(1)
 n_time = 6
  x <- seq(1,6, length.out = n_time)
  mu <- matrix(0, length(x), 2)
