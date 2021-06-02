@@ -474,7 +474,7 @@ b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
 
 ```
 
-(ref:basis-caption-appendix) Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Penalty matrix for the basis functions. Each basis function is penalized by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Penalized basis functions. Each of the four basis functions of panel A has been penalized by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D: Smoother for time and original data points. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.
+(ref:basis-caption-appendix) Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2, the intercept basis is not shown. B: Coefficient matrix for the basis functions. Each basis function is weighted by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Weighted basis functions. Each of the four basis functions of panel A has been weighted by the corresponding coefficient shown in Panel B, note the corresponding increase (or decrease) of each basis. D: Smoother for time and original data points. The smoother (line) is the result of the sum of each penalized basis function at each time point, simulated values for the group appear as points.
 
 ```{r,basis-plot-appendix,fig.width=10, fig.height=10, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, fig.show='hold', fig.cap='(ref:basis-caption-appendix)'}
 
@@ -687,7 +687,7 @@ gam.check(m1)
 summary(m1)
 ```
 
-The resulting model is`m1`, which is the model fitted in the main manuscript. By using `appraise()` and `draw` on this model (Figure  \@ref(fig:final-GAM-diag)) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group . From `gam.check`, the k-index is now at an acceptable value ($\approx$ 1.02), and `summary` now indicates that the model is able to capture 87% of the variance data.
+The resulting model is `m1`, which is the model fitted in the main manuscript. By using `appraise()` and `draw` on this model (Figure  \@ref(fig:final-GAM-diag)) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group. From `gam.check`, the k-index is now at an acceptable value ($\approx$ 1.02), and `summary` now indicates that the model is able to capture 87% of the variance data.
 
 (ref:final-GAM-caption) Graphical diagnostics for the final GAM model. Left: Graphical diagnostics provided by the function `appraise` from the package _gratia_. Right: Fitted smooths for the model, provided by the function `draw`.
 
@@ -713,7 +713,7 @@ AIC(gam_00,gam_01,m1)
 
 ```
 
-The output in this case is expected: model `gam1` has a lower AIC (711.46) whereas the initial two models have higher AICs (891 and 850). The AIC should not be considered as the only estimator of model goodness, instead to be used as complimentary information to the graphical diagnostics and model checks described above.
+The output in this case is expected: model `gam1` has a lower AIC (711.46) whereas the initial two models have higher AICs (891 and 850). The AIC should not be considered as the only estimator of model quality, instead to be used as complimentary information to the graphical diagnostics and model checks described above.
 
 #### Pairwise comparisons of smooth confidence intervals
 
