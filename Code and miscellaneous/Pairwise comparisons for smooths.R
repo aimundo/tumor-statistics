@@ -126,6 +126,36 @@ c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
 c1
 
 
+c2<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
+    geom_rect(data=comp_StO2%>%
+                    filter(lower>0),
+              fill='blue',
+              alpha = 0.1,
+                aes(xmin =Day[1], xmax =Day[153],ymin=-Inf,ymax=Inf),
+                ) +
+    geom_rect(data=comp_StO2 %>%
+                  filter(upper<0),
+              fill='red',
+              alpha = 0.1,
+              aes(xmin=Day[1],xmax=Day[212],ymin =-Inf, ymax =Inf),
+
+              ) +
+    geom_ribbon(aes(ymin = lower, ymax = upper),
+                alpha = 0.9,
+                fill='black') +
+    geom_line(data=comp_StO2,aes(y=0),size=0.5)+
+    geom_line(color='black',size=1) +
+
+    facet_wrap(~ pair) +
+    theme_classic()+
+    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    theme(
+        text=element_text(size=18),
+        legend.title=element_blank()
+    )
+
+c2
 ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.9,
@@ -149,9 +179,7 @@ ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
     theme(
         text=element_text(size=18),
         legend.title=element_blank()
-    )+
-    scale_color_aaas()+
-    scale_fill_aaas()
+    )
 
 c1
 #######################
@@ -208,3 +236,4 @@ c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
         text=element_text(size=18),
         legend.title=element_blank()
     )
+
