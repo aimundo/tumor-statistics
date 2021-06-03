@@ -125,21 +125,35 @@ c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
 
 c1
 
+annotate("rect",
+         xmin=100,
+         xmax=200,
+         ymin=0,
+         ymax=Inf,
+         alpha=0.2,
+         fill="red")
+
+#find interval where Control is higher, get the value of Day
+
+v1<-comp_StO2%>%
+    filter(lower>0)%>%
+    select(Day)
+
+v2<-comp_StO2%>%
+    filter(upper<0)%>%
+    select(Day)
 
 c2<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
-    geom_rect(data=comp_StO2%>%
-                    filter(lower>0),
-              fill='blue',
-              alpha = 0.1,
-                aes(xmin =Day[1], xmax =Day[153],ymin=-Inf,ymax=Inf),
+    annotate("rect",
+                xmin =0, xmax =v1$Day[[nrow(v1)]],ymin=-Inf,ymax=Inf,
+                fill='blue',
+                alpha = 0.1,
                 ) +
-    geom_rect(data=comp_StO2 %>%
-                  filter(upper<0),
-              fill='red',
-              alpha = 0.1,
-              aes(xmin=Day[1],xmax=Day[212],ymin =-Inf, ymax =Inf),
-
-              ) +
+    annotate("rect",
+             xmin =v2$Day[[1]], xmax =v2$Day[[nrow(v2)]],ymin=-Inf,ymax=Inf,
+             fill='red',
+             alpha = 0.1,
+    ) +
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.9,
                 fill='black') +
@@ -156,6 +170,8 @@ c2<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
     )
 
 c2
+
+
 ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.9,
