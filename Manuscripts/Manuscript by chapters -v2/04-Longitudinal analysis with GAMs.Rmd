@@ -23,7 +23,6 @@ This syntax specifies that `m1` will store the model, and that the change in the
 One question that might arise at this point is "what is the fit that an rm-ANOVA model produces for the simulated data?". The rm-ANOVA model, which corresponds to Equation \@ref(eq:linear-model) is presented in Figure \@ref(fig:sim-smooth-plot), C. This is a typical case of model misspecification: The slopes of each group are different, which would lead to a _p-value_ indicating significance for the treatment and time effects, but the model is not capturing the changes that occur at days 2 and between days 5 and 7, whereas the GAM model is able to do so (Figure \@ref(fig:sim-smooth-plot), B) .
 
 ```{r,sim-tumor-response,echo=FALSE,include=FALSE,message=FALSE,warning=FALSE}
-set.seed(1)
 dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
             Day=rep(c(0,2,5,7,10),times=2),
             Group=as.factor(rep(c("Control","Treatment"),each=5))
@@ -331,22 +330,67 @@ comp_StO2_full <- cbind(Day = seq(0, 10, length = 400),
     lower>0~"greater"
   ))
 
+#function to obtain values for the shading regions
+pairwise_limits<-function(dataframe){
+    #extract values where the lower limit of the ribbon is greater than zero
+    #this is the region where the control group effect is greater
+    v1<-dataframe%>%
+        filter(lower>0)%>%
+        select(Day)
+    #get day  initial value
+    init1=v1$Day[[1]]
+    #get day final value
+    final1=v1$Day[[nrow(v1)]]
+
+    #extract values where the value of the upper limit of the ribbon is lower than zero
+    #this corresponds to the region where the treatment group effect is greater
+    v2<-comp_StO2_full%>%
+        filter(upper<0)%>%
+        select(Day)
+
+    init2=v2$Day[[1]]
+    final2=v2$Day[[nrow(v2)]]
+    #store values
+    my_list<-list(init1=init1,
+                  final1=final1,
+                  init2=init2,
+                  final2=final2)
+return(my_list)
+}
+
+my_list<-pairwise_limits(comp_StO2_full)
+
 c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
+    annotate("rect",
+                xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
+                fill='#30123BFF',
+                alpha = 0.5,
+                ) +
+  annotate("text",
+             x=1.5,
+             y=-15,
+             label="Control",
+           size=10,
+           angle=90
+           )+
+    annotate("rect",
+             xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
+             fill='#7A0403FF',
+             alpha = 0.5,
+    ) +
+  annotate("text",
+             x=6,
+             y=-15,
+             label="Treatment",
+             size=10,
+           angle=90
+           )+
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.5,
                 fill='#DB3A07FF') +
-    geom_line(color='#E75B64FF',size=1) +
     geom_line(data=comp_StO2_full,aes(y=0),size=0.5)+
-    geom_ribbon(data=comp_StO2_full%>%
-                    filter(lower>0),
-                aes(ymin =0, ymax =lower),
-                alpha = 0.5,
-                fill='#30123BFF') +
-    geom_ribbon(data=comp_StO2_full %>%
-                    filter(upper<0),
-                    aes(ymin =0, ymax =upper),
-                alpha = 0.5,
-                fill='#7A0403FF') +
+    geom_line(color='black',size=1) +
+
     facet_wrap(~ pair) +
     theme_classic()+
     labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
@@ -355,7 +399,6 @@ c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
         text=element_text(size=18),
         legend.title=element_blank()
     )
-
 
 
 ###for missing data
@@ -377,22 +420,38 @@ missing_plot<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
      legend.title=element_blank()
      )
 
+my_list<-pairwise_limits(comp_StO2_missing)
+
 c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
+    annotate("rect",
+             xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
+             fill='#30123BFF',
+             alpha = 0.5
+             ) +
+  annotate("text",
+             x=1.5,
+             y=-15,
+             label="Control",
+           size=10,
+           angle=90
+           )+
+    annotate("rect",
+             xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
+             fill='#7A0403FF',
+             alpha = 0.5,
+    ) +
+  annotate("text",
+             x=6,
+             y=-15,
+             label="Treatment",
+             size=10,
+           angle=90
+           )+
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.5,
                 fill='#DB3A07FF') +
-    geom_line(color='#E75B64FF',size=1) +
     geom_line(data=comp_StO2_missing,aes(y=0),size=0.5)+
-    # geom_ribbon(data=comp_StO2_missing%>%
-    #                 filter(lower>0),
-    #             aes(ymin =0, ymax =lower),
-    #             alpha = 0.5,
-    #             fill='#30123BFF') +
-    geom_ribbon(data=comp_StO2_missing %>%
-                    filter(upper<0),
-                    aes(ymin =0, ymax =upper),
-                alpha = 0.5,
-                fill='#7A0403FF') +
+    geom_line(color='black',size=1) +
     facet_wrap(~ pair) +
     theme_classic()+
     labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
@@ -425,7 +484,7 @@ With this expectation of different trends in each group, computing the differenc
 
 Consider the calculation of pairwise differences for the smooths in Figure \@ref(fig:sim-smooth-plot), B and D. Figure \@ref(fig:plot-pairwise-comp), shows the comparison between each treatment group for the full and missing datasets. Here, the  "Control" group is used as the reference to which "Treatment" group is being compared. Of notice, the pairwise comparison has been set on the response scale (see Appendix for code details), because otherwise the comparison appears shifted and is not intuitively easy to relate to the original data.  
 
-With this correction in mind, the shaded region under or above the confidence interval (that does not cover 0) indicates the interval where each group has a higher effect than the other. Notice that the shaded region between days 0 and 3 for the full dataset indicates that through that time, the "Control" group has higher $\mbox{StO}_2$, but as therapy progresses the effect is reversed and by day 4 it is the "Treatment" group the one that has greater $\mbox{StO}_2$. This would suggest that the effect of chemotherapy in the "Treatment" group becomes significant after day 4 for the model used. Moreover, notice that although there is no actual measurement at day 4, the model is capable of providing an estimate of when the shift in $\mbox{StO}_2$ occurs. 
+With this correction in mind, the shaded regions over the confidence interval (where it does not cover 0) indicate the time interval where each group has a higher effect than the other. Notice that the shaded region between days 0 and $\approx$ 2 for the full dataset indicates that through that time, the "Control" group has higher $\mbox{StO}_2$, but as therapy progresses the effect is reversed and by day 4 it is the "Treatment" group the one that has greater $\mbox{StO}_2$. This would suggest that the effect of chemotherapy in the "Treatment" group becomes significant after day 4 for the model used. Moreover, notice that although there is no actual measurement at day 4, the model is capable of providing an estimate of when the shift in $\mbox{StO}_2$ occurs. 
 
 On the data with missing observations (Figure \@ref(fig:sim-smooth-plot), D), the confidence intervals of the smooths overlap between days 0 and 3. Consequently, the smooth pairwise comparison (Figure \@ref(fig:plot-pairwise-comp), B) shows that there is not a significant difference between the groups during that period, but is still able to pick the change on day 4 as the full dataset smooth pairwise comparison. 
 

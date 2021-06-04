@@ -2,7 +2,7 @@
 #significance
 #https://stats.stackexchange.com/questions/376237/correcting-for-multiple-pairwise-comparisons-with-gam-objects-mgcv-in-r
 
-
+set.seed(123)
 dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
             Day=rep(c(0,2,5,7,10),times=2),
             Group=as.factor(rep(c("Control","Treatment"),each=5))
@@ -34,132 +34,143 @@ df <- 6
 dat_sim <- simulate_data(dat, n, sd)
 
 
-gam1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5,bs="gp"),
+m1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5,bs="gp"),
             method='REML',
             data  = dat_sim)
 
-#creates fine grid at the values of Day
-pdat <- expand.grid(Day = seq(0, 10, length = 400),
-                    Group = c('Control', 'Treatment'))
+######missing data###########
+#############################
+missing <- sample(1:100, 40)
 
-##matrix that contains the basis functions evaluated at the points in pdat
-    xp <- predict(gam1, newdata = pdat, type = 'lpmatrix')
+#create a new dataframe from the simulated data with 40 rows randomly removed, keep the missing values as NA
 
+ind <- which(dat_sim$StO2_sim %in% sample(dat_sim$StO2_sim, 40))
 
-#Find columns in xp where the name contains "Control"
-    c1 <- grepl('Control', colnames(xp))
+#create a new dataframe, remove the StO2 column
+dat_missing <- dat_sim[,-1]
 
-#Find columns in xp where the name contains 'Treatment'
-    c2 <- grepl('Treatment', colnames(xp))
+#add NAs at the ind positions
+dat_missing$StO2_sim[ind]<-NA
 
-#Find rows in pdat that correspond to either 'Control' or 'Treatment'
-    r1 <- with(pdat, Group == 'Control')
-    r2 <- with(pdat, Group == 'Treatment')
-
-# In xp: find the rows that correspond to Control or Treatment, those that do not match will be
-    #set to zero. Then, substract the values from the rows corresponding to 'Control' from those that correspond
-    #to 'Treatment'
-    X <- xp[r1, ] - xp[r2, ]
-
-    test<-control-treatment
+#Count the number of remaining observations per day (original dataset had 10 per group per day)
+dat_missing %>%
+    group_by(Day,Group) %>%
+    filter(!is.na(StO2_sim))%>%
+    count(Day)
 
 
-    ## remove columns that do not contain name 'Control' or 'Treatment'
-    X[, ! (c1 | c2)] <- 0
-    ## zero out the parametric cols, those that do not contain in the characters 's('
-    X[, !grepl('^s\\(', colnames(xp))] <- 0
+#the same model used for the full dataset
+mod_m1 <- gam(StO2_sim ~ Group+s(Day,by=Group,k=5), data  = dat_missing)
+#appraise the model
+appraise(mod_m1)
 
-    #Multiply matrix by model coefficients. X has (p,n) (rows, columns) and the coefficient matrix has
-    #dimensions (n,1). The resulting matrix has dimensions (p,1)
-    dif <- X %*% coef(gam1)
 
-    #comp<-test %*% coef(gam1)[3:10]
+m_predict <- expand_grid(Group = factor(c("Control", "Treatment")),
+                         Day = seq(0, 10, by = 0.1))
 
-#Calculate standard error for the computed differences using the variance-covariance matrix
-    #of the model
-    se <- sqrt(rowSums((X %*% vcov(gam1, unconditional = FALSE)) * X))
-    crit <- qt(0.05/2, df.residual(gam1), lower.tail = FALSE)
-    #upper  limits
+#adds the predictions to the grid and creates a confidence interval
+m_predict<-m_predict%>%
+    mutate(fit = predict(mod_m1,m_predict,se.fit = TRUE,type='response')$fit,
+           se.fit = predict(mod_m1, m_predict,se.fit = TRUE,type='response')$se.fit)
+
+##pairwise comparisons###
+smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
+                        unconditional = FALSE) {
+    xp <- predict(model, newdata = newdata, type = 'lpmatrix')
+    #Find columns in xp where the name contains "Control" and "Treatment"
+    col1 <- grepl(g1, colnames(xp))
+    col2 <- grepl(g2, colnames(xp))
+    #Find rows in xp that correspond to each treatment
+    row1 <- with(newdata, Group == g1)
+    row2 <- with(newdata, Group == g2)
+    ## difference rows of xp for data from comparison
+    X <- xp[row1, ] - xp[row2, ]
+    ## zero out cols of X related to splines for other lochs
+    X[, ! (col1 | col2)] <- 0
+    ## zero out the parametric cols
+    #X[, !grepl('^s\\(', colnames(xp))] <- 0
+    dif <- X %*% coef(model)
+    se <- sqrt(rowSums((X %*% vcov(model, unconditional = unconditional)) * X))
+    crit <- qt(alpha/2, df.residual(model), lower.tail = FALSE)
     upr <- dif + (crit * se)
-    #lower limits
     lwr <- dif - (crit * se)
-    #put all components in a dataframe for plotting
-    comp1<-data.frame(pair = paste('Control', 'Treatment', sep = '-'),
+    data.frame(pair = paste(g1, g2, sep = '-'),
                diff = dif,
                se = se,
                upper = upr,
                lower = lwr)
+}
+
+pdat <- expand.grid(Day = seq(0, 10, length = 400),
+                    Group = c('Control', 'Treatment'))
 
 
+comp1<-smooth_diff(m1,pdat,'Control','Treatment')
 
-#add time point sequence
-comp_StO2 <- cbind(Day = seq(0, 10, length = 400),
-                   rbind(comp1))
+comp_StO2_full <- cbind(Day = seq(0, 10, length = 400),
+                        rbind(comp1)) %>%
+    mutate(interval=case_when(
+        upper>0 & lower<0~"no-diff",
+        upper<0~"less",
+        lower>0~"greater"
+    ))
 
-#plot the difference
-c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
-    geom_ribbon(aes(ymin = lower, ymax = upper),
-                alpha = 0.5,
-                fill='black') +
-    geom_line(color='black',size=1) +
-    geom_line(data=comp_StO2,aes(y=0),size=0.5)+
-    geom_ribbon(data=comp_StO2%>%
-                    filter(lower>0),
-                aes(ymin =0, ymax =lower),
-                alpha = 0.5,
-                fill='blue') +
-    geom_ribbon(data=comp_StO2 %>%
-                    filter(upper<0),
-                    aes(ymin =0, ymax =upper),
-                alpha = 0.5,
-                fill='red') +
-    facet_wrap(~ pair) +
-    theme_classic()+
-    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
-    scale_x_continuous(breaks=c(0,2,5,7,10))+
-    theme(
-        text=element_text(size=18),
-        legend.title=element_blank()
-    )
+###plot for full data####
+#function to extract limits for the shades
+pairwise_limits<-function(dataframe){
+    #extract values where the lower limit of the ribbon is greater than zero
+    #this is the region where the control group effect is greater
+    v1<-dataframe%>%
+        filter(lower>0)%>%
+        select(Day)
+    #get day  initial value
+    init1=v1$Day[[1]]
+    #get day final value
+    final1=v1$Day[[nrow(v1)]]
+
+    #extract values where the value of the upper limit of the ribbon is lower than zero
+    #this corresponds to the region where the treatment group effect is greater
+    v2<-comp_StO2_full%>%
+        filter(upper<0)%>%
+        select(Day)
+
+    init2=v2$Day[[1]]
+    final2=v2$Day[[nrow(v2)]]
+    #store values
+    my_list<-list(init1=init1,
+                  final1=final1,
+                  init2=init2,
+                  final2=final2)
+return(my_list)
+}
 
 
-c1
+my_list<-pairwise_limits(comp_StO2_full)
 
-annotate("rect",
-         xmin=100,
-         xmax=200,
-         ymin=0,
-         ymax=Inf,
-         alpha=0.2,
-         fill="red")
-
-#find interval where Control is higher, get the value of Day
-
-v1<-comp_StO2%>%
-    filter(lower>0)%>%
-    select(Day)
-
-v2<-comp_StO2%>%
-    filter(upper<0)%>%
-    select(Day)
-
-c2<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
+c2<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
     annotate("rect",
-                xmin =0, xmax =v1$Day[[nrow(v1)]],ymin=-Inf,ymax=Inf,
+                xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
                 fill='blue',
-                alpha = 0.1,
-                ) +
+                alpha = 0.1) +
+    annotate("text",
+             x=1.5,
+             y=-10,
+             label="Control",size=10)+
     annotate("rect",
-             xmin =v2$Day[[1]], xmax =v2$Day[[nrow(v2)]],ymin=-Inf,ymax=Inf,
+             xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
              fill='red',
              alpha = 0.1,
     ) +
+    annotate("text",
+             x=6,
+             y=-10,
+             label="Treatment",
+             size=10)+
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.9,
                 fill='black') +
-    geom_line(data=comp_StO2,aes(y=0),size=0.5)+
+    geom_line(data=comp_StO2_full,aes(y=0),size=0.5)+
     geom_line(color='black',size=1) +
-
     facet_wrap(~ pair) +
     theme_classic()+
     labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
@@ -172,22 +183,35 @@ c2<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
 c2
 
 
-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
+####plot for missing data####
+comp2<-smooth_diff(mod_m1,pdat,'Control','Treatment')
+
+comp_StO2_missing <- cbind(Day = seq(0, 10, length = 400),
+                        rbind(comp2)) %>%
+    mutate(interval=case_when(
+        upper>0 & lower<0~"no-diff",
+        upper<0~"less",
+        lower>0~"greater"
+    ))
+
+my_list<-pairwise_limits(comp_StO2_missing)
+
+c3<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
+    annotate("rect",
+             xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
+             fill='blue',
+             alpha = 0.1,
+    ) +
+    annotate("rect",
+             xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
+             fill='red',
+             alpha = 0.1,
+    ) +
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.9,
-                fill="#f6d8ae") +
-    geom_line(color='#E79626',size=1) +
-    geom_line(data=comp_StO2,aes(y=0),size=0.5)+
-    geom_ribbon(data=comp_StO2%>%
-                    filter(lower>0),
-                aes(ymin =0, ymax =lower),
-                alpha = 0.9,
-                fill="#083d77") +
-    geom_ribbon(data=comp_StO2 %>%
-                    filter(upper<0),
-                aes(ymin =0, ymax =upper),
-                alpha = 0.9,
-                fill="#da4167") +
+                fill='black') +
+    geom_line(data=comp_StO2_missing,aes(y=0),size=0.5)+
+    geom_line(color='black',size=1) +
     facet_wrap(~ pair) +
     theme_classic()+
     labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
@@ -197,7 +221,7 @@ ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
         legend.title=element_blank()
     )
 
-c1
+c3
 #######################
 
 ##original code for the comparisons, from Gavin Simpson's blog.
@@ -207,31 +231,31 @@ pdat <- expand.grid(Day = seq(0, 10, length = 400),
 smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
                         unconditional = FALSE) {
     xp <- predict(model, newdata = newdata, type = 'lpmatrix')
-    c1 <- grepl(f1, colnames(xp))
-    c2 <- grepl(f2, colnames(xp))
+    c1 <- grepl(g1, colnames(xp))
+    c2 <- grepl(g2, colnames(xp))
     #r1 <- newdata[[var]] == f1
     #r2 <- newdata[[var]] == f2
-    r1 <- with(newdata, Group == f1)
-    r2 <- with(newdata, Group == f2)
+    r1 <- with(newdata, Group == g1)
+    r2 <- with(newdata, Group == g2)
     ## difference rows of xp for data from comparison
     X <- xp[r1, ] - xp[r2, ]
     ## zero out cols of X related to splines for other lochs
     X[, ! (c1 | c2)] <- 0
     ## zero out the parametric cols
-    X[, !grepl('^s\\(', colnames(xp))] <- 0
+    #X[, !grepl('^s\\(', colnames(xp))] <- 0
     dif <- X %*% coef(model)
     se <- sqrt(rowSums((X %*% vcov(model, unconditional = unconditional)) * X))
     crit <- qt(alpha/2, df.residual(model), lower.tail = FALSE)
     upr <- dif + (crit * se)
     lwr <- dif - (crit * se)
-    data.frame(pair = paste(f1, f2, sep = '-'),
+    data.frame(pair = paste(g1, g2, sep = '-'),
                diff = dif,
                se = se,
                upper = upr,
                lower = lwr)
 }
 
-comp1<-smooth_diff(gam1,pdat,'Control','Treatment')
+comp1<-smooth_diff(m1,pdat,'Control','Treatment')
 
 comp_StO2 <- cbind(Day = seq(0, 10, length = 400),
                    rbind(comp1)) %>%
