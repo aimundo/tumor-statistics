@@ -182,7 +182,7 @@
 \hypertarget{abstract}{%
 \section{Abstract}\label{abstract}}
 
-In biomedical research, the outcome of longitudinal studies has been traditionally analyzed using the \emph{repeated measures analysis of variance} (rm-ANOVA) or more recently, \emph{linear mixed models} (LMEMs). Although LMEMs are less restrictive than rm-ANOVA in terms of correlation and missing observations, both methodologies share an assumption of linearity in the measured response, which results in biased estimates and unreliable inference when they are used to analyze data where the trends are non-linear. In contrast, generalized additive models (GAMs) relax the linearity assumption, and allow the data to determine the fit of the model while permitting missing observations and different correlation structures. Therefore, GAMs present an excellent choice to analyze non-linear longitudinal data in the context of biomedical research. This paper summarizes the limitations of rm-ANOVA and LMEMs, presents the basic theory of GAMs, and uses simulated data that follows trends reported in the biomedical literature to demonstrate their implementation in \(\textsf{R}\) via the package \emph{mgcv}. To make this work reproducible, the code and data used in this paper are available at: \url{https://github.com/aimundo/GAMs-biomedical-research}.
+In biomedical research, the outcome of longitudinal studies has been traditionally analyzed using the \emph{repeated measures analysis of variance} (rm-ANOVA) or more recently, \emph{linear mixed models} (LMEMs). Although LMEMs are less restrictive than rm-ANOVA in terms of correlation and missing observations, both methodologies share an assumption of linearity in the measured response, which results in biased estimates and unreliable inference when they are used to analyze data where the trends are non-linear. In contrast, generalized additive models (GAMs) relax the linearity assumption, and allow the data to determine the fit of the model while permitting missing observations and different correlation structures. Therefore, GAMs present an excellent choice to analyze non-linear longitudinal data in the context of biomedical research. This paper summarizes the limitations of rm-ANOVA and LMEMs and uses simulated data to visually show how both methods produce biased estimates when used on non-linear data. We also present the basic theory of GAMs, and use simulated data that follows trends reported in the biomedical literature to demonstrate how these models are implemented in \(\textsf{R}\) via the package \emph{mgcv}, showing that GAMs are able to produce estimates that are consistent with the trends of non-linear data even if the case when missing observations exist. To make this work reproducible, the code and data used in this paper are available at: \url{https://github.com/aimundo/GAMs-biomedical-research}.
 
 \hypertarget{background}{%
 \section{Background}\label{background}}
@@ -409,7 +409,7 @@ Because GAMs do not require equally-spaced or complete observations for all subj
 
 }
 
-\caption{Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset. B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the interval does not cover 0. In both cases the effect of treatment is significant after day 5.}\label{fig:plot-pairwise-comp}
+\caption{Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset. B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the interval does not cover 0. In both cases the effect of treatment is significant after day 3.}\label{fig:plot-pairwise-comp}
 \end{figure}
 
 \hypertarget{GAM-significance}{%
@@ -421,9 +421,9 @@ With this expectation of different trends in each group, computing the differenc
 
 Consider the calculation of pairwise differences for the smooths in Figure \ref{fig:sim-smooth-plot}, B and D. Figure \ref{fig:plot-pairwise-comp}, shows the comparison between each treatment group for the full and missing datasets. Here, the ``Control'' group is used as the reference to which ``Treatment'' group is being compared. Of notice, the pairwise comparison has been set on the response scale (see Appendix for code details), because otherwise the comparison appears shifted and is not intuitively easy to relate to the original data.
 
-With this correction in mind, the shaded regions over the confidence interval (where it does not cover 0) indicate the time interval where each group has a higher effect than the other. Notice that the shaded region between days 0 and \(\approx\) 2 for the full dataset indicates that through that time, the ``Control'' group has higher \(\mbox{StO}_2\), but as therapy progresses the effect is reversed and by day 4 it is the ``Treatment'' group the one that has greater \(\mbox{StO}_2\). This would suggest that the effect of chemotherapy in the ``Treatment'' group becomes significant after day 4 for the model used. Moreover, notice that although there is no actual measurement at day 4, the model is capable of providing an estimate of when the shift in \(\mbox{StO}_2\) occurs.
+With this correction in mind, the shaded regions over the confidence interval (where it does not cover 0) indicate the time interval where each group has a higher effect than the other. Notice that the shaded region between days 0 and \(\approx\) 2 for the full dataset indicates that through that time, the ``Control'' group has higher \(\mbox{StO}_2\), but as therapy progresses the effect is reversed and by \(\approx\) 3 day it is the ``Treatment'' group the one that has greater \(\mbox{StO}_2\). This would suggest that the effect of chemotherapy in the ``Treatment'' group becomes significant after day 3 for the model used. Moreover, notice that although there is no actual measurement at day 3, the model is capable of providing an estimate of when the shift in \(\mbox{StO}_2\) occurs.
 
-On the data with missing observations (Figure \ref{fig:sim-smooth-plot}, D), the confidence intervals of the smooths overlap between days 0 and 3. Consequently, the smooth pairwise comparison (Figure \ref{fig:plot-pairwise-comp}, B) shows that there is not a significant difference between the groups during that period, but is still able to pick the change on day 4 as the full dataset smooth pairwise comparison.
+On the data with missing observations (Figure \ref{fig:sim-smooth-plot}, D), the confidence intervals of the smooths overlap between days 0 and 3. Consequently, the smooth pairwise comparison (Figure \ref{fig:plot-pairwise-comp}, B) shows that there is not a significant difference between the groups during that period, but is still able to pick the change on day 3 as the full dataset smooth pairwise comparison.
 
 In a sense, the pairwise smooth comparison is more informative than a \emph{post-hoc} \emph{p-value}. For biomedical studies, the smooth comparison is able to provide an estimate of \emph{when} and by \emph{how much} a biological process becomes significant. This is advantageous because it can help researchers gain insight on metabolic changes and other biological processes that can be worth examining, and can help refine the experimental design of future studies in order to obtain measurements at time points where a significant change might be expected.
 
@@ -436,7 +436,7 @@ Biomedical longitudinal non-linear data is particularly challenging to analyze d
 
 In this paper we have presented GAMs as a suitable method to analyze non-linear longitudinal data. It is interesting to note that although GAMs are a well established method to analyze temporal data in different fields (among which are palaeoecology, geochemistry, and ecology) {[}\protect\hyperlink{ref-pedersen2019}{33},\protect\hyperlink{ref-hefley2017}{52}{]} they are not routinely used in biomedical research despite an early publication from Hastie and Tibshirani that demonstrated their use in medical research {[}\protect\hyperlink{ref-hastie1995}{57}{]}. This is possibly due to the fact that the theory behind GAMs can seem very different from that of rm-ANOVA and LMEMs, but the purpose of Section \ref{GAM-theory} is to demonstrate that at its core the theory quite simple: Instead of using a linear relationship to model the response (as rm-ANOVA and LMEMs do), GAMs use basis functions to build smooths that are capable of following non-linear trends in the data.
 
-However, from a practical standpoint is equally important to demonstrate how GAMs are computationally implemented. We have provided an example on how GAMs can be fitted using simulated data that follows trends reported in biomedical literature {[}\protect\hyperlink{ref-vishwanath2009}{16}{]} using \(\textsf{R}\) and the package \emph{mgcv}{[}\protect\hyperlink{ref-wood2017}{37}{]} in Section \ref{longitudinal-GAMs}, while a basic workflow for model selection is in the Appendix. One of the features of GAMs is that they go beyond a mere \emph{p-value} to indicate differences between groups, and in turn provide a time-based estimate of shifts in the response that can be directly tied to biological values as the pairwise smooth comparisons in Figure \ref{fig:plot-pairwise-comp} indicate. The model is therefore able to provide an estimate of significant change between the groups at time points were data was not directly measured even with missing data exists ( \(\approx\) day 4 in Figure \ref{fig:plot-pairwise-comp} A, B ), which can be used by researchers as feedback on experiment design and to further evaluate important biological changes in future studies.
+However, from a practical standpoint is equally important to demonstrate how GAMs are computationally implemented. We have provided an example on how GAMs can be fitted using simulated data that follows trends reported in biomedical literature {[}\protect\hyperlink{ref-vishwanath2009}{16}{]} using \(\textsf{R}\) and the package \emph{mgcv}{[}\protect\hyperlink{ref-wood2017}{37}{]} in Section \ref{longitudinal-GAMs}, while a basic workflow for model selection is in the Appendix. One of the features of GAMs is that they go beyond a mere \emph{p-value} to indicate differences between groups, and in turn provide a time-based estimate of shifts in the response that can be directly tied to biological values as the pairwise smooth comparisons in Figure \ref{fig:plot-pairwise-comp} indicate. The model is therefore able to provide an estimate of significant change between the groups at time points were data was not directly measured even with missing data exists ( \(\approx\) day 3 in Figure \ref{fig:plot-pairwise-comp} A, B ), which can be used by researchers as feedback on experiment design and to further evaluate important biological changes in future studies.
 
 We have used \(\textsf{R}\) as the software of choice for this paper because not only provides a fully developed environment to fit GAMs, but also eases simulation (which is becoming increasingly used for exploratory statistical analysis and power calculations) and provides powerful and convenient methods of visualization, which are key aspects that biomedical researchers might need to consider to make their work reproducible. In this regard, reproducibility is still an issue in biomedical research {[}\protect\hyperlink{ref-begley2015}{58},\protect\hyperlink{ref-weissgerber2018}{59}{]}, but it is becoming apparent that what other disciplines have experienced in this aspect is likely to impact sooner rather than later this field. Researchers need to plan on how they will make their data, code, and any other materials open and accessible as more journals and funding agencies recognize the importance and benefits of open science in biomedical research. We have made all the data and code used in this paper accessible, and we hope that this will encourage other researchers to do the same with future projects.
 
@@ -451,7 +451,7 @@ By making the data and code used in this paper accessible, we hope to address th
 \hypertarget{acknowledgements}{%
 \section{Acknowledgements}\label{acknowledgements}}
 
-This work was supported by the National Science Foundation Career Award (CBET 1751554) and the Arkansas Biosciences Institute.
+This work was supported by the National Science Foundation Career Award (CBET 1751554, TJM) and the Arkansas Biosciences Institute.
 
 \FloatBarrier
 
@@ -1918,9 +1918,9 @@ c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
                 ) +
   annotate("text",
              x=1.5,
-             y=-15,
-             label="Control",
-           size=10,
+             y=-18,
+             label="Control>Treatment",
+           size=8,
            angle=90
            )+
     annotate("rect",
@@ -1930,9 +1930,9 @@ c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
     ) +
   annotate("text",
              x=6,
-             y=-15,
-             label="Treatment",
-             size=10,
+             y=-18,
+             label="Treatment>Control",
+             size=8,
            angle=90
            )+
     geom_ribbon(aes(ymin = lower, ymax = upper),
@@ -1980,8 +1980,9 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
     ) +
   annotate("text",
              x=1.5,
-             y=-15,
-             label="Control",size=10
+             y=-18,
+             label="Control>Treatment",
+           size=8
            )+
     annotate("rect",
              xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
@@ -1990,9 +1991,9 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
     ) +
   annotate("text",
              x=6,
-             y=-15,
-             label="Treatment",
-             size=10)+
+             y=-18,
+             label="Treatment>Control",
+             size=8)+
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.5,
                 fill='#DB3A07FF') +
@@ -2016,7 +2017,7 @@ pair_comp<-c1+c2
 
 }
 
-\caption{Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset. B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the interval does not cover 0. In both cases the effect of treatment is significant after day 5.}\label{fig:plot-pairwise-comp-Appendix}
+\caption{Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset. B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the interval does not cover 0. In both cases the effect of treatment is significant after day 3.}\label{fig:plot-pairwise-comp-Appendix}
 \end{figure}
 
 \end{document}

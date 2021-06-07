@@ -6,5 +6,5 @@ By making the data and code used in this paper accessible, we hope to address th
 
 # Acknowledgements
 
-This work was supported by the National Science Foundation Career Award (CBET 1751554) and the Arkansas Biosciences Institute.
+This work was supported by the National Science Foundation Career Award (CBET 1751554, TJM) and the Arkansas Biosciences Institute.
 

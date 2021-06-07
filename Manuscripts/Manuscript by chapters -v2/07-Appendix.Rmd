@@ -1099,9 +1099,9 @@ c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
                 ) +
   annotate("text",
              x=1.5,
-             y=-15,
-             label="Control",
-           size=10,
+             y=-18,
+             label="Control>Treatment",
+           size=8,
            angle=90
            )+
     annotate("rect",
@@ -1111,9 +1111,9 @@ c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
     ) +
   annotate("text",
              x=6,
-             y=-15,
-             label="Treatment",
-             size=10,
+             y=-18,
+             label="Treatment>Control",
+             size=8,
            angle=90
            )+
     geom_ribbon(aes(ymin = lower, ymax = upper),
@@ -1161,8 +1161,9 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
     ) +
   annotate("text",
              x=1.5,
-             y=-15,
-             label="Control",size=10
+             y=-18,
+             label="Control>Treatment",
+           size=8
            )+
     annotate("rect",
              xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
@@ -1171,9 +1172,9 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
     ) +
   annotate("text",
              x=6,
-             y=-15,
-             label="Treatment",
-             size=10)+
+             y=-18,
+             label="Treatment>Control",
+             size=8)+
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.5,
                 fill='#DB3A07FF') +

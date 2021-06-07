@@ -368,9 +368,9 @@ c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
                 ) +
   annotate("text",
              x=1.5,
-             y=-15,
-             label="Control",
-           size=10,
+             y=-18,
+             label="Control>Treatment",
+           size=8,
            angle=90
            )+
     annotate("rect",
@@ -380,9 +380,9 @@ c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
     ) +
   annotate("text",
              x=6,
-             y=-15,
-             label="Treatment",
-             size=10,
+             y=-18,
+             label="Treatment>Control",
+             size=8,
            angle=90
            )+
     geom_ribbon(aes(ymin = lower, ymax = upper),
@@ -430,9 +430,9 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
              ) +
   annotate("text",
              x=1.5,
-             y=-15,
-             label="Control",
-           size=10,
+             y=-18,
+             label="Control>Treatment",
+           size=8,
            angle=90
            )+
     annotate("rect",
@@ -442,9 +442,9 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
     ) +
   annotate("text",
              x=6,
-             y=-15,
-             label="Treatment",
-             size=10,
+             y=-18,
+             label="Treatment>Control",
+             size=8,
            angle=90
            )+
     geom_ribbon(aes(ymin = lower, ymax = upper),
@@ -464,7 +464,7 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
 pair_comp<-c1+c2
 ```
 
-(ref:pairwise-comp) Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset.  B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the interval does not cover 0. In both cases the effect of treatment is significant after day 5.
+(ref:pairwise-comp) Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset.  B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the interval does not cover 0. In both cases the effect of treatment is significant after day 3.
 
 ```{r,plot-pairwise-comp,fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:pairwise-comp)'}
 
@@ -484,9 +484,9 @@ With this expectation of different trends in each group, computing the differenc
 
 Consider the calculation of pairwise differences for the smooths in Figure \@ref(fig:sim-smooth-plot), B and D. Figure \@ref(fig:plot-pairwise-comp), shows the comparison between each treatment group for the full and missing datasets. Here, the  "Control" group is used as the reference to which "Treatment" group is being compared. Of notice, the pairwise comparison has been set on the response scale (see Appendix for code details), because otherwise the comparison appears shifted and is not intuitively easy to relate to the original data.  
 
-With this correction in mind, the shaded regions over the confidence interval (where it does not cover 0) indicate the time interval where each group has a higher effect than the other. Notice that the shaded region between days 0 and $\approx$ 2 for the full dataset indicates that through that time, the "Control" group has higher $\mbox{StO}_2$, but as therapy progresses the effect is reversed and by day 4 it is the "Treatment" group the one that has greater $\mbox{StO}_2$. This would suggest that the effect of chemotherapy in the "Treatment" group becomes significant after day 4 for the model used. Moreover, notice that although there is no actual measurement at day 4, the model is capable of providing an estimate of when the shift in $\mbox{StO}_2$ occurs. 
+With this correction in mind, the shaded regions over the confidence interval (where it does not cover 0) indicate the time interval where each group has a higher effect than the other. Notice that the shaded region between days 0 and $\approx$ 2 for the full dataset indicates that through that time, the "Control" group has higher $\mbox{StO}_2$, but as therapy progresses the effect is reversed and by $\approx$ 3 day  it is the "Treatment" group the one that has greater $\mbox{StO}_2$. This would suggest that the effect of chemotherapy in the "Treatment" group becomes significant after day 3 for the model used. Moreover, notice that although there is no actual measurement at day 3, the model is capable of providing an estimate of when the shift in $\mbox{StO}_2$ occurs. 
 
-On the data with missing observations (Figure \@ref(fig:sim-smooth-plot), D), the confidence intervals of the smooths overlap between days 0 and 3. Consequently, the smooth pairwise comparison (Figure \@ref(fig:plot-pairwise-comp), B) shows that there is not a significant difference between the groups during that period, but is still able to pick the change on day 4 as the full dataset smooth pairwise comparison. 
+On the data with missing observations (Figure \@ref(fig:sim-smooth-plot), D), the confidence intervals of the smooths overlap between days 0 and 3. Consequently, the smooth pairwise comparison (Figure \@ref(fig:plot-pairwise-comp), B) shows that there is not a significant difference between the groups during that period, but is still able to pick the change on day 3 as the full dataset smooth pairwise comparison. 
 
 In a sense, the pairwise smooth comparison is more informative than a _post-hoc_ _p-value_. For biomedical studies, the smooth comparison is able to provide an estimate of _when_ and by _how much_ a biological process becomes significant. This is advantageous because it can help researchers gain insight on metabolic changes and other biological processes that can be worth examining, and can help refine the experimental design of future studies in order to obtain measurements at time points where a significant change might be expected.
 
