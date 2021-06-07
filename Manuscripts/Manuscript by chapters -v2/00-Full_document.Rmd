@@ -9,6 +9,7 @@ output:
     pandoc_args: --listings #calls the listings package to fit code within the page margins
     keep_tex: yes #keep LaTeX file for submission
     fig_caption: yes #allows captions in figures
+    toc: false #do not include table of contents
     extra_dependencies:
       subfig: null #allows for subfigures
       breqn: null #line breaks for long equations
