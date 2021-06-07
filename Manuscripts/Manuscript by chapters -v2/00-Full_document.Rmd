@@ -1,5 +1,5 @@
 ---
-title: '**The statistical analysis of non-linear longitudinal data in biomedical research using generalized additive models**'
+title: '**Using generalized additive models to analyze biomedical non-linear longitudinal data**'
 subtitle: _Beyond repeated measures ANOVA and Linear Mixed Models_
 header-includes:
     \usepackage{placeins}
