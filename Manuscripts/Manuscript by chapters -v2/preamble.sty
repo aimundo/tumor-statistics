@@ -1,16 +1,26 @@
 \usepackage{lineno}
 \usepackage{authblk}
+\usepackage{hyperref}
+\usepackage{graphicx}
 
+%set a box to put the ORCID logo
+\newbox{\myorcidaffilbox}
+\sbox{\myorcidaffilbox}{\large\includegraphics[height=1.7ex]{orcid}}
+
+%add hyperlink to the box
+\newcommand{\orcidaffila}[1]{%
+  \href{https://orcid.org/0000-0002-6014-4538}{\usebox{\myorcidaffilbox}}}
 
 %command for the package lineno
 \linenumbers
 
 %authors
-\author[1]{Ariel I. Mundo}
+\author[1]{Ariel I. Mundo \orcidaffila{}}
 \author[2]{John R. Tipton}
-\author[1]{Timothy J. Muldoon}
+\author[1]{Timothy J. Muldoon \thanks{Corresponding author, tmuldoon@uark.edu}}
 \affil[1]{\footnotesize Department of Biomedical Engineering, University of Arkansas, Fayetteville, AR, USA}
 \affil[2]{\footnotesize Department of Mathematical Sciences, University of Arkansas, Fayetteville, AR, USA}
+
 
 \usepackage{xcolor} %theme colors for the code chunks (originally from latex-solarized on GitHub)
 \definecolor{sbase03}{HTML}{002B36}
