@@ -146,7 +146,7 @@ return(my_list)
 
 
 my_list<-pairwise_limits(comp_StO2_full)
-
+rib_col<-'#EDD03AFF'
 c2<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
     annotate("rect",
                 xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
@@ -168,7 +168,7 @@ c2<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
              size=10)+
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.9,
-                fill='black') +
+                fill=rib_col) +
     geom_line(data=comp_StO2_full,aes(y=0),size=0.5)+
     geom_line(color='black',size=1) +
     facet_wrap(~ pair) +

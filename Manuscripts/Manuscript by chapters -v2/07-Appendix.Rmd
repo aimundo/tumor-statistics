@@ -565,7 +565,7 @@ f2<-ggplot(dat_sim,
 
 ```
 
-## A basic Workflow for GAMs
+## A basic Workflow for GAMs{#workflow}
 
 This section shows a basic workflow to fit a series of increasingly complex GAMs to the simulated data from the previous section. Graphical and parameter diagnostics for goodness of fit are discussed, as well as model comparison via AIC (Aikake Information Criterion). 
 
@@ -774,7 +774,7 @@ comp_StO2 <- cbind(Day = seq(0, 10, length = 400),
 #use function from the pairwise comparison plot in the manuscript to get the shaded regions
     
     my_list<-pairwise_limits(comp_StO2)
-
+  rib_col<-'#EDD03AFF' #color for the ribbon
 #plot the difference
 c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
   #shaded region
@@ -803,7 +803,7 @@ c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
   #ribbon for difference confidence interval  
   geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.5,
-                fill='#DB3A07FF') +
+                fill=rib_col) +
     geom_line(color='black',size=1) +
     geom_line(data=comp_StO2,aes(y=0),size=0.5)+
     facet_wrap(~ pair) +
@@ -833,7 +833,7 @@ Keep in mind that this function **does not** center the pairwise comparison at t
 
 # GAM and Linear model plots and Missing data
 
-This section covers the code used to generate Figure \@ref(fig:sim-smooth-plot), where the simulated data, fit of the "final" GAM (`m1`), linear model  and GAM on data with missing observations are presented. Note that panel A in Figure \@ref(fig:sim-smooth-plot) and the inlet are generated in the code chunk where the data is simulated in Section \@ref(tumor-data-simulation), and are called later to build the figure.
+This section covers the code used to generate Figure \@ref(fig:sim-smooth-plot), where the simulated data, fit of the "final" GAM (`m1`), linear model  and GAM on data with missing observations are presented. Note that panel A in Figure \@ref(fig:sim-smooth-plot) and the inset are generated in the code chunk where the data is simulated in Section \@ref(tumor-data-simulation), and are called later to build the figure.
 
 ## GAM and Linear model plots
 
@@ -1090,6 +1090,7 @@ return(my_list)
 }
 
 my_list<-pairwise_limits(comp_StO2_full)
+rib_col<-'#EDD03AFF'
 
 c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
     annotate("rect",
@@ -1118,7 +1119,7 @@ c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
            )+
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.5,
-                fill='#DB3A07FF') +
+                fill=rib_col) +
     geom_line(data=comp_StO2_full,aes(y=0),size=0.5)+
     geom_line(color='black',size=1) +
 
@@ -1177,7 +1178,7 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
              size=8)+
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.5,
-                fill='#DB3A07FF') +
+                fill=rib_col) +
     geom_line(data=comp_StO2_missing,aes(y=0),size=0.5)+
     geom_line(color='black',size=1) +
     facet_wrap(~ pair) +
