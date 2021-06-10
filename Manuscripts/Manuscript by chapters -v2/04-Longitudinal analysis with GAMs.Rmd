@@ -1,5 +1,4 @@
-\newpage
- 
+
 # The analyisis of longitudinal biomedical data using GAMs{#longitudinal-GAMs}
 
 The previous sections provided the basic framework to understand the GAM framework and how these models are more advantageous to analyze non-linear longitudinal data when compared to rm-ANOVA or LMEMs. This section will use simulation to present the practical implementation of GAMs for longitudinal biomedical data using $\textsf{R}$ and the package `mgcv`. The code for the simulated data and figures, and a brief guide for model selection and diagnostics appear in the Appendix.
@@ -487,7 +486,7 @@ Consider the calculation of pairwise differences for the smooths in Figure \@ref
 
 With this correction in mind, the shaded regions over the confidence interval (where it does not cover 0) indicate the time interval where each group has a higher effect than the other. Notice that the shaded region between days 0 and $\approx$ 2 for the full dataset indicates that through that time, the "Control" group has higher mean $\mbox{StO}_2$, but as therapy progresses the effect is reversed and by $\approx$ 3 day  it is the "Treatment" group the one that on average, has greater $\mbox{StO}_2$. This would suggest that the effect of chemotherapy in the "Treatment" group becomes significant after day 3 for the given model. Moreover, notice that although there is no actual measurement at day 3, the model is capable of providing an estimate of when the shift in mean $\mbox{StO}_2$ occurs. 
 
-On the data with missing observations (Figure \@ref(fig:sim-smooth-plot)D), the empirical Bayesian credible confidence intervals of the smooths overlap between days 0 and 3. Consequently, the smooth pairwise comparison (Figure \@ref(fig:plot-pairwise-comp)B) shows that there is no evidence of a significant difference between the groups during that period, but is still able to pick the change on day 3 as the full dataset smooth pairwise comparison. 
+On the data with missing observations (Figure \@ref(fig:sim-smooth-plot)D), the empirical Bayesian credible intervals of the smooths overlap between days 0 and 3. Consequently, the smooth pairwise comparison (Figure \@ref(fig:plot-pairwise-comp)B) shows that there is no evidence of a significant difference between the groups during that period, but is still able to pick the change on day 3 as the full dataset smooth pairwise comparison. 
 
 In a sense, the pairwise smooth comparison is more informative than a _post-hoc_ _p-value_. For biomedical studies, the smooth comparison is able to provide an estimate of _when_ and by _how much_ a biological process becomes significant. This is advantageous because it can help researchers gain insight on metabolic changes and other biological processes that can be worth examining, and can help refine the experimental design of future studies in order to obtain measurements at time points where a significant change might be expected.
 
