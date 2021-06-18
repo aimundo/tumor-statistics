@@ -22,7 +22,7 @@ J. Muldoon*\affilnum{1}}
 University of Arkansas, Fayetteville, AR, US}\\\affilnum{2}{Department
 of Mathematical Sciences, University of Arkansas, Fayetteville, AR, US}}
 
-\corrauth{Corresponding author}
+\corrauth{Timothy J. Muldoon}
 
 \email{\href{mailto:tmuldoon@uark.edu}{\nolinkurl{tmuldoon@uark.edu}}}
 
@@ -72,18 +72,19 @@ frequently uses longitudinal studies to analyze the evolution of a
 the subjects of analysis range from animals (mice, rats, rabbits), to
 human patients, cells, or blood samples, among many others. Tumor
 response \citep{roblyer2011, tank2020, pavlov2018, demidov2018},
-antibody expression \citep{ritter2001, roth2017}, and cell metabolism
-\citep{jones2018, skala2010} are examples of the different situations
-where researchers have used longitudinal designs to study some
-physiological response. Because the frequency of the measurements in a
-longitudinal study is dependent on the biological phenomena of interest
-and the experimental design of the study, the frequency of such
-measurements can range from minute intervals to study a short-term
-response such as anesthesia effects in animals\citep{greening2018}, to
-weekly measurements to analyze a mid-term response like the evolution of
-dermatitis symptoms in breast cancer patients \citep{sio2016}, to
-monthly measurements to study a long-term response such as mouth opening
-following radiotherapy (RT) in neck cancer patients \citep{kamstra2015}.
+antibody expression \citep{ritter2001} \citep{roth2017}, and cell
+metabolism \citep{jones2018} \citep{skala2010} are examples of the
+different situations where researchers have used longitudinal designs to
+study some physiological response. Because the frequency of the
+measurements in a longitudinal study is dependent on the biological
+phenomena of interest and the experimental design of the study, the
+frequency of such measurements can range from minute intervals to study
+a short-term response such as anesthesia effects in
+animals\citep{greening2018}, to weekly measurements to analyze a
+mid-term response like the evolution of dermatitis symptoms in breast
+cancer patients \citep{sio2016}, to monthly measurements to study a
+long-term response such as mouth opening following radiotherapy (RT) in
+neck cancer patients \citep{kamstra2015}.
 
 Traditionally, a ``frequentist'' or ``classical'' statistical paradigm
 is used in biomedical research to derive inferences from a longitudinal
@@ -97,7 +98,7 @@ makes three key assumptions regarding longitudinal data: 1) linearity of
 the response across time, 2) constant correlation across same-subject
 measurements, and 3) observations from each subject are obtained at all
 time points through the study (a condition also known as \emph{complete
-observations}) \citep{gueorguieva2004, schober2018}.
+observations}) \citep{gueorguieva2004} \citep{schober2018}.
 
 The expected linear behavior of the response through time is a key
 requisite in rm-ANOVA \citep{pinheiro2006}. This ``linearity
@@ -107,14 +108,14 @@ inference. In biomedical research, non-linear trends are the norm rather
 than the exception in longitudinal studies. A particular example of this
 non-linear behavior in longitudinal data arises in measurements of tumor
 response to chemo and/or radiotherapy in preclinical and clinical
-settings \citep{roblyer2011, skala2010, vishwanath2009}. These studies
-have shown that the collected signal does not follow a linear trend over
-time, and presents extreme variability at different time points, making
-the fit of rm-ANOVA model inconsistent with the observed variation.
-Therefore, when rm-ANOVA is used to draw inference of such data the
-estimates are inevitably biased, because the model is only able to
-accommodate linear trends that fail to adequately represent the
-biological phenomenon of interest.
+settings \citep{roblyer2011} \citep{skala2010} \citep{vishwanath2009}.
+These studies have shown that the collected signal does not follow a
+linear trend over time, and presents extreme variability at different
+time points, making the fit of rm-ANOVA model inconsistent with the
+observed variation. Therefore, when rm-ANOVA is used to draw inference
+of such data the estimates are inevitably biased, because the model is
+only able to accommodate linear trends that fail to adequately represent
+the biological phenomenon of interest.
 
 A \emph{post hoc} analysis is often used in conjunction with rm-ANOVA to
 perform repeated comparisons to estimate a \emph{p-value}, which in turn
@@ -208,14 +209,14 @@ data. Examples of the use of GAMs include the analysis of temporal
 variations in geochemical and palaeoecological data
 \citep{rose2012, pedersen2019, simpson2018}, health-environment
 interactions \citep{yang2012} and the dynamics of government in
-political science \citep{beck1998} . There are several advantages of
-GAMs over LMEMs and rm-ANOVA models: 1) GAMs can fit a more flexible
-class of smooth responses that enable the data to dictate the trend in
-the fit of the model, 2) they can model non-constant correlation between
-repeated measurements \citep{wood2017} and 3) can easily accommodate
-missing observations. Therefore, GAMs can provide a more flexible
-statistical approach to analyze non-linear biomedical longitudinal data
-than LMEMs and rm-ANOVA.
+political science \citep{beck1998}. There are several advantages of GAMs
+over LMEMs and rm-ANOVA models: 1) GAMs can fit a more flexible class of
+smooth responses that enable the data to dictate the trend in the fit of
+the model, 2) they can model non-constant correlation between repeated
+measurements \citep{wood2017} and 3) can easily accommodate missing
+observations. Therefore, GAMs can provide a more flexible statistical
+approach to analyze non-linear biomedical longitudinal data than LMEMs
+and rm-ANOVA.
 
 The current advances in programming languages designed for statistical
 analysis (specifically \(\textsf{R}\)), have eased the computational
@@ -2558,7 +2559,7 @@ pair_comp<-c1+c2
 \end{figure}
 
 \bibliographystyle{sagev}
-\bibliography{refs1.bib}
+\bibliography{refs.bib}
 
 
 \end{document}

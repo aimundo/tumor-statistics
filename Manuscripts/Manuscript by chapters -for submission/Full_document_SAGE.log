@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.17)  18 JUN 2021 13:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.17)  18 JUN 2021 15:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -710,188 +710,188 @@ Package natbib Warning: Citation `skala2010' on page 2 undefined on input line
 
 
 Package natbib Warning: Citation `greening2018' on page 2 undefined on input li
-ne 82.
+ne 83.
 
 
-Package natbib Warning: Citation `sio2016' on page 2 undefined on input line 84
+Package natbib Warning: Citation `sio2016' on page 2 undefined on input line 85
 .
 
 
 Package natbib Warning: Citation `kamstra2015' on page 2 undefined on input lin
-e 86.
+e 87.
 
 
 Package natbib Warning: Citation `wagenmakers2008' on page 2 undefined on input
- line 92.
+ line 93.
 
 
 Package natbib Warning: Citation `gueorguieva2004' on page 2 undefined on input
- line 100.
+ line 101.
 
 
 Package natbib Warning: Citation `schober2018' on page 2 undefined on input lin
-e 100.
+e 101.
 
 
 Package natbib Warning: Citation `pinheiro2006' on page 2 undefined on input li
-ne 103.
+ne 104.
 
 
 Package natbib Warning: Citation `roblyer2011' on page 2 undefined on input lin
-e 110.
+e 111.
 
 
 Package natbib Warning: Citation `skala2010' on page 2 undefined on input line 
-110.
+111.
 
 
 Package natbib Warning: Citation `vishwanath2009' on page 2 undefined on input 
-line 110.
+line 111.
 
 [2]
 LaTeX Font Info:    Trying to load font information for OML+ptm on input line 1
-23.
+24.
 
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/omlptm.fd
 File: omlptm.fd 
 )
 LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 123.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 124.
 
 Package natbib Warning: Citation `dennis2019' on page 3 undefined on input line
- 127.
+ 128.
 
 
 Package natbib Warning: Citation `wang2019' on page 3 undefined on input line 1
-31.
+32.
 
 
 Package natbib Warning: Citation `liu2010' on page 3 undefined on input line 13
-5.
+6.
 
 
 Package natbib Warning: Citation `halsey2015' on page 3 undefined on input line
- 135.
+ 136.
 
 
 Package natbib Warning: Citation `abdi2010' on page 3 undefined on input line 1
-37.
+38.
 
 
 Package natbib Warning: Citation `nakagawa2004' on page 3 undefined on input li
-ne 138.
+ne 139.
 
 
 Package natbib Warning: Citation `gelman2012' on page 3 undefined on input line
- 141.
+ 142.
 
 
 Package natbib Warning: Citation `albers2019' on page 3 undefined on input line
- 141.
+ 142.
 
 
 Package natbib Warning: Citation `ugrinowitsch2004' on page 3 undefined on inpu
-t line 150.
+t line 151.
 
 
 Package natbib Warning: Citation `huynh1976' on page 3 undefined on input line 
-151.
+152.
 
 
 Package natbib Warning: Citation `greenhouse1959' on page 3 undefined on input 
-line 151.
+line 152.
 
 
 Package natbib Warning: Citation `haverkamp2017' on page 3 undefined on input l
-ine 153.
+ine 154.
 
 
 Package natbib Warning: Citation `keselman2001' on page 3 undefined on input li
-ne 154.
+ne 155.
 
 
 Package natbib Warning: Citation `charan2013' on page 3 undefined on input line
- 156.
+ 157.
 
 
 Package natbib Warning: Citation `gueorguieva2004' on page 3 undefined on input
- line 168.
+ line 169.
 
 
 Package natbib Warning: Citation `skala2010' on page 3 undefined on input line 
-182.
+183.
 
 
 Package natbib Warning: Citation `vishwanath2009' on page 3 undefined on input 
-line 182.
+line 183.
 
 
 Package natbib Warning: Citation `pinheiro2006' on page 3 undefined on input li
-ne 191.
+ne 192.
 
 
 Package natbib Warning: Citation `gueorguieva2004' on page 3 undefined on input
- line 193.
+ line 194.
 
 
 Package natbib Warning: Citation `barr2013' on page 3 undefined on input line 1
-93.
+94.
 
 
 Package natbib Warning: Citation `pinheiro2006' on page 3 undefined on input li
-ne 195.
+ne 196.
 
 [3]
 
 Package natbib Warning: Citation `rose2012' on page 4 undefined on input line 2
-09.
-
-
-Package natbib Warning: Citation `pedersen2019' on page 4 undefined on input li
-ne 209.
-
-
-Package natbib Warning: Citation `simpson2018' on page 4 undefined on input lin
-e 209.
-
-
-Package natbib Warning: Citation `yang2012' on page 4 undefined on input line 2
 10.
 
 
-Package natbib Warning: Citation `beck1998' on page 4 undefined on input line 2
+Package natbib Warning: Citation `pedersen2019' on page 4 undefined on input li
+ne 210.
+
+
+Package natbib Warning: Citation `simpson2018' on page 4 undefined on input lin
+e 210.
+
+
+Package natbib Warning: Citation `yang2012' on page 4 undefined on input line 2
 11.
 
 
+Package natbib Warning: Citation `beck1998' on page 4 undefined on input line 2
+12.
+
+
 Package natbib Warning: Citation `wood2017' on page 4 undefined on input line 2
-15.
+16.
 
 
-Package natbib Warning: Citation `r' on page 4 undefined on input line 224.
+Package natbib Warning: Citation `r' on page 4 undefined on input line 225.
 
 
 Package natbib Warning: Citation `wood2016' on page 4 undefined on input line 2
-25.
+26.
 
 
 Package natbib Warning: Citation `wood2017' on page 4 undefined on input line 2
-25.
+26.
 
 
 Package natbib Warning: Citation `haverkamp2017' on page 4 undefined on input l
-ine 231.
+ine 232.
 
 
 Package natbib Warning: Citation `vishwanath2009' on page 4 undefined on input 
-line 247.
+line 248.
 
 [4]
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <12> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 267.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 268.
 LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
-(Font)              scaled to size 11.39996pt on input line 267.
+(Font)              scaled to size 11.39996pt on input line 268.
 
-Overfull \hbox (75.1947pt too wide) detected at line 302
+Overfull \hbox (75.1947pt too wide) detected at line 303
 []\OML/cmm/m/it/10 y[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 ^^L[] \OT1/cmr/m/n/10
  + \OML/cmm/m/it/10 ^^L[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it/10 time[] \OT1/cmr
 /m/n/10 + \OML/cmm/m/it/10 ^^L[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it/10 treatmen
@@ -903,7 +903,7 @@ t[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 ^^L[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it
  []
 
 [5]
-Overfull \hbox (50.4718pt too wide) detected at line 327
+Overfull \hbox (50.4718pt too wide) detected at line 328
 []\OML/cmm/m/it/10 y[] \OT1/cmr/m/n/10 = [] (#\OML/cmm/m/it/10 eq \OT1/cmr/m/n/
 10 : \OML/cmm/m/it/10 ANOVA \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 by \OMS/cmsy/
 m/n/10 ^^@ \OML/cmm/m/it/10 group\OT1/cmr/m/n/10 )
@@ -911,14 +911,14 @@ m/n/10 ^^@ \OML/cmm/m/it/10 group\OT1/cmr/m/n/10 )
 
 
 Package natbib Warning: Citation `pinheiro2006' on page 6 undefined on input li
-ne 362.
+ne 363.
 
 
 Package natbib Warning: Citation `west2014' on page 6 undefined on input line 3
-62.
+63.
 
 
-Overfull \hbox (70.58159pt too wide) detected at line 368
+Overfull \hbox (70.58159pt too wide) detected at line 369
 []\OML/cmm/m/it/10 y[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 ^^L[] \OT1/cmr/m/n/10
  + \OML/cmm/m/it/10 ^^L[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it/10 time[] \OT1/cmr
 /m/n/10 + \OML/cmm/m/it/10 ^^L[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it/10 treatmen
@@ -932,94 +932,94 @@ t[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 ^^L[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it
 [6]
 
 Package natbib Warning: Citation `pinheiro2006' on page 7 undefined on input li
-ne 391.
+ne 392.
 
 
 Package natbib Warning: Citation `wolfinger1996' on page 7 undefined on input l
-ine 407.
+ine 408.
 
 
 Package natbib Warning: Citation `west2014' on page 7 undefined on input line 4
-08.
+09.
 
 
 Package natbib Warning: Citation `weiss2005' on page 7 undefined on input line 
-408.
+409.
 
 
 Package natbib Warning: Citation `weiss2005' on page 7 undefined on input line 
-414.
+415.
 
 
 Package natbib Warning: Citation `geisser1958' on page 7 undefined on input lin
-e 414.
+e 415.
 
 
 Package natbib Warning: Citation `huynh1976' on page 7 undefined on input line 
-414.
+415.
 
 
 Package natbib Warning: Citation `maxwell2017' on page 7 undefined on input lin
-e 417.
+e 418.
 
 
 Package natbib Warning: Citation `gueorguieva2004' on page 7 undefined on input
- line 418.
+ line 419.
 
 
 Package natbib Warning: Citation `ugrinowitsch2004' on page 7 undefined on inpu
-t line 418.
+t line 419.
 
 
 Package natbib Warning: Citation `huynh1976' on page 7 undefined on input line 
-420.
+421.
 
 
 Package natbib Warning: Citation `greenhouse1959' on page 7 undefined on input 
-line 420.
+line 421.
 
 
 Package natbib Warning: Citation `haverkamp2017' on page 7 undefined on input l
-ine 422.
+ine 423.
 
 
 Package natbib Warning: Citation `keselman2001' on page 7 undefined on input li
-ne 424.
+ne 425.
 
 
 Package natbib Warning: Citation `pinheiro2006' on page 7 undefined on input li
-ne 432.
+ne 433.
 
 
 Package natbib Warning: Citation `molenberghs2004' on page 7 undefined on input
- line 443.
+ line 444.
 
 
 Package natbib Warning: Citation `weiss2005' on page 7 undefined on input line 
-448.
+449.
 
 
 Package natbib Warning: Citation `scheffer2002' on page 7 undefined on input li
-ne 450.
+ne 451.
 
 
 Package natbib Warning: Citation `potthoff2006' on page 7 undefined on input li
-ne 452.
+ne 453.
 
 [7]
 
-Package natbib Warning: Citation `ma2012' on page 8 undefined on input line 459
+Package natbib Warning: Citation `ma2012' on page 8 undefined on input line 460
 .
 
 
 Package natbib Warning: Citation `west2014' on page 8 undefined on input line 4
-61.
+62.
 
 
-Package natbib Warning: Citation `r' on page 8 undefined on input line 475.
+Package natbib Warning: Citation `r' on page 8 undefined on input line 476.
 
 
-Package natbib Warning: Citation `nlme' on page 8 undefined on input line 475.
+Package natbib Warning: Citation `nlme' on page 8 undefined on input line 476.
 
 [8]
 <Full_document_SAGE_files/figure-latex/l-q-response-1.pdf, id=76, 722.7pt x 722
@@ -1028,28 +1028,28 @@ File: Full_document_SAGE_files/figure-latex/l-q-response-1.pdf Graphic file (ty
 pe pdf)
 <use Full_document_SAGE_files/figure-latex/l-q-response-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/l-q-response-1.p
-df  used on input line 536.
+df  used on input line 537.
 (pdftex.def)             Requested size: 264.61061pt x 264.60484pt.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 8.54997pt on input line 540.
+(Font)              scaled to size 8.54997pt on input line 541.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 8.54997pt on input line 540.
+(Font)              scaled to size 8.54997pt on input line 541.
 [9]
 
 Package natbib Warning: Citation `nelder1972' on page 10 undefined on input lin
-e 600.
+e 601.
 
 
 Package natbib Warning: Citation `simpson2018' on page 10 undefined on input li
-ne 603.
+ne 604.
 
 
 Package natbib Warning: Citation `wood2017' on page 10 undefined on input line 
-603.
+604.
 
 
 Package natbib Warning: Citation `hastie1987' on page 10 undefined on input lin
-e 603.
+e 604.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1057,27 +1057,27 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [10 <./Full_document_SAGE_files/figure-latex/l-q-response-1.pdf>]
 
 Package natbib Warning: Citation `beck1998' on page 11 undefined on input line 
-627.
+628.
 
 
 Package natbib Warning: Citation `simpson2018' on page 11 undefined on input li
-ne 639.
+ne 640.
 
 
 Package natbib Warning: Citation `hefley2017' on page 11 undefined on input lin
-e 645.
+e 646.
 
 
 Package natbib Warning: Citation `wood2017' on page 11 undefined on input line 
-655.
+656.
 
 
 Package natbib Warning: Citation `simpson2018' on page 11 undefined on input li
-ne 655.
+ne 656.
 
 
 Package natbib Warning: Citation `wegman1983' on page 11 undefined on input lin
-e 658.
+e 659.
 
 [11]
 <Full_document_SAGE_files/figure-latex/basis-plot-1.pdf, id=100, 722.7pt x 722.
@@ -1086,51 +1086,51 @@ File: Full_document_SAGE_files/figure-latex/basis-plot-1.pdf Graphic file (type
  pdf)
 <use Full_document_SAGE_files/figure-latex/basis-plot-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/basis-plot-1.pdf
-  used on input line 714.
+  used on input line 715.
 (pdftex.def)             Requested size: 264.61061pt x 264.60484pt.
 
 Package natbib Warning: Citation `mcelreath2018' on page 12 undefined on input 
-line 726.
+line 727.
 
 
 Package natbib Warning: Citation `wood2017' on page 12 undefined on input line 
-730.
+731.
 
 
 Package natbib Warning: Citation `miller2019' on page 12 undefined on input lin
-e 733.
+e 734.
 
 
 Package natbib Warning: Citation `laird1982' on page 12 undefined on input line
- 735.
+ 736.
 
 
 Package natbib Warning: Citation `pedersen2019' on page 12 undefined on input l
-ine 735.
+ine 736.
 
 
 Package natbib Warning: Citation `pedersen2019' on page 12 undefined on input l
-ine 738.
+ine 739.
 
 
 Package natbib Warning: Citation `wood2017' on page 12 undefined on input line 
-740.
+741.
 
 
 Package natbib Warning: Citation `miller2019' on page 12 undefined on input lin
-e 748.
+e 749.
 
 
 Package natbib Warning: Citation `wood2017' on page 12 undefined on input line 
-748.
+749.
 
 
 Package natbib Warning: Citation `simpson2018' on page 12 undefined on input li
-ne 748.
+ne 749.
 
 
 Package natbib Warning: Citation `marra2012' on page 12 undefined on input line
- 749.
+ 750.
 
 [12]
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1138,50 +1138,50 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [13 <./Full_document_SAGE_files/figure-latex/basis-plot-1.pdf>]
 
 Package natbib Warning: Citation `vishwanath2009' on page 14 undefined on input
- line 772.
+ line 773.
 
 
 Package natbib Warning: Citation `hefley2017' on page 14 undefined on input lin
-e 796.
+e 797.
 
 LaTeX Font Info:    Trying to load font information for OML+pcr on input line 8
-09.
+10.
 
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/omlpcr.fd
 File: omlpcr.fd 
 )
 LaTeX Font Info:    Font shape `OML/pcr/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 809.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 810.
 LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 8
-09.
+10.
 
 (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ts1pcr.fd
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 )
-Underfull \hbox (badness 10000) in paragraph at lines 809--810
+Underfull \hbox (badness 10000) in paragraph at lines 810--811
 []\OT1/pcr/m/n/10 m1 \OML/cmm/m/it/10 <\OT1/pcr/m/n/10 - gam(StO2[]sim ~ Group 
 + s(Day, by=Group, k=5),
  []
 
 
 Package natbib Warning: Citation `simpson2018' on page 14 undefined on input li
-ne 817.
+ne 818.
 
 
 Package natbib Warning: Citation `wood2017' on page 14 undefined on input line 
-820.
+821.
 
 
 Package natbib Warning: Citation `gratia' on page 14 undefined on input line 82
-6.
+7.
 
 
 Package natbib Warning: Citation `wood2017' on page 14 undefined on input line 
-828.
+829.
 
 
 Package natbib Warning: Citation `harezlak2018' on page 14 undefined on input l
-ine 829.
+ine 830.
 
 [14]
 <Full_document_SAGE_files/figure-latex/sim-smooth-plot-1.pdf, id=130, 722.7pt x
@@ -1190,7 +1190,7 @@ File: Full_document_SAGE_files/figure-latex/sim-smooth-plot-1.pdf Graphic file
 (type pdf)
 <use Full_document_SAGE_files/figure-latex/sim-smooth-plot-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/sim-smooth-plot-
-1.pdf  used on input line 875.
+1.pdf  used on input line 876.
 (pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
 <Full_document_SAGE_files/figure-latex/plot-pairwise-comp-1.pdf, id=131, 722.7p
 t x 505.89pt>
@@ -1198,17 +1198,17 @@ File: Full_document_SAGE_files/figure-latex/plot-pairwise-comp-1.pdf Graphic fi
 le (type pdf)
 <use Full_document_SAGE_files/figure-latex/plot-pairwise-comp-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/plot-pairwise-co
-mp-1.pdf  used on input line 890.
+mp-1.pdf  used on input line 891.
 (pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
 [15] [16 <./Full_document_SAGE_files/figure-latex/sim-smooth-plot-1.pdf> <./Ful
 l_document_SAGE_files/figure-latex/plot-pairwise-comp-1.pdf>]
 
 Package natbib Warning: Citation `dennis2019' on page 17 undefined on input lin
-e 976.
+e 977.
 
 
 Package natbib Warning: Citation `lang2015' on page 17 undefined on input line 
-981.
+982.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1216,77 +1216,77 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [17]
 
 Package natbib Warning: Citation `hefley2017' on page 18 undefined on input lin
-e 990.
+e 991.
 
 
 Package natbib Warning: Citation `pedersen2019' on page 18 undefined on input l
-ine 990.
+ine 991.
 
 
 Package natbib Warning: Citation `hastie1995' on page 18 undefined on input lin
-e 993.
+e 994.
 
 
 Package natbib Warning: Citation `vishwanath2009' on page 18 undefined on input
- line 1004.
+ line 1005.
 
 
 Package natbib Warning: Citation `wood2017' on page 18 undefined on input line 
-1005.
+1006.
 
 
 Package natbib Warning: Citation `begley2015' on page 18 undefined on input lin
-e 1026.
+e 1027.
 
 
 Package natbib Warning: Citation `weissgerber2018' on page 18 undefined on inpu
-t line 1026.
+t line 1027.
 
 [18] [19]
-Overfull \hbox (223.18584pt too wide) in paragraph at lines 1093--1093
+Overfull \hbox (223.18584pt too wide) in paragraph at lines 1094--1094
 []\OT1/pcr/m/n/10 #This function simulates data using a linear or quadratic mea
 n response and each with correlated[] 
  []
 
 
-Overfull \hbox (55.18584pt too wide) in paragraph at lines 1094--1094
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 1095--1095
 []\OT1/pcr/m/n/10 #or uncorrelated errors. Each group has a different slope/con
 cavity.[] 
  []
 
 
-Overfull \hbox (7.18584pt too wide) in paragraph at lines 1100--1100
+Overfull \hbox (7.18584pt too wide) in paragraph at lines 1101--1101
 []    \OT1/pcr/m/n/10 stop('fun_type must be either "linear", or "quadratic"')[
 ] 
  []
 
 
-Overfull \hbox (43.18584pt too wide) in paragraph at lines 1102--1102
+Overfull \hbox (43.18584pt too wide) in paragraph at lines 1103--1103
 []    \OT1/pcr/m/n/10 stop('fun_type must be either "correlated", or "independe
 nt"')[] 
  []
 
 
-Overfull \hbox (529.18584pt too wide) in paragraph at lines 1120--1120
+Overfull \hbox (529.18584pt too wide) in paragraph at lines 1121--1121
 []  \OT1/pcr/m/n/10 #create an array where individual observations per each tim
 e point for each group are to be stored. Currently using 10 observations per ti
 mepoint[] 
  []
 
 
-Overfull \hbox (199.18584pt too wide) in paragraph at lines 1123--1123
+Overfull \hbox (199.18584pt too wide) in paragraph at lines 1124--1124
 []  \OT1/pcr/m/n/10 #Create array to store the "errors" for each group at each 
 timepoint. The "errors" are the[] 
  []
 
 
-Overfull \hbox (199.18584pt too wide) in paragraph at lines 1126--1126
+Overfull \hbox (199.18584pt too wide) in paragraph at lines 1127--1127
 []  \OT1/pcr/m/n/10 #create an array where 10 observations per each time point 
 for each group are to be stored[] 
  []
 
 
-Overfull \hbox (985.18584pt too wide) in paragraph at lines 1128--1128
+Overfull \hbox (985.18584pt too wide) in paragraph at lines 1129--1129
 []  \OT1/pcr/m/n/10 #The following cycles create independent or correlated resp
 onses. To each value of mu (mean response per group) a randomly generated error
  (correlated or uncorrelated) is added and thus the individual response is crea
@@ -1297,43 +1297,43 @@ ted.[]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [20]
-Overfull \hbox (19.18584pt too wide) in paragraph at lines 1140--1140
+Overfull \hbox (19.18584pt too wide) in paragraph at lines 1141--1141
 []        \OT1/pcr/m/n/10 # compound symmetry errors: variance covariance matri
 x[] 
  []
 
 
-Overfull \hbox (199.18584pt too wide) in paragraph at lines 1141--1141
+Overfull \hbox (199.18584pt too wide) in paragraph at lines 1142--1142
 []        \OT1/pcr/m/n/10 errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * di
 ag(6) + 0.25 * matrix(1, 6, 6))[] 
  []
 
 
-Overfull \hbox (127.18584pt too wide) in paragraph at lines 1150--1150
+Overfull \hbox (127.18584pt too wide) in paragraph at lines 1151--1151
 []  \OT1/pcr/m/n/10 ## visualizing the difference between independent errors an
 d compound symmetry[] 
  []
 
 
-Overfull \hbox (61.18584pt too wide) in paragraph at lines 1151--1151
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 1152--1152
 []  \OT1/pcr/m/n/10 ## why do we need to account for this -- overly confident i
 nference[] 
  []
 
 
-Overfull \hbox (145.18584pt too wide) in paragraph at lines 1166--1166
+Overfull \hbox (145.18584pt too wide) in paragraph at lines 1167--1167
 []  \OT1/pcr/m/n/10 #convert y, mu and errors to  dataframes with time, treatme
 nt and subject columns[] 
  []
 
 
-Overfull \hbox (7.18584pt too wide) in paragraph at lines 1170--1170
+Overfull \hbox (7.18584pt too wide) in paragraph at lines 1171--1171
 []                                    \OT1/pcr/m/n/10 responseName = "errors")[
 ] 
  []
 
 
-Overfull \hbox (49.18584pt too wide) in paragraph at lines 1174--1174
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 1175--1175
 []  \OT1/pcr/m/n/10 #join the dataframes to show mean response and errors per s
 ubject[] 
  []
@@ -1342,49 +1342,49 @@ ubject[]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [21]
-Overfull \hbox (67.18584pt too wide) in paragraph at lines 1190--1190
+Overfull \hbox (67.18584pt too wide) in paragraph at lines 1191--1191
 []  \OT1/pcr/m/n/10 fit_anova <- lm(y ~ time + treatment + time * treatment, da
 ta = dat)[] 
  []
 
 
-Overfull \hbox (19.18584pt too wide) in paragraph at lines 1192--1192
+Overfull \hbox (19.18584pt too wide) in paragraph at lines 1193--1193
 []\OT1/pcr/m/n/10 #LMEM: time and treatment interaction model, compound symmetr
 y[] 
  []
 
 
-Overfull \hbox (31.18584pt too wide) in paragraph at lines 1196--1196
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1197--1197
 []                 \OT1/pcr/m/n/10 correlation = corCompSymm(form = ~ 1 | subje
 ct)[] 
  []
 
 
-Overfull \hbox (115.18584pt too wide) in paragraph at lines 1199--1199
+Overfull \hbox (115.18584pt too wide) in paragraph at lines 1200--1200
 []  \OT1/pcr/m/n/10 #create a prediction frame where the model can be used for 
 plotting purposes[] 
  []
 
 
-Overfull \hbox (61.18584pt too wide) in paragraph at lines 1205--1205
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 1206--1206
 []  \OT1/pcr/m/n/10 #add model predictions to the dataframe that has the simula
 ted data[] 
  []
 
 
-Overfull \hbox (73.18584pt too wide) in paragraph at lines 1217--1217
+Overfull \hbox (73.18584pt too wide) in paragraph at lines 1218--1218
 []\OT1/pcr/m/n/10 ##################Section for plotting#######################
 ##########[] 
  []
 
 
-Overfull \hbox (73.18584pt too wide) in paragraph at lines 1218--1218
+Overfull \hbox (73.18584pt too wide) in paragraph at lines 1219--1219
 []\OT1/pcr/m/n/10 #############################################################
 ##########[] 
  []
 
 
-Overfull \hbox (139.18584pt too wide) in paragraph at lines 1219--1219
+Overfull \hbox (139.18584pt too wide) in paragraph at lines 1220--1220
 []\OT1/pcr/m/n/10 #This function will create the plots for either a "linear" or
  "quadratic" response[] 
  []
@@ -1393,13 +1393,13 @@ Overfull \hbox (139.18584pt too wide) in paragraph at lines 1219--1219
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [22]
-Overfull \hbox (13.18584pt too wide) in paragraph at lines 1242--1242
+Overfull \hbox (13.18584pt too wide) in paragraph at lines 1243--1243
 []  \OT1/pcr/m/n/10 #plot the simulated data with trajectories per each subject
 [] 
  []
 
 
-Overfull \hbox (181.18584pt too wide) in paragraph at lines 1258--1258
+Overfull \hbox (181.18584pt too wide) in paragraph at lines 1259--1259
 []    \OT1/pcr/m/n/10 scale_size_manual(name = "Type", values=c("Subjects" = 0.
 5, "Simulated Truth" = 3)) +[] 
  []
@@ -1408,19 +1408,19 @@ Overfull \hbox (181.18584pt too wide) in paragraph at lines 1258--1258
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [23]
-Overfull \hbox (103.18584pt too wide) in paragraph at lines 1287--1287
+Overfull \hbox (103.18584pt too wide) in paragraph at lines 1288--1288
 []                  \OT1/pcr/m/n/10 group = subject, size = "Subjects"),show.le
 gend = FALSE) +[] 
  []
 
 
-Overfull \hbox (31.18584pt too wide) in paragraph at lines 1294--1294
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1295--1295
 []    \OT1/pcr/m/n/10 guides(color = guide_legend(override.aes = list(size = 2)
 ))+[] 
  []
 
 
-Overfull \hbox (61.18584pt too wide) in paragraph at lines 1296--1296
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 1297--1297
 []                      \OT1/pcr/m/n/10 values=c("Subjects" = 0.5, "Population"
  = 3)) +[] 
  []
@@ -1429,43 +1429,43 @@ Overfull \hbox (61.18584pt too wide) in paragraph at lines 1296--1296
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [24]
-Overfull \hbox (31.18584pt too wide) in paragraph at lines 1319--1319
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1320--1320
 []    \OT1/pcr/m/n/10 guides(color = guide_legend(override.aes = list(size = 2)
 ))+[] 
  []
 
 
-Overfull \hbox (61.18584pt too wide) in paragraph at lines 1321--1321
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 1322--1322
 []                      \OT1/pcr/m/n/10 values=c("Subjects" = 0.5, "Population"
  = 3)) +[] 
  []
 
 
-Overfull \hbox (127.18584pt too wide) in paragraph at lines 1328--1328
+Overfull \hbox (127.18584pt too wide) in paragraph at lines 1329--1329
 []  \OT1/pcr/m/n/10 return((p1+p3+p2+p4+p5)+plot_layout(nrow=1)+plot_annotation
 (tag_levels = 'A'))[] 
  []
 
 
-Overfull \hbox (85.18584pt too wide) in paragraph at lines 1336--1336
+Overfull \hbox (85.18584pt too wide) in paragraph at lines 1337--1337
 []\OT1/pcr/m/n/10 A1<-plot_example(example(fun_type = "linear", error_type = "c
 orrelated"))[] 
  []
 
 
-Overfull \hbox (91.18584pt too wide) in paragraph at lines 1338--1338
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 1339--1339
 []\OT1/pcr/m/n/10 B1<-plot_example(example(fun_type = "linear", error_type = "i
 ndependent"))[] 
  []
 
 
-Overfull \hbox (103.18584pt too wide) in paragraph at lines 1340--1340
+Overfull \hbox (103.18584pt too wide) in paragraph at lines 1341--1341
 []\OT1/pcr/m/n/10 C1<-plot_example(example(fun_type = "quadratic", error_type =
  "correlated"))[] 
  []
 
 
-Overfull \hbox (109.18584pt too wide) in paragraph at lines 1342--1342
+Overfull \hbox (109.18584pt too wide) in paragraph at lines 1343--1343
 []\OT1/pcr/m/n/10 D1<-plot_example(example(fun_type = "quadratic", error_type =
  "independent"))[] 
  []
@@ -1476,15 +1476,15 @@ File: Full_document_SAGE_files/figure-latex/linear-cases-Appendix-1.pdf Graphic
  file (type pdf)
 <use Full_document_SAGE_files/figure-latex/linear-cases-Appendix-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/linear-cases-App
-endix-1.pdf  used on input line 1361.
+endix-1.pdf  used on input line 1362.
 (pdftex.def)             Requested size: 1156.31718pt x 867.2379pt.
 
-Overfull \hbox (803.50302pt too wide) in paragraph at lines 1361--1362
+Overfull \hbox (803.50302pt too wide) in paragraph at lines 1362--1363
  [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 361.36191pt on input line 1363.
+LaTeX Warning: Float too large for page by 361.36191pt on input line 1364.
 
 [25]
 <Full_document_SAGE_files/figure-latex/quadratic-cases-Appendix-1.pdf, id=218, 
@@ -1493,85 +1493,85 @@ File: Full_document_SAGE_files/figure-latex/quadratic-cases-Appendix-1.pdf Grap
 hic file (type pdf)
 <use Full_document_SAGE_files/figure-latex/quadratic-cases-Appendix-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/quadratic-cases-
-Appendix-1.pdf  used on input line 1385.
+Appendix-1.pdf  used on input line 1386.
 (pdftex.def)             Requested size: 1156.31718pt x 867.2379pt.
 
-Overfull \hbox (803.50302pt too wide) in paragraph at lines 1385--1386
+Overfull \hbox (803.50302pt too wide) in paragraph at lines 1386--1387
  [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 361.36191pt on input line 1387.
+LaTeX Warning: Float too large for page by 361.36191pt on input line 1388.
 
 
-Overfull \hbox (175.18584pt too wide) in paragraph at lines 1400--1400
+Overfull \hbox (175.18584pt too wide) in paragraph at lines 1401--1401
 []\OT1/pcr/m/n/10 #generate the response: the same initial procedure from the p
 revious section to simulate 
  []
 
 
-Overfull \hbox (205.18584pt too wide) in paragraph at lines 1413--1413
+Overfull \hbox (205.18584pt too wide) in paragraph at lines 1414--1414
 []         \OT1/pcr/m/n/10 errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * d
 iag(6) + 0.25 * matrix(1, 6, 6))[] 
  []
 
 
-Overfull \hbox (31.18584pt too wide) in paragraph at lines 1419--1419
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1420--1420
 []  \OT1/pcr/m/n/10 dimnames(y) <- list(time = x, treatment = 1:2, subject = 1:
 10)[] 
  []
 
 
-Overfull \hbox (55.18584pt too wide) in paragraph at lines 1420--1420
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 1421--1421
 [] \OT1/pcr/m/n/10 dimnames(errors) <- list(time = x, treatment = 1:2, subject 
 = 1:10)[] 
  []
 
 [26] [27 <./Full_document_SAGE_files/figure-latex/linear-cases-Appendix-1.pdf>]
 [28 <./Full_document_SAGE_files/figure-latex/quadratic-cases-Appendix-1.pdf>]
-Overfull \hbox (7.18584pt too wide) in paragraph at lines 1423--1423
+Overfull \hbox (7.18584pt too wide) in paragraph at lines 1424--1424
 [] \OT1/pcr/m/n/10 #Convert to dataframes with subject, time and group columns[
 ] 
  []
 
 
-Overfull \hbox (49.18584pt too wide) in paragraph at lines 1425--1425
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 1426--1426
 [] \OT1/pcr/m/n/10 dat_errors <- as.data.frame.table(errors, responseName = "er
 rors")[] 
  []
 
 
-Overfull \hbox (91.18584pt too wide) in paragraph at lines 1427--1427
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 1428--1428
 [] \OT1/pcr/m/n/10 dat <- left_join(dat, dat_errors, by = c("time", "treatment"
 , "subject"))[] 
  []
 
 
-Overfull \hbox (1.18584pt too wide) in paragraph at lines 1428--1428
+Overfull \hbox (1.18584pt too wide) in paragraph at lines 1429--1429
 [] \OT1/pcr/m/n/10 dat <- left_join(dat, dat_mu, by = c("time", "treatment"))[]
  
  []
 
 
-Overfull \hbox (49.18584pt too wide) in paragraph at lines 1433--1433
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 1434--1434
 []     \OT1/pcr/m/n/10 mutate(subject = factor(paste(subject, treatment, sep = 
 "-")))[] 
  []
 
 
-Overfull \hbox (223.18584pt too wide) in paragraph at lines 1450--1450
+Overfull \hbox (223.18584pt too wide) in paragraph at lines 1451--1451
 []\OT1/pcr/m/n/10 basis<-model_matrix[1:6,] #extracting basis (because the valu
 es are repeated after every 6 rows)[] 
  []
 
 
-Overfull \hbox (7.18584pt too wide) in paragraph at lines 1452--1452
+Overfull \hbox (7.18584pt too wide) in paragraph at lines 1453--1453
 []\OT1/pcr/m/n/10 colnames(basis)[colnames(basis)=="(Intercept)"]<-"s(time).0"[
 ] 
  []
 
 
-Overfull \hbox (379.18584pt too wide) in paragraph at lines 1459--1459
+Overfull \hbox (379.18584pt too wide) in paragraph at lines 1460--1460
 []\OT1/pcr/m/n/10 #length of dataframe to be created: number of knots by number
  of timepoints (minus 1 for the intercept that we won't plot)[] 
  []
@@ -1580,25 +1580,25 @@ Overfull \hbox (379.18584pt too wide) in paragraph at lines 1459--1459
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [29]
-Overfull \hbox (85.18584pt too wide) in paragraph at lines 1469--1469
+Overfull \hbox (85.18584pt too wide) in paragraph at lines 1470--1470
 []\OT1/pcr/m/n/10 basis_plot$Basis<-factor(rep(c(1:5),each=6)) #pasting basis n
 umber values[] 
  []
 
 
-Overfull \hbox (25.18584pt too wide) in paragraph at lines 1471--1471
+Overfull \hbox (25.18584pt too wide) in paragraph at lines 1472--1472
 []\OT1/pcr/m/n/10 basis_plot$cof<-rep(coef(gm)[1:5],each=6) #pasting coefficien
 ts[] 
  []
 
 
-Overfull \hbox (163.18584pt too wide) in paragraph at lines 1473--1473
+Overfull \hbox (163.18584pt too wide) in paragraph at lines 1474--1474
 []  \OT1/pcr/m/n/10 mutate(mod_val=value_orig*cof) #the create the predicted va
 lues the bases need to be[] 
  []
 
 
-Overfull \hbox (31.18584pt too wide) in paragraph at lines 1486--1486
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1487--1487
 []\OT1/pcr/m/n/10 #calculating the final smooth by aggregating the basis functi
 ons[] 
  []
@@ -1607,7 +1607,7 @@ ons[]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [30]
-Overfull \hbox (91.18584pt too wide) in paragraph at lines 1540--1540
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 1541--1541
 []                        \OT1/pcr/m/n/10 high = "#B50A2AFF")+ #color picked fr
 om KikiMedium[] 
  []
@@ -1622,38 +1622,38 @@ File: Full_document_SAGE_files/figure-latex/basis-plot-appendix-1.pdf Graphic f
 ile (type pdf)
 <use Full_document_SAGE_files/figure-latex/basis-plot-appendix-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/basis-plot-appen
-dix-1.pdf  used on input line 1572.
+dix-1.pdf  used on input line 1573.
 (pdftex.def)             Requested size: 264.61061pt x 264.60484pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [32 <./Full_document_SAGE_files/figure-latex/basis-plot-appendix-1.pdf>]
-Overfull \hbox (37.18584pt too wide) in paragraph at lines 1595--1595
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1596--1596
 []            \OT1/pcr/m/n/10 Group=as.factor(rep(c("Control","Treatment"),each
 =5))[] 
  []
 
 
-Overfull \hbox (499.18584pt too wide) in paragraph at lines 1623--1623
+Overfull \hbox (499.18584pt too wide) in paragraph at lines 1624--1624
 []\OT1/pcr/m/n/10 #This function simulates data for the tumor data using defaul
 t parameters of 10 observations per time point,and Standard deviation (sd) of 5
 %.[] 
  []
 
 
-Overfull \hbox (337.18584pt too wide) in paragraph at lines 1624--1624
+Overfull \hbox (337.18584pt too wide) in paragraph at lines 1625--1625
 []\OT1/pcr/m/n/10 #Because physiologically StO2 cannot go below 0%, data is  ge
 nerated with a cutoff value of 0.0001 (the "StO2_sim")[] 
  []
 
 [33]
-Overfull \hbox (1.18584pt too wide) in paragraph at lines 1631--1631
+Overfull \hbox (1.18584pt too wide) in paragraph at lines 1632--1632
 []               \OT1/pcr/m/n/10 StO2_sim = pmax(rnorm(n, StO2, sd), 0.0001),[]
  
  []
 
 
-Overfull \hbox (25.18584pt too wide) in paragraph at lines 1633--1633
+Overfull \hbox (25.18584pt too wide) in paragraph at lines 1634--1634
 []               \OT1/pcr/m/n/10 subject=factor(paste(subject, Group, sep = "-"
 ))[] 
  []
@@ -1665,7 +1665,7 @@ File: Full_document_SAGE_files/figure-latex/first-GAM-diag-1.pdf Graphic file (
 type pdf)
 <use Full_document_SAGE_files/figure-latex/first-GAM-diag-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/first-GAM-diag-1
-.pdf  used on input line 1715.
+.pdf  used on input line 1716.
 (pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
 [35 <./Full_document_SAGE_files/figure-latex/first-GAM-diag-1.pdf>]
 <Full_document_SAGE_files/figure-latex/first-GAM-check-1.pdf, id=301, 469.755pt
@@ -1674,45 +1674,45 @@ File: Full_document_SAGE_files/figure-latex/first-GAM-check-1.pdf Graphic file
 (type pdf)
 <use Full_document_SAGE_files/figure-latex/first-GAM-check-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/first-GAM-check-
-1.pdf  used on input line 1745.
+1.pdf  used on input line 1746.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (126.93971pt too wide) in paragraph at lines 1745--1746
+Overfull \hbox (126.93971pt too wide) in paragraph at lines 1746--1747
 [][] 
  []
 
 
-Overfull \hbox (55.18584pt too wide) in paragraph at lines 1753--1753
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 1754--1754
 []\OT1/pcr/m/n/10 ## Hessian positive definite, eigenvalue range [0.3881695,49.
 00676].[] 
  []
 
 [36 <./Full_document_SAGE_files/figure-latex/first-GAM-check-1.pdf>]
-Overfull \hbox (55.18584pt too wide) in paragraph at lines 1756--1756
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 1757--1757
 []\OT1/pcr/m/n/10 ## Basis dimension (k) checking results. Low p-value (k-index
 <1) may[] 
  []
 
 
-Overfull \hbox (31.18584pt too wide) in paragraph at lines 1757--1757
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1758--1758
 []\OT1/pcr/m/n/10 ## indicate that k is too low, especially if edf is close to 
 k'.[] 
  []
 
 
-Overfull \hbox (37.18584pt too wide) in paragraph at lines 1762--1762
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1763--1763
 []\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
  ' 1[] 
  []
 
 
-Overfull \hbox (37.18584pt too wide) in paragraph at lines 1781--1781
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1782--1782
 []\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
  ' 1[] 
  []
 
 
-Overfull \hbox (37.18584pt too wide) in paragraph at lines 1787--1787
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1788--1788
 []\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
  ' 1[] 
  []
@@ -1724,45 +1724,45 @@ File: Full_document_SAGE_files/figure-latex/second-GAM-1.pdf Graphic file (type
  pdf)
 <use Full_document_SAGE_files/figure-latex/second-GAM-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/second-GAM-1.pdf
-  used on input line 1830.
+  used on input line 1831.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (126.93971pt too wide) in paragraph at lines 1830--1831
+Overfull \hbox (126.93971pt too wide) in paragraph at lines 1831--1832
 [][] 
  []
 
 [38 <./Full_document_SAGE_files/figure-latex/second-GAM-1.pdf>]
-Overfull \hbox (49.18584pt too wide) in paragraph at lines 1838--1838
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 1839--1839
 []\OT1/pcr/m/n/10 ## Hessian positive definite, eigenvalue range [0.3162258,48.
 5557].[] 
  []
 
 
-Overfull \hbox (55.18584pt too wide) in paragraph at lines 1841--1841
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 1842--1842
 []\OT1/pcr/m/n/10 ## Basis dimension (k) checking results. Low p-value (k-index
 <1) may[] 
  []
 
 
-Overfull \hbox (31.18584pt too wide) in paragraph at lines 1842--1842
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1843--1843
 []\OT1/pcr/m/n/10 ## indicate that k is too low, especially if edf is close to 
 k'.[] 
  []
 
 
-Overfull \hbox (37.18584pt too wide) in paragraph at lines 1848--1848
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1849--1849
 []\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
  ' 1[] 
  []
 
 
-Overfull \hbox (37.18584pt too wide) in paragraph at lines 1867--1867
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1868--1868
 []\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
  ' 1[] 
  []
 
 
-Overfull \hbox (37.18584pt too wide) in paragraph at lines 1874--1874
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1875--1875
 []\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
  ' 1[] 
  []
@@ -1774,7 +1774,7 @@ File: Full_document_SAGE_files/figure-latex/second-GAM-diag-1.pdf Graphic file
 (type pdf)
 <use Full_document_SAGE_files/figure-latex/second-GAM-diag-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/second-GAM-diag-
-1.pdf  used on input line 1895.
+1.pdf  used on input line 1896.
 (pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
 <Full_document_SAGE_files/figure-latex/final-model-Appendix-1.pdf, id=338, 469.
 755pt x 325.215pt>
@@ -1782,10 +1782,10 @@ File: Full_document_SAGE_files/figure-latex/final-model-Appendix-1.pdf Graphic
 file (type pdf)
 <use Full_document_SAGE_files/figure-latex/final-model-Appendix-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/final-model-Appe
-ndix-1.pdf  used on input line 1925.
+ndix-1.pdf  used on input line 1926.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (126.93971pt too wide) in paragraph at lines 1925--1926
+Overfull \hbox (126.93971pt too wide) in paragraph at lines 1926--1927
 [][] 
  []
 
@@ -1793,31 +1793,31 @@ Overfull \hbox (126.93971pt too wide) in paragraph at lines 1925--1926
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [40 <./Full_document_SAGE_files/figure-latex/second-GAM-diag-1.pdf>]
-Overfull \hbox (49.18584pt too wide) in paragraph at lines 1933--1933
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 1934--1934
 []\OT1/pcr/m/n/10 ## Hessian positive definite, eigenvalue range [1.174841,48.0
 8834].[] 
  []
 
 
-Overfull \hbox (55.18584pt too wide) in paragraph at lines 1936--1936
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 1937--1937
 []\OT1/pcr/m/n/10 ## Basis dimension (k) checking results. Low p-value (k-index
 <1) may[] 
  []
 
 
-Overfull \hbox (31.18584pt too wide) in paragraph at lines 1937--1937
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1938--1938
 []\OT1/pcr/m/n/10 ## indicate that k is too low, especially if edf is close to 
 k'.[] 
  []
 
 [41 <./Full_document_SAGE_files/figure-latex/final-model-Appendix-1.pdf>]
-Overfull \hbox (37.18584pt too wide) in paragraph at lines 1961--1961
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1962--1962
 []\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
  ' 1[] 
  []
 
 
-Overfull \hbox (37.18584pt too wide) in paragraph at lines 1968--1968
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1969--1969
 []\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
  ' 1[] 
  []
@@ -1828,76 +1828,76 @@ File: Full_document_SAGE_files/figure-latex/final-GAM-diag-1.pdf Graphic file (
 type pdf)
 <use Full_document_SAGE_files/figure-latex/final-GAM-diag-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/final-GAM-diag-1
-.pdf  used on input line 1991.
+.pdf  used on input line 1992.
 (pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
 [42]
-Overfull \hbox (91.18584pt too wide) in paragraph at lines 2048--2048
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 2049--2049
 []\OT1/pcr/m/n/10 ##matrix that contains the basis functions evaluated at the p
 oints in pdat[] 
  []
 
 [43 <./Full_document_SAGE_files/figure-latex/final-GAM-diag-1.pdf>]
-Overfull \hbox (61.18584pt too wide) in paragraph at lines 2058--2058
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 2059--2059
 []\OT1/pcr/m/n/10 #Find rows in pdat that correspond to either 'Control' or 'Tr
 eatment'[] 
  []
 
 
-Overfull \hbox (217.18584pt too wide) in paragraph at lines 2062--2062
+Overfull \hbox (217.18584pt too wide) in paragraph at lines 2063--2063
 []\OT1/pcr/m/n/10 # In xp: find the rows that correspond to Control or Treatmen
 t, those that do not match will be[] 
  []
 
 
-Overfull \hbox (319.18584pt too wide) in paragraph at lines 2063--2063
+Overfull \hbox (319.18584pt too wide) in paragraph at lines 2064--2064
 []    \OT1/pcr/m/n/10 #set to zero. Then, substract the values from the rows co
 rresponding to 'Control' from those that correspond[] 
  []
 
 
-Overfull \hbox (73.18584pt too wide) in paragraph at lines 2067--2067
+Overfull \hbox (73.18584pt too wide) in paragraph at lines 2068--2068
 []    \OT1/pcr/m/n/10 ## remove columns that do not contain name 'Control' or '
 Treatment'[] 
  []
 
 
-Overfull \hbox (157.18584pt too wide) in paragraph at lines 2069--2069
+Overfull \hbox (157.18584pt too wide) in paragraph at lines 2070--2070
 []    \OT1/pcr/m/n/10 ## zero out the parametric cols, those that do not contai
 n in the characters 's('[] 
  []
 
 
-Overfull \hbox (259.18584pt too wide) in paragraph at lines 2072--2072
+Overfull \hbox (259.18584pt too wide) in paragraph at lines 2073--2073
 []    \OT1/pcr/m/n/10 #Multiply matrix by model coefficients. X has (p,n) (rows
 , columns) and the coefficient matrix has[] 
  []
 
 
-Overfull \hbox (31.18584pt too wide) in paragraph at lines 2073--2073
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 2074--2074
 []    \OT1/pcr/m/n/10 #dimensions (n,1). The resulting matrix has dimensions (p
 ,1)[] 
  []
 
 
-Overfull \hbox (193.18584pt too wide) in paragraph at lines 2078--2078
+Overfull \hbox (193.18584pt too wide) in paragraph at lines 2079--2079
 []\OT1/pcr/m/n/10 #Calculate standard error for the computed differences using 
 the variance-covariance matrix[] 
  []
 
 
-Overfull \hbox (55.18584pt too wide) in paragraph at lines 2080--2080
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 2081--2081
 []    \OT1/pcr/m/n/10 se <- sqrt(rowSums((X %*% vcov(m1, unconditional = FALSE)
 ) * X))[] 
  []
 
 
-Overfull \hbox (1.18584pt too wide) in paragraph at lines 2081--2081
+Overfull \hbox (1.18584pt too wide) in paragraph at lines 2082--2082
 []    \OT1/pcr/m/n/10 crit <- qt(0.05/2, df.residual(m1), lower.tail = FALSE)[]
  
  []
 
 
-Overfull \hbox (67.18584pt too wide) in paragraph at lines 2087--2087
+Overfull \hbox (67.18584pt too wide) in paragraph at lines 2088--2088
 []    \OT1/pcr/m/n/10 comp1<-data.frame(pair = paste('Control', 'Treatment', se
 p = '-'),[] 
  []
@@ -1906,31 +1906,31 @@ p = '-'),[]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [44]
-Overfull \hbox (193.18584pt too wide) in paragraph at lines 2099--2099
+Overfull \hbox (193.18584pt too wide) in paragraph at lines 2100--2100
 []\OT1/pcr/m/n/10 #use function from the pairwise comparison plot in the manusc
 ript to get the shaded regions[] 
  []
 
 
-Overfull \hbox (13.18584pt too wide) in paragraph at lines 2104--2104
+Overfull \hbox (13.18584pt too wide) in paragraph at lines 2105--2105
 []\OT1/pcr/m/n/10 c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
 [] 
  []
 
 
-Overfull \hbox (109.18584pt too wide) in paragraph at lines 2107--2107
+Overfull \hbox (109.18584pt too wide) in paragraph at lines 2108--2108
 []                \OT1/pcr/m/n/10 xmin =my_list$init1, xmax =my_list$final1,ymi
 n=-Inf,ymax=Inf,[] 
  []
 
 
-Overfull \hbox (91.18584pt too wide) in paragraph at lines 2118--2118
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 2119--2119
 []             \OT1/pcr/m/n/10 xmin =my_list$init2, xmax =my_list$final2,ymin=-
 Inf,ymax=Inf,[] 
  []
 
 
-Overfull \hbox (61.18584pt too wide) in paragraph at lines 2136--2136
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 2137--2137
 []    \OT1/pcr/m/n/10 labs(x = 'Days', y = expression(paste('Difference in StO'
 [2] )))+[] 
  []
@@ -1945,101 +1945,101 @@ File: Full_document_SAGE_files/figure-latex/pairwise-comp-workflow-fig-1.pdf Gr
 aphic file (type pdf)
 <use Full_document_SAGE_files/figure-latex/pairwise-comp-workflow-fig-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/pairwise-comp-wo
-rkflow-fig-1.pdf  used on input line 2152.
+rkflow-fig-1.pdf  used on input line 2153.
 (pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
 [46 <./Full_document_SAGE_files/figure-latex/pairwise-comp-workflow-fig-1.pdf>]
 
-Overfull \hbox (13.18584pt too wide) in paragraph at lines 2194--2194
+Overfull \hbox (13.18584pt too wide) in paragraph at lines 2195--2195
 []\OT1/pcr/m/n/10 lm1<-lm(StO2_sim ~ Day + Group + Day * Group, data = dat_sim)
 [] 
  []
 
 
-Overfull \hbox (49.18584pt too wide) in paragraph at lines 2197--2197
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 2198--2198
 []\OT1/pcr/m/n/10 #creates a dataframe using the length of the covariates for t
 he GAM[] 
  []
 
 
-Overfull \hbox (61.18584pt too wide) in paragraph at lines 2198--2198
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 2199--2199
 []\OT1/pcr/m/n/10 gam_predict <- expand_grid(Group = factor(c("Control", "Treat
 ment")),[] 
  []
 
 
-Overfull \hbox (55.18584pt too wide) in paragraph at lines 2202--2202
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 2203--2203
 []\OT1/pcr/m/n/10 #creates a dataframe using the length of the covariates for r
 m-ANOVA[] 
  []
 
 
-Overfull \hbox (43.18584pt too wide) in paragraph at lines 2203--2203
+Overfull \hbox (43.18584pt too wide) in paragraph at lines 2204--2204
 []\OT1/pcr/m/n/10 lm_predict<-expand_grid(Group = factor(c("Control", "Treatmen
 t")),[] 
  []
 
 
-Overfull \hbox (139.18584pt too wide) in paragraph at lines 2207--2207
+Overfull \hbox (139.18584pt too wide) in paragraph at lines 2208--2208
 []\OT1/pcr/m/n/10 lm_predict$subject<-factor(paste(lm_predict$subject, lm_predi
 ct$Group, sep = "-"))[] 
  []
 
 
-Overfull \hbox (97.18584pt too wide) in paragraph at lines 2209--2209
+Overfull \hbox (97.18584pt too wide) in paragraph at lines 2210--2210
 []\OT1/pcr/m/n/10 #adds the predictions to the grid and creates a confidence in
 terval for GAM[] 
  []
 
 
-Overfull \hbox (97.18584pt too wide) in paragraph at lines 2211--2211
+Overfull \hbox (97.18584pt too wide) in paragraph at lines 2212--2212
 []    \OT1/pcr/m/n/10 mutate(fit = predict(m1,gam_predict,se.fit = TRUE,type='r
 esponse')$fit,[] 
  []
 
 
-Overfull \hbox (139.18584pt too wide) in paragraph at lines 2212--2212
+Overfull \hbox (139.18584pt too wide) in paragraph at lines 2213--2213
 []           \OT1/pcr/m/n/10 se.fit = predict(m1, gam_predict,se.fit = TRUE,typ
 e='response')$se.fit)[] 
  []
 
 
-Overfull \hbox (97.18584pt too wide) in paragraph at lines 2216--2216
+Overfull \hbox (97.18584pt too wide) in paragraph at lines 2217--2217
 []    \OT1/pcr/m/n/10 mutate(fit = predict(lm1,lm_predict,se.fit = TRUE,type='r
 esponse')$fit,[] 
  []
 
 
-Overfull \hbox (139.18584pt too wide) in paragraph at lines 2217--2217
+Overfull \hbox (139.18584pt too wide) in paragraph at lines 2218--2218
 []           \OT1/pcr/m/n/10 se.fit = predict(lm1, lm_predict,se.fit = TRUE,typ
 e='response')$se.fit)[] 
  []
 
 
-Overfull \hbox (25.18584pt too wide) in paragraph at lines 2220--2220
+Overfull \hbox (25.18584pt too wide) in paragraph at lines 2221--2221
 []\OT1/pcr/m/n/10 f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group))
  +[] 
  []
 
 
-Overfull \hbox (79.18584pt too wide) in paragraph at lines 2221--2221
+Overfull \hbox (79.18584pt too wide) in paragraph at lines 2222--2222
 []    \OT1/pcr/m/n/10 geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legen
 d = FALSE)+[] 
  []
 
 [47]
-Overfull \hbox (25.18584pt too wide) in paragraph at lines 2245--2245
+Overfull \hbox (25.18584pt too wide) in paragraph at lines 2246--2246
 []\OT1/pcr/m/n/10 f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group))
  +[] 
  []
 
 
-Overfull \hbox (79.18584pt too wide) in paragraph at lines 2246--2246
+Overfull \hbox (79.18584pt too wide) in paragraph at lines 2247--2247
 []    \OT1/pcr/m/n/10 geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legen
 d = FALSE)+[] 
  []
 
 
-Overfull \hbox (79.18584pt too wide) in paragraph at lines 2274--2274
+Overfull \hbox (79.18584pt too wide) in paragraph at lines 2275--2275
 []\OT1/pcr/m/n/10 #summary(glht(lm1, linfct=mcp(Group="Tukey", interaction_aver
 age=TRUE)))[] 
  []
@@ -2048,73 +2048,73 @@ age=TRUE)))[]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [48]
-Overfull \hbox (109.18584pt too wide) in paragraph at lines 2289--2289
+Overfull \hbox (109.18584pt too wide) in paragraph at lines 2290--2290
 []\OT1/pcr/m/n/10 #create a sequence of 40 random numbers between 1 and 100, th
 ese numbers will[] 
  []
 
 
-Overfull \hbox (115.18584pt too wide) in paragraph at lines 2290--2290
+Overfull \hbox (115.18584pt too wide) in paragraph at lines 2291--2291
 []\OT1/pcr/m/n/10 #correspond to the row numbers to be randomly erased from the
  original dataset[] 
  []
 
 
-Overfull \hbox (295.18584pt too wide) in paragraph at lines 2294--2294
+Overfull \hbox (295.18584pt too wide) in paragraph at lines 2295--2295
 []\OT1/pcr/m/n/10 #create a new dataframe from the simulated data with 40 rows 
 randomly removed, keep the missing values as NA[] 
  []
 
 
-Overfull \hbox (31.18584pt too wide) in paragraph at lines 2296--2296
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 2297--2297
 []\OT1/pcr/m/n/10 ind <- which(dat_sim$StO2_sim %in% sample(dat_sim$StO2_sim, 4
 0))[] 
  []
 
 
-Overfull \hbox (217.18584pt too wide) in paragraph at lines 2304--2304
+Overfull \hbox (217.18584pt too wide) in paragraph at lines 2305--2305
 []\OT1/pcr/m/n/10 #Count the number of remaining observations per day (original
  dataset had 10 per group per day)[] 
  []
 
 
-Overfull \hbox (151.18584pt too wide) in paragraph at lines 2312--2312
+Overfull \hbox (151.18584pt too wide) in paragraph at lines 2313--2313
 []\OT1/pcr/m/n/10 mod_m1 <- gam(StO2_sim ~ Group+s(Day,by=Group,k=5), data  = d
 at_missing,family=scat)[] 
  []
 
 
-Overfull \hbox (49.18584pt too wide) in paragraph at lines 2317--2317
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 2318--2318
 []\OT1/pcr/m/n/10 m_predict <- expand_grid(Group = factor(c("Control", "Treatme
 nt")),[] 
  []
 
 
-Overfull \hbox (49.18584pt too wide) in paragraph at lines 2320--2320
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 2321--2321
 []\OT1/pcr/m/n/10 #adds the predictions to the grid and creates a confidence in
 terval[] 
  []
 
 
-Overfull \hbox (109.18584pt too wide) in paragraph at lines 2322--2322
+Overfull \hbox (109.18584pt too wide) in paragraph at lines 2323--2323
 []    \OT1/pcr/m/n/10 mutate(fit = predict(mod_m1,m_predict,se.fit = TRUE,type=
 'response')$fit,[] 
  []
 
 
-Overfull \hbox (151.18584pt too wide) in paragraph at lines 2323--2323
+Overfull \hbox (151.18584pt too wide) in paragraph at lines 2324--2324
 []           \OT1/pcr/m/n/10 se.fit = predict(mod_m1, m_predict,se.fit = TRUE,t
 ype='response')$se.fit)[] 
  []
 
 
-Overfull \hbox (49.18584pt too wide) in paragraph at lines 2326--2326
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 2327--2327
 []\OT1/pcr/m/n/10 f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Gro
 up)) +[] 
  []
 
 [49]
-Overfull \hbox (79.18584pt too wide) in paragraph at lines 2327--2327
+Overfull \hbox (79.18584pt too wide) in paragraph at lines 2328--2328
 []    \OT1/pcr/m/n/10 geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legen
 d = FALSE)+[] 
  []
@@ -2125,106 +2125,106 @@ File: Full_document_SAGE_files/figure-latex/sim-smooth-plot-Appendix-1.pdf Grap
 hic file (type pdf)
 <use Full_document_SAGE_files/figure-latex/sim-smooth-plot-Appendix-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/sim-smooth-plot-
-Appendix-1.pdf  used on input line 2353.
+Appendix-1.pdf  used on input line 2354.
 (pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
 [50 <./Full_document_SAGE_files/figure-latex/sim-smooth-plot-Appendix-1.pdf>]
-Overfull \hbox (133.18584pt too wide) in paragraph at lines 2373--2373
+Overfull \hbox (133.18584pt too wide) in paragraph at lines 2374--2374
 []\OT1/pcr/m/n/10 #this function takes the model, grid and groups to be compare
 d using the lpmatrix[] 
  []
 
 
-Overfull \hbox (55.18584pt too wide) in paragraph at lines 2375--2375
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 2376--2376
 []\OT1/pcr/m/n/10 #https://fromthebottomoftheheap.net/2017/10/10/difference-spl
 ines-i/[] 
  []
 
 
-Overfull \hbox (13.18584pt too wide) in paragraph at lines 2377--2377
+Overfull \hbox (13.18584pt too wide) in paragraph at lines 2378--2378
 []\OT1/pcr/m/n/10 smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
 [] 
  []
 
 
-Overfull \hbox (19.18584pt too wide) in paragraph at lines 2379--2379
+Overfull \hbox (19.18584pt too wide) in paragraph at lines 2380--2380
 []    \OT1/pcr/m/n/10 xp <- predict(model, newdata = newdata, type = 'lpmatrix'
 )[] 
  []
 
 
-Overfull \hbox (85.18584pt too wide) in paragraph at lines 2380--2380
+Overfull \hbox (85.18584pt too wide) in paragraph at lines 2381--2381
 []    \OT1/pcr/m/n/10 #Find columns in xp where the name contains "Control" and
  "Treatment"[] 
  []
 
 
-Overfull \hbox (7.18584pt too wide) in paragraph at lines 2388--2388
+Overfull \hbox (7.18584pt too wide) in paragraph at lines 2389--2389
 []    \OT1/pcr/m/n/10 ## zero out cols of X related to splines for other lochs[
 ] 
  []
 
 
-Overfull \hbox (121.18584pt too wide) in paragraph at lines 2392--2392
+Overfull \hbox (121.18584pt too wide) in paragraph at lines 2393--2393
 []    \OT1/pcr/m/n/10 #This line has been commented to keep the comparison at t
 he response level,[] 
  []
 
 
-Overfull \hbox (1.18584pt too wide) in paragraph at lines 2393--2393
+Overfull \hbox (1.18584pt too wide) in paragraph at lines 2394--2394
 []    \OT1/pcr/m/n/10 #otherwise it gives the marginal change between smooths[]
  
  []
 
 
-Overfull \hbox (121.18584pt too wide) in paragraph at lines 2397--2397
+Overfull \hbox (121.18584pt too wide) in paragraph at lines 2398--2398
 []    \OT1/pcr/m/n/10 se <- sqrt(rowSums((X %*% vcov(model, unconditional = unc
 onditional)) * X))[] 
  []
 
 
-Overfull \hbox (25.18584pt too wide) in paragraph at lines 2398--2398
+Overfull \hbox (25.18584pt too wide) in paragraph at lines 2399--2399
 []    \OT1/pcr/m/n/10 crit <- qt(alpha/2, df.residual(model), lower.tail = FALS
 E)[] 
  []
 
 [51]
-Overfull \hbox (181.18584pt too wide) in paragraph at lines 2411--2411
+Overfull \hbox (181.18584pt too wide) in paragraph at lines 2412--2412
 []\OT1/pcr/m/n/10 #Create a dataframe with time, comparisons and labels for reg
 ions where difference exists[] 
  []
 
 
-Overfull \hbox (103.18584pt too wide) in paragraph at lines 2421--2421
+Overfull \hbox (103.18584pt too wide) in paragraph at lines 2422--2422
 []    \OT1/pcr/m/n/10 #extract values where the lower limit of the ribbon is gr
 eater than zero[] 
  []
 
 
-Overfull \hbox (37.18584pt too wide) in paragraph at lines 2422--2422
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 2423--2423
 []    \OT1/pcr/m/n/10 #this is the region where the control group effect is gre
 ater[] 
  []
 
 
-Overfull \hbox (169.18584pt too wide) in paragraph at lines 2431--2431
+Overfull \hbox (169.18584pt too wide) in paragraph at lines 2432--2432
 []    \OT1/pcr/m/n/10 #extract values where the value of the upper limit of the
  ribbon is lower than zero[] 
  []
 
 
-Overfull \hbox (121.18584pt too wide) in paragraph at lines 2432--2432
+Overfull \hbox (121.18584pt too wide) in paragraph at lines 2433--2433
 []    \OT1/pcr/m/n/10 #this corresponds to the region where the treatment group
  effect is greater[] 
  []
 
 
-Overfull \hbox (43.18584pt too wide) in paragraph at lines 2450--2450
+Overfull \hbox (43.18584pt too wide) in paragraph at lines 2451--2451
 []\OT1/pcr/m/n/10 c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pai
 r)) +[] 
  []
 
 
-Overfull \hbox (109.18584pt too wide) in paragraph at lines 2452--2452
+Overfull \hbox (109.18584pt too wide) in paragraph at lines 2453--2453
 []                \OT1/pcr/m/n/10 xmin =my_list$init1, xmax =my_list$final1,ymi
 n=-Inf,ymax=Inf,[] 
  []
@@ -2233,19 +2233,19 @@ n=-Inf,ymax=Inf,[]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [52]
-Overfull \hbox (91.18584pt too wide) in paragraph at lines 2464--2464
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 2465--2465
 []             \OT1/pcr/m/n/10 xmin =my_list$init2, xmax =my_list$final2,ymin=-
 Inf,ymax=Inf,[] 
  []
 
 
-Overfull \hbox (61.18584pt too wide) in paragraph at lines 2483--2483
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 2484--2484
 []    \OT1/pcr/m/n/10 labs(x = 'Days', y = expression(paste('Difference in StO'
 [2] )))+[] 
  []
 
 
-Overfull \hbox (121.18584pt too wide) in paragraph at lines 2496--2496
+Overfull \hbox (121.18584pt too wide) in paragraph at lines 2497--2497
 []\OT1/pcr/m/n/10 missing_plot<-ggplot(comp_StO2_missing, aes(x = Day, y = diff
 , group = pair)) +[] 
  []
@@ -2254,31 +2254,31 @@ Overfull \hbox (121.18584pt too wide) in paragraph at lines 2496--2496
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [53]
-Overfull \hbox (25.18584pt too wide) in paragraph at lines 2497--2497
+Overfull \hbox (25.18584pt too wide) in paragraph at lines 2498--2498
 []    \OT1/pcr/m/n/10 geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2)
  +[] 
  []
 
 
-Overfull \hbox (79.18584pt too wide) in paragraph at lines 2501--2501
+Overfull \hbox (79.18584pt too wide) in paragraph at lines 2502--2502
 []         \OT1/pcr/m/n/10 y = expression(paste('Difference in StO'[2],'\n (mis
 sing data)'[] 
  []
 
 
-Overfull \hbox (61.18584pt too wide) in paragraph at lines 2512--2512
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 2513--2513
 []\OT1/pcr/m/n/10 c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = 
 pair)) +[] 
  []
 
 
-Overfull \hbox (91.18584pt too wide) in paragraph at lines 2514--2514
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 2515--2515
 []             \OT1/pcr/m/n/10 xmin =my_list$init1, xmax =my_list$final1,ymin=-
 Inf,ymax=Inf,[] 
  []
 
 
-Overfull \hbox (91.18584pt too wide) in paragraph at lines 2525--2525
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 2526--2526
 []             \OT1/pcr/m/n/10 xmin =my_list$init2, xmax =my_list$final2,ymin=-
 Inf,ymax=Inf,[] 
  []
@@ -2287,7 +2287,7 @@ Inf,ymax=Inf,[]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [54]
-Overfull \hbox (61.18584pt too wide) in paragraph at lines 2541--2541
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 2542--2542
 []    \OT1/pcr/m/n/10 labs(x = 'Days', y = expression(paste('Difference in StO'
 [2] )))+[] 
  []
@@ -2298,7 +2298,7 @@ File: Full_document_SAGE_files/figure-latex/plot-pairwise-comp-Appendix-1.pdf G
 raphic file (type pdf)
 <use Full_document_SAGE_files/figure-latex/plot-pairwise-comp-Appendix-1.pdf>
 Package pdftex.def Info: Full_document_SAGE_files/figure-latex/plot-pairwise-co
-mp-Appendix-1.pdf  used on input line 2553.
+mp-Appendix-1.pdf  used on input line 2554.
 (pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
 No file Full_document_SAGE.bbl.
 
@@ -2347,7 +2347,7 @@ rs/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb>
 <c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr
 8a.pfb><c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/tim
 es/utmri8a.pfb>
-Output written on Full_document_SAGE.pdf (55 pages, 669728 bytes).
+Output written on Full_document_SAGE.pdf (55 pages, 669735 bytes).
 PDF statistics:
  576 PDF objects out of 1000 (max. 8388607)
  452 compressed objects within 5 object streams
