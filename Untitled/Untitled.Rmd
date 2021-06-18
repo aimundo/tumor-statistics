@@ -1,261 +1,145 @@
 ---
-journal: jacsat
-type: article
+title: A demonstration of the \LaTeX class file for Statistical Methods in Medical Research with Rmarkdown
+runninghead: Uthor \emph{et al}.
 author:
-  - name: Andrew N. Other
-    altaff: A shared footnote
-  - name: Fred T. Secondauthor
-    altaff: "Current address: Some other place, Germany"
-  - name: I. Ken Groupleader
-    altaff: A shared footnote
-    email: \email{i.k.groupleader@unknown.uu}
-    phone: +123 (0)123 4445556
-    fax: +123 (0)123 4445557
-    aff: Department of Chemistry, Unknown University, Unknown Town
-    alsoaff: Department of Chemistry, Second University, Nearby Town
-  - name: Susanne K. Laborator
-    email: \email{s.k.laborator@bigpharma.co}
-    aff: Lead Discovery, BigPharma, Big Town, USA
-  - name: Kay T. Finally
-    aff: Department of Chemistry, Unknown University, Unknown Town
-    alsoaff: Department of Chemistry, Second University, Nearby Town
-title:
-  formatted: A demonstration of the \textsf{achemso} \LaTeX\
-   class\footnote{A footnote for the title}
-  short: An \textsf{achemso} demo
-abbr: IR,NMR,UV
-keywords: American Chemical Society, \LaTeX
-abstract: |
-  This is an example document for the \textsf{achemso} documentclass, intended for submissions to the American Chemical Society for publication. The class is based on the standard \LaTeXe\ \textsf{report} file, and does not seek to reproduce the appearanceof a published paper.
-
-  This is an abstract for the \textsf{achemso} document class demonstration document.  An abstract is only allowed for certain manuscript types.  The selection of \texttt{journal} and \texttt{manuscript} will determine if an abstract is valid.  If not, the class will issue an appropriate error.This is the abstract.
-
-bibliography: acstest.bib
-csl: american-chemical-society.csl
-output: rticles::acs_article
+- name: A. Uthor*
+  num: 1,2
+- name: O. Tro
+  num: 2
+- name: O. Vriga
+  num: 3
+address:
+- num: 1
+  org: Department of Incredible Research, University A, City A, Country A
+- num: 2
+  org: Department of Applied Things, University B, City B, Country B
+- num: 3
+  org: Very Important Stuff Committee, Institute C, City C, Country C
+corrauth: "Corresponding author name, This is sample corresponding address."
+email: correspondingauthor@protonmail.com
+abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut elit odio. Donec fermentum tellus neque, vitae fringilla orci pretium vitae. Fusce maximus finibus facilisis. Donec ut ullamcorper turpis. Donec ut porta ipsum. Nullam cursus mauris a sapien ornare pulvinar. Aenean malesuada molestie erat quis mattis. Praesent scelerisque posuere faucibus. Praesent nunc nulla, ullamcorper ut ullamcorper sed, molestie ut est. Donec consequat libero nisi, non semper velit vulputate et. Quisque eleifend tincidunt ligula, bibendum finibus massa cursus eget. Curabitur aliquet vehicula quam non pulvinar. Aliquam facilisis tortor nec purus finibus, sit amet elementum eros sodales. Ut porta porttitor vestibulum. Integer molestie, leo ut maximus aliquam, velit dui iaculis nibh, eget hendrerit purus risus sit amet dolor. Sed sed tincidunt ex. Curabitur imperdiet egestas tellus in iaculis. Maecenas ante neque, pretium vel nisl at, lobortis lacinia neque. In gravida elit vel volutpat imperdiet. Sed ut nulla arcu. Proin blandit interdum ex sit amet laoreet. Phasellus efficitur, sem hendrerit mattis dapibus, nunc tellus ornare nisi, nec eleifend enim nibh ac ipsum. Aenean tincidunt nisl sit amet facilisis faucibus. Donec odio erat, bibendum eu imperdiet sed, gravida luctus turpis."
+keywords: Class file; \LaTeX; SMMR; Rmarkdown;
+classoption:
+  - Royal
+  - times
+bibliography: bibfile
+bibliographystyle: sageh
+output:
+  rticles::sage_article:
+    keep_tex: yes
 ---
 
-\begin{tocentry}
-Some journals require a graphical entry for the Table of Contents.
-This should be laid out ``print ready'' so that the sizing of the
-text is correct.
+# The Article Header Information
 
-Inside the \texttt{tocentry} environment, the font used is Helvetica
-8\,pt, as required by \emph{Journal of the American Chemical
-Society}.
+YAML header:
 
-The surrounding frame is 9\,cm by 3.5\,cm, which is the maximum
-permitted for  \emph{Journal of the American Chemical Society}
-graphical table of content entries. The box will not resize if the
-content is too big: instead it will overflow the edge of the box.
-
-This box and the associated title will always be printed on a
-separate page at the end of the document.
-\end{tocentry}
-
-# Introduction
-This is a paragraph of text to fill the introduction of the
-demonstration file.  The demonstration file attempts to show the
-modifications of the standard \LaTeX\ macros that are implemented by
-the \textsf{achemso} class.  These are mainly concerned with content,
-as opposed to appearance.
-
-# Results and discussion
-
-## Outline
-
-The document layout should follow the style of the journal concerned.
-Where appropriate, sections and subsections should be added in the
-normal way. If the class options are set correctly, warnings will be
-given if these should not be present.
-
-## References
-
-The class makes various changes to the way that references are
-handled.  The class loads \textsf{natbib}, and also the
-appropriate bibliography style.  References can be made using
-the normal method; the citation should be placed before any
-punctuation, as the class will move it if using a superscript
-citation style [@Garnier2007].
-The use of \textsf{natbib} allows the use of the various citation
-commands of that package have shown
-something.  Long lists of authors will be
-automatically truncated in most article formats, but not in
-supplementary information or reviews. If you
-encounter problems with the citation macros, please check that
-your copy of \textsf{natbib} is up to date. The demonstration
-database file \texttt{achemso-demo.bib} shows how to complete
-entries correctly. Notice that ``\latin{et al.}'' is auto-formatted
-using the \texttt{\textbackslash latin} command.
-
-Multiple citations to be combined into a list can be given as
-a single citation.  This uses the \textsf{mciteplus} package.
-Citations other than the first of the list should be indicated
-with a star.
-
-The class also handles notes to be added to the bibliography.  These
-should be given in place in the document.  As with
-citations, the text should be placed before punctuation.  A note is
-also generated if a citation has an optional note.  This assumes that
-the whole work has already been cited: odd numbering will result if
-this is not the case .
-
-## Floats
-
-New float types are automatically set up by the class file.  The
-means graphics are included as follows (Scheme \ref{sch:example}).  As
-illustrated, the float is ``here'' if possible.
-\begin{scheme}
-  Your scheme graphic would go here: \texttt{.eps} format\\
-  for \LaTeX\, or \texttt{.pdf} (or \texttt{.png}) for pdf\LaTeX\\
-  \textsc{ChemDraw} files are best saved as \texttt{.eps} files:\\
-  these can be scaled without loss of quality, and can be\\
-  converted to \texttt{.pdf} files easily using \texttt{eps2pdf}.\\
-  %\includegraphics{graphic}
-  \caption{An example scheme}
-  \label{sch:example}
-\end{scheme}
-
-```{r,echo=FALSE,fig.cap='test'}
-plot(1:10)
+```
+output:
+  rticles::sim_article:
+    keep_tex: TRUE
 ```
 
-\begin{figure}
-  As well as the standard float types \texttt{table}\\
-  and \texttt{figure}, the class also recognises\\
-  \texttt{scheme}, \texttt{chart} and \texttt{graph}.
-  \caption{An example figure}
-  \label{fgr:example}
-\end{figure}
+Configure the YAML header including the following elements:
 
-Charts, figures and schemes do not necessarily have to be labelled or
-captioned.  However, tables should always have a title. It is
-possible to include a number and label for a graphic without any
-title, using an empty argument to the \texttt{\textbackslash caption}
-macro.
+* `title`: Title
 
-The use of the different floating environments is not required, but
-it is intended to make document preparation easier for authors. In
-general, you should place your graphics where they make logical
-sense; the production process will move them if needed.
+* `runninghead`: Author last names, use _et al._ if there are three or more authors.
 
-## Math(s)
+* `author`: List of author(s) containing `name` and `num`
 
-The \textsf{achemso} class does not load any particular additional
-support for mathematics.  If packages such as \textsf{amsmath} are
-required, they should be loaded in the preamble.  However,
-the basic \LaTeX\ math(s) input should work correctly without
-this.  Some inline material $y = mx + c$ or $1 + 1 = 2$
-followed by some display. $$ A = \pi r^2 $$
+* `corrauth`: Corresponding author's name and address.
 
-It is possible to label equations in the usual way (Eq. \ref{eqn:example}).
-\begin{equation}
-  \frac{\mathrm{d}}{\mathrm{d}x} \, r^2 = 2r \label{eqn:example}
-\end{equation}
-This can also be used to have equations containing graphical
-content. To align the equation number with the middle of the graphic,
-rather than the bottom, a minipage may be used.
-\begin{equation}
-  \begin{minipage}[c]{0.80\linewidth}
-    \centering
-    As illustrated here, the width of \\
-    the minipage needs to allow some  \\
-    space for the number to fit in to.
-    %\includegraphics{graphic}
-  \end{minipage}
-  \label{eqn:graphic}
-\end{equation}
+* `email`: Correspondence email
 
-# Experimental
+* `abstract`: Limited to 200 words
 
-The usual experimental details should appear here.  This could
-include a table, which can be referenced as Table \ref{tbl:example}.
-Notice that the caption is positioned at the top of the table.
-\begin{table}
-  \caption{An example table}
-  \label{tbl:example}
-  \begin{tabular}{ll}
-    \hline
-    Header one  & Header two  \\
-    \hline
-    Entry one   & Entry two   \\
-    Entry three & Entry four  \\
-    Entry five  & Entry five  \\
-    Entry seven & Entry eight \\
-    \hline
-  \end{tabular}
-\end{table}
+* `keywords`: Keywords for the article
 
-Adding notes to tables can be complicated.  Perhaps the easiest
-method is to generate these using the basic
-\texttt{\textbackslash textsuperscript} and
-\texttt{\textbackslash emph} macros, as illustrated (Table \ref{tbl:notes}).
-\begin{table}
-  \caption{A table with notes}
-  \label{tbl:notes}
-  \begin{tabular}{ll}
-    \hline
-    Header one                            & Header two \\
-    \hline
-    Entry one\textsuperscript{\emph{a}}   & Entry two  \\
-    Entry three\textsuperscript{\emph{b}} & Entry four \\
-    \hline
-  \end{tabular}
+* `bibliography`: BibTeX `.bib` file
 
-  \textsuperscript{\emph{a}} Some text;
-  \textsuperscript{\emph{b}} Some more text.
-\end{table}
+* `bibliographystyle`: sageh or sagev
 
-The example file also loads the optional \textsf{mhchem} package, so
-that formulas are easy to input: \texttt{\textbackslash ce\{H2SO4\}}
-gives \ce{H2SO4}.  See the use in the bibliography file (when using
-titles in the references section).
+* `classoption`: options of the `sagej` class
 
-The use of new commands should be limited to simple things which will
-not interfere with the production process.  For example,
-\texttt{\textbackslash mycommand} has been defined in this example,
-to give italic, mono-spaced text: \mycommand{some text}.
+## Remarks
 
-# Extra information when writing JACS Communications
+2. `bibliographystyle`
 
-When producing communications for \emph{J.~Am.\ Chem.\ Soc.}, the
-class will automatically lay the text out in the style of the
-journal. This gives a guide to the length of text that can be
-accommodated in such a publication. There are some points to bear in
-mind when preparing a JACS Communication in this way.  The layout
-produced here is a \emph{model} for the published result, and the
-outcome should be taken as a \emph{guide} to the final length. The
-spacing and sizing of graphical content is an area where there is
-some flexibility in the process.  You should not worry about the
-space before and after graphics, which is set to give a guide to the
-published size. This is very dependant on the final published layout.
+3. `classoption`
 
-You should be able to use the same source to produce a JACS
-Communication and a normal article.  For example, this demonstration
-file will work with both \texttt{type=article} and
-\texttt{type=communication}. Sections and any abstract are
-automatically ignored, although you will get warnings to this effect.
+4. Keywords are separated by commas.
 
-\begin{acknowledgement}
+# The Body of the Article
 
-Please use ``The authors thank \ldots'' rather than ``The
-authors would like to thank \ldots''.
+## Mathematics
 
-The author thanks Mats Dahlgren for version one of \textsf{achemso},
-and Donald Arseneau for the code taken from \textsf{cite} to move
-citations after punctuation. Many users have provided feedback on the
-class, which is reflected in all of the different demonstrations
-shown in this document.
+Use mathematics in Rmarkdown as usual.
 
-\end{acknowledgement}
+## Figures and Tables
 
-\begin{suppinfo}
+Figures are supported from R code:
 
-This will usually read something like: ``Experimental procedures and
-characterization data for all new compounds. The class will
-automatically add a sentence pointing to the information on-line:
+```{r plot-ref, fig.cap = "Fancy Caption\\label{fig:plot}", out.width='100%'}
+x = rnorm(10)
+y = rnorm(10)
+plot(x, y)
+```
 
-\end{suppinfo}
-## References
+...and can be referenced (Figure \ref{fig:plot}) by including the `\\label{}` tag in the `fig.cap` attribute of the R chunk: `fig.cap = "Fancy Caption\\label{fig:plot}"`. It is a quirky hack at the moment, see [here](https://github.com/yihui/knitr/issues/323).
 
+Analogously, use Rmarkdown to produce tables as usual:
 
+```{r, results = "asis"}
+if (!require("xtable")) install.packages("xtable")
+xt <- xtable(head(cars), caption = "A table", label = "tab:table")
+print(xt, comment = FALSE)
+```
+
+Referenced via \ref{tab:table}. You can also use the YAML option `header-includes` to includes custom \LaTeX packages for tables (keep in mind that `pandoc` uses `longtables` by default, and it is hardcoded; some things may require including the package `longtable`). E.g., using `ctable`:
+```
+header-includes:
+- \usepackage{ctable}
+```
+Then, just write straight-up \LaTeX code and reference is as usual (`\ref{tab:ctable}`):
+```
+\ctable[cap = {Short caption},
+        caption = {A caption for this table.},
+        label={tab:ctable},]
+        {cc}
+        {
+        \tnote[$\ast$]{Footnote 1}
+        \tnote[$\dagger$]{Other footnote}
+        \tnote[b]{Mistakes are possible.}
+        }{
+        \FL
+        COL 1\tmark[a] & COL 2\tmark[$\ast$]
+        \ML
+        6.92\tmark[$\dagger$] & 0.09781 \\
+        6.93\tmark[$\dagger$] & 0.09901 \\
+        97 & 2000
+        \LL
+}
+```
+
+It is also possible to set the `YAML` option `longtable: true` and use markdown tables (or the `knitr::kable` function): `knitr::kable(head(cars))` produces the same table as the `xtable` example presented before.
+
+## Cross-referencing
+
+The use of the Rmarkdown equivalent of the \LaTeX cross-reference system
+for figures, tables, equations, etc., is encouraged (using `[@<name>]`, equivalent of `\ref{<name>}` and `\label{<name>}`). That works well for citations in Rmarkdown, not so well for figures and tables. In that case, it is possible to revert to standard \LaTeX syntax.
+
+## Double Spacing
+
+If you need to double space your document for submission please use the `doublespace` option in the header.
+
+# Bibliography
+
+Link a `.bib` document via the YAML header, and bibliography will be printed at the very end (as usual). The default bibliography style is provided by Wiley as in `WileyNJD-AMA.bst`, do not delete that file.
+
+Use the Rmarkdown equivalent of the \LaTeX citation system using `[@<name>]`. Example: [@Taylor1937], [@Knupp1999; @Kamm2000].
+
+To include all citation from the `.bib` file, add `\nocite{*}` before the end of the document.
+
+# Further information
+
+All \LaTeX enviroments supported by the main template are supported here as well; see the `.tex` sample file [here](http://onlinelibrary.wiley.com/journal/10.1002/(ISSN)1097-0258/homepage/la_tex_class_file.htm) for more details and example.

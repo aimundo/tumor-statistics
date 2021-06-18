@@ -1,0 +1,2356 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.17)  18 JUN 2021 13:33
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**Full_document_SAGE.tex
+(./Full_document_SAGE.tex
+LaTeX2e <2021-06-01> patch level 1
+L3 programming layer <2021-06-01> (./sagej.cls
+Document Class: sagej 2017/01/17 v1.20\ sagej.cls
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2021/02/12 v1.4n Standard LaTeX document class
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count182
+\c@section=\count183
+\c@subsection=\count184
+\c@subsubsection=\count185
+\c@paragraph=\count186
+\c@subparagraph=\count187
+\c@figure=\count188
+\c@table=\count189
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty
+Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/helvet.st
+y
+Package: helvet 2020/03/25 PSNFSS-v9.3 (WaS) 
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.
+sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+))
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphic
+x.sty
+Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphic
+s.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.st
+y
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/gra
+phics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdf
+tex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen139
+\Gin@req@width=\dimen140
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/latexsym.st
+y
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 52.
+) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.st
+y
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/rotatin
+g.sty
+Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
+\c@r@tfl@t=\count190
+\rotFPtop=\skip49
+\rotFPbot=\skip50
+\rot@float@box=\box50
+\rot@mess@toks=\toks17
+) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count191
+\calc@Bcount=\count192
+\calc@Adimen=\dimen141
+\calc@Bdimen=\dimen142
+\calc@Askip=\skip51
+\calc@Bskip=\skip52
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count193
+\calc@Cskip=\skip53
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/textcase/textcas
+e.sty
+Package: textcase 2019/09/14 v1.00 Text only upper/lower case changing (DPC)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktab
+s.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen143
+\lightrulewidth=\dimen144
+\cmidrulewidth=\dimen145
+\belowrulesep=\dimen146
+\belowbottomsep=\dimen147
+\aboverulesep=\dimen148
+\abovetopsep=\dimen149
+\cmidrulesep=\dimen150
+\cmidrulekern=\dimen151
+\defaultaddspace=\dimen152
+\@cmidla=\count194
+\@cmidlb=\count195
+\@aboverulesep=\dimen153
+\@belowrulesep=\dimen154
+\@thisruleclass=\count196
+\@lastruleclass=\count197
+\@thisrulewidth=\dimen155
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/color.s
+ty
+Package: color 2020/02/24 v1.2b Standard LaTeX Color (DPC)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/col
+or.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 149.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/endnotes/endnote
+s.sty
+Package: endnotes 2020-01-02 endnotes package
+\c@endnote=\count198
+\endnotesep=\dimen156
+\@enotes=\write3
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfont
+s.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks18
+\symAMSa=\mathgroup5
+\symAMSb=\mathgroup6
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb
+.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.s
+ty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.s
+ty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks19
+\ex@=\dimen157
+)
+\pmbraise@=\dimen158
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.
+sty
+Package: amsmath 2021/04/20 v2.17j AMS math features
+\@mathmargin=\skip54
+For additional information on amsmath, use the `?' option.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.
+sty
+Package: amstext 2000/06/29 v2.01 AMS text
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.s
+ty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count199
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count266
+\leftroot@=\count267
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count268
+\DOTSCASE@=\count269
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box51
+\strutbox@=\box52
+\big@size=\dimen159
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count270
+\c@MaxMatrixCols=\count271
+\dotsspace@=\muskip16
+\c@parentequation=\count272
+\dspbrk@lvl=\count273
+\tag@help=\toks20
+\row@=\count274
+\column@=\count275
+\maxfields@=\count276
+\andhelp@=\toks21
+\eqnshift@=\dimen160
+\alignsep@=\dimen161
+\tagshift@=\dimen162
+\tagwidth@=\dimen163
+\totwidth@=\dimen164
+\lineht@=\dimen165
+\@envbody=\toks22
+\multlinegap=\skip55
+\multlinetaggap=\skip56
+\mathdisplay@stack=\toks23
+LaTeX Info: Redefining \[ on input line 2923.
+LaTeX Info: Redefining \] on input line 2924.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amscls/amsthm.st
+y
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks24
+\thm@bodyfont=\toks25
+\thm@headfont=\toks26
+\thm@notefont=\toks27
+\thm@headpunct=\toks28
+\thm@preskip=\skip57
+\thm@postskip=\skip58
+\thm@headsep=\skip59
+\dth@everypar=\toks29
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/tracefnt.st
+y
+Package: tracefnt 2020/12/22 v3.0n Standard LaTeX package (font tracing)
+\tracingfonts=\count277
+LaTeX Info: Redefining \selectfont on input line 107.
+Applying: [2021/06/01] Add hook to \selectfont  on input line 142.
+Already applied: [0000/00/00] Add hook to \selectfont  on input line 145.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/geometry/geometr
+y.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.s
+ty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.st
+y
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+\Gm@cnth=\count278
+\Gm@cntv=\count279
+\c@Gm@tempcnt=\count280
+\Gm@bindingoffset=\dimen166
+\Gm@wd@mp=\dimen167
+\Gm@odd@mp=\dimen168
+\Gm@even@mp=\dimen169
+\Gm@layoutwidth=\dimen170
+\Gm@layoutheight=\dimen171
+\Gm@layouthoffset=\dimen172
+\Gm@layoutvoffset=\dimen173
+\Gm@dimlist=\toks30
+)
+\absbox=\box53
+\@bls=\dimen174
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption.
+sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption3
+.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen175
+\captionmargin@=\dimen176
+\captionwidth=\dimen177
+\caption@tempdima=\dimen178
+\caption@indent=\dimen179
+\caption@parindent=\dimen180
+\caption@hangindent=\dimen181
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count281
+\c@continuedfloat=\count282
+Package caption Info: rotating package is loaded.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/natbib/natbib.st
+y
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip60
+\bibsep=\skip61
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count283
+))
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/moreverb/morever
+b.sty
+Package: moreverb 2008/06/03 v2.3a `more' verbatim facilities
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/verbatim.s
+ty
+Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks31
+\verbatim@line=\toks32
+\verbatim@in@stream=\read2
+)
+\tab@position=\count284
+\tab@size=\count285
+\listing@line=\count286
+) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multiro
+w.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip62
+\multirow@cntb=\count287
+\multirow@dima=\skip63
+\bigstrutjot=\dimen182
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/tabularx.s
+ty
+Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
+\col@sep=\dimen183
+\ar@mcellbox=\box54
+\extrarowheight=\dimen184
+\NC@list=\toks33
+\extratabsurround=\skip64
+\backup@length=\skip65
+\ar@cellbox=\box55
+)
+\TX@col@width=\dimen185
+\TX@old@table=\dimen186
+\TX@old@col=\dimen187
+\TX@target=\dimen188
+\TX@delta=\dimen189
+\TX@cols=\count288
+\TX@ftn=\toks34
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperre
+f.sty
+Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmd
+s.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdf
+texcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infw
+arerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvse
+tkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/k
+vdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfe
+scape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.
+sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/letltxmacro/letl
+txmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.
+sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvopti
+ons.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+)
+\@linkdim=\dimen190
+\Hy@linkcounter=\count289
+\Hy@pagecounter=\count290
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.
+def
+File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperre
+f-langpatches.def
+File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
+nguages
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcal
+c.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/etexcmds/etexc
+mds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count291
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.d
+ef
+File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 4073.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 4073.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 4073
+.
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4445.
+\c@Hy@tempcnt=\count292
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen191
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.
+sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/big
+intcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count293
+\Field@Width=\dimen192
+\Fld@charsize=\dimen193
+Package hyperref Info: Hyper figures OFF on input line 6076.
+Package hyperref Info: Link nesting OFF on input line 6081.
+Package hyperref Info: Hyper index ON on input line 6084.
+Package hyperref Info: backreferencing OFF on input line 6091.
+Package hyperref Info: Link coloring ON on input line 6094.
+Package hyperref Info: Link coloring with OCG OFF on input line 6101.
+Package hyperref Info: PDF/A mode OFF on input line 6106.
+LaTeX Info: Redefining \ref on input line 6146.
+LaTeX Info: Redefining \pageref on input line 6150.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-lt
+x.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count294
+\c@Item=\count295
+\c@Hfootnote=\count296
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex
+.def
+File: hpdftex.def 2021-06-07 v7.00m Hyperref driver for pdfTeX
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-l
+tx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
+e
+with kernel methods
+)
+\Fld@listcount=\count297
+\c@bookmark@seq@number=\count298
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/r
+erunfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/
+uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip66
+)
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
+1.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3back
+end-pdftex.def
+File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count299
+\l__pdf_internal_box=\box56
+)
+No file Full_document_SAGE.aux.
+\openout1 = `Full_document_SAGE.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/eps
+topdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epst
+opdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: custom
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* hratio: 1:1
+* vratio: 1:1
+* modes: twoside asymmetric 
+* h-part:(L,W,R)=(45.52441pt, 352.81416pt, 45.52441pt)
+* v-part:(T,H,B)=(69.70924pt, 526.37598pt, 69.70926pt)
+* \paperwidth=443.86299pt
+* \paperheight=665.79448pt
+* \textwidth=352.81416pt
+* \textheight=526.37598pt
+* \oddsidemargin=-26.74557pt
+* \evensidemargin=-26.74557pt
+* \topmargin=-35.56075pt
+* \headheight=12.0pt
+* \headsep=21.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=12.0pt
+* \skip\footins=20.0pt plus 8.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: hyperref package is loaded.
+Package caption Info: End \AtBeginDocument code.
+Package hyperref Info: Link coloring ON on input line 11.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref
+.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcoun
+t.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring
+/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count300
+)
+LaTeX Info: Redefining \ref on input line 11.
+LaTeX Info: Redefining \pageref on input line 11.
+LaTeX Info: Redefining \nameref on input line 11.
+\@outlinefile=\write4
+\openout4 = `Full_document_SAGE.out'.
+
+LaTeX Font Info:    Trying to load font information for OT1+phv on input line 2
+9.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ot1phv.fd
+File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
+)
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 9.49997pt on input line 29.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 11.39996pt on input line 29.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 11.39996pt on input line 29.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 9.49997pt on input line 29.
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <10> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 32.
+LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
+(Font)              scaled to size 9.49997pt on input line 32.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 5
+5.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 55
+.
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+LaTeX Font Info:    Trying to load font information for U+msa on input line 55.
+
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 55.
+
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 17.09995pt on input line 62.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 17.09995pt on input line 62.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 6.64998pt on input line 62.
+
+LaTeX Warning: Reference `FirstPage' on page 1 undefined on input line 62.
+
+
+LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 62.
+
+LaTeX Font Info:    Trying to load font information for TS1+phv on input line 6
+2.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ts1phv.fd
+File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
+)
+LaTeX Font Info:    Font shape `TS1/phv/m/n' will be
+(Font)              scaled to size 6.64998pt on input line 62.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 7.59998pt on input line 62.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 5.69998pt on input line 62.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 7.59998pt on input line 62.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 5.69998pt on input line 62.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 4.74998pt on input line 62.
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <7> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 64.
+LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
+(Font)              scaled to size 6.64998pt on input line 64.
+[1
+
+{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdf
+tex.map}]
+
+Package natbib Warning: Citation `roblyer2011' on page 2 undefined on input lin
+e 74.
+
+
+Package natbib Warning: Citation `tank2020' on page 2 undefined on input line 7
+4.
+
+
+Package natbib Warning: Citation `pavlov2018' on page 2 undefined on input line
+ 74.
+
+
+Package natbib Warning: Citation `demidov2018' on page 2 undefined on input lin
+e 74.
+
+
+Package natbib Warning: Citation `ritter2001' on page 2 undefined on input line
+ 75.
+
+
+Package natbib Warning: Citation `roth2017' on page 2 undefined on input line 7
+5.
+
+
+Package natbib Warning: Citation `jones2018' on page 2 undefined on input line 
+76.
+
+
+Package natbib Warning: Citation `skala2010' on page 2 undefined on input line 
+76.
+
+
+Package natbib Warning: Citation `greening2018' on page 2 undefined on input li
+ne 82.
+
+
+Package natbib Warning: Citation `sio2016' on page 2 undefined on input line 84
+.
+
+
+Package natbib Warning: Citation `kamstra2015' on page 2 undefined on input lin
+e 86.
+
+
+Package natbib Warning: Citation `wagenmakers2008' on page 2 undefined on input
+ line 92.
+
+
+Package natbib Warning: Citation `gueorguieva2004' on page 2 undefined on input
+ line 100.
+
+
+Package natbib Warning: Citation `schober2018' on page 2 undefined on input lin
+e 100.
+
+
+Package natbib Warning: Citation `pinheiro2006' on page 2 undefined on input li
+ne 103.
+
+
+Package natbib Warning: Citation `roblyer2011' on page 2 undefined on input lin
+e 110.
+
+
+Package natbib Warning: Citation `skala2010' on page 2 undefined on input line 
+110.
+
+
+Package natbib Warning: Citation `vishwanath2009' on page 2 undefined on input 
+line 110.
+
+[2]
+LaTeX Font Info:    Trying to load font information for OML+ptm on input line 1
+23.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/omlptm.fd
+File: omlptm.fd 
+)
+LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <10> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 123.
+
+Package natbib Warning: Citation `dennis2019' on page 3 undefined on input line
+ 127.
+
+
+Package natbib Warning: Citation `wang2019' on page 3 undefined on input line 1
+31.
+
+
+Package natbib Warning: Citation `liu2010' on page 3 undefined on input line 13
+5.
+
+
+Package natbib Warning: Citation `halsey2015' on page 3 undefined on input line
+ 135.
+
+
+Package natbib Warning: Citation `abdi2010' on page 3 undefined on input line 1
+37.
+
+
+Package natbib Warning: Citation `nakagawa2004' on page 3 undefined on input li
+ne 138.
+
+
+Package natbib Warning: Citation `gelman2012' on page 3 undefined on input line
+ 141.
+
+
+Package natbib Warning: Citation `albers2019' on page 3 undefined on input line
+ 141.
+
+
+Package natbib Warning: Citation `ugrinowitsch2004' on page 3 undefined on inpu
+t line 150.
+
+
+Package natbib Warning: Citation `huynh1976' on page 3 undefined on input line 
+151.
+
+
+Package natbib Warning: Citation `greenhouse1959' on page 3 undefined on input 
+line 151.
+
+
+Package natbib Warning: Citation `haverkamp2017' on page 3 undefined on input l
+ine 153.
+
+
+Package natbib Warning: Citation `keselman2001' on page 3 undefined on input li
+ne 154.
+
+
+Package natbib Warning: Citation `charan2013' on page 3 undefined on input line
+ 156.
+
+
+Package natbib Warning: Citation `gueorguieva2004' on page 3 undefined on input
+ line 168.
+
+
+Package natbib Warning: Citation `skala2010' on page 3 undefined on input line 
+182.
+
+
+Package natbib Warning: Citation `vishwanath2009' on page 3 undefined on input 
+line 182.
+
+
+Package natbib Warning: Citation `pinheiro2006' on page 3 undefined on input li
+ne 191.
+
+
+Package natbib Warning: Citation `gueorguieva2004' on page 3 undefined on input
+ line 193.
+
+
+Package natbib Warning: Citation `barr2013' on page 3 undefined on input line 1
+93.
+
+
+Package natbib Warning: Citation `pinheiro2006' on page 3 undefined on input li
+ne 195.
+
+[3]
+
+Package natbib Warning: Citation `rose2012' on page 4 undefined on input line 2
+09.
+
+
+Package natbib Warning: Citation `pedersen2019' on page 4 undefined on input li
+ne 209.
+
+
+Package natbib Warning: Citation `simpson2018' on page 4 undefined on input lin
+e 209.
+
+
+Package natbib Warning: Citation `yang2012' on page 4 undefined on input line 2
+10.
+
+
+Package natbib Warning: Citation `beck1998' on page 4 undefined on input line 2
+11.
+
+
+Package natbib Warning: Citation `wood2017' on page 4 undefined on input line 2
+15.
+
+
+Package natbib Warning: Citation `r' on page 4 undefined on input line 224.
+
+
+Package natbib Warning: Citation `wood2016' on page 4 undefined on input line 2
+25.
+
+
+Package natbib Warning: Citation `wood2017' on page 4 undefined on input line 2
+25.
+
+
+Package natbib Warning: Citation `haverkamp2017' on page 4 undefined on input l
+ine 231.
+
+
+Package natbib Warning: Citation `vishwanath2009' on page 4 undefined on input 
+line 247.
+
+[4]
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <12> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 267.
+LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
+(Font)              scaled to size 11.39996pt on input line 267.
+
+Overfull \hbox (75.1947pt too wide) detected at line 302
+[]\OML/cmm/m/it/10 y[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 ^^L[] \OT1/cmr/m/n/10
+ + \OML/cmm/m/it/10 ^^L[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it/10 time[] \OT1/cmr
+/m/n/10 + \OML/cmm/m/it/10 ^^L[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it/10 treatmen
+t[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 ^^L[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it
+/10 time[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it/10 treatment[] \OT1/cmr/m/n/10 + 
+\OML/cmm/m/it/10 "[][] \OT1/cmr/m/n/10 (#\OML/cmm/m/it/10 eq \OT1/cmr/m/n/10 : 
+\OML/cmm/m/it/10 linear \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 model\OT1/cmr/m/n
+/10 )
+ []
+
+[5]
+Overfull \hbox (50.4718pt too wide) detected at line 327
+[]\OML/cmm/m/it/10 y[] \OT1/cmr/m/n/10 = [] (#\OML/cmm/m/it/10 eq \OT1/cmr/m/n/
+10 : \OML/cmm/m/it/10 ANOVA \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 by \OMS/cmsy/
+m/n/10 ^^@ \OML/cmm/m/it/10 group\OT1/cmr/m/n/10 )
+ []
+
+
+Package natbib Warning: Citation `pinheiro2006' on page 6 undefined on input li
+ne 362.
+
+
+Package natbib Warning: Citation `west2014' on page 6 undefined on input line 3
+62.
+
+
+Overfull \hbox (70.58159pt too wide) detected at line 368
+[]\OML/cmm/m/it/10 y[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 ^^L[] \OT1/cmr/m/n/10
+ + \OML/cmm/m/it/10 ^^L[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it/10 time[] \OT1/cmr
+/m/n/10 + \OML/cmm/m/it/10 ^^L[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it/10 treatmen
+t[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 ^^L[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it
+/10 time[] \OMS/cmsy/m/n/10 ^^B \OML/cmm/m/it/10 treatment[] \OT1/cmr/m/n/10 + 
+\OML/cmm/m/it/10 ^^V[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 "[][] \OT1/cmr/m/n/10
+ (#\OML/cmm/m/it/10 eq \OT1/cmr/m/n/10 : \OML/cmm/m/it/10 LMEM\OT1/cmr/m/n/10 )
+
+ []
+
+[6]
+
+Package natbib Warning: Citation `pinheiro2006' on page 7 undefined on input li
+ne 391.
+
+
+Package natbib Warning: Citation `wolfinger1996' on page 7 undefined on input l
+ine 407.
+
+
+Package natbib Warning: Citation `west2014' on page 7 undefined on input line 4
+08.
+
+
+Package natbib Warning: Citation `weiss2005' on page 7 undefined on input line 
+408.
+
+
+Package natbib Warning: Citation `weiss2005' on page 7 undefined on input line 
+414.
+
+
+Package natbib Warning: Citation `geisser1958' on page 7 undefined on input lin
+e 414.
+
+
+Package natbib Warning: Citation `huynh1976' on page 7 undefined on input line 
+414.
+
+
+Package natbib Warning: Citation `maxwell2017' on page 7 undefined on input lin
+e 417.
+
+
+Package natbib Warning: Citation `gueorguieva2004' on page 7 undefined on input
+ line 418.
+
+
+Package natbib Warning: Citation `ugrinowitsch2004' on page 7 undefined on inpu
+t line 418.
+
+
+Package natbib Warning: Citation `huynh1976' on page 7 undefined on input line 
+420.
+
+
+Package natbib Warning: Citation `greenhouse1959' on page 7 undefined on input 
+line 420.
+
+
+Package natbib Warning: Citation `haverkamp2017' on page 7 undefined on input l
+ine 422.
+
+
+Package natbib Warning: Citation `keselman2001' on page 7 undefined on input li
+ne 424.
+
+
+Package natbib Warning: Citation `pinheiro2006' on page 7 undefined on input li
+ne 432.
+
+
+Package natbib Warning: Citation `molenberghs2004' on page 7 undefined on input
+ line 443.
+
+
+Package natbib Warning: Citation `weiss2005' on page 7 undefined on input line 
+448.
+
+
+Package natbib Warning: Citation `scheffer2002' on page 7 undefined on input li
+ne 450.
+
+
+Package natbib Warning: Citation `potthoff2006' on page 7 undefined on input li
+ne 452.
+
+[7]
+
+Package natbib Warning: Citation `ma2012' on page 8 undefined on input line 459
+.
+
+
+Package natbib Warning: Citation `west2014' on page 8 undefined on input line 4
+61.
+
+
+Package natbib Warning: Citation `r' on page 8 undefined on input line 475.
+
+
+Package natbib Warning: Citation `nlme' on page 8 undefined on input line 475.
+
+[8]
+<Full_document_SAGE_files/figure-latex/l-q-response-1.pdf, id=76, 722.7pt x 722
+.7pt>
+File: Full_document_SAGE_files/figure-latex/l-q-response-1.pdf Graphic file (ty
+pe pdf)
+<use Full_document_SAGE_files/figure-latex/l-q-response-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/l-q-response-1.p
+df  used on input line 536.
+(pdftex.def)             Requested size: 264.61061pt x 264.60484pt.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 8.54997pt on input line 540.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 8.54997pt on input line 540.
+[9]
+
+Package natbib Warning: Citation `nelder1972' on page 10 undefined on input lin
+e 600.
+
+
+Package natbib Warning: Citation `simpson2018' on page 10 undefined on input li
+ne 603.
+
+
+Package natbib Warning: Citation `wood2017' on page 10 undefined on input line 
+603.
+
+
+Package natbib Warning: Citation `hastie1987' on page 10 undefined on input lin
+e 603.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[10 <./Full_document_SAGE_files/figure-latex/l-q-response-1.pdf>]
+
+Package natbib Warning: Citation `beck1998' on page 11 undefined on input line 
+627.
+
+
+Package natbib Warning: Citation `simpson2018' on page 11 undefined on input li
+ne 639.
+
+
+Package natbib Warning: Citation `hefley2017' on page 11 undefined on input lin
+e 645.
+
+
+Package natbib Warning: Citation `wood2017' on page 11 undefined on input line 
+655.
+
+
+Package natbib Warning: Citation `simpson2018' on page 11 undefined on input li
+ne 655.
+
+
+Package natbib Warning: Citation `wegman1983' on page 11 undefined on input lin
+e 658.
+
+[11]
+<Full_document_SAGE_files/figure-latex/basis-plot-1.pdf, id=100, 722.7pt x 722.
+7pt>
+File: Full_document_SAGE_files/figure-latex/basis-plot-1.pdf Graphic file (type
+ pdf)
+<use Full_document_SAGE_files/figure-latex/basis-plot-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/basis-plot-1.pdf
+  used on input line 714.
+(pdftex.def)             Requested size: 264.61061pt x 264.60484pt.
+
+Package natbib Warning: Citation `mcelreath2018' on page 12 undefined on input 
+line 726.
+
+
+Package natbib Warning: Citation `wood2017' on page 12 undefined on input line 
+730.
+
+
+Package natbib Warning: Citation `miller2019' on page 12 undefined on input lin
+e 733.
+
+
+Package natbib Warning: Citation `laird1982' on page 12 undefined on input line
+ 735.
+
+
+Package natbib Warning: Citation `pedersen2019' on page 12 undefined on input l
+ine 735.
+
+
+Package natbib Warning: Citation `pedersen2019' on page 12 undefined on input l
+ine 738.
+
+
+Package natbib Warning: Citation `wood2017' on page 12 undefined on input line 
+740.
+
+
+Package natbib Warning: Citation `miller2019' on page 12 undefined on input lin
+e 748.
+
+
+Package natbib Warning: Citation `wood2017' on page 12 undefined on input line 
+748.
+
+
+Package natbib Warning: Citation `simpson2018' on page 12 undefined on input li
+ne 748.
+
+
+Package natbib Warning: Citation `marra2012' on page 12 undefined on input line
+ 749.
+
+[12]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[13 <./Full_document_SAGE_files/figure-latex/basis-plot-1.pdf>]
+
+Package natbib Warning: Citation `vishwanath2009' on page 14 undefined on input
+ line 772.
+
+
+Package natbib Warning: Citation `hefley2017' on page 14 undefined on input lin
+e 796.
+
+LaTeX Font Info:    Trying to load font information for OML+pcr on input line 8
+09.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/omlpcr.fd
+File: omlpcr.fd 
+)
+LaTeX Font Info:    Font shape `OML/pcr/m/n' in size <10> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 809.
+LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 8
+09.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ts1pcr.fd
+File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
+)
+Underfull \hbox (badness 10000) in paragraph at lines 809--810
+[]\OT1/pcr/m/n/10 m1 \OML/cmm/m/it/10 <\OT1/pcr/m/n/10 - gam(StO2[]sim ~ Group 
++ s(Day, by=Group, k=5),
+ []
+
+
+Package natbib Warning: Citation `simpson2018' on page 14 undefined on input li
+ne 817.
+
+
+Package natbib Warning: Citation `wood2017' on page 14 undefined on input line 
+820.
+
+
+Package natbib Warning: Citation `gratia' on page 14 undefined on input line 82
+6.
+
+
+Package natbib Warning: Citation `wood2017' on page 14 undefined on input line 
+828.
+
+
+Package natbib Warning: Citation `harezlak2018' on page 14 undefined on input l
+ine 829.
+
+[14]
+<Full_document_SAGE_files/figure-latex/sim-smooth-plot-1.pdf, id=130, 722.7pt x
+ 505.89pt>
+File: Full_document_SAGE_files/figure-latex/sim-smooth-plot-1.pdf Graphic file 
+(type pdf)
+<use Full_document_SAGE_files/figure-latex/sim-smooth-plot-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/sim-smooth-plot-
+1.pdf  used on input line 875.
+(pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
+<Full_document_SAGE_files/figure-latex/plot-pairwise-comp-1.pdf, id=131, 722.7p
+t x 505.89pt>
+File: Full_document_SAGE_files/figure-latex/plot-pairwise-comp-1.pdf Graphic fi
+le (type pdf)
+<use Full_document_SAGE_files/figure-latex/plot-pairwise-comp-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/plot-pairwise-co
+mp-1.pdf  used on input line 890.
+(pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
+[15] [16 <./Full_document_SAGE_files/figure-latex/sim-smooth-plot-1.pdf> <./Ful
+l_document_SAGE_files/figure-latex/plot-pairwise-comp-1.pdf>]
+
+Package natbib Warning: Citation `dennis2019' on page 17 undefined on input lin
+e 976.
+
+
+Package natbib Warning: Citation `lang2015' on page 17 undefined on input line 
+981.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[17]
+
+Package natbib Warning: Citation `hefley2017' on page 18 undefined on input lin
+e 990.
+
+
+Package natbib Warning: Citation `pedersen2019' on page 18 undefined on input l
+ine 990.
+
+
+Package natbib Warning: Citation `hastie1995' on page 18 undefined on input lin
+e 993.
+
+
+Package natbib Warning: Citation `vishwanath2009' on page 18 undefined on input
+ line 1004.
+
+
+Package natbib Warning: Citation `wood2017' on page 18 undefined on input line 
+1005.
+
+
+Package natbib Warning: Citation `begley2015' on page 18 undefined on input lin
+e 1026.
+
+
+Package natbib Warning: Citation `weissgerber2018' on page 18 undefined on inpu
+t line 1026.
+
+[18] [19]
+Overfull \hbox (223.18584pt too wide) in paragraph at lines 1093--1093
+[]\OT1/pcr/m/n/10 #This function simulates data using a linear or quadratic mea
+n response and each with correlated[] 
+ []
+
+
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 1094--1094
+[]\OT1/pcr/m/n/10 #or uncorrelated errors. Each group has a different slope/con
+cavity.[] 
+ []
+
+
+Overfull \hbox (7.18584pt too wide) in paragraph at lines 1100--1100
+[]    \OT1/pcr/m/n/10 stop('fun_type must be either "linear", or "quadratic"')[
+] 
+ []
+
+
+Overfull \hbox (43.18584pt too wide) in paragraph at lines 1102--1102
+[]    \OT1/pcr/m/n/10 stop('fun_type must be either "correlated", or "independe
+nt"')[] 
+ []
+
+
+Overfull \hbox (529.18584pt too wide) in paragraph at lines 1120--1120
+[]  \OT1/pcr/m/n/10 #create an array where individual observations per each tim
+e point for each group are to be stored. Currently using 10 observations per ti
+mepoint[] 
+ []
+
+
+Overfull \hbox (199.18584pt too wide) in paragraph at lines 1123--1123
+[]  \OT1/pcr/m/n/10 #Create array to store the "errors" for each group at each 
+timepoint. The "errors" are the[] 
+ []
+
+
+Overfull \hbox (199.18584pt too wide) in paragraph at lines 1126--1126
+[]  \OT1/pcr/m/n/10 #create an array where 10 observations per each time point 
+for each group are to be stored[] 
+ []
+
+
+Overfull \hbox (985.18584pt too wide) in paragraph at lines 1128--1128
+[]  \OT1/pcr/m/n/10 #The following cycles create independent or correlated resp
+onses. To each value of mu (mean response per group) a randomly generated error
+ (correlated or uncorrelated) is added and thus the individual response is crea
+ted.[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[20]
+Overfull \hbox (19.18584pt too wide) in paragraph at lines 1140--1140
+[]        \OT1/pcr/m/n/10 # compound symmetry errors: variance covariance matri
+x[] 
+ []
+
+
+Overfull \hbox (199.18584pt too wide) in paragraph at lines 1141--1141
+[]        \OT1/pcr/m/n/10 errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * di
+ag(6) + 0.25 * matrix(1, 6, 6))[] 
+ []
+
+
+Overfull \hbox (127.18584pt too wide) in paragraph at lines 1150--1150
+[]  \OT1/pcr/m/n/10 ## visualizing the difference between independent errors an
+d compound symmetry[] 
+ []
+
+
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 1151--1151
+[]  \OT1/pcr/m/n/10 ## why do we need to account for this -- overly confident i
+nference[] 
+ []
+
+
+Overfull \hbox (145.18584pt too wide) in paragraph at lines 1166--1166
+[]  \OT1/pcr/m/n/10 #convert y, mu and errors to  dataframes with time, treatme
+nt and subject columns[] 
+ []
+
+
+Overfull \hbox (7.18584pt too wide) in paragraph at lines 1170--1170
+[]                                    \OT1/pcr/m/n/10 responseName = "errors")[
+] 
+ []
+
+
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 1174--1174
+[]  \OT1/pcr/m/n/10 #join the dataframes to show mean response and errors per s
+ubject[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[21]
+Overfull \hbox (67.18584pt too wide) in paragraph at lines 1190--1190
+[]  \OT1/pcr/m/n/10 fit_anova <- lm(y ~ time + treatment + time * treatment, da
+ta = dat)[] 
+ []
+
+
+Overfull \hbox (19.18584pt too wide) in paragraph at lines 1192--1192
+[]\OT1/pcr/m/n/10 #LMEM: time and treatment interaction model, compound symmetr
+y[] 
+ []
+
+
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1196--1196
+[]                 \OT1/pcr/m/n/10 correlation = corCompSymm(form = ~ 1 | subje
+ct)[] 
+ []
+
+
+Overfull \hbox (115.18584pt too wide) in paragraph at lines 1199--1199
+[]  \OT1/pcr/m/n/10 #create a prediction frame where the model can be used for 
+plotting purposes[] 
+ []
+
+
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 1205--1205
+[]  \OT1/pcr/m/n/10 #add model predictions to the dataframe that has the simula
+ted data[] 
+ []
+
+
+Overfull \hbox (73.18584pt too wide) in paragraph at lines 1217--1217
+[]\OT1/pcr/m/n/10 ##################Section for plotting#######################
+##########[] 
+ []
+
+
+Overfull \hbox (73.18584pt too wide) in paragraph at lines 1218--1218
+[]\OT1/pcr/m/n/10 #############################################################
+##########[] 
+ []
+
+
+Overfull \hbox (139.18584pt too wide) in paragraph at lines 1219--1219
+[]\OT1/pcr/m/n/10 #This function will create the plots for either a "linear" or
+ "quadratic" response[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[22]
+Overfull \hbox (13.18584pt too wide) in paragraph at lines 1242--1242
+[]  \OT1/pcr/m/n/10 #plot the simulated data with trajectories per each subject
+[] 
+ []
+
+
+Overfull \hbox (181.18584pt too wide) in paragraph at lines 1258--1258
+[]    \OT1/pcr/m/n/10 scale_size_manual(name = "Type", values=c("Subjects" = 0.
+5, "Simulated Truth" = 3)) +[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[23]
+Overfull \hbox (103.18584pt too wide) in paragraph at lines 1287--1287
+[]                  \OT1/pcr/m/n/10 group = subject, size = "Subjects"),show.le
+gend = FALSE) +[] 
+ []
+
+
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1294--1294
+[]    \OT1/pcr/m/n/10 guides(color = guide_legend(override.aes = list(size = 2)
+))+[] 
+ []
+
+
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 1296--1296
+[]                      \OT1/pcr/m/n/10 values=c("Subjects" = 0.5, "Population"
+ = 3)) +[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[24]
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1319--1319
+[]    \OT1/pcr/m/n/10 guides(color = guide_legend(override.aes = list(size = 2)
+))+[] 
+ []
+
+
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 1321--1321
+[]                      \OT1/pcr/m/n/10 values=c("Subjects" = 0.5, "Population"
+ = 3)) +[] 
+ []
+
+
+Overfull \hbox (127.18584pt too wide) in paragraph at lines 1328--1328
+[]  \OT1/pcr/m/n/10 return((p1+p3+p2+p4+p5)+plot_layout(nrow=1)+plot_annotation
+(tag_levels = 'A'))[] 
+ []
+
+
+Overfull \hbox (85.18584pt too wide) in paragraph at lines 1336--1336
+[]\OT1/pcr/m/n/10 A1<-plot_example(example(fun_type = "linear", error_type = "c
+orrelated"))[] 
+ []
+
+
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 1338--1338
+[]\OT1/pcr/m/n/10 B1<-plot_example(example(fun_type = "linear", error_type = "i
+ndependent"))[] 
+ []
+
+
+Overfull \hbox (103.18584pt too wide) in paragraph at lines 1340--1340
+[]\OT1/pcr/m/n/10 C1<-plot_example(example(fun_type = "quadratic", error_type =
+ "correlated"))[] 
+ []
+
+
+Overfull \hbox (109.18584pt too wide) in paragraph at lines 1342--1342
+[]\OT1/pcr/m/n/10 D1<-plot_example(example(fun_type = "quadratic", error_type =
+ "independent"))[] 
+ []
+
+<Full_document_SAGE_files/figure-latex/linear-cases-Appendix-1.pdf, id=212, 115
+6.32pt x 867.24pt>
+File: Full_document_SAGE_files/figure-latex/linear-cases-Appendix-1.pdf Graphic
+ file (type pdf)
+<use Full_document_SAGE_files/figure-latex/linear-cases-Appendix-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/linear-cases-App
+endix-1.pdf  used on input line 1361.
+(pdftex.def)             Requested size: 1156.31718pt x 867.2379pt.
+
+Overfull \hbox (803.50302pt too wide) in paragraph at lines 1361--1362
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 361.36191pt on input line 1363.
+
+[25]
+<Full_document_SAGE_files/figure-latex/quadratic-cases-Appendix-1.pdf, id=218, 
+1156.32pt x 867.24pt>
+File: Full_document_SAGE_files/figure-latex/quadratic-cases-Appendix-1.pdf Grap
+hic file (type pdf)
+<use Full_document_SAGE_files/figure-latex/quadratic-cases-Appendix-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/quadratic-cases-
+Appendix-1.pdf  used on input line 1385.
+(pdftex.def)             Requested size: 1156.31718pt x 867.2379pt.
+
+Overfull \hbox (803.50302pt too wide) in paragraph at lines 1385--1386
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 361.36191pt on input line 1387.
+
+
+Overfull \hbox (175.18584pt too wide) in paragraph at lines 1400--1400
+[]\OT1/pcr/m/n/10 #generate the response: the same initial procedure from the p
+revious section to simulate 
+ []
+
+
+Overfull \hbox (205.18584pt too wide) in paragraph at lines 1413--1413
+[]         \OT1/pcr/m/n/10 errors[, i, j] <- rmvn(1, rep(0, length(x)), 0.1 * d
+iag(6) + 0.25 * matrix(1, 6, 6))[] 
+ []
+
+
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1419--1419
+[]  \OT1/pcr/m/n/10 dimnames(y) <- list(time = x, treatment = 1:2, subject = 1:
+10)[] 
+ []
+
+
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 1420--1420
+[] \OT1/pcr/m/n/10 dimnames(errors) <- list(time = x, treatment = 1:2, subject 
+= 1:10)[] 
+ []
+
+[26] [27 <./Full_document_SAGE_files/figure-latex/linear-cases-Appendix-1.pdf>]
+[28 <./Full_document_SAGE_files/figure-latex/quadratic-cases-Appendix-1.pdf>]
+Overfull \hbox (7.18584pt too wide) in paragraph at lines 1423--1423
+[] \OT1/pcr/m/n/10 #Convert to dataframes with subject, time and group columns[
+] 
+ []
+
+
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 1425--1425
+[] \OT1/pcr/m/n/10 dat_errors <- as.data.frame.table(errors, responseName = "er
+rors")[] 
+ []
+
+
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 1427--1427
+[] \OT1/pcr/m/n/10 dat <- left_join(dat, dat_errors, by = c("time", "treatment"
+, "subject"))[] 
+ []
+
+
+Overfull \hbox (1.18584pt too wide) in paragraph at lines 1428--1428
+[] \OT1/pcr/m/n/10 dat <- left_join(dat, dat_mu, by = c("time", "treatment"))[]
+ 
+ []
+
+
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 1433--1433
+[]     \OT1/pcr/m/n/10 mutate(subject = factor(paste(subject, treatment, sep = 
+"-")))[] 
+ []
+
+
+Overfull \hbox (223.18584pt too wide) in paragraph at lines 1450--1450
+[]\OT1/pcr/m/n/10 basis<-model_matrix[1:6,] #extracting basis (because the valu
+es are repeated after every 6 rows)[] 
+ []
+
+
+Overfull \hbox (7.18584pt too wide) in paragraph at lines 1452--1452
+[]\OT1/pcr/m/n/10 colnames(basis)[colnames(basis)=="(Intercept)"]<-"s(time).0"[
+] 
+ []
+
+
+Overfull \hbox (379.18584pt too wide) in paragraph at lines 1459--1459
+[]\OT1/pcr/m/n/10 #length of dataframe to be created: number of knots by number
+ of timepoints (minus 1 for the intercept that we won't plot)[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[29]
+Overfull \hbox (85.18584pt too wide) in paragraph at lines 1469--1469
+[]\OT1/pcr/m/n/10 basis_plot$Basis<-factor(rep(c(1:5),each=6)) #pasting basis n
+umber values[] 
+ []
+
+
+Overfull \hbox (25.18584pt too wide) in paragraph at lines 1471--1471
+[]\OT1/pcr/m/n/10 basis_plot$cof<-rep(coef(gm)[1:5],each=6) #pasting coefficien
+ts[] 
+ []
+
+
+Overfull \hbox (163.18584pt too wide) in paragraph at lines 1473--1473
+[]  \OT1/pcr/m/n/10 mutate(mod_val=value_orig*cof) #the create the predicted va
+lues the bases need to be[] 
+ []
+
+
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1486--1486
+[]\OT1/pcr/m/n/10 #calculating the final smooth by aggregating the basis functi
+ons[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[30]
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 1540--1540
+[]                        \OT1/pcr/m/n/10 high = "#B50A2AFF")+ #color picked fr
+om KikiMedium[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[31]
+<Full_document_SAGE_files/figure-latex/basis-plot-appendix-1.pdf, id=258, 722.7
+pt x 722.7pt>
+File: Full_document_SAGE_files/figure-latex/basis-plot-appendix-1.pdf Graphic f
+ile (type pdf)
+<use Full_document_SAGE_files/figure-latex/basis-plot-appendix-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/basis-plot-appen
+dix-1.pdf  used on input line 1572.
+(pdftex.def)             Requested size: 264.61061pt x 264.60484pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[32 <./Full_document_SAGE_files/figure-latex/basis-plot-appendix-1.pdf>]
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1595--1595
+[]            \OT1/pcr/m/n/10 Group=as.factor(rep(c("Control","Treatment"),each
+=5))[] 
+ []
+
+
+Overfull \hbox (499.18584pt too wide) in paragraph at lines 1623--1623
+[]\OT1/pcr/m/n/10 #This function simulates data for the tumor data using defaul
+t parameters of 10 observations per time point,and Standard deviation (sd) of 5
+%.[] 
+ []
+
+
+Overfull \hbox (337.18584pt too wide) in paragraph at lines 1624--1624
+[]\OT1/pcr/m/n/10 #Because physiologically StO2 cannot go below 0%, data is  ge
+nerated with a cutoff value of 0.0001 (the "StO2_sim")[] 
+ []
+
+[33]
+Overfull \hbox (1.18584pt too wide) in paragraph at lines 1631--1631
+[]               \OT1/pcr/m/n/10 StO2_sim = pmax(rnorm(n, StO2, sd), 0.0001),[]
+ 
+ []
+
+
+Overfull \hbox (25.18584pt too wide) in paragraph at lines 1633--1633
+[]               \OT1/pcr/m/n/10 subject=factor(paste(subject, Group, sep = "-"
+))[] 
+ []
+
+[34]
+<Full_document_SAGE_files/figure-latex/first-GAM-diag-1.pdf, id=282, 722.7pt x 
+505.89pt>
+File: Full_document_SAGE_files/figure-latex/first-GAM-diag-1.pdf Graphic file (
+type pdf)
+<use Full_document_SAGE_files/figure-latex/first-GAM-diag-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/first-GAM-diag-1
+.pdf  used on input line 1715.
+(pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
+[35 <./Full_document_SAGE_files/figure-latex/first-GAM-diag-1.pdf>]
+<Full_document_SAGE_files/figure-latex/first-GAM-check-1.pdf, id=301, 469.755pt
+ x 325.215pt>
+File: Full_document_SAGE_files/figure-latex/first-GAM-check-1.pdf Graphic file 
+(type pdf)
+<use Full_document_SAGE_files/figure-latex/first-GAM-check-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/first-GAM-check-
+1.pdf  used on input line 1745.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Overfull \hbox (126.93971pt too wide) in paragraph at lines 1745--1746
+[][] 
+ []
+
+
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 1753--1753
+[]\OT1/pcr/m/n/10 ## Hessian positive definite, eigenvalue range [0.3881695,49.
+00676].[] 
+ []
+
+[36 <./Full_document_SAGE_files/figure-latex/first-GAM-check-1.pdf>]
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 1756--1756
+[]\OT1/pcr/m/n/10 ## Basis dimension (k) checking results. Low p-value (k-index
+<1) may[] 
+ []
+
+
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1757--1757
+[]\OT1/pcr/m/n/10 ## indicate that k is too low, especially if edf is close to 
+k'.[] 
+ []
+
+
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1762--1762
+[]\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
+ ' 1[] 
+ []
+
+
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1781--1781
+[]\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
+ ' 1[] 
+ []
+
+
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1787--1787
+[]\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
+ ' 1[] 
+ []
+
+[37]
+<Full_document_SAGE_files/figure-latex/second-GAM-1.pdf, id=320, 469.755pt x 32
+5.215pt>
+File: Full_document_SAGE_files/figure-latex/second-GAM-1.pdf Graphic file (type
+ pdf)
+<use Full_document_SAGE_files/figure-latex/second-GAM-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/second-GAM-1.pdf
+  used on input line 1830.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Overfull \hbox (126.93971pt too wide) in paragraph at lines 1830--1831
+[][] 
+ []
+
+[38 <./Full_document_SAGE_files/figure-latex/second-GAM-1.pdf>]
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 1838--1838
+[]\OT1/pcr/m/n/10 ## Hessian positive definite, eigenvalue range [0.3162258,48.
+5557].[] 
+ []
+
+
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 1841--1841
+[]\OT1/pcr/m/n/10 ## Basis dimension (k) checking results. Low p-value (k-index
+<1) may[] 
+ []
+
+
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1842--1842
+[]\OT1/pcr/m/n/10 ## indicate that k is too low, especially if edf is close to 
+k'.[] 
+ []
+
+
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1848--1848
+[]\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
+ ' 1[] 
+ []
+
+
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1867--1867
+[]\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
+ ' 1[] 
+ []
+
+
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1874--1874
+[]\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
+ ' 1[] 
+ []
+
+[39]
+<Full_document_SAGE_files/figure-latex/second-GAM-diag-1.pdf, id=337, 722.7pt x
+ 505.89pt>
+File: Full_document_SAGE_files/figure-latex/second-GAM-diag-1.pdf Graphic file 
+(type pdf)
+<use Full_document_SAGE_files/figure-latex/second-GAM-diag-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/second-GAM-diag-
+1.pdf  used on input line 1895.
+(pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
+<Full_document_SAGE_files/figure-latex/final-model-Appendix-1.pdf, id=338, 469.
+755pt x 325.215pt>
+File: Full_document_SAGE_files/figure-latex/final-model-Appendix-1.pdf Graphic 
+file (type pdf)
+<use Full_document_SAGE_files/figure-latex/final-model-Appendix-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/final-model-Appe
+ndix-1.pdf  used on input line 1925.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Overfull \hbox (126.93971pt too wide) in paragraph at lines 1925--1926
+[][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[40 <./Full_document_SAGE_files/figure-latex/second-GAM-diag-1.pdf>]
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 1933--1933
+[]\OT1/pcr/m/n/10 ## Hessian positive definite, eigenvalue range [1.174841,48.0
+8834].[] 
+ []
+
+
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 1936--1936
+[]\OT1/pcr/m/n/10 ## Basis dimension (k) checking results. Low p-value (k-index
+<1) may[] 
+ []
+
+
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 1937--1937
+[]\OT1/pcr/m/n/10 ## indicate that k is too low, especially if edf is close to 
+k'.[] 
+ []
+
+[41 <./Full_document_SAGE_files/figure-latex/final-model-Appendix-1.pdf>]
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1961--1961
+[]\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
+ ' 1[] 
+ []
+
+
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 1968--1968
+[]\OT1/pcr/m/n/10 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 '
+ ' 1[] 
+ []
+
+<Full_document_SAGE_files/figure-latex/final-GAM-diag-1.pdf, id=365, 722.7pt x 
+505.89pt>
+File: Full_document_SAGE_files/figure-latex/final-GAM-diag-1.pdf Graphic file (
+type pdf)
+<use Full_document_SAGE_files/figure-latex/final-GAM-diag-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/final-GAM-diag-1
+.pdf  used on input line 1991.
+(pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
+[42]
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 2048--2048
+[]\OT1/pcr/m/n/10 ##matrix that contains the basis functions evaluated at the p
+oints in pdat[] 
+ []
+
+[43 <./Full_document_SAGE_files/figure-latex/final-GAM-diag-1.pdf>]
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 2058--2058
+[]\OT1/pcr/m/n/10 #Find rows in pdat that correspond to either 'Control' or 'Tr
+eatment'[] 
+ []
+
+
+Overfull \hbox (217.18584pt too wide) in paragraph at lines 2062--2062
+[]\OT1/pcr/m/n/10 # In xp: find the rows that correspond to Control or Treatmen
+t, those that do not match will be[] 
+ []
+
+
+Overfull \hbox (319.18584pt too wide) in paragraph at lines 2063--2063
+[]    \OT1/pcr/m/n/10 #set to zero. Then, substract the values from the rows co
+rresponding to 'Control' from those that correspond[] 
+ []
+
+
+Overfull \hbox (73.18584pt too wide) in paragraph at lines 2067--2067
+[]    \OT1/pcr/m/n/10 ## remove columns that do not contain name 'Control' or '
+Treatment'[] 
+ []
+
+
+Overfull \hbox (157.18584pt too wide) in paragraph at lines 2069--2069
+[]    \OT1/pcr/m/n/10 ## zero out the parametric cols, those that do not contai
+n in the characters 's('[] 
+ []
+
+
+Overfull \hbox (259.18584pt too wide) in paragraph at lines 2072--2072
+[]    \OT1/pcr/m/n/10 #Multiply matrix by model coefficients. X has (p,n) (rows
+, columns) and the coefficient matrix has[] 
+ []
+
+
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 2073--2073
+[]    \OT1/pcr/m/n/10 #dimensions (n,1). The resulting matrix has dimensions (p
+,1)[] 
+ []
+
+
+Overfull \hbox (193.18584pt too wide) in paragraph at lines 2078--2078
+[]\OT1/pcr/m/n/10 #Calculate standard error for the computed differences using 
+the variance-covariance matrix[] 
+ []
+
+
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 2080--2080
+[]    \OT1/pcr/m/n/10 se <- sqrt(rowSums((X %*% vcov(m1, unconditional = FALSE)
+) * X))[] 
+ []
+
+
+Overfull \hbox (1.18584pt too wide) in paragraph at lines 2081--2081
+[]    \OT1/pcr/m/n/10 crit <- qt(0.05/2, df.residual(m1), lower.tail = FALSE)[]
+ 
+ []
+
+
+Overfull \hbox (67.18584pt too wide) in paragraph at lines 2087--2087
+[]    \OT1/pcr/m/n/10 comp1<-data.frame(pair = paste('Control', 'Treatment', se
+p = '-'),[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[44]
+Overfull \hbox (193.18584pt too wide) in paragraph at lines 2099--2099
+[]\OT1/pcr/m/n/10 #use function from the pairwise comparison plot in the manusc
+ript to get the shaded regions[] 
+ []
+
+
+Overfull \hbox (13.18584pt too wide) in paragraph at lines 2104--2104
+[]\OT1/pcr/m/n/10 c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
+[] 
+ []
+
+
+Overfull \hbox (109.18584pt too wide) in paragraph at lines 2107--2107
+[]                \OT1/pcr/m/n/10 xmin =my_list$init1, xmax =my_list$final1,ymi
+n=-Inf,ymax=Inf,[] 
+ []
+
+
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 2118--2118
+[]             \OT1/pcr/m/n/10 xmin =my_list$init2, xmax =my_list$final2,ymin=-
+Inf,ymax=Inf,[] 
+ []
+
+
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 2136--2136
+[]    \OT1/pcr/m/n/10 labs(x = 'Days', y = expression(paste('Difference in StO'
+[2] )))+[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[45]
+<Full_document_SAGE_files/figure-latex/pairwise-comp-workflow-fig-1.pdf, id=397
+, 722.7pt x 505.89pt>
+File: Full_document_SAGE_files/figure-latex/pairwise-comp-workflow-fig-1.pdf Gr
+aphic file (type pdf)
+<use Full_document_SAGE_files/figure-latex/pairwise-comp-workflow-fig-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/pairwise-comp-wo
+rkflow-fig-1.pdf  used on input line 2152.
+(pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
+[46 <./Full_document_SAGE_files/figure-latex/pairwise-comp-workflow-fig-1.pdf>]
+
+Overfull \hbox (13.18584pt too wide) in paragraph at lines 2194--2194
+[]\OT1/pcr/m/n/10 lm1<-lm(StO2_sim ~ Day + Group + Day * Group, data = dat_sim)
+[] 
+ []
+
+
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 2197--2197
+[]\OT1/pcr/m/n/10 #creates a dataframe using the length of the covariates for t
+he GAM[] 
+ []
+
+
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 2198--2198
+[]\OT1/pcr/m/n/10 gam_predict <- expand_grid(Group = factor(c("Control", "Treat
+ment")),[] 
+ []
+
+
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 2202--2202
+[]\OT1/pcr/m/n/10 #creates a dataframe using the length of the covariates for r
+m-ANOVA[] 
+ []
+
+
+Overfull \hbox (43.18584pt too wide) in paragraph at lines 2203--2203
+[]\OT1/pcr/m/n/10 lm_predict<-expand_grid(Group = factor(c("Control", "Treatmen
+t")),[] 
+ []
+
+
+Overfull \hbox (139.18584pt too wide) in paragraph at lines 2207--2207
+[]\OT1/pcr/m/n/10 lm_predict$subject<-factor(paste(lm_predict$subject, lm_predi
+ct$Group, sep = "-"))[] 
+ []
+
+
+Overfull \hbox (97.18584pt too wide) in paragraph at lines 2209--2209
+[]\OT1/pcr/m/n/10 #adds the predictions to the grid and creates a confidence in
+terval for GAM[] 
+ []
+
+
+Overfull \hbox (97.18584pt too wide) in paragraph at lines 2211--2211
+[]    \OT1/pcr/m/n/10 mutate(fit = predict(m1,gam_predict,se.fit = TRUE,type='r
+esponse')$fit,[] 
+ []
+
+
+Overfull \hbox (139.18584pt too wide) in paragraph at lines 2212--2212
+[]           \OT1/pcr/m/n/10 se.fit = predict(m1, gam_predict,se.fit = TRUE,typ
+e='response')$se.fit)[] 
+ []
+
+
+Overfull \hbox (97.18584pt too wide) in paragraph at lines 2216--2216
+[]    \OT1/pcr/m/n/10 mutate(fit = predict(lm1,lm_predict,se.fit = TRUE,type='r
+esponse')$fit,[] 
+ []
+
+
+Overfull \hbox (139.18584pt too wide) in paragraph at lines 2217--2217
+[]           \OT1/pcr/m/n/10 se.fit = predict(lm1, lm_predict,se.fit = TRUE,typ
+e='response')$se.fit)[] 
+ []
+
+
+Overfull \hbox (25.18584pt too wide) in paragraph at lines 2220--2220
+[]\OT1/pcr/m/n/10 f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group))
+ +[] 
+ []
+
+
+Overfull \hbox (79.18584pt too wide) in paragraph at lines 2221--2221
+[]    \OT1/pcr/m/n/10 geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legen
+d = FALSE)+[] 
+ []
+
+[47]
+Overfull \hbox (25.18584pt too wide) in paragraph at lines 2245--2245
+[]\OT1/pcr/m/n/10 f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group))
+ +[] 
+ []
+
+
+Overfull \hbox (79.18584pt too wide) in paragraph at lines 2246--2246
+[]    \OT1/pcr/m/n/10 geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legen
+d = FALSE)+[] 
+ []
+
+
+Overfull \hbox (79.18584pt too wide) in paragraph at lines 2274--2274
+[]\OT1/pcr/m/n/10 #summary(glht(lm1, linfct=mcp(Group="Tukey", interaction_aver
+age=TRUE)))[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[48]
+Overfull \hbox (109.18584pt too wide) in paragraph at lines 2289--2289
+[]\OT1/pcr/m/n/10 #create a sequence of 40 random numbers between 1 and 100, th
+ese numbers will[] 
+ []
+
+
+Overfull \hbox (115.18584pt too wide) in paragraph at lines 2290--2290
+[]\OT1/pcr/m/n/10 #correspond to the row numbers to be randomly erased from the
+ original dataset[] 
+ []
+
+
+Overfull \hbox (295.18584pt too wide) in paragraph at lines 2294--2294
+[]\OT1/pcr/m/n/10 #create a new dataframe from the simulated data with 40 rows 
+randomly removed, keep the missing values as NA[] 
+ []
+
+
+Overfull \hbox (31.18584pt too wide) in paragraph at lines 2296--2296
+[]\OT1/pcr/m/n/10 ind <- which(dat_sim$StO2_sim %in% sample(dat_sim$StO2_sim, 4
+0))[] 
+ []
+
+
+Overfull \hbox (217.18584pt too wide) in paragraph at lines 2304--2304
+[]\OT1/pcr/m/n/10 #Count the number of remaining observations per day (original
+ dataset had 10 per group per day)[] 
+ []
+
+
+Overfull \hbox (151.18584pt too wide) in paragraph at lines 2312--2312
+[]\OT1/pcr/m/n/10 mod_m1 <- gam(StO2_sim ~ Group+s(Day,by=Group,k=5), data  = d
+at_missing,family=scat)[] 
+ []
+
+
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 2317--2317
+[]\OT1/pcr/m/n/10 m_predict <- expand_grid(Group = factor(c("Control", "Treatme
+nt")),[] 
+ []
+
+
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 2320--2320
+[]\OT1/pcr/m/n/10 #adds the predictions to the grid and creates a confidence in
+terval[] 
+ []
+
+
+Overfull \hbox (109.18584pt too wide) in paragraph at lines 2322--2322
+[]    \OT1/pcr/m/n/10 mutate(fit = predict(mod_m1,m_predict,se.fit = TRUE,type=
+'response')$fit,[] 
+ []
+
+
+Overfull \hbox (151.18584pt too wide) in paragraph at lines 2323--2323
+[]           \OT1/pcr/m/n/10 se.fit = predict(mod_m1, m_predict,se.fit = TRUE,t
+ype='response')$se.fit)[] 
+ []
+
+
+Overfull \hbox (49.18584pt too wide) in paragraph at lines 2326--2326
+[]\OT1/pcr/m/n/10 f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Gro
+up)) +[] 
+ []
+
+[49]
+Overfull \hbox (79.18584pt too wide) in paragraph at lines 2327--2327
+[]    \OT1/pcr/m/n/10 geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legen
+d = FALSE)+[] 
+ []
+
+<Full_document_SAGE_files/figure-latex/sim-smooth-plot-Appendix-1.pdf, id=432, 
+722.7pt x 505.89pt>
+File: Full_document_SAGE_files/figure-latex/sim-smooth-plot-Appendix-1.pdf Grap
+hic file (type pdf)
+<use Full_document_SAGE_files/figure-latex/sim-smooth-plot-Appendix-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/sim-smooth-plot-
+Appendix-1.pdf  used on input line 2353.
+(pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
+[50 <./Full_document_SAGE_files/figure-latex/sim-smooth-plot-Appendix-1.pdf>]
+Overfull \hbox (133.18584pt too wide) in paragraph at lines 2373--2373
+[]\OT1/pcr/m/n/10 #this function takes the model, grid and groups to be compare
+d using the lpmatrix[] 
+ []
+
+
+Overfull \hbox (55.18584pt too wide) in paragraph at lines 2375--2375
+[]\OT1/pcr/m/n/10 #https://fromthebottomoftheheap.net/2017/10/10/difference-spl
+ines-i/[] 
+ []
+
+
+Overfull \hbox (13.18584pt too wide) in paragraph at lines 2377--2377
+[]\OT1/pcr/m/n/10 smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
+[] 
+ []
+
+
+Overfull \hbox (19.18584pt too wide) in paragraph at lines 2379--2379
+[]    \OT1/pcr/m/n/10 xp <- predict(model, newdata = newdata, type = 'lpmatrix'
+)[] 
+ []
+
+
+Overfull \hbox (85.18584pt too wide) in paragraph at lines 2380--2380
+[]    \OT1/pcr/m/n/10 #Find columns in xp where the name contains "Control" and
+ "Treatment"[] 
+ []
+
+
+Overfull \hbox (7.18584pt too wide) in paragraph at lines 2388--2388
+[]    \OT1/pcr/m/n/10 ## zero out cols of X related to splines for other lochs[
+] 
+ []
+
+
+Overfull \hbox (121.18584pt too wide) in paragraph at lines 2392--2392
+[]    \OT1/pcr/m/n/10 #This line has been commented to keep the comparison at t
+he response level,[] 
+ []
+
+
+Overfull \hbox (1.18584pt too wide) in paragraph at lines 2393--2393
+[]    \OT1/pcr/m/n/10 #otherwise it gives the marginal change between smooths[]
+ 
+ []
+
+
+Overfull \hbox (121.18584pt too wide) in paragraph at lines 2397--2397
+[]    \OT1/pcr/m/n/10 se <- sqrt(rowSums((X %*% vcov(model, unconditional = unc
+onditional)) * X))[] 
+ []
+
+
+Overfull \hbox (25.18584pt too wide) in paragraph at lines 2398--2398
+[]    \OT1/pcr/m/n/10 crit <- qt(alpha/2, df.residual(model), lower.tail = FALS
+E)[] 
+ []
+
+[51]
+Overfull \hbox (181.18584pt too wide) in paragraph at lines 2411--2411
+[]\OT1/pcr/m/n/10 #Create a dataframe with time, comparisons and labels for reg
+ions where difference exists[] 
+ []
+
+
+Overfull \hbox (103.18584pt too wide) in paragraph at lines 2421--2421
+[]    \OT1/pcr/m/n/10 #extract values where the lower limit of the ribbon is gr
+eater than zero[] 
+ []
+
+
+Overfull \hbox (37.18584pt too wide) in paragraph at lines 2422--2422
+[]    \OT1/pcr/m/n/10 #this is the region where the control group effect is gre
+ater[] 
+ []
+
+
+Overfull \hbox (169.18584pt too wide) in paragraph at lines 2431--2431
+[]    \OT1/pcr/m/n/10 #extract values where the value of the upper limit of the
+ ribbon is lower than zero[] 
+ []
+
+
+Overfull \hbox (121.18584pt too wide) in paragraph at lines 2432--2432
+[]    \OT1/pcr/m/n/10 #this corresponds to the region where the treatment group
+ effect is greater[] 
+ []
+
+
+Overfull \hbox (43.18584pt too wide) in paragraph at lines 2450--2450
+[]\OT1/pcr/m/n/10 c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pai
+r)) +[] 
+ []
+
+
+Overfull \hbox (109.18584pt too wide) in paragraph at lines 2452--2452
+[]                \OT1/pcr/m/n/10 xmin =my_list$init1, xmax =my_list$final1,ymi
+n=-Inf,ymax=Inf,[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[52]
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 2464--2464
+[]             \OT1/pcr/m/n/10 xmin =my_list$init2, xmax =my_list$final2,ymin=-
+Inf,ymax=Inf,[] 
+ []
+
+
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 2483--2483
+[]    \OT1/pcr/m/n/10 labs(x = 'Days', y = expression(paste('Difference in StO'
+[2] )))+[] 
+ []
+
+
+Overfull \hbox (121.18584pt too wide) in paragraph at lines 2496--2496
+[]\OT1/pcr/m/n/10 missing_plot<-ggplot(comp_StO2_missing, aes(x = Day, y = diff
+, group = pair)) +[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[53]
+Overfull \hbox (25.18584pt too wide) in paragraph at lines 2497--2497
+[]    \OT1/pcr/m/n/10 geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2)
+ +[] 
+ []
+
+
+Overfull \hbox (79.18584pt too wide) in paragraph at lines 2501--2501
+[]         \OT1/pcr/m/n/10 y = expression(paste('Difference in StO'[2],'\n (mis
+sing data)'[] 
+ []
+
+
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 2512--2512
+[]\OT1/pcr/m/n/10 c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = 
+pair)) +[] 
+ []
+
+
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 2514--2514
+[]             \OT1/pcr/m/n/10 xmin =my_list$init1, xmax =my_list$final1,ymin=-
+Inf,ymax=Inf,[] 
+ []
+
+
+Overfull \hbox (91.18584pt too wide) in paragraph at lines 2525--2525
+[]             \OT1/pcr/m/n/10 xmin =my_list$init2, xmax =my_list$final2,ymin=-
+Inf,ymax=Inf,[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[54]
+Overfull \hbox (61.18584pt too wide) in paragraph at lines 2541--2541
+[]    \OT1/pcr/m/n/10 labs(x = 'Days', y = expression(paste('Difference in StO'
+[2] )))+[] 
+ []
+
+<Full_document_SAGE_files/figure-latex/plot-pairwise-comp-Appendix-1.pdf, id=46
+6, 722.7pt x 505.89pt>
+File: Full_document_SAGE_files/figure-latex/plot-pairwise-comp-Appendix-1.pdf G
+raphic file (type pdf)
+<use Full_document_SAGE_files/figure-latex/plot-pairwise-comp-Appendix-1.pdf>
+Package pdftex.def Info: Full_document_SAGE_files/figure-latex/plot-pairwise-co
+mp-Appendix-1.pdf  used on input line 2553.
+(pdftex.def)             Requested size: 264.61061pt x 185.22339pt.
+No file Full_document_SAGE.bbl.
+
+Package natbib Warning: There were undefined citations.
+
+[55 <./Full_document_SAGE_files/figure-latex/plot-pairwise-comp-Appendix-1.pdf>
+] (./Full_document_SAGE.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `Full_document_SAGE.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `Full_document_SAGE.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  F295C5D57FD764C08DF459CBACED0CC5;7516.
+ ) 
+Here is how much of TeX's memory you used:
+ 12128 strings out of 480472
+ 192907 string characters out of 5897137
+ 491351 words of memory out of 5000000
+ 29445 multiletter control sequences out of 15000+600000
+ 447256 words of font info for 109 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 72i,9n,80p,301b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.
+enc}<c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmex10.pfb><c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/aimundo/AppData/Roaming/TinyTeX/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/Users/aimundo/AppData/Ro
+aming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/aim
+undo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
+><c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmsy10.pfb><c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmsy7.pfb><c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf
+-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/Users/aimundo/AppData/Roaming/Tiny
+TeX/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb><c:/Users/aimundo/AppData/Ro
+aming/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb><c:/Users/aimundo/
+AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb><c:/Use
+rs/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb>
+<c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr
+8a.pfb><c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/tim
+es/utmri8a.pfb>
+Output written on Full_document_SAGE.pdf (55 pages, 669728 bytes).
+PDF statistics:
+ 576 PDF objects out of 1000 (max. 8388607)
+ 452 compressed objects within 5 object streams
+ 149 named destinations out of 1000 (max. 500000)
+ 81 words of extra memory for PDF output out of 10000 (max. 10000000)
+
