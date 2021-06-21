@@ -8,3 +8,7 @@ By making the data and code used in this paper accessible, we hope to address th
 
 This work was supported by the National Science Foundation Career Award (CBET 1751554, TJM) and the Arkansas Biosciences Institute.
 
+# Declaration of Conflicting Interests
+
+The Authors declare that there is no conflict of interest.
+

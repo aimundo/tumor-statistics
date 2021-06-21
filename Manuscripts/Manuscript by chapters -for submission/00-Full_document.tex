@@ -1,30 +1,66 @@
-\documentclass[Royal,times,sagev]{sagej}
+\documentclass[,]{sagej}
 
 \usepackage{moreverb,url,natbib, multirow, tabularx}
 \usepackage[colorlinks,bookmarksopen,bookmarksnumbered,citecolor=red,urlcolor=red]{hyperref}
 
 
 % Pandoc citation processing
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+% for Pandoc 2.8 to 2.10.1
+\newenvironment{cslreferences}%
+  {}%
+  {\par}
+% For Pandoc 2.11+
+\newenvironment{CSLReferences}[3] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc} % for calculating minipage widths
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\usepackage{lineno}
+\usepackage{authblk}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+%set a box to put the ORCID logo
+\newbox{\myorcidaffilbox}
+\sbox{\myorcidaffilbox}{\large\includegraphics[height=1.7ex]{orcid}}
+
+%add hyperlink to the box
+\newcommand{\orcidaffila}[1]{%
+  \href{https://orcid.org/0000-0002-6014-4538}{\usebox{\myorcidaffilbox}}}
+
+\newcommand{\orcidaffilb}[1]{%
+  \href{https://orcid.org/0000-0002-6135-8191}{\usebox{\myorcidaffilbox}}}
 
 
-\usepackage{float}
-\usepackage{listings}
-\setcounter{secnumdepth}{2} %to add section numbers
-\usepackage{chngcntr} %package to enable figure numbers by sections
-%\counterwithin{figure}{section} %command for chngcntr in order to provide numbers per section that match with the letter for the Appendix
+%command for the package lineno
+\linenumbers
 
-%to have page numbers with letters in the Appendix:
-%solution from https://tex.stackexchange.com/questions/59572/custom-page-numbering-for-appendix
-\newcommand{\appendixpagenumbering}{
-  \break
-  \pagenumbering{arabic}
-  \renewcommand{\thepage}{\thesection-\arabic{page}}
-}
-%\newcommand{\passthrough}[1]{#1}
+%authors
+\author[1]{Ariel I. Mundo \orcidaffila{}}
+\author[2]{John R. Tipton \orcidaffilb{}}
+\author[1]{Timothy J. Muldoon \thanks{Corresponding author, tmuldoon@uark.edu}}
+\affil[1]{\footnotesize Department of Biomedical Engineering, University of Arkansas, Fayetteville, AR, USA}
+\affil[2]{\footnotesize Department of Mathematical Sciences, University of Arkansas, Fayetteville, AR, USA}
 
 %theme colors for the code chunks (originally from latex-solarized on GitHub)
 %https://github.com/jez/latex-solarized
- \usepackage{xcolor}
+\usepackage{xcolor}
 \definecolor{sbase03}{HTML}{002B36}
 \definecolor{sbase02}{HTML}{073642}
 \definecolor{sbase01}{HTML}{586E75}
@@ -44,7 +80,6 @@
 %command to set parameter(s) in package listings
 \lstset{
     % How/what to match
-    language=R,
     sensitive=true,
     % Border (above and below)
     frame=lines,
@@ -68,27 +103,40 @@
 }
 
 
+%\lstset{
+%  breaklines=true,
+%  stringstyle=\ttfamily,
+%  backgroundcolor=\color{gray}
+%}
+\usepackage{placeins}
+\usepackage{subfig}
+\usepackage{breqn}
+\usepackage[font={small}]{caption}
+\usepackage{float}
+
+
 \begin{document}
 
-\title{Using generalized additive models to analyze biomedical non-linear longitudinal data}
+\title{\textbf{Using generalized additive models to analyze biomedical non-linear longitudinal data}}
 
-\runninghead{Mundo \emph{et al}.}
+\runninghead{}
 
-\author{Ariel I. Mundo\affilnum{1}, John R. Tipton\affilnum{2}, Timothy J. Muldoon*\affilnum{1}}
+\author{}
 
-\affiliation{\affilnum{1}{Department of Biomedical Engineering, University of Arkansas, Fayetteville, AR, US}\\\affilnum{2}{Department of Mathematical Sciences, University of Arkansas, Fayetteville, AR, US}}
+\affiliation{}
 
-\corrauth{Timothy J. Muldoon}
 
-\email{\href{mailto:tmuldoon@uark.edu}{\nolinkurl{tmuldoon@uark.edu}}}
 
-\begin{abstract}
-In biomedical research, the outcome of longitudinal studies has been traditionally analyzed using the \emph{repeated measures analysis of variance} (rm-ANOVA) or more recently, \emph{linear mixed models} (LMEMs). Although LMEMs are less restrictive than rm-ANOVA in terms of correlation and missing observations, both methodologies share an assumption of linearity in the measured response, which results in biased estimates and unreliable inference when they are used to analyze data where the trends are non-linear, which is a common occurrence in biomedical research. In contrast, \emph{generalized additive models} (GAMs) relax the linearity assumption, and allow the data to determine the fit of the model while permitting missing observations and different correlation structures. Therefore, GAMs present an excellent choice to analyze non-linear longitudinal data in the context of biomedical research. This paper summarizes the limitations of rm-ANOVA and LMEMs and uses simulated data to visually show how both methods produce biased estimates when used on non-linear data. We also present the basic theory of GAMs, and using trends of oxygen saturation in tumors reported in the biomedical literature, we simulate example longitudinal data (two treatment groups, 10 subjects per group, five repeated measures for each group) to demonstrate how these models can be computationally implemented. We show that GAMs are able to produce estimates that are consistent with the trends of biomedical non-linear data even in the case when missing observations exist (with 40\% of the simulated observations missing), allowing reliable inference from the data. To make this work reproducible, the code and data used in this paper are available at: \url{https://github.com/aimundo/GAMs-biomedical-research}.
-\end{abstract}
 
-\keywords{Cancer biology; Tumor response; generalized additive models; simulation; R}
 
 \maketitle
+
+\hypertarget{abstract}{%
+\section{Abstract}\label{abstract}}
+
+In biomedical research, the outcome of longitudinal studies has been traditionally analyzed using the \emph{repeated measures analysis of variance} (rm-ANOVA) or more recently, \emph{linear mixed models} (LMEMs). Although LMEMs are less restrictive than rm-ANOVA in terms of correlation and missing observations, both methodologies share an assumption of linearity in the measured response, which results in biased estimates and unreliable inference when they are used to analyze data where the trends are non-linear, which is a common occurrence in biomedical research.
+
+In contrast, generalized additive models (GAMs) relax the linearity assumption, and allow the data to determine the fit of the model while permitting missing observations and different correlation structures. Therefore, GAMs present an excellent choice to analyze non-linear longitudinal data in the context of biomedical research. This paper summarizes the limitations of rm-ANOVA and LMEMs and uses simulated data to visually show how both methods produce biased estimates when used on non-linear data. We also present the basic theory of GAMs, and using trends of oxygen saturation in tumors reported in the biomedical literature, we simulate example longitudinal data (2 treatment groups, 10 subjects per group, 5 repeated measures for each group) to demonstrate how these models can be computationally implemented. We show that GAMs are able to produce estimates that are consistent with the trends of biomedical non-linear data even in the case when missing observations exist (with 40\% of the simulated observations missing), allowing reliable inference from the data. To make this work reproducible, the code and data used in this paper are available at: \url{https://github.com/aimundo/GAMs-biomedical-research}.
 
 \hypertarget{background}{%
 \section{Background}\label{background}}
@@ -117,6 +165,8 @@ The current advances in programming languages designed for statistical analysis 
 This work provides biomedical researchers with a clear understanding of the theory and the practice of using GAMs to analyze longitudinal data using by focusing on four areas. First, the limitations of LMEMs and rm-ANOVA regarding linearity of response, constant correlation structures and missing observations are explained in detail. Second, the key theoretical elements of GAMs are presented using clear and simple mathematical notation while explaining the context and interpretation of the equations. Third, we illustrate the type of non-linear longitudinal data that often occurs in biomedical research using simulated data that reproduces patterns in previously reported studies \citep{vishwanath2009}. The simulated data experiments highlight the differences in inference between rm-ANOVA, LMEMs and GAMs on data similar to what is commonly observed in biomedical studies. Finally, reproducibility is emphasized by providing the code to generate the simulated data and the implementation of different models in \(\textsf{R}\), in conjunction with a step-by-step guide demonstrating how to fit models of increasing complexity.
 
 In summary, this work will allow biomedical researchers to identify when the use of GAMs instead of rm-ANOVA or LMEMs is appropriate to analyze longitudinal data, and provide guidance on the implementation of these models to improve the standards for reproducibility in biomedical research.
+
+\FloatBarrier
 
 \hypertarget{challenges-presented-by-longitudinal-studies}{%
 \section{Challenges presented by longitudinal studies}\label{challenges-presented-by-longitudinal-studies}}
@@ -207,9 +257,9 @@ A more comprehensive exploration of the fit of rm-ANOVA and LMEMs for linear and
 
 
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/l-q-response-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{00-Full_document_files/figure-latex/l-q-response-1} 
 
 }
 
@@ -223,6 +273,8 @@ However, consider the case when the data follows a non-linear trend, such as the
 Comparing the fitted responses of the LMEM and the rm-ANOVA models used in the simulated quadratic data (Figure \ref{fig:l-q-response}E, F) indicates that the models are not capturing the changes within each group. Specifically, note that the fitted mean response of both models shows that the change (increase for Treatment 1 or decrease for Treatment 2) in the response through time points 2 and 4 is not being captured. The LMEM is only able to account for between-subject variation by providing estimates for each subject (Figure \ref{fig:l-q-response}F), but both models are unable to capture the fact that the initial values are the same in each group, and instead fit non-parallel lines that have initial values that are markedly different from the ``true'' initial values in each case (compare Figure \ref{fig:l-q-response}D with Figure \ref{fig:l-q-response}E, F). If such a change has important physiological implications, both rm-ANOVA and LMEMs omit it from the fitted mean response. Thus, even though the model correctly detects a divergence between treatment groups, the exact nature of this difference is not correctly identified, limiting valuable inferences from the data.
 
 This section has used simulation to better convey the limitations of linearity and correlation in the response in non-linear data. The models fitted to the simulated data were an rm-ANOVA model and a LMEM, where the main issue is the expected linear trend in the response. In the following section, we present generalized additive models (GAMs) as a data-driven alternative method to analyze longitudinal non-linear data that overcomes the linearity assumption.
+
+\FloatBarrier
 
 \hypertarget{GAM-theory}{%
 \section{GAMs as a special case of Generalized Linear Models}\label{GAM-theory}}
@@ -251,9 +303,9 @@ To get the weighted basis functions, each basis (from Figure Figure \ref{fig:bas
 
 
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/basis-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{00-Full_document_files/figure-latex/basis-plot-1} 
 
 }
 
@@ -265,10 +317,12 @@ To get the weighted basis functions, each basis (from Figure Figure \ref{fig:bas
 
 Bayes' theorem states that the probability of an event can be calculated using prior knowledge or belief \citep{mcelreath2018}. In the case of non-linear data, the belief that the \emph{true} trend of the data is likely to be smooth rather than ``wiggly'' introduces the concept of a prior distribution for wiggliness (and therefore a Bayesian view) of GAMs \citep{wood2017}. GAMs are considered ``empirical'' Bayesian models because the smoothing parameters are estimated from the data (and not from a prior distribution as in the ``Full Bayes'' case) \citep{miller2019}. Moreover, the use of the restricted maximum likelihood (REML) to estimate the smoothing parameters gives an empirical estimate of the smooth model \citep{laird1982, pedersen2019}. Therefore, the confidence intervals calculated for the smooth terms using the package \emph{mgcv} are considered empirical Bayesian posterior credible intervals \citep{pedersen2019}, which have good ``frequentist'' coverage (pointwise coverage or ``single point'' coverage), and \emph{across the function} coverage \citep{wood2017}. This last part means that contrary to a pointwise coverage (where the coverage of the interval is correct for a single point) the estimated confidence intervals for the smooths will contain \emph{on average} the true function of the data 95\% of the time across the entire timeline (in the case of longitudinal data for which smooths are calculated), which allows to obtain better inference from the model. In-depth theory of the Bayesian interpretation of GAMs is beyond the scope of this paper, but can be found in \citep{miller2019, wood2017, simpson2018} and \citep{marra2012}. With this brief introduction to the Bayesian interpretation of GAMs, we henceforth refer to the confidence intervals for the smooths in GAMs as ``empirical Bayesian'' through the rest of this paper.
 
+\FloatBarrier
+
 \hypertarget{longitudinal-GAMs}{%
 \section{The analyisis of longitudinal biomedical data using GAMs}\label{longitudinal-GAMs}}
 
-The previous sections provided the basic framework to understand the GAM framework and how these models are more advantageous to analyze non-linear longitudinal data when compared to rm-ANOVA or LMEMs. This section will use simulation to present the practical implementation of GAMs for longitudinal biomedical data using \(\textsf{R}\) and the package \texttt{mgcv}. The code for the simulated data and figures, and a brief guide for model selection and diagnostics appear in the Appendix.
+The previous sections provided the basic framework to understand the GAM framework and how these models are more advantageous to analyze non-linear longitudinal data when compared to rm-ANOVA or LMEMs. This section will use simulation to present the practical implementation of GAMs for longitudinal biomedical data using \(\textsf{R}\) and the package \passthrough{\lstinline!mgcv!}. The code for the simulated data and figures, and a brief guide for model selection and diagnostics appear in the Appendix.
 
 \hypertarget{simulated-data}{%
 \subsection{Simulated data}\label{simulated-data}}
@@ -281,11 +335,11 @@ The simulated and real data appear in Figure \ref{fig:sim-smooth-plot}A and the 
 
 An interaction effect is typically the main interest in longitudinal biomedical data, as it takes into account treatment, time, and their combination. In a practical sense, when a GAM is implemented for longitudinal data, a smooth can be added to the model for the \emph{time} effect to account for the repeated measures over time. Although specific methods of how GAMs model correlation structures is a topic beyond the scope of this paper, it suffices to say that GAMs are flexible and can handle correlation structures beyond compound symmetry. A detailed description on basis functions and correlations can be found in \citep{hefley2017}.
 
-For the data in Figure \ref{fig:sim-smooth-plot}, A the main effect of interest is how \(\mbox{StO}_2\) changes over time for each treatment. To estimate this, the model incorporates independent smooths for \emph{Group} and \emph{Day}, respectively. The main thing to consider is that model syntax accounts for the fact that one of the variables is numeric (\emph{Day}) and the other is a factor (\emph{Group}). Because the smooths are centered at 0, the factor variable needs to be specified as a parametric term in order to identify any differences between the groups. Using \(\textsf{R}\) and the package \texttt{mgcv} the model syntax is:
+For the data in Figure \ref{fig:sim-smooth-plot}, A the main effect of interest is how \(\mbox{StO}_2\) changes over time for each treatment. To estimate this, the model incorporates independent smooths for \emph{Group} and \emph{Day}, respectively. The main thing to consider is that model syntax accounts for the fact that one of the variables is numeric (\emph{Day}) and the other is a factor (\emph{Group}). Because the smooths are centered at 0, the factor variable needs to be specified as a parametric term in order to identify any differences between the groups. Using \(\textsf{R}\) and the package \passthrough{\lstinline!mgcv!} the model syntax is:
 
-\texttt{m1\ \textless{}-\ gam(StO2\_sim\ \textasciitilde{}\ Group\ +\ s(Day,\ by=Group,\ k=5),\ method=\textquotesingle{}REML,\ data\ =\ dat\_sim)}
+\passthrough{\lstinline!m1 <- gam(StO2\_sim \~ Group + s(Day, by=Group, k=5), method='REML, data = dat\_sim)!}
 
-This syntax specifies that \texttt{m1} will store the model, and that the change in the simulated oxygen saturation (\texttt{StO2\_sim}) is modeled using independent smooths over \texttt{Day} for each \texttt{Group} (the parenthesis preceded by \texttt{s}) using 5 knots. The smooth is constructed by default using thin plate regression splines, but other splines can be used if desired, including Gaussian process smooths \citep{simpson2018}. The parametric term \texttt{Group} is added to quantify overall mean differences in the effect of treatment between groups, and the \texttt{method} chosen to estimate the smoothing parameters is the restricted maximum likelihood (REML) \citep{wood2017}. When the smooths are plotted over the raw data, it is clear that the model has been able to capture the trend of the change of \(\mbox{StO}_2\) for each group across time (Figure \ref{fig:sim-smooth-plot}B). Model diagnostics can be obtained using the \texttt{gam.check} function, and the function \texttt{appraise} from the package \emph{gratia} \citep{gratia}. A guide for model selection and diagnostics is in the \protect\hyperlink{workflow}{Appendix}, and an in-depth analysis can be found in \citep{wood2017} and \citep{harezlak2018}.
+This syntax specifies that \passthrough{\lstinline!m1!} will store the model, and that the change in the simulated oxygen saturation (\passthrough{\lstinline!StO2\_sim!}) is modeled using independent smooths over \passthrough{\lstinline!Day!} for each \passthrough{\lstinline!Group!} (the parenthesis preceded by \passthrough{\lstinline!s!}) using 5 knots. The smooth is constructed by default using thin plate regression splines, but other splines can be used if desired, including Gaussian process smooths \citep{simpson2018}. The parametric term \passthrough{\lstinline!Group!} is added to quantify overall mean differences in the effect of treatment between groups, and the \passthrough{\lstinline!method!} chosen to estimate the smoothing parameters is the restricted maximum likelihood (REML) \citep{wood2017}. When the smooths are plotted over the raw data, it is clear that the model has been able to capture the trend of the change of \(\mbox{StO}_2\) for each group across time (Figure \ref{fig:sim-smooth-plot}B). Model diagnostics can be obtained using the \passthrough{\lstinline!gam.check!} function, and the function \passthrough{\lstinline!appraise!} from the package \emph{gratia} \citep{gratia}. A guide for model selection and diagnostics is in the \protect\hyperlink{workflow}{Appendix}, and an in-depth analysis can be found in \citep{wood2017} and \citep{harezlak2018}.
 
 One question that might arise at this point is ``what is the fit that an rm-ANOVA model produces for the simulated data?''. The rm-ANOVA model, which corresponds to Equation \eqref{eq:linear-model} is presented in Figure \ref{fig:sim-smooth-plot}C. This is a typical case of model misspecification: The slopes of each group are different, which would lead to a \emph{p-value} indicating significance for the treatment and time effects, but the model is not capturing the changes that occur at days 2 and between days 5 and 7, whereas the GAM model is able to reliably estimate the trend over all timepoints (Figure \ref{fig:sim-smooth-plot}B) .
 
@@ -293,9 +347,9 @@ Because GAMs do not require equally-spaced or complete observations for all subj
 
 
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/sim-smooth-plot-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{00-Full_document_files/figure-latex/sim-smooth-plot-1} 
 
 }
 
@@ -304,9 +358,9 @@ Because GAMs do not require equally-spaced or complete observations for all subj
 
 
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/plot-pairwise-comp-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{00-Full_document_files/figure-latex/plot-pairwise-comp-1} 
 
 }
 
@@ -328,6 +382,8 @@ On the data with missing observations (Figure \ref{fig:sim-smooth-plot}D), the e
 
 In a sense, the pairwise smooth comparison is more informative than a \emph{post-hoc} \emph{p-value}. For biomedical studies, the smooth comparison is able to provide an estimate of \emph{when} and by \emph{how much} a biological process becomes significant. This is advantageous because it can help researchers gain insight on metabolic changes and other biological processes that can be worth examining, and can help refine the experimental design of future studies in order to obtain measurements at time points where a significant change might be expected.
 
+\FloatBarrier
+
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
@@ -338,6 +394,8 @@ In this paper we have presented GAMs as a suitable method to analyze non-linear 
 However, from a practical standpoint is equally important to demonstrate how GAMs are computationally implemented. We have provided an example on how GAMs can be fitted using simulated data that follows trends reported in biomedical literature \citep{vishwanath2009} using \(\textsf{R}\) and the package \emph{mgcv}\citep{wood2017} in Section \ref{longitudinal-GAMs}, while a basic workflow for model selection is in the \protect\hyperlink{workflow}{Appendix}. One of the features of GAMs is that their Bayesian interpretation allows to indicate differences between groups without the need of a \emph{p-value}, and in turn provide a time-based estimate of shifts in the response that can be directly tied to biological values as the pairwise smooth comparisons in Figure \ref{fig:plot-pairwise-comp} indicate. The model is therefore able to provide an estimate of significant change between the groups at time points were data was not directly measured even with missing data exists ( \(\approx\) day 3 in Figure \ref{fig:plot-pairwise-comp} A, B ), which can be used by researchers as feedback on experiment design and to further evaluate important biological changes in future studies.
 
 We have used \(\textsf{R}\) as the software of choice for this paper because not only provides a fully developed environment to fit GAMs, but also eases simulation (which is becoming increasingly used for exploratory statistical analysis and power calculations) and provides powerful and convenient methods of visualization, which are key aspects that biomedical researchers might need to consider to make their work reproducible. In this regard, reproducibility is still an issue in biomedical research \citep{begley2015, weissgerber2018}, but it is becoming apparent that what other disciplines have experienced in this aspect is likely to impact sooner rather than later this field. Researchers need to plan on how they will make their data, code, and any other materials open and accessible as more journals and funding agencies recognize the importance and benefits of open science in biomedical research. We have made all the data and code used in this paper accessible, and we hope that this will encourage other researchers to do the same with future projects.
+
+\FloatBarrier
 
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
@@ -355,31 +413,35 @@ This work was supported by the National Science Foundation Career Award (CBET 17
 
 The Authors declare that there is no conflict of interest.
 
+\FloatBarrier
+
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{appendix-appendix}{%
-\appendix}
+\newpage
 
+\hypertarget{references}{%
+\section{References}\label{references}}
 
-\appendixpagenumbering
-
-\counterwithin{figure}{section}
+\hypertarget{refs}{}
+\begin{CSLReferences}{0}{0}
+\end{CSLReferences}
 
 \hypertarget{appendix}{%
-\section{APPENDIX}\label{appendix}}
+\section{(APPENDIX)}\label{appendix}}
 
-This section presents the code used to generate figures, models and simulated data from the main manuscript.
+\hypertarget{code-for-manuscript-data}{%
+\section{Code for Manuscript data}\label{code-for-manuscript-data}}
+
+This section presents the code used to generate figures, models and simulated data from Sections 3 and 4 from the main manuscript.
 
 \hypertarget{compound-symmetry-and-independent-errors-in-linear-and-quadratic-responses}{%
 \subsection{Compound symmetry and independent errors in linear and quadratic responses}\label{compound-symmetry-and-independent-errors-in-linear-and-quadratic-responses}}
 
-This section simulates linear and quadratic data in the same manner as in Section \ref{simulation}. The linear simulations using Figure \ref{fig:linear-cases-Appendix} show in panels A and D the simulated mean responses and individual data points. Panels C and G show a visual interpretation of ``correlation'' in the responses: In panel C, subjects that have a value of the random error \(\varepsilon\) either above or below the mean group response are more likely to have other observations that follow the same trajectory, thereby demonstrating correlation in the response. In panel G,because the errors are independent, there is no expectation that responses are likely to follow a similar pattern. Panels D and H show the predictions from the rm-ANOVA model.
+This section simulated linear and quadratic data in the same manner as in Section \ref{simulation}. The linear simulations using Figure \ref{fig:linear-cases-Appendix} show in panels A and D the simulated mean responses and individual data points. Panels C and G show a visual interpretation of ``correlation'' in the responses: In panel C, subjects that have a value of the random error \(\varepsilon\) either above or below the mean group response are more likely to have other observations that follow the same trajectory, thereby demonstrating correlation in the response. In panel G,because the errors are independent, there is no expectation that responses are likely to follow a similar pattern. Panels D and H show the predictions from the rm-ANOVA model.
 
 The following code produces a more comprehensive exploration of Figure \ref{fig:l-q-response} in the main manuscript.
 
-\begin{lstlisting}
-
-```r
+\begin{lstlisting}[language=R]
 ##########Section for calculations###########
 
 
@@ -635,31 +697,20 @@ B1<-plot_example(example(fun_type = "linear", error_type = "independent"))
 C1<-plot_example(example(fun_type = "quadratic", error_type = "correlated")) 
   
 D1<-plot_example(example(fun_type = "quadratic", error_type = "independent")) 
-```
 \end{lstlisting}
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/linear-cases-Appendix-1} 
-
-}
-
-\caption{Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are able to capture the trend of the data.}\label{fig:linear-cases-Appendix}
+\begin{figure}[H]
+\includegraphics{00-Full_document_files/figure-latex/linear-cases-Appendix-1} \caption{Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are able to capture the trend of the data.}\label{fig:linear-cases-Appendix}
 \end{figure}
 
 For the quadratic response case, Figure \ref{fig:quadratic-cases-Appendix} shows the simulated responses using compound symmetry and independent errors.
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/quadratic-cases-Appendix-1} 
-
-}
-
-\caption{Simulated quadratic responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are not able to capture the changes in each group over time.}\label{fig:quadratic-cases-Appendix}
+\begin{figure}[H]
+\includegraphics{00-Full_document_files/figure-latex/quadratic-cases-Appendix-1} \caption{Simulated quadratic responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are not able to capture the changes in each group over time.}\label{fig:quadratic-cases-Appendix}
 \end{figure}
 
 \hypertarget{basis-functions-and-gams}{%
@@ -667,7 +718,7 @@ For the quadratic response case, Figure \ref{fig:quadratic-cases-Appendix} shows
 
 This code produces Figure \ref{fig:basis-plot} from the main manuscript. Briefly, a non-linear (quadratic) response is simulated a gam model is fitted and the basis are extracted in order to explain how the smooth is constructed. The code for data simulation is used again here for the sake of keeping the same structure, although the data can be simulated in a more simple fashion.
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 #generate the response: the same initial procedure from the previous section to simulate
 #the response
 set.seed(1)
@@ -836,11 +887,11 @@ b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
   theme(
      text=element_text(size=18)
      )
-\end{verbatim}
+\end{lstlisting}
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/basis-plot-appendix-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{00-Full_document_files/figure-latex/basis-plot-appendix-1} 
 
 }
 
@@ -848,11 +899,11 @@ b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
 \end{figure}
 
 \hypertarget{tumor-data-simulation}{%
-\subsection{Longitudinal biomedical data simulation and GAMs}\label{tumor-data-simulation}}
+\section{Longitudinal biomedical data simulation and GAMs}\label{tumor-data-simulation}}
 
 This section describes how to fit GAMs to longitudinal data using simulated data. First, data is simulated according to Section \ref{longitudinal-GAMs}, where reported data of oxygen saturation (\(\mbox{StO}_2\)) in tumors under either chemotherapy or saline control is used as a starting point to generate individual responses in each group.
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 set.seed(1)
 #Dataframe that contains the original reported trends
 dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
@@ -930,7 +981,7 @@ f2<-ggplot(dat_sim,
   )+
   thm+
     scale_x_continuous(breaks=c(0,2,5,7,10))
-\end{verbatim}
+\end{lstlisting}
 
 \hypertarget{workflow}{%
 \subsection{A basic Workflow for GAMs}\label{workflow}}
@@ -940,45 +991,45 @@ This section shows a basic workflow to fit a series of increasingly complex GAMs
 \hypertarget{first-model}{%
 \subsubsection{First model}\label{first-model}}
 
-The first model fitted to the data is one that only accounts for different smooths by day. The model syntax specifies that \texttt{gam\_00} is the object that will contain all the model information, and that the model attempts to explain changes in \texttt{StO2\_sim} (simulated \(\mbox{StO}_2\)) using a smooth per \texttt{Day}. The model will use 5 knots (\texttt{k=5}) for the smooth. The smooth is constructed by default using thin plate regression splines. The smoothing parameter estimation method used is the restricted maximum likelihood (\texttt{REML}).
+The first model fitted to the data is one that only accounts for different smooths by day. The model syntax specifies that \passthrough{\lstinline!gam\_00!} is the object that will contain all the model information, and that the model attempts to explain changes in \passthrough{\lstinline!StO2\_sim!} (simulated \(\mbox{StO}_2\)) using a smooth per \passthrough{\lstinline!Day!}. The model will use 5 knots (\passthrough{\lstinline!k=5!}) for the smooth. The smooth is constructed by default using thin plate regression splines. The smoothing parameter estimation method used is the restricted maximum likelihood (\passthrough{\lstinline!REML!}).
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 gam_00<-gam(StO2_sim ~ s(Day, k = 5),
             method='REML',
             data  = dat_sim)
-\end{verbatim}
+\end{lstlisting}
 
-To obtain model diagnostics, two methodologies are to be used: 1) graphical diagnostics, and 2) a model check. In the first case, the functions \texttt{appraise} and \texttt{draw} from the package \emph{gratia} can be used to obtain a single output with all the graphical diagnostics. For model check, the functions \texttt{gam.check} and \texttt{summary} from \emph{mgcv} provide detailed information about the model fit and its parameters.
+To obtain model diagnostics, two methodologies are to be used: 1) graphical diagnostics, and 2) a model check. In the first case, the functions \passthrough{\lstinline!appraise!} and \passthrough{\lstinline!draw!} from the package \emph{gratia} can be used to obtain a single output with all the graphical diagnostics. For model check, the functions \passthrough{\lstinline!gam.check!} and \passthrough{\lstinline!summary!} from \emph{mgcv} provide detailed information about the model fit and its parameters.
 
 
 
 \hypertarget{graphical-diagnostics}{%
 \paragraph{Graphical diagnostics}\label{graphical-diagnostics}}
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/first-GAM-diag-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{00-Full_document_files/figure-latex/first-GAM-diag-1} 
 
 }
 
-\caption{Graphical diagnostics for the first GAM model. Left: Graphical diagnostics provided by the function \texttt{appraise} from the package \emph{gratia}. Right: Fitted smooth for the model, provided by the function \texttt{draw}.}\label{fig:first-GAM-diag}
+\caption{Graphical diagnostics for the first GAM model. Left: Graphical diagnostics provided by the function \passthrough{\lstinline!appraise!} from the package \emph{gratia}. Right: Fitted smooth for the model, provided by the function \passthrough{\lstinline!draw!}.}\label{fig:first-GAM-diag}
 \end{figure}
 
-From the output of the function \texttt{appraise} in Figure \ref{fig:first-GAM-diag}, the major indicators of concern about the model are the QQ plot of residuals and the histogram of residuals. The QQ plot shows that the errors are not reasonably located along the 45\(^{\circ}\) line (which indicates normality), as there are multiple points that deviate from the trend, specially in the tails. The histogram also shows that the variation (residuals) is not following the assumption of a normal distribution.
+From the output of the function \passthrough{\lstinline!appraise!} in Figure \ref{fig:first-GAM-diag}, the major indicators of concern about the model are the QQ plot of residuals and the histogram of residuals. The QQ plot shows that the errors are not reasonably located along the 45\(^{\circ}\) line (which indicates normality), as there are multiple points that deviate from the trend, specially in the tails. The histogram also shows that the variation (residuals) is not following the assumption of a normal distribution.
 
-The \texttt{draw} function permits to plot the smooths as \texttt{ggplot2} objects, which eases subsequent manipulation, if desired. Because model \texttt{gam\_00} specifies only one smooth for the time covariate (Day), the plot only contains only one smooth. Note that the smooth shows an almost linear profile.
+The \passthrough{\lstinline!draw!} function permits to plot the smooths as \passthrough{\lstinline!ggplot2!} objects, which eases subsequent manipulation, if desired. Because model \passthrough{\lstinline!gam\_00!} specifies only one smooth for the time covariate (Day), the plot only contains only one smooth. Note that the smooth shows an almost linear profile.
 
 \hypertarget{model-check}{%
 \paragraph{Model check}\label{model-check}}
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 #need to add figure number and caption
 gam.check(gam_00)
-\end{verbatim}
+\end{lstlisting}
 
-\includegraphics{Full_document_SAGE_files/figure-latex/first-GAM-check-1.pdf}
+\includegraphics{00-Full_document_files/figure-latex/first-GAM-check-1}
 
-\begin{verbatim}
+\begin{lstlisting}
 ## 
 ## Method: REML   Optimizer: outer newton
 ## full convergence after 5 iterations.
@@ -994,13 +1045,13 @@ gam.check(gam_00)
 ## s(Day) 4.00 2.11    0.36  <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
+\end{lstlisting}
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 summary(gam_00)
-\end{verbatim}
+\end{lstlisting}
 
-\begin{verbatim}
+\begin{lstlisting}
 ## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -1022,28 +1073,28 @@ summary(gam_00)
 ## 
 ## R-sq.(adj) =  0.153   Deviance explained = 17.2%
 ## -REML = 444.01  Scale est. = 450.66    n = 100
-\end{verbatim}
+\end{lstlisting}
 
-Special attention must be paid to the `k-index' from \texttt{gam.check}. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trens in the data, this is indicated by a low k-index value (\textless1). From the output, it can be seen that the k-index is 0.36, which indicates that the model is not capturing the variability in the data. The \texttt{edf} (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
+Special attention must be paid to the `k-index' from \passthrough{\lstinline!gam.check!}. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trens in the data, this is indicated by a low k-index value (\textless1). From the output, it can be seen that the k-index is 0.36, which indicates that the model is not capturing the variability in the data. The \passthrough{\lstinline!edf!} (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
 
-From the \texttt{summary} function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is `identity' as the model does not make any transformation on the predictors. The `significance of smooth terms' \emph{p-value} indicates if each smooth is adding significance to the model. Here, the \emph{p-value} is low but we have seen that there are issues with the model from the previous outputs. Finally, the `deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to \(\approx\) 17\%.
+From the \passthrough{\lstinline!summary!} function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is `identity' as the model does not make any transformation on the predictors. The `significance of smooth terms' \emph{p-value} indicates if each smooth is adding significance to the model. Here, the \emph{p-value} is low but we have seen that there are issues with the model from the previous outputs. Finally, the `deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to \(\approx\) 17\%.
 
 \hypertarget{second-model}{%
 \subsubsection{Second model}\label{second-model}}
 
-The major flaw of \texttt{gam\_00} is that this model is not taking into account the fact that the data is nested in groups. The next iteration is a model where a different smooth of time (Day) is assigned for each group using \texttt{by=Group} in the model syntax.
+The major flaw of \passthrough{\lstinline!gam\_00!} is that this model is not taking into account the fact that the data is nested in groups. The next iteration is a model where a different smooth of time (Day) is assigned for each group using \passthrough{\lstinline!by=Group!} in the model syntax.
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 gam_01<-gam(StO2_sim ~ s(Day, by=Group,k = 5),
             method='REML',
             data  = dat_sim)
 
 gam.check(gam_01)
-\end{verbatim}
+\end{lstlisting}
 
-\includegraphics{Full_document_SAGE_files/figure-latex/second-GAM-1.pdf}
+\includegraphics{00-Full_document_files/figure-latex/second-GAM-1}
 
-\begin{verbatim}
+\begin{lstlisting}
 ## 
 ## Method: REML   Optimizer: outer newton
 ## full convergence after 7 iterations.
@@ -1060,13 +1111,13 @@ gam.check(gam_01)
 ## s(Day):GroupTreatment 4.00 3.23    0.43  <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
+\end{lstlisting}
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 summary(gam_01)
-\end{verbatim}
+\end{lstlisting}
 
-\begin{verbatim}
+\begin{lstlisting}
 ## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -1089,27 +1140,27 @@ summary(gam_01)
 ## 
 ## R-sq.(adj) =  0.472   Deviance explained = 50.8%
 ## -REML = 423.39  Scale est. = 280.88    n = 100
-\end{verbatim}
+\end{lstlisting}
 
-Diagnostics for this model indicate that the k-index is still below 1 (0.43 from \texttt{gam.check}), and that the residuals are still not following a normal distribution (Figure \ref{fig:second-GAM-diag}). Moreover, the smooths (plotted via the \texttt{draw()} function) appear with a fairly linear profile, which indicates they are still not capturing the trends observed in the data. From \texttt{summary()}, the deviance explained by the model is \(\approx\) 51\%.
+Diagnostics for this model indicate that the k-index is still below 1 (0.43 from \passthrough{\lstinline!gam.check!}), and that the residuals are still not following a normal distribution (Figure \ref{fig:second-GAM-diag}). Moreover, the smooths (plotted via the \passthrough{\lstinline!draw()!} function) appear with a fairly linear profile, which indicates they are still not capturing the trends observed in the data. From \passthrough{\lstinline!summary()!}, the deviance explained by the model is \(\approx\) 51\%.
 
 
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/second-GAM-diag-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{00-Full_document_files/figure-latex/second-GAM-diag-1} 
 
 }
 
-\caption{Graphical diagnostics for the second GAM model. Left: Graphical diagnostics provided by the function \texttt{appraise} from the package \emph{gratia}. Right: Fitted smooth for the model, provided by the function \texttt{draw}.}\label{fig:second-GAM-diag}
+\caption{Graphical diagnostics for the second GAM model. Left: Graphical diagnostics provided by the function \passthrough{\lstinline!appraise!} from the package \emph{gratia}. Right: Fitted smooth for the model, provided by the function \passthrough{\lstinline!draw!}.}\label{fig:second-GAM-diag}
 \end{figure}
 
 \hypertarget{third-model}{%
 \subsubsection{Third model}\label{third-model}}
 
-Model \texttt{gam\_00} was built for didactic purposes to cover the simplest case, but it does not account for the nesting of the data by Group, which is apparent from the type of smooth fitted, the model diagnostics, and, the low variance explained by the model. On the other hand, \texttt{gam\_01} takes into account the nesting within each group and provides better variance explanation, but as indicated in Section \ref{longitudinal-GAMs}, in order to differentiate between each group a parametric term needs to be added to the model for the interaction of \emph{Day} and \emph{Group}.
+Model \passthrough{\lstinline!gam\_00!} was built for didactic purposes to cover the simplest case, but it does not account for the nesting of the data by Group, which is apparent from the type of smooth fitted, the model diagnostics, and, the low variance explained by the model. On the other hand, \passthrough{\lstinline!gam\_01!} takes into account the nesting within each group and provides better variance explanation, but as indicated in Section \ref{longitudinal-GAMs}, in order to differentiate between each group a parametric term needs to be added to the model for the interaction of \emph{Day} and \emph{Group}.
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 #GAM for StO2
 
 m1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),
@@ -1117,11 +1168,11 @@ m1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),
             data  = dat_sim)
 
 gam.check(m1)
-\end{verbatim}
+\end{lstlisting}
 
-\includegraphics{Full_document_SAGE_files/figure-latex/final-model-Appendix-1.pdf}
+\includegraphics{00-Full_document_files/figure-latex/final-model-Appendix-1}
 
-\begin{verbatim}
+\begin{lstlisting}
 ## 
 ## Method: REML   Optimizer: outer newton
 ## full convergence after 10 iterations.
@@ -1136,13 +1187,13 @@ gam.check(m1)
 ##                         k'  edf k-index p-value
 ## s(Day):GroupControl   4.00 3.87    1.02    0.59
 ## s(Day):GroupTreatment 4.00 3.88    1.02    0.54
-\end{verbatim}
+\end{lstlisting}
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 summary(m1)
-\end{verbatim}
+\end{lstlisting}
 
-\begin{verbatim}
+\begin{lstlisting}
 ## 
 ## Family: gaussian 
 ## Link function: identity 
@@ -1166,45 +1217,45 @@ summary(m1)
 ## 
 ## R-sq.(adj) =  0.879   Deviance explained = 88.9%
 ## -REML = 355.86  Scale est. = 64.533    n = 100
-\end{verbatim}
+\end{lstlisting}
 
-The resulting model is \texttt{m1}, which is the model fitted in the main manuscript. By using \texttt{appraise()} and \texttt{draw} on this model (Figure \ref{fig:final-GAM-diag}) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group. From \texttt{gam.check}, the k-index is now at an acceptable value (\(\approx\) 1.02), and \texttt{summary} now indicates that the model is able to capture 89\% of the variance in the data.
+The resulting model is \passthrough{\lstinline!m1!}, which is the model fitted in the main manuscript. By using \passthrough{\lstinline!appraise()!} and \passthrough{\lstinline!draw!} on this model (Figure \ref{fig:final-GAM-diag}) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group. From \passthrough{\lstinline!gam.check!}, the k-index is now at an acceptable value (\(\approx\) 1.02), and \passthrough{\lstinline!summary!} now indicates that the model is able to capture 89\% of the variance in the data.
 
 
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/final-GAM-diag-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{00-Full_document_files/figure-latex/final-GAM-diag-1} 
 
 }
 
-\caption{Graphical diagnostics for the final GAM model. Left: Graphical diagnostics provided by the function \texttt{appraise} from the package \emph{gratia}. Right: Fitted smooths for the model, provided by the function \texttt{draw}.}\label{fig:final-GAM-diag}
+\caption{Graphical diagnostics for the final GAM model. Left: Graphical diagnostics provided by the function \passthrough{\lstinline!appraise!} from the package \emph{gratia}. Right: Fitted smooths for the model, provided by the function \passthrough{\lstinline!draw!}.}\label{fig:final-GAM-diag}
 \end{figure}
 
 \hypertarget{comparing-models-via-aic}{%
 \subsubsection{Comparing models via AIC}\label{comparing-models-via-aic}}
 
-One final comparison that can be made for model selection involves the use of the Aikake Information Criterion (AIC). This metric is used to estimate information loss, which we want to minimize with an appropriate model. Therefore, when 2 or more models are compared, the model with lower AIC is preferred. In R, the comparison is done using the \texttt{AIC} function.
+One final comparison that can be made for model selection involves the use of the Aikake Information Criterion (AIC). This metric is used to estimate information loss, which we want to minimize with an appropriate model. Therefore, when 2 or more models are compared, the model with lower AIC is preferred. In R, the comparison is done using the \passthrough{\lstinline!AIC!} function.
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 AIC(gam_00,gam_01,m1)
-\end{verbatim}
+\end{lstlisting}
 
-\begin{verbatim}
+\begin{lstlisting}
 ##               df      AIC
 ## gam_00  4.564893 900.8257
 ## gam_01  9.476137 858.6051
 ## m1     10.980983 712.2067
-\end{verbatim}
+\end{lstlisting}
 
-The output in this case is expected: model \texttt{m1} has a lower AIC (712.46) whereas the initial two models have higher AICs (900 and 858). The AIC should not be considered as the only estimator of model quality, instead to be used as complimentary information to the graphical diagnostics and model checks described above.
+The output in this case is expected: model \passthrough{\lstinline!m1!} has a lower AIC (712.46) whereas the initial two models have higher AICs (900 and 858). The AIC should not be considered as the only estimator of model quality, instead to be used as complimentary information to the graphical diagnostics and model checks described above.
 
 \hypertarget{pairwise-comparisons-of-smooth-confidence-intervals}{%
 \paragraph{Pairwise comparisons of smooth confidence intervals}\label{pairwise-comparisons-of-smooth-confidence-intervals}}
 
-The estimation of significant differences between each treatment group can be achieved via pairwise comparisons of the smooth confidence intervals as described in section \ref{GAM-significance}. In this case, the ``design matrix'' is used to estimate the pairwise comparisons (see main manuscript for details and associated references). Briefly, the ``design matrix'' (also known as the ``Xp matrix'') from the selected model (\texttt{m1}) is used to calculate a 95\% confidence interval of the difference between the smooth terms for each group. This approach allows to estimate the time intervals where a significant difference exists between the groups (confidence interval above or below 0). \textbf{All pairwise comparisons in this paper have been centered at the response scale to ease interpretation }.
+The estimation of significant differences between each treatment group can be achieved via pairwise comparisons of the smooth confidence intervals as described in section \ref{GAM-significance}. In this case, the ``design matrix'' is used to estimate the pairwise comparisons (see main manuscript for details and associated references). Briefly, the ``design matrix'' (also known as the ``Xp matrix'') from the selected model (\passthrough{\lstinline!m1!}) is used to calculate a 95\% confidence interval of the difference between the smooth terms for each group. This approach allows to estimate the time intervals where a significant difference exists between the groups (confidence interval above or below 0). \textbf{All pairwise comparisons in this paper have been centered at the response scale to ease interpretation }.
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 ##Pairwise comparisons
 pdat <- expand.grid(Day = seq(0, 10, length = 400),
                     Group = c('Control', 'Treatment'))
@@ -1303,36 +1354,36 @@ c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
         text=element_text(size=18),
         legend.title=element_blank()
     )
-\end{verbatim}
+\end{lstlisting}
 
 
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/pairwise-comp-workflow-fig-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{00-Full_document_files/figure-latex/pairwise-comp-workflow-fig-1} 
 
 }
 
-\caption{Smooth pairwise comparisons for model \texttt{m1} using a 95\% confidence interval for the difference between smooths. The comparison is centered at the response scale. Shaded regions indicate time intervals where each treatment group has a non-zero effect.}\label{fig:pairwise-comp-workflow-fig}
+\caption{Smooth pairwise comparisons for model \passthrough{\lstinline!m1!} using a 95\% confidence interval for the difference between smooths. The comparison is centered at the response scale. Shaded regions indicate time intervals where each treatment group has a non-zero effect.}\label{fig:pairwise-comp-workflow-fig}
 \end{figure}
 
-Of notice, a convenient wrapper for the function described above exists in the package \texttt{gratia}. In this package, \texttt{difference\_smooths} is a function that makes the comparisons and produces Figure \ref{fig:pairwise-comp-workflow-fig} when is used on a fitted model. The function syntax and an example can be found at:
+Of notice, a convenient wrapper for the function described above exists in the package \passthrough{\lstinline!gratia!}. In this package, \passthrough{\lstinline!difference\_smooths!} is a function that makes the comparisons and produces Figure \ref{fig:pairwise-comp-workflow-fig} when is used on a fitted model. The function syntax and an example can be found at:
 
 \url{https://cran.r-project.org/web/packages/gratia/gratia.pdf}
 
 Keep in mind that this function \textbf{does not} center the pairwise comparison at the response scale, so it has to be shifted in order to be compared to the raw data.
 
 \hypertarget{gam-and-linear-model-plots-and-missing-data}{%
-\subsection{GAM and Linear model plots and Missing data}\label{gam-and-linear-model-plots-and-missing-data}}
+\section{GAM and Linear model plots and Missing data}\label{gam-and-linear-model-plots-and-missing-data}}
 
-This section covers the code used to generate Figure \ref{fig:sim-smooth-plot}, where the simulated data, fit of the ``final'' GAM (\texttt{m1}), linear model and GAM on data with missing observations are presented. Note that panel A in Figure \ref{fig:sim-smooth-plot} and the inset are generated in the code chunk where the data is simulated in Section \ref{tumor-data-simulation}, and are called later to build the figure.
+This section covers the code used to generate Figure \ref{fig:sim-smooth-plot}, where the simulated data, fit of the ``final'' GAM (\passthrough{\lstinline!m1!}), linear model and GAM on data with missing observations are presented. Note that panel A in Figure \ref{fig:sim-smooth-plot} and the inset are generated in the code chunk where the data is simulated in Section \ref{tumor-data-simulation}, and are called later to build the figure.
 
 \hypertarget{gam-and-linear-model-plots}{%
-\subsubsection{GAM and Linear model plots}\label{gam-and-linear-model-plots}}
+\subsection{GAM and Linear model plots}\label{gam-and-linear-model-plots}}
 
-This code chunk creates panels B and D in Figure \ref{fig:sim-smooth-plot}. Note that this code uses the final GAM from the previous section (\texttt{m1}), so the simulated data and the model should be generated before running this section.
+This code chunk creates panels B and D in Figure \ref{fig:sim-smooth-plot}. Note that this code uses the final GAM from the previous section (\passthrough{\lstinline!m1!}), so the simulated data and the model should be generated before running this section.
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 #linear model
 lm1<-lm(StO2_sim ~ Day + Group + Day * Group, data = dat_sim)
 
@@ -1415,14 +1466,14 @@ f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
 
 #summary(glht(lm1, linfct = mcp(Group = 'Tukey')))
 #summary(glht(lm1, linfct=mcp(Group="Tukey", interaction_average=TRUE)))
-\end{verbatim}
+\end{lstlisting}
 
 \hypertarget{working-with-missing-data-in-gams}{%
 \subsection{Working with Missing data in GAMs}\label{working-with-missing-data-in-gams}}
 
 This code chunk first randomly deletes 40\% of the total observations in the original simulated data, and then an interaction GAM is fitted to the remaining data. Model diagnostics are presented, and an object that stores the fitted smooths is saved to be called in the final code chunk to build the figure.
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 #missing data
 #create a sequence of 40 random numbers between 1 and 100, these numbers will
 #correspond to the row numbers to be randomly erased from the original dataset
@@ -1484,11 +1535,11 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
   )+
       thm+
   thm1
-\end{verbatim}
+\end{lstlisting}
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/sim-smooth-plot-Appendix-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{00-Full_document_files/figure-latex/sim-smooth-plot-Appendix-1} 
 
 }
 
@@ -1500,7 +1551,7 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
 
 The next code chunk reproduces Figure \ref{fig:plot-pairwise-comp}. Here pairwise comparisons are made for the full and missing datasets.
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
 ##Pairwise comparisons
 
 pdat <- expand.grid(Day = seq(0, 10, length = 400),
@@ -1682,18 +1733,18 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
     )
 
 pair_comp<-c1+c2
-\end{verbatim}
+\end{lstlisting}
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/plot-pairwise-comp-Appendix-1} 
+{\centering \includegraphics[width=0.75\linewidth,]{00-Full_document_files/figure-latex/plot-pairwise-comp-Appendix-1} 
 
 }
 
 \caption{Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset. B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the 95\% empirical Bayesian credible interval does not cover 0. In both cases the effect of treatment is significant after day 3.}\label{fig:plot-pairwise-comp-Appendix}
 \end{figure}
 
-\bibliographystyle{sagev}
+\bibliographystyle{}
 \bibliography{refs.bib}
 
 

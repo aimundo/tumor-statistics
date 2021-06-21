@@ -1,22 +1,21 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
-# (APPENDIX)
+# (APPENDIX) Appendix {-}
 
-# Code for Manuscript data
+<!-- allows for page numbering using letters for the Appendix -->
+\appendixpagenumbering
 
-This section presents the code used to generate figures, models and simulated data from Sections 3 and 4 from the main manuscript.
+<!-- Allows for figure numbers with letters for Appendix -->
+\counterwithin{figure}{section} 
+# APPENDIX
+
+This section presents the code used to generate figures, models and simulated data from the main manuscript.
 
 ## Compound symmetry and independent errors in linear and quadratic responses
 
-This section simulated linear and quadratic data in the same manner as in Section \@ref(simulation). The linear simulations using Figure \@ref(fig:linear-cases-Appendix) show in  panels A and D the simulated mean responses and individual data points.  Panels C and G show a visual interpretation of "correlation" in the responses: In panel C, subjects that have a value of the random error $\varepsilon$ either above or below the mean group response are more likely to have other observations that follow the same trajectory, thereby demonstrating correlation in the response. In panel G,because the errors are independent, there is no expectation that responses are likely to follow a similar pattern.  Panels D and H show the predictions from the rm-ANOVA model.
+This section simulates linear and quadratic data in the same manner as in Section \@ref(simulation). The linear simulations using Figure \@ref(fig:linear-cases-Appendix) show in panels A and D the simulated mean responses and individual data points.  Panels C and G show a visual interpretation of "correlation" in the responses: In panel C, subjects that have a value of the random error $\varepsilon$ either above or below the mean group response are more likely to have other observations that follow the same trajectory, thereby demonstrating correlation in the response. In panel G,because the errors are independent, there is no expectation that responses are likely to follow a similar pattern.  Panels D and H show the predictions from the rm-ANOVA model.
 
 The following code produces a more comprehensive exploration of Figure \@ref(fig:l-q-response) in the main manuscript.
 
 ```{r, responses-Appendix,include=TRUE,message=FALSE,echo=TRUE}
-
 ##########Section for calculations###########
 
 
@@ -276,11 +275,10 @@ D1<-plot_example(example(fun_type = "quadratic", error_type = "independent"))
 
 ```
 
-
 (ref:linear-cases-appendix) Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are able to capture the trend of the data.
 
 
-```{r, linear-cases-Appendix, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:linear-cases-appendix)'}
+```{r, linear-cases-Appendix, fig.width=14, fig.height=10, out.width='75%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:linear-cases-appendix)'}
 # linear response, correlated errors (subject effect)
 A1/B1+plot_annotation(tag_levels = 'A')
 ```
@@ -291,7 +289,7 @@ For the quadratic response case, Figure \@ref(fig:quadratic-cases-Appendix) show
 (ref:quadratic-caption-appendix) Simulated quadratic responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are not able to capture the changes in each group over time.
 
 
-```{r, quadratic-cases-Appendix, fig.width=16, fig.height=12,  echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:quadratic-caption-appendix)'}
+```{r, quadratic-cases-Appendix, fig.width=14, fig.height=10, out.width='75%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:quadratic-caption-appendix)'}
 # linear response, correlated errors (subject effect)
 C1/D1+plot_annotation(tag_levels = 'A')
 ```
@@ -300,6 +298,7 @@ C1/D1+plot_annotation(tag_levels = 'A')
 ## Basis functions and GAMs
 
 This code produces Figure \@ref(fig:basis-plot) from the main manuscript. Briefly, a non-linear (quadratic) response is simulated a gam model is fitted and the basis are extracted in order to explain how the smooth is constructed. The code for data simulation is used again here for the sake of keeping the same structure, although the data can be simulated in a more simple fashion.
+
 
 ```{r,basis-Appendix, echo=TRUE,include=TRUE,message=FALSE,warning=FALSE,eval=FALSE}
 #generate the response: the same initial procedure from the previous section to simulate
@@ -474,14 +473,14 @@ b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
 ```
 
 
-
 ```{r,basis-plot-appendix, ref.label=I('basis-plot')}
 
 ```
 
-# Longitudinal biomedical data simulation and GAMs{#tumor-data-simulation}
+## Longitudinal biomedical data simulation and GAMs{#tumor-data-simulation}
 
 This section describes how to fit GAMs to longitudinal data using simulated data. First, data is simulated according to Section \@ref(longitudinal-GAMs), where reported data of oxygen saturation ($\mbox{StO}_2$) in tumors under either chemotherapy or saline control is used as a starting point to generate individual responses in each group.
+
 
 ```{r,sim-tumor-response-Appendix,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE,eval=FALSE}
 set.seed(1)
@@ -586,6 +585,7 @@ To obtain model diagnostics, two methodologies are to be used: 1) graphical diag
 
 (ref:first-GAM-caption) Graphical diagnostics for the first GAM model. Left: Graphical diagnostics provided by the function `appraise` from the package _gratia_. Right: Fitted smooth for the model, provided by the function `draw`.
 
+
 ```{r, plotting layouts,echo=TRUE, include=FALSE}
 
 #see https://patchwork.data-imaginist.com/reference/area.html
@@ -611,6 +611,7 @@ layout2 <- c(
 
 #### Graphical diagnostics
 
+
 ```{r, first-GAM-diag, fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:first-GAM-caption)'}
 
 appr1<-appraise(gam_00)
@@ -619,6 +620,7 @@ visual_check<-appr1+sm1
 
 visual_check+plot_layout(design=layout1)
 ```
+
 
 From the output of the function `appraise` in Figure \@ref(fig:first-GAM-diag), the major indicators of concern about the model are the QQ plot of residuals and the histogram of residuals. The QQ plot shows that the errors are not reasonably located along the 45$^{\circ}$ line (which indicates normality), as there are multiple points that deviate from the trend, specially in the tails. The histogram also shows that the variation (residuals) is not following the assumption of a normal distribution. 
 
@@ -671,6 +673,7 @@ visual_check2+plot_layout(design=layout1)
 
 Model `gam_00` was built for didactic purposes to cover the simplest case, but it does not account for the nesting of the data by Group, which is apparent from the type of smooth fitted, the model diagnostics, and, the low variance explained by the model. On the other hand, `gam_01` takes into account the nesting within each group and provides better variance explanation, but as indicated in Section \@ref(longitudinal-GAMs), in order to differentiate between each group a parametric term needs to be added to the model for the interaction of _Day_ and _Group_. 
 
+
 ```{r,final-model-Appendix,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
 
 #GAM for StO2
@@ -686,7 +689,6 @@ summary(m1)
 The resulting model is `m1`, which is the model fitted in the main manuscript. By using `appraise()` and `draw` on this model (Figure  \@ref(fig:final-GAM-diag)) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group. From `gam.check`, the k-index is now at an acceptable value ($\approx$ 1.02), and `summary` now indicates that the model is able to capture 89% of the variance in the data.
 
 (ref:final-GAM-caption) Graphical diagnostics for the final GAM model. Left: Graphical diagnostics provided by the function `appraise` from the package _gratia_. Right: Fitted smooths for the model, provided by the function `draw`.
-
 
 ```{r, final-GAM-diag, fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:final-GAM-caption)'}
 
@@ -831,11 +833,11 @@ https://cran.r-project.org/web/packages/gratia/gratia.pdf
 Keep in mind that this function **does not** center the pairwise comparison at the response scale, so it has to be shifted in order to be compared to the raw data.
 
 
-# GAM and Linear model plots and Missing data
+## GAM and Linear model plots and Missing data
 
 This section covers the code used to generate Figure \@ref(fig:sim-smooth-plot), where the simulated data, fit of the "final" GAM (`m1`), linear model  and GAM on data with missing observations are presented. Note that panel A in Figure \@ref(fig:sim-smooth-plot) and the inset are generated in the code chunk where the data is simulated in Section \@ref(tumor-data-simulation), and are called later to build the figure.
 
-## GAM and Linear model plots
+### GAM and Linear model plots
 
 This code chunk creates panels B and D in Figure \@ref(fig:sim-smooth-plot). Note that this code uses the final GAM from the previous section (`m1`), so the simulated data and the model should be generated before running this section. 
 
@@ -1197,3 +1199,4 @@ pair_comp<-c1+c2
 ```{r,plot-pairwise-comp-Appendix,ref.label=I('plot-pairwise-comp')}
 
 ```
+
