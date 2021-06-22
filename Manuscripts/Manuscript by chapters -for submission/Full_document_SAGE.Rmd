@@ -24,12 +24,14 @@ bibliography: refs.bib
 bibliographystyle: sagev
 output:
   bookdown::pdf_book:
+    pandoc_args: [ "--listings" ]
     base_format: rticles::sage_article
     keep_tex: yes
     fig_caption: yes
     includes:
       in_header: preamble_SAGE.sty #LaTeX formatting options
 ---
+
 
 ```{r libraries, message = FALSE,include=FALSE}
 #the packages needed to run the code
