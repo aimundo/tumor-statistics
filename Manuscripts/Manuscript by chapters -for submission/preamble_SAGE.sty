@@ -12,7 +12,8 @@
   \pagenumbering{arabic}
   \renewcommand{\thepage}{\thesection-\arabic{page}}
 }
-%\newcommand{\passthrough}[1]{#1}
+
+%newcommand{\passthrough}[1]{#1}
 
 %theme colors for the code chunks (originally from latex-solarized on GitHub)
 %https://github.com/jez/latex-solarized
@@ -34,7 +35,7 @@
 \definecolor{scyan}{HTML}{2AA198}
 \definecolor{sgreen}{HTML}{859900}
 %command to set parameter(s) in package listings
-\lstset{
+\lstdefinestyle{astyle}{
     % How/what to match
     language=R,
     sensitive=true,
@@ -58,3 +59,5 @@
     showstringspaces=false,
     tabsize=2
 }
+
+\lstset{style=astyle}
