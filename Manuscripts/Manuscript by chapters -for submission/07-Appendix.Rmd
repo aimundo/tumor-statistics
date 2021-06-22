@@ -11,11 +11,10 @@ This section presents the code used to generate figures, models and simulated da
 
 ## Compound symmetry and independent errors in linear and quadratic responses
 
-This section simulates linear and quadratic data in the same manner as in Section \@ref(simulation). The linear simulations using Figure \@ref(fig:linear-cases-Appendix) show in panels A and D the simulated mean responses and individual data points.  Panels C and G show a visual interpretation of "correlation" in the responses: In panel C, subjects that have a value of the random error $\varepsilon$ either above or below the mean group response are more likely to have other observations that follow the same trajectory, thereby demonstrating correlation in the response. In panel G,because the errors are independent, there is no expectation that responses are likely to follow a similar pattern.  Panels D and H show the predictions from the rm-ANOVA model.
+This section simulates linear and quadratic data in the same manner as in Section \@ref(simulation) in the main manuscript. The linear simulations using Figure \@ref(fig:linear-cases-Appendix) show in panels A and D the simulated mean responses and individual data points.  Panels C and G show a visual interpretation of "correlation" in the responses: In panel C, subjects that have a value of the random error $\varepsilon$ either above or below the mean group response are more likely to have other observations that follow the same trajectory, thereby demonstrating correlation in the response. In panel G,because the errors are independent, there is no expectation that responses are likely to follow a similar pattern.  Panels D and H show the predictions from the rm-ANOVA model.
 
 The following code produces a more comprehensive exploration of Figure \@ref(fig:l-q-response) in the main manuscript.
 
-\begin{lstlisting}[language=R]
 ```{r, responses-Appendix,include=TRUE,message=FALSE,echo=TRUE}
 ##########Section for calculations###########
 
@@ -147,7 +146,7 @@ example <- function(n_time = 6, #number of time points
   ))
 }
 ##################Section for plotting#################################
-#######################################################################
+
 #This function will create the plots for either a "linear" or "quadratic" response
 
 plot_example <- function(sim_dat) {
@@ -275,7 +274,7 @@ D1<-plot_example(example(fun_type = "quadratic", error_type = "independent"))
   
 
 ```
-\end{lstlisting}
+
 
 (ref:linear-cases-appendix) Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are able to capture the trend of the data.
 
@@ -631,15 +630,17 @@ The `draw` function permits to plot the smooths as `ggplot2` objects, which ease
 
 #### Model check
 
-```{r, first-GAM-check, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
-#need to add figure number and caption
+Special attention must be paid to the 'k-index' from `gam.check`. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trens in the data, this is indicated by a low k-index value (<1).
+
+```{r, first-GAM-check, fig.width=10, fig.height=7, out.width='75%', fig.align='center', echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
+
 gam.check(gam_00)
 
 summary(gam_00)
 
 ```
 
-Special attention must be paid to the 'k-index' from `gam.check`. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trens in the data, this is indicated by a low k-index value (<1). From the output, it can be seen that the k-index is 0.36, which indicates that the model is not capturing the variability in the data. The `edf` (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
+From the output, it can be seen that the k-index is 0.36, which indicates that the model is not capturing the variability in the data. The `edf` (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
 
 From the `summary` function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is 'identity' as the model does not make any transformation on the predictors. The 'significance of smooth terms' _p-value_ indicates if each smooth is adding significance to the model. Here, the _p-value_ is low but we have seen that there are issues with the model from the previous outputs. Finally, the 'deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to $\approx$ 17%.
 
@@ -648,7 +649,7 @@ From the `summary` function, information about the assumed distribution of the e
 The major flaw of `gam_00` is that this model is not taking into account the fact that the data is nested in groups. The next iteration is a model where a different smooth of time (Day) is assigned for each group using `by=Group` in the model syntax.
 
 
-```{r, second-GAM, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
+```{r, second-GAM, echo=TRUE, fig.width=10, fig.height=7, out.width='75%', fig.align='center', include=TRUE, message=FALSE,warning=FALSE}
 
 gam_01<-gam(StO2_sim ~ s(Day, by=Group,k = 5),
             method='REML',
@@ -677,7 +678,7 @@ visual_check2+plot_layout(design=layout1)
 Model `gam_00` was built for didactic purposes to cover the simplest case, but it does not account for the nesting of the data by Group, which is apparent from the type of smooth fitted, the model diagnostics, and, the low variance explained by the model. On the other hand, `gam_01` takes into account the nesting within each group and provides better variance explanation, but as indicated in Section \@ref(longitudinal-GAMs), in order to differentiate between each group a parametric term needs to be added to the model for the interaction of _Day_ and _Group_. 
 
 
-```{r,final-model-Appendix,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
+```{r,final-model-Appendix,fig.width=10, fig.height=7, out.width='75%', fig.align='center', echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
 
 #GAM for StO2
 
