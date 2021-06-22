@@ -15,6 +15,7 @@ This section simulates linear and quadratic data in the same manner as in Sectio
 
 The following code produces a more comprehensive exploration of Figure \@ref(fig:l-q-response) in the main manuscript.
 
+\begin{lstlisting}[language=R]
 ```{r, responses-Appendix,include=TRUE,message=FALSE,echo=TRUE}
 ##########Section for calculations###########
 
@@ -274,6 +275,7 @@ D1<-plot_example(example(fun_type = "quadratic", error_type = "independent"))
   
 
 ```
+\end{lstlisting}
 
 (ref:linear-cases-appendix) Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are able to capture the trend of the data.
 
@@ -282,6 +284,7 @@ D1<-plot_example(example(fun_type = "quadratic", error_type = "independent"))
 # linear response, correlated errors (subject effect)
 A1/B1+plot_annotation(tag_levels = 'A')
 ```
+
 
 For the quadratic response case, Figure \@ref(fig:quadratic-cases-Appendix) shows the simulated responses using compound symmetry and independent errors. 
 

@@ -8,7 +8,6 @@
 
 
 \usepackage{float}
-\usepackage{listings}
 \setcounter{secnumdepth}{2} %to add section numbers
 \usepackage{chngcntr} %package to enable figure numbers by sections
 %\counterwithin{figure}{section} %command for chngcntr in order to provide numbers per section that match with the letter for the Appendix
@@ -21,11 +20,29 @@
   \renewcommand{\thepage}{\thesection-\arabic{page}}
 }
 
-%newcommand{\passthrough}[1]{#1}
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+\lstset{defaultdialect=[5.3]Lua}
+\lstset{defaultdialect=[x86masm]Assembler}
+
+%to control that figures from R output do not overflow
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
 
 %theme colors for the code chunks (originally from latex-solarized on GitHub)
 %https://github.com/jez/latex-solarized
- \usepackage{xcolor}
+\usepackage{xcolor}
 \definecolor{sbase03}{HTML}{002B36}
 \definecolor{sbase02}{HTML}{073642}
 \definecolor{sbase01}{HTML}{586E75}
@@ -43,9 +60,8 @@
 \definecolor{scyan}{HTML}{2AA198}
 \definecolor{sgreen}{HTML}{859900}
 %command to set parameter(s) in package listings
-\lstdefinestyle{astyle}{
+\lstset{
     % How/what to match
-    language=R,
     sensitive=true,
     % Border (above and below)
     frame=lines,
@@ -68,7 +84,7 @@
     tabsize=2
 }
 
-\lstset{style=astyle}
+
 
 
 \begin{document}
@@ -89,7 +105,7 @@
 In biomedical research, the outcome of longitudinal studies has been traditionally analyzed using the \emph{repeated measures analysis of variance} (rm-ANOVA) or more recently, \emph{linear mixed models} (LMEMs). Although LMEMs are less restrictive than rm-ANOVA in terms of correlation and missing observations, both methodologies share an assumption of linearity in the measured response, which results in biased estimates and unreliable inference when they are used to analyze data where the trends are non-linear, which is a common occurrence in biomedical research. In contrast, \emph{generalized additive models} (GAMs) relax the linearity assumption, and allow the data to determine the fit of the model while permitting missing observations and different correlation structures. Therefore, GAMs present an excellent choice to analyze non-linear longitudinal data in the context of biomedical research. This paper summarizes the limitations of rm-ANOVA and LMEMs and uses simulated data to visually show how both methods produce biased estimates when used on non-linear data. We also present the basic theory of GAMs, and using trends of oxygen saturation in tumors reported in the biomedical literature, we simulate example longitudinal data (two treatment groups, 10 subjects per group, five repeated measures for each group) to demonstrate how these models can be computationally implemented. We show that GAMs are able to produce estimates that are consistent with the trends of biomedical non-linear data even in the case when missing observations exist (with 40\% of the simulated observations missing), allowing reliable inference from the data. To make this work reproducible, the code and data used in this paper are available at: \url{https://github.com/aimundo/GAMs-biomedical-research}.
 \end{abstract}
 
-\keywords{Cancer biology; Tumor response; generalized additive models; simulation; R}
+\keywords{cancer biology; tumor response; generalized additive models; simulation; R}
 
 \maketitle
 
@@ -103,7 +119,7 @@ Traditionally, a ``frequentist'' or ``classical'' statistical paradigm is used i
 The expected linear behavior of the response through time is a key requisite in rm-ANOVA \citep{pinheiro2006}. This ``linearity assumption'' in rm-ANOVA implies that the model is misspecified when the data does not follow a linear trend, which results in unreliable inference. In biomedical research, non-linear trends are the norm rather than the exception in longitudinal studies. A particular example of this non-linear behavior in longitudinal data arises in measurements of tumor response to chemo and/or radiotherapy in preclinical and clinical settings \citep{roblyer2011, skala2010, vishwanath2009}. These studies have shown that the collected signal does not follow a linear trend over time, and presents extreme variability at different time points, making the fit of rm-ANOVA model inconsistent with the observed variation. Therefore, when rm-ANOVA is used to draw inference of such data the estimates are inevitably biased, because the model is only able to accommodate linear trends that fail to adequately represent the biological phenomenon of interest.
 
 A \emph{post hoc} analysis is often used in conjunction with rm-ANOVA to perform repeated comparisons to estimate a \emph{p-value}, which in turn is used as a measure of significance.
-Although it is possible that a \emph{post hoc} analysis of rm-ANOVA is able to find ``significant'' \emph{p-values}( \emph{p}\textless{}0.05) from non-linear data, the validity of such metric is dependent on how adequate the model fits the data. In other words, \emph{p-values} are valid only if the model and the data have good agreement; if that is not the case, a ``Type III'' error (known as ``model misspecification'') occurs\citep{dennis2019}. For example, model misspecification will occur when a model that is only able to explain linear responses (such as rm-ANOVA) is fitted to data that follows a quadratic trend, thereby causing the resulting \emph{p-values} and parameter estimates to be invalid \citep{wang2019}.
+Although it is possible that a \emph{post hoc} analysis of rm-ANOVA is able to find ``significant'' \emph{p-values}( \emph{p}\textless0.05) from non-linear data, the validity of such metric is dependent on how adequate the model fits the data. In other words, \emph{p-values} are valid only if the model and the data have good agreement; if that is not the case, a ``Type III'' error (known as ``model misspecification'') occurs\citep{dennis2019}. For example, model misspecification will occur when a model that is only able to explain linear responses (such as rm-ANOVA) is fitted to data that follows a quadratic trend, thereby causing the resulting \emph{p-values} and parameter estimates to be invalid \citep{wang2019}.
 
 Additionally, the \emph{p-value} itself is highly variable, and multiple comparisons can inflate the false positivity rate (Type I error or \(\alpha\)) \citep{liu2010, halsey2015}, consequently biasing the conclusions of the study. Corrections exist to address the Type I error issue of multiple comparisons (such as Bonferroni \citep{abdi2010}), but they in turn reduce statistical power (1-\(\beta\))\citep{nakagawa2004}, and lead to increased Type II error (failing to reject the null hypothesis when the null hypothesis is false) \citep{gelman2012, albers2019}. Therefore, the tradeoff of \emph{post hoc} comparisons in rm-ANOVA between Type I, II and III errors might be difficult to resolve in a biomedical longitudinal study where a delicate balance exists between statistical power and sample size.
 
@@ -358,8 +374,6 @@ This work was supported by the National Science Foundation Career Award (CBET 17
 
 The Authors declare that there is no conflict of interest.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
 \hypertarget{appendix-appendix}{%
 \appendix}
 
@@ -380,7 +394,9 @@ This section simulates linear and quadratic data in the same manner as in Sectio
 
 The following code produces a more comprehensive exploration of Figure \ref{fig:l-q-response} in the main manuscript.
 
-\begin{verbatim}
+\begin{lstlisting}[language=R]
+
+```r
 ##########Section for calculations###########
 
 
@@ -636,7 +652,8 @@ B1<-plot_example(example(fun_type = "linear", error_type = "independent"))
 C1<-plot_example(example(fun_type = "quadratic", error_type = "correlated")) 
   
 D1<-plot_example(example(fun_type = "quadratic", error_type = "independent")) 
-\end{verbatim}
+```
+\end{lstlisting}
 
 
 
@@ -838,13 +855,14 @@ b_plot<-p11+p13+p12+p14+plot_annotation(tag_levels='A')&
      )
 \end{verbatim}
 
-\begin{verbatim}
-par(mar = c(2, 2, 2, 2))
+\begin{figure}
 
-b_plot
-\end{verbatim}
+{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/basis-plot-appendix-1} 
 
-\includegraphics{Full_document_SAGE_files/figure-latex/basis-plot-appendix-1.pdf}
+}
+
+\caption{Basis functions for a single smoother for time with five knots. A: Basis functions for a single smoother for time for the simulated data of Group 1 from Figure 2. B: Matrix of basis function weights. Each basis function is multiplied by a coefficient which can be positive or negative. The coefficient determines the overall effect of each basis in the final smoother. C: Weighted basis functions. Each of the four basis functions of panel A has been weighted by the corresponding coefficient shown in Panel B. Note the corresponding increase (or decrease) in magnitude of each weighted basis function. D: Smoother for time and original data points. The smoother (line) is the result of the sum of each weighted basis function at each time point, with simulated values for the group shown as points.}\label{fig:basis-plot-appendix}
+\end{figure}
 
 \hypertarget{tumor-data-simulation}{%
 \subsection{Longitudinal biomedical data simulation and GAMs}\label{tumor-data-simulation}}
@@ -1023,7 +1041,7 @@ summary(gam_00)
 ## -REML = 444.01  Scale est. = 450.66    n = 100
 \end{verbatim}
 
-Special attention must be paid to the `k-index' from \texttt{gam.check}. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trens in the data, this is indicated by a low k-index value (\textless{}1). From the output, it can be seen that the k-index is 0.36, which indicates that the model is not capturing the variability in the data. The \texttt{edf} (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
+Special attention must be paid to the `k-index' from \texttt{gam.check}. This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trens in the data, this is indicated by a low k-index value (\textless1). From the output, it can be seen that the k-index is 0.36, which indicates that the model is not capturing the variability in the data. The \texttt{edf} (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
 
 From the \texttt{summary} function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is `identity' as the model does not make any transformation on the predictors. The `significance of smooth terms' \emph{p-value} indicates if each smooth is adding significance to the model. Here, the \emph{p-value} is low but we have seen that there are issues with the model from the previous outputs. Finally, the `deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to \(\approx\) 17\%.
 
@@ -1485,60 +1503,14 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
   thm1
 \end{verbatim}
 
-\begin{verbatim}
-mult_plot<-f2+inset_element(
-  f1, left = 0.01, 
-  bottom = 0.5, 
-  right = 0.5, 
-  top = 1.0)+
-  f3+f4+f6+
-   plot_annotation(tag_levels='A')&
-   ylim(c(-7,75)) &
-  theme(
-     text=element_text(size=18)
-     )&
-  thm
-\end{verbatim}
+\begin{figure}
 
-\begin{verbatim}
-## Scale for 'y' is already present. Adding another scale for 'y', which will
-## replace the existing scale.
-\end{verbatim}
+{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/sim-smooth-plot-Appendix-1} 
 
-\begin{verbatim}
-## Scale for 'colour' is already present. Adding another scale for 'colour',
-## which will replace the existing scale.
-## Scale for 'colour' is already present. Adding another scale for 'colour',
-## which will replace the existing scale.
-## Scale for 'colour' is already present. Adding another scale for 'colour',
-## which will replace the existing scale.
-## Scale for 'colour' is already present. Adding another scale for 'colour',
-## which will replace the existing scale.
-## Scale for 'colour' is already present. Adding another scale for 'colour',
-## which will replace the existing scale.
-\end{verbatim}
+}
 
-\begin{verbatim}
-mult_plot
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: Removed 1 rows containing non-finite values (stat_summary).
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: Removed 1 rows containing missing values (geom_point).
-
-## Warning: Removed 1 rows containing missing values (geom_point).
-
-## Warning: Removed 1 rows containing missing values (geom_point).
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: Removed 53 rows containing missing values (geom_point).
-\end{verbatim}
-
-\includegraphics{Full_document_SAGE_files/figure-latex/sim-smooth-plot-Appendix-1.pdf}
+\caption{Simulated data and smooths for oxygen saturation in tumors. A: Simulated data that follows previously reported trends (inset) in tumors under chemotherapy (Treatment) or saline (Control) treatment. Simulated data is from a normal distribution with standard deviation of 10\% with 10 observations per time point. Lines indicate mean oxygen saturation B: Smooths from the GAM model for the full simulated data with interaction of Group and Treatment. Lines represent trends for each group, shaded regions are 95\% confidence intervals. C: The rm-ANOVA model for the simulated data, which does not capture the changes in each group over time. D: Smooths for the GAM model for the simulated data with 40\% of its observations missing. Lines represent trends for each group, shaded regions are 95\% empirical Bayesian confidence intervals.}\label{fig:sim-smooth-plot-Appendix}
+\end{figure}
 
 \hypertarget{pairwise-comparisons-in-gams-full-and-missing-data-cases}{%
 \subsection{Pairwise comparisons in GAMs: full and missing data cases}\label{pairwise-comparisons-in-gams-full-and-missing-data-cases}}
@@ -1729,14 +1701,14 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
 pair_comp<-c1+c2
 \end{verbatim}
 
-\begin{verbatim}
-pair_comp+plot_annotation(tag_levels='A')&
-  theme(
-     text=element_text(size=18)
-     )
-\end{verbatim}
+\begin{figure}
 
-\includegraphics{Full_document_SAGE_files/figure-latex/plot-pairwise-comp-Appendix-1.pdf}
+{\centering \includegraphics[width=0.75\linewidth]{Full_document_SAGE_files/figure-latex/plot-pairwise-comp-Appendix-1} 
+
+}
+
+\caption{Pairwise comparisons for smooth terms. A: Pairwise comparisons for the full dataset. B: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the 95\% empirical Bayesian credible interval does not cover 0. In both cases the effect of treatment is significant after day 3.}\label{fig:plot-pairwise-comp-Appendix}
+\end{figure}
 
 \bibliographystyle{sagev}
 \bibliography{refs.bib}
