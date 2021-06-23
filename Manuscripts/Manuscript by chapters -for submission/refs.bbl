@@ -1,0 +1,491 @@
+﻿\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{roblyer2011}
+Roblyer D, Ueda S, Cerussi A et~al.
+\newblock Optical imaging of breast cancer oxyhemoglobin flare correlates with
+  neoadjuvant chemotherapy response one day after starting treatment.
+\newblock \emph{Proceedings of the National Academy of Sciences} 2011; 108(35):
+  14626--14631.
+\newblock \doi{10.1073/pnas.1013103108}.
+\newblock \urlprefix\url{https://doi.org/10.1073/pnas.1013103108}.
+
+\bibitem{tank2020}
+Tank A, Peterson HM, Pera V et~al.
+\newblock Diffuse optical spectroscopic imaging reveals distinct early breast
+  tumor hemodynamic responses to metronomic and maximum tolerated dose
+  regimens.
+\newblock \emph{Breast Cancer Research} 2020; 22(1).
+\newblock \doi{10.1186/s13058-020-01262-1}.
+\newblock \urlprefix\url{https://doi.org/10.1186/s13058-020-01262-1}.
+
+\bibitem{pavlov2018}
+Pavlov MV, Kalganova TI and Lyubimtseva YS.
+\newblock Multimodal approach in assessment of the response of breast cancer to
+  neoadjuvant chemotherapy.
+\newblock \emph{Journal of Biomedical Optics} 2018; 23(09): 1.
+\newblock \doi{10.1117/1.jbo.23.9.091410}.
+\newblock \urlprefix\url{https://doi.org/10.1117/1.jbo.23.9.091410}.
+
+\bibitem{demidov2018}
+Demidov V, Maeda A, Sugita M et~al.
+\newblock Preclinical longitudinal imaging of tumor microvascular
+  radiobiological response with functional optical coherence tomography.
+\newblock \emph{Scientific Reports} 2018; 8(1).
+\newblock \doi{10.1038/s41598-017-18635-w}.
+\newblock \urlprefix\url{https://doi.org/10.1038/s41598-017-18635-w}.
+
+\bibitem{ritter2001}
+Ritter G, Cohen L, Williams C et~al.
+\newblock {Serological analysis of human anti-human antibody responses in colon
+  cancer patients treated with repeated doses of humanized monoclonal antibody
+  A33}.
+\newblock \emph{{Cancer Research}} {2001}; {61}({18}): {6851--6859}.
+
+\bibitem{roth2017}
+Roth EM, Goldberg AC, Catapano AL et~al.
+\newblock Antidrug antibodies in patients treated with alirocumab.
+\newblock \emph{New England Journal of Medicine} 2017; 376(16): 1589--1590.
+\newblock \doi{10.1056/nejmc1616623}.
+\newblock \urlprefix\url{https://doi.org/10.1056/nejmc1616623}.
+
+\bibitem{jones2018}
+Jones JD, Ramser HE, Woessner AE et~al.
+\newblock In vivo multiphoton microscopy detects longitudinal metabolic changes
+  associated with delayed skin wound healing.
+\newblock \emph{Communications Biology} 2018; 1(1).
+\newblock \doi{10.1038/s42003-018-0206-4}.
+\newblock \urlprefix\url{https://doi.org/10.1038/s42003-018-0206-4}.
+
+\bibitem{skala2010}
+Skala MC, Fontanella A, Lan L et~al.
+\newblock Longitudinal optical imaging of tumor metabolism and hemodynamics.
+\newblock \emph{Journal of Biomedical Optics} 2010; 15(1): 011112.
+\newblock \doi{10.1117/1.3285584}.
+\newblock \urlprefix\url{https://doi.org/10.1117/1.3285584}.
+
+\bibitem{greening2018}
+Greening GJ, Miller KP, Spainhour CR et~al.
+\newblock Effects of isoflurane anesthesia on physiological parameters in
+  murine subcutaneous tumor allografts measured via diffuse reflectance
+  spectroscopy.
+\newblock \emph{Biomedical Optics Express} 2018; 9(6): 2871.
+\newblock \doi{10.1364/boe.9.002871}.
+\newblock \urlprefix\url{https://doi.org/10.1364/boe.9.002871}.
+
+\bibitem{sio2016}
+Sio TT, Atherton PJ, Birckhead BJ et~al.
+\newblock Repeated measures analyses of dermatitis symptom evolution in breast
+  cancer patients receiving radiotherapy in a phase 3 randomized trial of
+  mometasone furoate vs placebo (n06c4 [alliance]).
+\newblock \emph{Supportive Care in Cancer} 2016; 24(9): 3847--3855.
+\newblock \doi{10.1007/s00520-016-3213-3}.
+\newblock \urlprefix\url{https://doi.org/10.1007/s00520-016-3213-3}.
+
+\bibitem{kamstra2015}
+Kamstra J, Dijkstra P, van Leeuwen M et~al.
+\newblock Mouth opening in patients irradiated for head and neck cancer: A
+  prospective repeated measures study.
+\newblock \emph{Oral Oncology} 2015; 51(5): 548--555.
+\newblock \doi{10.1016/j.oraloncology.2015.01.016}.
+\newblock \urlprefix\url{https://doi.org/10.1016/j.oraloncology.2015.01.016}.
+
+\bibitem{wagenmakers2008}
+Wagenmakers EJ, Lee M, Lodewyckx T et~al.
+\newblock Bayesian versus frequentist inference.
+\newblock In \emph{Bayesian Evaluation of Informative Hypotheses}. Springer New
+  York, 2008.
+\newblock pp. 181--207.
+\newblock \doi{10.1007/978-0-387-09612-4_9}.
+\newblock \urlprefix\url{https://doi.org/10.1007/978-0-387-09612-4_9}.
+
+\bibitem{gueorguieva2004}
+Gueorguieva R and Krystal JH.
+\newblock Move over {ANOVA}.
+\newblock \emph{Archives of General Psychiatry} 2004; 61(3): 310.
+\newblock \doi{10.1001/archpsyc.61.3.310}.
+\newblock \urlprefix\url{https://doi.org/10.1001/archpsyc.61.3.310}.
+
+\bibitem{schober2018}
+Schober P and Vetter TR.
+\newblock Repeated measures designs and analysis of longitudinal data.
+\newblock \emph{Anesthesia {\&} Analgesia} 2018; 127(2): 569--575.
+\newblock \doi{10.1213/ane.0000000000003511}.
+\newblock \urlprefix\url{https://doi.org/10.1213/ane.0000000000003511}.
+
+\bibitem{pinheiro2006}
+Pinheiro J and Bates D.
+\newblock \emph{{Mixed-effects models in S and S-PLUS}}.
+\newblock Springer Science and Business Media, 2006.
+\newblock ISBN 0387227474.
+\newblock \doi{https://doi.org/10.1007/b98882}.
+
+\bibitem{vishwanath2009}
+Vishwanath K, Yuan H, Barry WT et~al.
+\newblock Using optical spectroscopy to longitudinally monitor physiological
+  changes within solid tumors.
+\newblock \emph{Neoplasia} 2009; 11(9): 889--900.
+\newblock \doi{10.1593/neo.09580}.
+\newblock \urlprefix\url{https://doi.org/10.1593/neo.09580}.
+
+\bibitem{dennis2019}
+Dennis B, Ponciano JM, Taper ML et~al.
+\newblock Errors in statistical inference under model misspecification:
+  Evidence, hypothesis testing, and {AIC}.
+\newblock \emph{Frontiers in Ecology and Evolution} 2019; 7.
+\newblock \doi{10.3389/fevo.2019.00372}.
+\newblock \urlprefix\url{https://doi.org/10.3389/fevo.2019.00372}.
+
+\bibitem{wang2019}
+Wang B, Zhou Z, Wang H et~al.
+\newblock The p-value and model specification in statistics.
+\newblock \emph{General Psychiatry} 2019; 32(3): e100081.
+\newblock \doi{10.1136/gpsych-2019-100081}.
+\newblock \urlprefix\url{https://doi.org/10.1136/gpsych-2019-100081}.
+
+\bibitem{liu2010}
+Liu C, Cripe TP and Kim MO.
+\newblock Statistical issues in longitudinal data analysis for treatment
+  efficacy studies in the biomedical sciences.
+\newblock \emph{Molecular Therapy} 2010; 18(9): 1724--1730.
+\newblock \doi{10.1038/mt.2010.127}.
+\newblock \urlprefix\url{https://doi.org/10.1038/mt.2010.127}.
+
+\bibitem{halsey2015}
+Halsey LG, Curran-Everett D, Vowler SL et~al.
+\newblock The fickle p value generates irreproducible results.
+\newblock \emph{Nature Methods} 2015; 12(3): 179--185.
+\newblock \doi{10.1038/nmeth.3288}.
+\newblock \urlprefix\url{https://doi.org/10.1038/nmeth.3288}.
+
+\bibitem{abdi2010}
+Abdi H.
+\newblock {Holm’s sequential Bonferroni procedure}.
+\newblock \emph{Encyclopedia of Research Design} 2010; 1(8): 1--8.
+\newblock \doi{10.4135/9781412961288.n178}.
+
+\bibitem{nakagawa2004}
+Nakagawa S.
+\newblock A farewell to bonferroni: the problems of low statistical power and
+  publication bias.
+\newblock \emph{Behavioral Ecology} 2004; 15(6): 1044--1045.
+\newblock \doi{10.1093/beheco/arh107}.
+\newblock \urlprefix\url{https://doi.org/10.1093/beheco/arh107}.
+
+\bibitem{gelman2012}
+Gelman A, Hill J and Yajima M.
+\newblock Why we (usually) don{\textquotesingle}t have to worry about multiple
+  comparisons.
+\newblock \emph{Journal of Research on Educational Effectiveness} 2012; 5(2):
+  189--211.
+\newblock \doi{10.1080/19345747.2011.618213}.
+\newblock \urlprefix\url{https://doi.org/10.1080/19345747.2011.618213}.
+
+\bibitem{albers2019}
+Albers C.
+\newblock The problem with unadjusted multiple and sequential statistical
+  testing.
+\newblock \emph{Nature Communications} 2019; 10(1).
+\newblock \doi{10.1038/s41467-019-09941-0}.
+\newblock \urlprefix\url{https://doi.org/10.1038/s41467-019-09941-0}.
+
+\bibitem{ugrinowitsch2004}
+Ugrinowitsch C, Fellingham GW and Ricard MD.
+\newblock Limitations of ordinary least squares models in analyzing repeated
+  measures data.
+\newblock \emph{Medicine {\&} Science in Sports {\&} Exercise} 2004; :
+  2144--2148\doi{10.1249/01.mss.0000147580.40591.75}.
+\newblock \urlprefix\url{https://doi.org/10.1249/01.mss.0000147580.40591.75}.
+
+\bibitem{huynh1976}
+Huynh H and Feldt LS.
+\newblock Estimation of the box correction for degrees of freedom from sample
+  data in randomized block and split-plot designs.
+\newblock \emph{Journal of Educational Statistics} 1976; 1(1): 69--82.
+\newblock \doi{10.3102/10769986001001069}.
+\newblock \urlprefix\url{https://doi.org/10.3102/10769986001001069}.
+
+\bibitem{greenhouse1959}
+Greenhouse SW and Geisser S.
+\newblock On methods in the analysis of profile data.
+\newblock \emph{Psychometrika} 1959; 24(2): 95--112.
+\newblock \doi{10.1007/bf02289823}.
+\newblock \urlprefix\url{https://doi.org/10.1007/bf02289823}.
+
+\bibitem{haverkamp2017}
+Haverkamp N and Beauducel A.
+\newblock Violation of the sphericity assumption and its effect on type-i error
+  rates in repeated measures {ANOVA} and multi-level linear models ({MLM}).
+\newblock \emph{Frontiers in Psychology} 2017; 8.
+\newblock \doi{10.3389/fpsyg.2017.01841}.
+\newblock \urlprefix\url{https://doi.org/10.3389/fpsyg.2017.01841}.
+
+\bibitem{keselman2001}
+Keselman HJ, Algina J and Kowalchuk RK.
+\newblock The analysis of repeated measures designs: A review.
+\newblock \emph{British Journal of Mathematical and Statistical Psychology}
+  2001; 54(1): 1--20.
+\newblock \doi{10.1348/000711001159357}.
+\newblock \urlprefix\url{https://doi.org/10.1348/000711001159357}.
+
+\bibitem{charan2013}
+Charan J and Kantharia N.
+\newblock How to calculate sample size in animal studies?
+\newblock \emph{Journal of Pharmacology and Pharmacotherapeutics} 2013; 4(4):
+  303.
+\newblock \doi{10.4103/0976-500x.119726}.
+\newblock \urlprefix\url{https://doi.org/10.4103/0976-500x.119726}.
+
+\bibitem{barr2013}
+Barr DJ, Levy R, Scheepers C et~al.
+\newblock Random effects structure for confirmatory hypothesis testing: Keep it
+  maximal.
+\newblock \emph{Journal of Memory and Language} 2013; 68(3): 255--278.
+\newblock \doi{10.1016/j.jml.2012.11.001}.
+\newblock \urlprefix\url{https://doi.org/10.1016/j.jml.2012.11.001}.
+
+\bibitem{rose2012}
+Rose NL, Yang H, Turner SD et~al.
+\newblock An assessment of the mechanisms for the transfer of lead and mercury
+  from atmospherically contaminated organic soils to lake sediments with
+  particular reference to scotland, {UK}.
+\newblock \emph{Geochimica et Cosmochimica Acta} 2012; 82: 113--135.
+\newblock \doi{10.1016/j.gca.2010.12.026}.
+\newblock \urlprefix\url{https://doi.org/10.1016/j.gca.2010.12.026}.
+
+\bibitem{pedersen2019}
+Pedersen EJ, Miller DL, Simpson GL et~al.
+\newblock Hierarchical generalized additive models in ecology: an introduction
+  with mgcv.
+\newblock \emph{{PeerJ}} 2019; 7: e6876.
+\newblock \doi{10.7717/peerj.6876}.
+\newblock \urlprefix\url{https://doi.org/10.7717/peerj.6876}.
+
+\bibitem{simpson2018}
+Simpson GL.
+\newblock Modelling palaeoecological time series using generalised additive
+  models.
+\newblock \emph{Frontiers in Ecology and Evolution} 2018; 6.
+\newblock \doi{10.3389/fevo.2018.00149}.
+\newblock \urlprefix\url{https://doi.org/10.3389/fevo.2018.00149}.
+
+\bibitem{yang2012}
+Yang L, Qin G, Zhao N et~al.
+\newblock Using a generalized additive model with autoregressive terms to study
+  the effects of daily temperature on mortality.
+\newblock \emph{{BMC} Medical Research Methodology} 2012; 12(1).
+\newblock \doi{10.1186/1471-2288-12-165}.
+\newblock \urlprefix\url{https://doi.org/10.1186/1471-2288-12-165}.
+
+\bibitem{beck1998}
+Beck N and Jackman S.
+\newblock Beyond linearity by default: Generalized additive models.
+\newblock \emph{American Journal of Political Science} 1998; 42(2): 596.
+\newblock \doi{10.2307/2991772}.
+\newblock \urlprefix\url{https://doi.org/10.2307/2991772}.
+
+\bibitem{wood2017}
+Wood SN.
+\newblock \emph{Generalized Additive Models}.
+\newblock Chapman and Hall/{CRC}, 2017.
+\newblock \doi{10.1201/9781315370279}.
+\newblock \urlprefix\url{https://doi.org/10.1201/9781315370279}.
+
+\bibitem{r}
+{R Core Team}.
+\newblock \emph{R: A Language and Environment for Statistical Computing}.
+\newblock R Foundation for Statistical Computing, Vienna, Austria, 2020.
+\newblock \urlprefix\url{https://www.R-project.org/}.
+
+\bibitem{wood2016}
+Wood SN, Pya N and S\"{a}fken B.
+\newblock Smoothing parameter and model selection for general smooth models.
+\newblock \emph{Journal of the American Statistical Association} 2016;
+  111(516): 1548--1563.
+\newblock \doi{10.1080/01621459.2016.1180986}.
+\newblock \urlprefix\url{https://doi.org/10.1080/01621459.2016.1180986}.
+
+\bibitem{west2014}
+West B, Welch K and Galecki A.
+\newblock \emph{Linear Mixed Models: A Practical Guide Using Statistical
+  Software, Second Edition}.
+\newblock Taylor \& Francis, 2014.
+\newblock ISBN 9781466560994.
+\newblock \urlprefix\url{https://books.google.com/books?id=hjT6AwAAQBAJ}.
+
+\bibitem{wolfinger1996}
+Wolfinger RD.
+\newblock Heterogeneous variance: Covariance structures for repeated measures.
+\newblock \emph{Journal of Agricultural, Biological, and Environmental
+  Statistics} 1996; 1(2): 205.
+\newblock \doi{10.2307/1400366}.
+\newblock \urlprefix\url{https://doi.org/10.2307/1400366}.
+
+\bibitem{weiss2005}
+Weiss R.
+\newblock \emph{Modeling Longitudinal Data}.
+\newblock Springer Texts in Statistics, Springer New York, 2005.
+\newblock ISBN 9780387402710.
+\newblock \doi{10.1007/0-387-28314-5}.
+\newblock \urlprefix\url{https://books.google.com/books?id=MQ\_bvWDPsEAC}.
+
+\bibitem{geisser1958}
+Geisser S and Greenhouse SW.
+\newblock An extension of box{\textquotesingle}s results on the use of the
+  {\textdollar}f{\textdollar} distribution in multivariate analysis.
+\newblock \emph{The Annals of Mathematical Statistics} 1958; 29(3): 885--891.
+\newblock \doi{10.1214/aoms/1177706545}.
+\newblock \urlprefix\url{https://doi.org/10.1214/aoms/1177706545}.
+
+\bibitem{maxwell2017}
+Maxwell SE, Delaney HD and Kelley K.
+\newblock \emph{Designing Experiments and Analyzing Data}.
+\newblock Routledge, 2017.
+\newblock \doi{10.4324/9781315642956}.
+\newblock \urlprefix\url{https://doi.org/10.4324/9781315642956}.
+
+\bibitem{molenberghs2004}
+Molenberghs G.
+\newblock Analyzing incomplete longitudinal clinical trial data.
+\newblock \emph{Biostatistics} 2004; 5(3): 445--464.
+\newblock \doi{10.1093/biostatistics/kxh001}.
+\newblock \urlprefix\url{https://doi.org/10.1093/biostatistics/kxh001}.
+
+\bibitem{scheffer2002}
+Scheffer J.
+\newblock Dealing with missing data.
+\newblock \emph{Research Letters in the Information and Mathematical Sciences}
+  2002; 3: 153--160.
+
+\bibitem{potthoff2006}
+Potthoff RF, Tudor GE, Pieper KS et~al.
+\newblock Can one assess whether missing data are missing at random in medical
+  studies?
+\newblock \emph{Statistical Methods in Medical Research} 2006; 15(3): 213--234.
+\newblock \doi{10.1191/0962280206sm448oa}.
+\newblock \urlprefix\url{https://doi.org/10.1191/0962280206sm448oa}.
+
+\bibitem{ma2012}
+Ma Y, Mazumdar M and Memtsoudis SG.
+\newblock Beyond repeated-measures analysis of variance.
+\newblock \emph{Regional Anesthesia and Pain Medicine} 2012; 37(1): 99--105.
+\newblock \doi{10.1097/aap.0b013e31823ebc74}.
+\newblock \urlprefix\url{https://doi.org/10.1097/aap.0b013e31823ebc74}.
+
+\bibitem{nlme}
+Pinheiro J, Bates D, DebRoy S et~al.
+\newblock \emph{{nlme}: Linear and Nonlinear Mixed Effects Models}, 2020.
+\newblock \urlprefix\url{https://CRAN.R-project.org/package=nlme}.
+\newblock R package version 3.1-150.
+
+\bibitem{nelder1972}
+Nelder JA and Wedderburn RWM.
+\newblock Generalized linear models.
+\newblock \emph{Journal of the Royal Statistical Society Series A (General)}
+  1972; 135(3): 370.
+\newblock \doi{10.2307/2344614}.
+\newblock \urlprefix\url{https://doi.org/10.2307/2344614}.
+
+\bibitem{hastie1987}
+Hastie T and Tibshirani R.
+\newblock Generalized additive models: Some applications.
+\newblock \emph{Journal of the American Statistical Association} 1987; 82(398):
+  371--386.
+\newblock \doi{10.1080/01621459.1987.10478440}.
+\newblock \urlprefix\url{https://doi.org/10.1080/01621459.1987.10478440}.
+
+\bibitem{hefley2017}
+Hefley TJ, Broms KM, Brost BM et~al.
+\newblock The basis function approach for modeling autocorrelation in
+  ecological data.
+\newblock \emph{Ecology} 2017; 98(3): 632--646.
+\newblock \doi{10.1002/ecy.1674}.
+\newblock \urlprefix\url{https://doi.org/10.1002/ecy.1674}.
+
+\bibitem{wegman1983}
+Wegman EJ and Wright IW.
+\newblock Splines in statistics.
+\newblock \emph{Journal of the American Statistical Association} 1983; 78(382):
+  351--365.
+\newblock \doi{10.1080/01621459.1983.10477977}.
+\newblock \urlprefix\url{https://doi.org/10.1080/01621459.1983.10477977}.
+
+\bibitem{mcelreath2018}
+McElreath R.
+\newblock \emph{Statistical Rethinking}.
+\newblock Chapman and Hall/{CRC}, 2018.
+\newblock \doi{10.1201/9781315372495}.
+\newblock \urlprefix\url{https://doi.org/10.1201/9781315372495}.
+
+\bibitem{miller2019}
+Miller DL.
+\newblock Bayesian views of generalized additive modelling.
+\newblock \emph{arXiv preprint arXiv:190201330} 2019; .
+
+\bibitem{laird1982}
+Laird NM and Ware JH.
+\newblock Random-effects models for longitudinal data.
+\newblock \emph{Biometrics} 1982; 38(4): 963.
+\newblock \doi{10.2307/2529876}.
+\newblock \urlprefix\url{https://doi.org/10.2307/2529876}.
+
+\bibitem{marra2012}
+Marra G and Wood SN.
+\newblock Coverage properties of confidence intervals for generalized additive
+  model components.
+\newblock \emph{Scandinavian Journal of Statistics} 2012; 39(1): 53--74.
+\newblock \doi{10.1111/j.1467-9469.2011.00760.x}.
+\newblock \urlprefix\url{https://doi.org/10.1111/j.1467-9469.2011.00760.x}.
+
+\bibitem{gratia}
+Simpson GL.
+\newblock \emph{gratia: Graceful 'ggplot'-Based Graphics and Other Functions
+  for GAMs Fitted Using 'mgcv'}, 2020.
+\newblock \urlprefix\url{https://CRAN.R-project.org/package=gratia}.
+\newblock R package version 0.4.1.
+
+\bibitem{harezlak2018}
+Harezlak J, Ruppert D and Wand MP.
+\newblock \emph{Semiparametric Regression with R}.
+\newblock Springer New York, 2018.
+\newblock \doi{10.1007/978-1-4939-8853-2}.
+\newblock \urlprefix\url{https://doi.org/10.1007/978-1-4939-8853-2}.
+
+\bibitem{lang2015}
+Lang TA and Altman DG.
+\newblock Basic statistical reporting for articles published in biomedical
+  journals: The {\textquotedblleft}statistical analyses and methods in the
+  published literature{\textquotedblright} or the {SAMPL} guidelines.
+\newblock \emph{International Journal of Nursing Studies} 2015; 52(1): 5--9.
+\newblock \doi{10.1016/j.ijnurstu.2014.09.006}.
+\newblock \urlprefix\url{https://doi.org/10.1016/j.ijnurstu.2014.09.006}.
+
+\bibitem{hastie1995}
+Hastie T and Tibshirani R.
+\newblock Generalized additive models for medical research.
+\newblock \emph{Statistical Methods in Medical Research} 1995; 4(3): 187--196.
+\newblock \doi{10.1177/096228029500400302}.
+\newblock \urlprefix\url{https://doi.org/10.1177/096228029500400302}.
+
+\bibitem{begley2015}
+Begley CG and Ioannidis JP.
+\newblock Reproducibility in science.
+\newblock \emph{Circulation Research} 2015; 116(1): 116--126.
+\newblock \doi{10.1161/circresaha.114.303819}.
+\newblock \urlprefix\url{https://doi.org/10.1161/circresaha.114.303819}.
+
+\bibitem{weissgerber2018}
+Weissgerber TL, Garcia-Valencia O, Garovic VD et~al.
+\newblock Why we need to report more than {\textquotesingle}data were analyzed
+  by t-tests or {ANOVA}{\textquotesingle}.
+\newblock \emph{{eLife}} 2018; 7.
+\newblock \doi{10.7554/elife.36163}.
+\newblock \urlprefix\url{https://doi.org/10.7554/elife.36163}.
+
+\end{thebibliography}
