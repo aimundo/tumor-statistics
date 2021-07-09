@@ -1,0 +1,1811 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.7.9)  9 JUL 2021 15:49
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**Full_document_SIM_rticles_No_Appendix.tex
+(./Full_document_SIM_rticles_No_Appendix.tex
+LaTeX2e <2021-06-01> patch level 1
+L3 programming layer <2021-06-18> (./WileyNJD-v2.cls
+Document Class: WileyNJD-v2 2017/06/23 v0.2 Standard LaTeX document class for J
+ournal
+\job@temptoken=\toks16
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2021/02/12 v1.4n Standard LaTeX document class
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fleqn.clo
+File: fleqn.clo 2016/12/29 v1.2b Standard LaTeX option (flush left equations)
+\mathindent=\skip47
+Applying: [2015/01/01] Make \[ robust on input line 50.
+LaTeX Info: Redefining \[ on input line 51.
+Already applied: [0000/00/00] Make \[ robust on input line 62.
+Applying: [2015/01/01] Make \] robust on input line 74.
+LaTeX Info: Redefining \] on input line 75.
+Already applied: [0000/00/00] Make \] robust on input line 83.
+) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.cl
+o
+File: size10.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count182
+\c@section=\count183
+\c@subsection=\count184
+\c@subsubsection=\count185
+\c@paragraph=\count186
+\c@subparagraph=\count187
+\c@figure=\count188
+\c@table=\count189
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen138
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etex-pkg/etex.st
+y
+Package: etex 2016/08/01 v2.7 eTeX basic definition package (PEB,DPC)
+\et@xins=\count190
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphic
+x.sty
+Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.
+sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphic
+s.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.st
+y
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/gra
+phics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdf
+tex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen139
+\Gin@req@width=\dimen140
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/multicol.s
+ty
+Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
+Normal \count register pool exhausted, switching to extended pool.
+\c@tracingmulticols=\count277
+\mult@box=\box50
+\multicol@leftmargin=\dimen141
+\c@unbalance=\count278
+\c@collectmore=\count279
+\doublecol@number=\count280
+\multicoltolerance=\count281
+\multicolpretolerance=\count282
+\full@width=\dimen142
+\page@free=\dimen143
+\premulticols=\dimen144
+\postmulticols=\dimen145
+\multicolsep=\skip50
+\multicolbaselineskip=\skip51
+\partial@page=\box51
+\last@line=\box52
+\maxbalancingoverflow=\dimen146
+\mult@rightbox=\box53
+\mult@grightbox=\box54
+\mult@gfirstbox=\box55
+\mult@firstbox=\box56
+\@tempa=\box57
+\@tempa=\box58
+\@tempa=\box59
+\@tempa=\box60
+\@tempa=\box61
+\@tempa=\box62
+\@tempa=\box63
+\@tempa=\box64
+\@tempa=\box65
+\@tempa=\box66
+\@tempa=\box67
+\@tempa=\box68
+\@tempa=\box69
+\@tempa=\box70
+\@tempa=\box71
+\@tempa=\box72
+\@tempa=\box73
+\@tempa=\box74
+\@tempa=\box75
+\@tempa=\box76
+\@tempa=\box77
+\@tempa=\box78
+\@tempa=\box79
+\@tempa=\box80
+\@tempa=\box81
+\@tempa=\box82
+\@tempa=\box83
+\@tempa=\box84
+\@tempa=\box85
+\@tempa=\box86
+\@tempa=\box87
+\@tempa=\box88
+\@tempa=\box89
+\@tempa=\box90
+\@tempa=\box91
+\@tempa=\box92
+\@tempa=\box93
+\c@minrows=\count283
+\c@columnbadness=\count284
+\c@finalcolumnbadness=\count285
+\last@try=\dimen147
+\multicolovershoot=\dimen148
+\multicolundershoot=\dimen149
+\mult@nat@firstbox=\box94
+\colbreak@box=\box95
+\mc@col@check@num=\count286
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multiro
+w.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip52
+\multirow@cntb=\count287
+\multirow@dima=\skip53
+\bigstrutjot=\dimen150
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/sttools/cuted.st
+y
+Package: cuted 2012/10/04 v1.5 Mixing onecolumn and twocolumn modes
+\At@ViperColsBreak=\toks18
+\v@aaa=\box96
+\v@ccc=\box97
+\lastskip@a=\skip54
+\lastskip@b=\skip55
+\lastskip@d=\skip56
+\lastbox@a=\box98
+\stripsep=\skip57
+\@viper=\box99
+\viper@penalty=\count288
+\hold@viper=\box100
+\ht@viper=\dimen151
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifpdf.st
+y
+Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.st
+y
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+)) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/changepage/chang
+epage.sty
+Package: changepage 2009/10/20 v1.0c check page and change page layout
+\c@cp@cntr=\count289
+\cp@tempcnt=\count290
+) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count291
+\calc@Bcount=\count292
+\calc@Adimen=\dimen152
+\calc@Bdimen=\dimen153
+\calc@Askip=\skip58
+\calc@Bskip=\skip59
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count293
+\calc@Cskip=\skip60
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.st
+y
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/col
+or.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.st
+y
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count294
+\float@exts=\toks19
+\float@box=\box101
+\@float@everytoks=\toks20
+\@floatcapt=\box102
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/sttools/floatpag
+.sty
+Package: floatpag 2012/05/29 v1.1 Different pagestyles on float pages
+Package: floatpag 1999/04/29 FLOAT PAGESTYLE
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/dblfloatfix/dblf
+loatfix.sty
+Package: dblfloatfix 2012/12/31 v1.0a (JAW)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fixltx2e.st
+y
+Package: fixltx2e 2016/12/29 v2.1a fixes to LaTeX (obsolete)
+Applying: [2015/01/01] Old fixltx2e package on input line 46.
+
+Package fixltx2e Warning: fixltx2e is not required with releases after 2015
+(fixltx2e)                All fixes are now in the LaTeX kernel.
+(fixltx2e)                See the latexrelease package for details.
+
+Already applied: [0000/00/00] Old fixltx2e package on input line 53.
+)
+\@dblbotnum=\count295
+\c@dblbotnumber=\count296
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/rotatin
+g.sty
+Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\c@r@tfl@t=\count297
+\rotFPtop=\skip61
+\rotFPbot=\skip62
+\rot@float@box=\box103
+\rot@mess@toks=\toks21
+) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ulem/ulem.st
+y
+\UL@box=\box104
+\UL@hyphenbox=\box105
+\UL@skip=\skip63
+\UL@hook=\toks22
+\UL@height=\dimen154
+\UL@pe=\count298
+\UL@pixel=\dimen155
+\ULC@box=\box106
+Package: ulem 2019/11/18
+\ULdepth=\dimen156
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/enumerate.
+sty
+Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
+\@enLab=\toks23
+) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/soul/soul.st
+y
+Package: soul 2003/11/17 v2.4 letterspacing/underlining (mf)
+\SOUL@word=\toks24
+\SOUL@lasttoken=\toks25
+\SOUL@cmds=\toks26
+\SOUL@buffer=\toks27
+\SOUL@token=\toks28
+\SOUL@spaceskip=\skip64
+\SOUL@ttwidth=\dimen157
+\SOUL@uldp=\dimen158
+\SOUL@ulht=\dimen159
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption.
+sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption3
+.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen160
+\captionmargin@=\dimen161
+\captionwidth=\dimen162
+\caption@tempdima=\dimen163
+\caption@indent=\dimen164
+\caption@parindent=\dimen165
+\caption@hangindent=\dimen166
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count299
+\c@continuedfloat=\count300
+Package caption Info: changepage package is loaded.
+\caption@adjustwidth@hsize=\dimen167
+\caption@adjustwidth@linewidth=\dimen168
+Package caption Info: float package is loaded.
+Package caption Info: rotating package is loaded.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperre
+f.sty
+Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmd
+s.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdf
+texcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infw
+arerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvse
+tkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/k
+vdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfe
+scape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.
+sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/letltxmacro/letl
+txmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.
+sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvopti
+ons.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+)
+\@linkdim=\dimen169
+\Hy@linkcounter=\count301
+\Hy@pagecounter=\count302
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.
+def
+File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperre
+f-langpatches.def
+File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
+nguages
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcal
+c.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/etexcmds/etexc
+mds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count303
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.d
+ef
+File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4445.
+\c@Hy@tempcnt=\count304
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen170
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.
+sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/big
+intcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count305
+\Field@Width=\dimen171
+Normal \dimen register pool exhausted, switching to extended pool.
+\Fld@charsize=\dimen256
+Package hyperref Info: Hyper figures OFF on input line 6076.
+Package hyperref Info: Link nesting OFF on input line 6081.
+Package hyperref Info: Hyper index ON on input line 6084.
+Package hyperref Info: backreferencing OFF on input line 6091.
+Package hyperref Info: Link coloring OFF on input line 6096.
+Package hyperref Info: Link coloring with OCG OFF on input line 6101.
+Package hyperref Info: PDF/A mode OFF on input line 6106.
+LaTeX Info: Redefining \ref on input line 6146.
+LaTeX Info: Redefining \pageref on input line 6150.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-lt
+x.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count306
+\c@Item=\count307
+\c@Hfootnote=\count308
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex
+.def
+File: hpdftex.def 2021-06-07 v7.00m Hyperref driver for pdfTeX
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-l
+tx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
+e
+with kernel methods
+)
+\Fld@listcount=\count309
+\c@bookmark@seq@number=\count310
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/r
+erunfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/
+uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip65
+)
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 278.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/bookmark/bookmar
+k.sty
+Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/bookmark/bkm-pdf
+tex.def
+File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
+\BKM@id=\count311
+))
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/subfig/subfig.st
+y
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+\c@KVtest=\count312
+\sf@farskip=\skip66
+\sf@captopadj=\dimen257
+\sf@capskip=\skip67
+\sf@nearskip=\skip68
+\c@subfigure=\count313
+\c@subfigure@save=\count314
+\c@lofdepth=\count315
+\c@subtable=\count316
+\c@subtable@save=\count317
+\c@lotdepth=\count318
+\sf@top=\skip69
+\sf@bottom=\skip70
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/oberdiek/twoopt.
+sty
+Package: twoopt 2016/05/16 v1.6 Definitions with two optional arguments (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/footmisc/footmis
+c.sty
+Package: footmisc 2011/06/06 v5.5b a miscellany of footnote facilities
+\FN@temptoken=\toks29
+\footnotemargin=\dimen258
+\c@pp@next@reset=\count319
+Package footmisc Info: Declaring symbol style bringhurst on input line 855.
+Package footmisc Info: Declaring symbol style chicago on input line 863.
+Package footmisc Info: Declaring symbol style wiley on input line 872.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 883.
+
+Package footmisc Info: Declaring symbol style lamport* on input line 903.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 924
+.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/tabularx.s
+ty
+Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
+\col@sep=\dimen259
+\ar@mcellbox=\box107
+\extrarowheight=\dimen260
+\NC@list=\toks30
+\extratabsurround=\skip71
+\backup@length=\skip72
+\ar@cellbox=\box108
+)
+\TX@col@width=\dimen261
+\TX@old@table=\dimen262
+\TX@old@col=\dimen263
+\TX@target=\dimen264
+\TX@delta=\dimen265
+\TX@cols=\count320
+\TX@ftn=\toks31
+)
+\tfboxrule=\dimen266
+\bfboxrule=\dimen267
+\BXRuleThickness=\dimen268
+\BXleftrightskipdimen=\dimen269
+\BXhsize=\dimen270
+\FreePageSpace=\dimen271
+\ovsize=\dimen272
+\adjustskip=\skip73
+\BXbox=\box109
+\xxptspaceamount=\skip74
+\BXboxoutbnewskip=\skip75
+\BXdim=\dimen273
+\BXgraybox=\box110
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/varwidth/varwidt
+h.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box111
+\sift@deathcycles=\count321
+\@vwid@loff=\dimen274
+\@vwid@roff=\dimen275
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/dcolumn.st
+y
+Package: dcolumn 2014/10/28 v1.06 decimal alignment package (DPC)
+) (c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/stix/stix.sty
+Package: stix 2018/04/17 v1.1.3-latex STIX fonts support package
+Now handling font encoding LS1 ...
+... no UTF-8 mapping file for font encoding LS1
+Now handling font encoding LS2 ...
+... no UTF-8 mapping file for font encoding LS2
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 76.
+LaTeX Font Info:    Encoding `OML' has changed to `LS1' for symbol font
+(Font)              `letters' in the math version `normal' on input line 76.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> LS1/stix/m/it on input line 76.
+LaTeX Font Info:    Encoding `OML' has changed to `LS1' for symbol font
+(Font)              `letters' in the math version `bold' on input line 76.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> LS1/stix/m/it on input line 76.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 77.
+LaTeX Font Info:    Encoding `OT1' has changed to `LS1' for symbol font
+(Font)              `operators' in the math version `normal' on input line 77.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> LS1/stix/m/n on input line 77.
+LaTeX Font Info:    Encoding `OT1' has changed to `LS1' for symbol font
+(Font)              `operators' in the math version `bold' on input line 77.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> LS1/stix/m/n on input line 77.
+\symbold-operators=\mathgroup4
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 79.
+LaTeX Font Info:    Encoding `OMS' has changed to `LS1' for symbol font
+(Font)              `symbols' in the math version `normal' on input line 79.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> LS1/stixscr/m/n on input line 79.
+LaTeX Font Info:    Encoding `OMS' has changed to `LS1' for symbol font
+(Font)              `symbols' in the math version `bold' on input line 79.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> LS1/stixscr/m/n on input line 79.
+\symsymbols2=\mathgroup5
+\symsymbols3=\mathgroup6
+\symsymbols4=\mathgroup7
+\symintegrals=\mathgroup8
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 84.
+LaTeX Font Info:    Encoding `OMX' has changed to `LS2' for symbol font
+(Font)              `largesymbols' in the math version `normal' on input line 8
+4.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> LS2/stixex/m/n on input line 84.
+LaTeX Font Info:    Encoding `OMX' has changed to `LS2' for symbol font
+(Font)              `largesymbols' in the math version `bold' on input line 84.
+
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> LS2/stixex/m/n on input line 84.
+\symarrows1=\mathgroup9
+\symarrows2=\mathgroup10
+\symarrows3=\mathgroup11
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  LS1/stix/m/it --> LS1/stix/b/it on input line 88.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  LS1/stix/m/n --> LS1/stix/b/n on input line 89.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  LS1/stixscr/m/n --> LS1/stixscr/b/n on input line 90.
+LaTeX Font Info:    Overwriting symbol font `symbols2' in version `bold'
+(Font)                  LS1/stixfrak/m/n --> LS1/stixfrak/b/n on input line 91.
+
+LaTeX Font Info:    Overwriting symbol font `symbols3' in version `bold'
+(Font)                  LS1/stixbb/m/n --> LS1/stixbb/b/n on input line 92.
+LaTeX Font Info:    Overwriting symbol font `symbols4' in version `bold'
+(Font)                  LS1/stixbb/m/it --> LS1/stixbb/b/it on input line 93.
+LaTeX Font Info:    Overwriting symbol font `integrals' in version `bold'
+(Font)                  LS2/stixcal/m/n --> LS2/stixcal/b/n on input line 94.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  LS2/stixex/m/n --> LS2/stixex/b/n on input line 95.
+LaTeX Font Info:    Overwriting symbol font `arrows1' in version `bold'
+(Font)                  LS1/stixsf/m/n --> LS1/stixsf/b/n on input line 96.
+LaTeX Font Info:    Overwriting symbol font `arrows2' in version `bold'
+(Font)                  LS1/stixsf/m/it --> LS1/stixsf/b/it on input line 97.
+LaTeX Font Info:    Overwriting symbol font `arrows3' in version `bold'
+(Font)                  LS2/stixtt/m/n --> LS2/stixtt/b/n on input line 98.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 99.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 106.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 108.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 109.
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 227.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 698.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 699.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 700.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 701.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 702.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 703.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 704.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 705.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 707.
+LaTeX Font Info:    Redeclaring math accent \check on input line 708.
+LaTeX Font Info:    Redeclaring math accent \vec on input line 716.
+LaTeX Font Info:    Redeclaring math accent \widehat on input line 728.
+LaTeX Font Info:    Redeclaring math accent \widetilde on input line 729.
+LaTeX Info: Redefining \vdots on input line 1518.
+LaTeX Info: Redefining \cdots on input line 1522.
+LaTeX Font Info:    Redeclaring math symbol \mathsterling on input line 1978.
+LaTeX Info: Redefining \not on input line 2144.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+LaTeX Font Info:    Trying to load font information for T1+stix on input line 1
+12.
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/stix/t1stix.fd
+File: t1stix.fd 2015/04/17 v1.1.2-latex STIX T1 font definitions
+))
+\trimwidth=\skip76
+\trimheight=\skip77
+\typewidth=\skip78
+\typeheight=\skip79
+\normaltextheight=\skip80
+\blindfoliodrop=\skip81
+\figheight=\skip82
+\figwidth=\skip83
+\tabledim=\skip84
+\columnhsizevalue=\dimen276
+\abs@coli@hsize=\skip85
+\abs@colii@hsize=\skip86
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/geometry/geometr
+y.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.s
+ty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count322
+\Gm@cntv=\count323
+\c@Gm@tempcnt=\count324
+\Gm@bindingoffset=\dimen277
+\Gm@wd@mp=\dimen278
+\Gm@odd@mp=\dimen279
+\Gm@even@mp=\dimen280
+\Gm@layoutwidth=\dimen281
+\Gm@layoutheight=\dimen282
+\Gm@layouthoffset=\dimen283
+\Gm@layoutvoffset=\dimen284
+\Gm@dimlist=\toks32
+)
+\parindentvalue=\dimen285
+\pageheight=\dimen286
+\rulecount=\count325
+\leftcolrulepos=\dimen287
+\rightcolrulepos=\dimen288
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/eso-pic/showfram
+e.sty
+Package: showframe 2020/10/14 v0.1j showframe (new impl., RN)
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/eso-pic/eso-pic.
+sty
+Package: eso-pic 2020/10/14 v3.0a eso-pic (RN)
+\ESO@tempdima=\dimen289
+\ESO@tempdimb=\dimen290
+)
+\SF@tempdima=\dimen291
+)
+\artopleftskipdim=\dimen292
+\@xmlpage=\write3
+\c@spagecounter=\count326
+\c@lpagecounter=\count327
+LaTeX Info: Redefining \rm on input line 1300.
+LaTeX Info: Redefining \sf on input line 1301.
+LaTeX Info: Redefining \tt on input line 1302.
+LaTeX Info: Redefining \bf on input line 1303.
+LaTeX Info: Redefining \it on input line 1304.
+LaTeX Info: Redefining \sl on input line 1305.
+LaTeX Info: Redefining \sc on input line 1306.
+LaTeX Info: Redefining \cal on input line 1307.
+LaTeX Info: Redefining \mit on input line 1308.
+\aucount=\count328
+\corrauthcount=\count329
+\authfncnt=\count330
+\authfnTmpCnt=\count331
+\aufootnotemark=\box112
+\authmarkbox=\box113
+\c@affn=\count332
+\addcount=\count333
+\emailcount=\count334
+\punctcount=\count335
+\foot@titlepage@raise@skip=\skip87
+\lastauthorcnt=\count336
+\fundinginfocount=\count337
+\commafundinginfocount=\count338
+\fundinginfotempcount=\count339
+\tempfundinginfocount=\count340
+\JELinfocount=\count341
+\commaJELinfocount=\count342
+\JELinfotempcount=\count343
+\tempJELinfocount=\count344
+\htftbox=\box114
+\ovsize=\dimen293
+\oovsize=\dimen294
+\FreePageSpace=\dimen295
+\FreePageSpaceTest=\dimen296
+\fadjskip=\skip88
+\adjustskip=\skip89
+\titleskip=\skip90
+\abs@boxa=\box115
+\abs@boxb=\box116
+\abs@boxc=\box117
+\abs@dima=\dimen297
+\abs@dimb=\dimen298
+\abs@dimc=\dimen299
+\adjtitleskip=\skip91
+\c@chapter=\count345
+\secruleskip=\skip92
+\rhverticalsep=\skip93
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/natbib/natbib.st
+y
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip94
+\bibsep=\skip95
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count346
+)
+\c@scheme=\count347
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktab
+s.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen300
+\lightrulewidth=\dimen301
+\cmidrulewidth=\dimen302
+\belowrulesep=\dimen303
+\belowbottomsep=\dimen304
+\aboverulesep=\dimen305
+\abovetopsep=\dimen306
+\cmidrulesep=\dimen307
+\cmidrulekern=\dimen308
+\defaultaddspace=\dimen309
+\@cmidla=\count348
+\@cmidlb=\count349
+\@aboverulesep=\dimen310
+\@belowrulesep=\dimen311
+\@thisruleclass=\count350
+\@lastruleclass=\count351
+\@thisrulewidth=\dimen312
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.
+sty
+Package: amsmath 2021/04/20 v2.17j AMS math features
+\@mathmargin=\skip96
+For additional information on amsmath, use the `?' option.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.
+sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.s
+ty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks33
+\ex@=\dimen313
+))
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.s
+ty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen314
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.s
+ty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count352
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count353
+\leftroot@=\count354
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count355
+\DOTSCASE@=\count356
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+\Mathstrutbox@=\box118
+\strutbox@=\box119
+\big@size=\dimen315
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count357
+\c@MaxMatrixCols=\count358
+\dotsspace@=\muskip17
+\c@parentequation=\count359
+\dspbrk@lvl=\count360
+\tag@help=\toks34
+\row@=\count361
+\column@=\count362
+\maxfields@=\count363
+\andhelp@=\toks35
+\eqnshift@=\dimen316
+\alignsep@=\dimen317
+\tagshift@=\dimen318
+\tagwidth@=\dimen319
+\totwidth@=\dimen320
+\lineht@=\dimen321
+\@envbody=\toks36
+\multlinegap=\skip97
+\multlinetaggap=\skip98
+\mathdisplay@stack=\toks37
+LaTeX Info: Redefining \[ on input line 2923.
+LaTeX Info: Redefining \] on input line 2924.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amscls/amsthm.st
+y
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks38
+\thm@bodyfont=\toks39
+\thm@headfont=\toks40
+\thm@notefont=\toks41
+\thm@headpunct=\toks42
+\thm@preskip=\skip99
+\thm@postskip=\skip100
+\thm@headsep=\skip101
+\dth@everypar=\toks43
+)
+\c@theorem=\count364
+\c@construction=\count365
+\c@estimate=\count366
+\c@lemma=\count367
+\c@corollary=\count368
+\c@result=\count369
+\c@algth=\count370
+\c@proposition=\count371
+\c@hypothesis=\count372
+\c@experiment=\count373
+\c@LWrule=\count374
+\c@procedure=\count375
+\c@assertion=\count376
+\c@axiom=\count377
+\c@conjecture=\count378
+\c@criterion=\count379
+\c@reduction=\count380
+\c@sublemma=\count381
+\c@case=\count382
+\c@remark=\count383
+\c@notation=\count384
+\c@answer=\count385
+\c@base=\count386
+\c@claim=\count387
+\c@ccomment=\count388
+\c@subproof=\count389
+\c@conclusion=\count390
+\c@observation=\count391
+\c@subcase=\count392
+\c@step=\count393
+\c@summary=\count394
+\c@definition=\count395
+\c@condition=\count396
+\c@property=\count397
+\c@problem=\count398
+\c@fact=\count399
+\c@assumption=\count400
+\c@eexample=\count401
+\c@model=\count402
+\c@affirmation=\count403
+\c@application=\count404
+\c@convention=\count405
+\c@discussion=\count406
+\c@exercise=\count407
+\c@question=\count408
+\c@scholium=\count409
+\c@terminology=\count410
+\c@printcitcnt=\count411
+\c@@pps=\count412
+\c@@ppsavesec=\count413
+\c@@ppsaveapp=\count414
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/algorithms/algor
+ithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+\@float@every@algorithm=\toks44
+\c@algorithm=\count415
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/algorithmicx/alg
+orithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count416
+\c@ALG@rem=\count417
+\c@ALG@nested=\count418
+\ALG@tlm=\skip102
+\ALG@thistlm=\skip103
+\c@ALG@Lnr=\count419
+\c@ALG@blocknr=\count420
+\c@ALG@storecount=\count421
+\c@ALG@tmpcounter=\count422
+\ALG@tmplength=\skip104
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/algorithmicx/alg
+pseudocode.sty
+Package: algpseudocode 
+Document Style - pseudocode environments for use with the `algorithmicx' style
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/listings/listing
+s.sty
+\lst@mode=\count423
+\lst@gtempboxa=\box120
+\lst@token=\toks45
+\lst@length=\count424
+\lst@currlwidth=\dimen322
+\lst@column=\count425
+\lst@pos=\count426
+\lst@lostspace=\dimen323
+\lst@width=\dimen324
+\lst@newlines=\count427
+\lst@lineno=\count428
+\lst@maxwidth=\dimen325
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/listings/lstmisc
+.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count429
+\lst@skipnumbers=\count430
+\lst@framebox=\box121
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/listings/listing
+s.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/alltt.sty
+Package: alltt 2021/01/29 v2.0g defines alltt environment
+)
+\jnlcitationbox=\box122
+\jnlcithsize=\dimen326
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.
+sty
+\wrapoverhang=\dimen327
+\WF@size=\dimen328
+\c@WF@wrappedlines=\count431
+\WF@box=\box123
+\WF@everypar=\toks46
+Package: wrapfig 2003/01/31  v 3.6
+)
+\wraplines=\count432
+\@authorfigbox=\box124
+\@authorfigboxdim=\skip105
+\biofigadjskip=\skip106
+)
+\csllabelwidth=\skip107
+\cslhangindent=\skip108
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lineno/lineno.st
+y
+Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+\linenopenalty=\count433
+\output=\toks47
+\linenoprevgraf=\count434
+\linenumbersep=\dimen329
+\linenumberwidth=\dimen330
+\c@linenumber=\count435
+\c@pagewiselinenumber=\count436
+\c@LN@truepage=\count437
+\c@internallinenumber=\count438
+\c@internallinenumbers=\count439
+\quotelinenumbersep=\dimen331
+\bframerule=\dimen332
+\bframesep=\dimen333
+\bframebox=\box125
+LaTeX Info: Redefining \\ on input line 3056.
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/preprint/authblk
+.sty
+Package: authblk 2001/02/27 1.3 (PWD)
+\affilsep=\skip109
+\@affilsep=\skip110
+\c@Maxaffil=\count440
+\c@authors=\count441
+\c@affil=\count442
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/setspace/setspac
+e.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/endfloat/endfloa
+t.sty
+Package: endfloat 2019/04/15 v2.7 LaTeX2e package puts figures and tables at en
+d (jdm)
+\c@postfigure=\count443
+\efloat@postfff=\write4
+\@ef@fffopen=\count444
+)
+\myorcidaffilbox=\box126
+<orcid.png, id=1, 64.24pt x 64.24pt>
+File: orcid.png Graphic file (type png)
+<use orcid.png>
+Package pdftex.def Info: orcid.png  used on input line 39.
+(pdftex.def)             Requested size: 9.17978pt x 9.17996pt.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3back
+end-pdftex.def
+File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count445
+\l__pdf_internal_box=\box127
+)
+
+LaTeX Warning: Unused global option(s):
+    [AMA,STIX1COL].
+
+No file Full_document_SIM_rticles_No_Appendix.aux.
+\openout1 = `Full_document_SIM_rticles_No_Appendix.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 133.
+LaTeX Font Info:    ... okay on input line 133.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 133.
+LaTeX Font Info:    ... okay on input line 133.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 133.
+LaTeX Font Info:    ... okay on input line 133.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 133.
+LaTeX Font Info:    ... okay on input line 133.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 133.
+LaTeX Font Info:    ... okay on input line 133.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 133.
+LaTeX Font Info:    ... okay on input line 133.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 133.
+LaTeX Font Info:    ... okay on input line 133.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 133.
+LaTeX Font Info:    ... okay on input line 133.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 133.
+LaTeX Font Info:    ... okay on input line 133.
+LaTeX Font Info:    Checking defaults for LS1/stix/m/n on input line 133.
+LaTeX Font Info:    Trying to load font information for LS1+stix on input line 
+133.
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/stix/ls1stix.fd
+File: ls1stix.fd 2015/04/17 v1.1.2-latex STIX LS1 font definitions
+)
+LaTeX Font Info:    ... okay on input line 133.
+LaTeX Font Info:    Checking defaults for LS2/stix/m/n on input line 133.
+LaTeX Font Info:    Trying to load font information for LS2+stix on input line 
+133.
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/stix/ls2stix.fd
+File: ls2stix.fd 2015/04/17 v1.1.2-latex STIX LS2 font definitions
+)
+LaTeX Font Info:    ... okay on input line 133.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/eps
+topdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/grfext/grfext.st
+y
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epst
+opdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: hyperref package is loaded.
+Package caption Info: listings package is loaded.
+Package caption Info: wrapfig package is loaded.
+Package caption Info: End \AtBeginDocument code.
+Package hyperref Info: Link coloring OFF on input line 133.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref
+.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcoun
+t.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring
+/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count446
+)
+LaTeX Info: Redefining \ref on input line 133.
+LaTeX Info: Redefining \pageref on input line 133.
+LaTeX Info: Redefining \nameref on input line 133.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: custom
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* hratio: 1:1
+* vratio: 1:1
+* modes: twoside 
+* h-part:(L,W,R)=(45.0pt, 507.50787pt, 45.0pt)
+* v-part:(T,H,B)=(57.5pt, 668.79605pt, 59.0pt)
+* \paperwidth=597.50787pt
+* \paperheight=785.29605pt
+* \textwidth=507.50787pt
+* \textheight=668.79605pt
+* \oddsidemargin=-27.26999pt
+* \evensidemargin=-27.26999pt
+* \topmargin=-46.76999pt
+* \headheight=21.0pt
+* \headsep=11.0pt
+* \topskip=6.0pt
+* \footskip=48.5pt
+* \marginparwidth=0.0pt
+* \marginparsep=0.0pt
+* \columnsep=0.0pt
+* \skip\footins=18.0pt plus 2.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+\c@lstlisting=\count447
+LaTeX Font Info:    Trying to load font information for T1+cmss on input line 1
+54.
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/t1cmss.fd
+File: t1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Trying to load font information for LS1+stixscr on input li
+ne 154.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/stix/ls1stixscr.
+fd
+File: ls1stixscr.fd 2015/04/17 v1.1.2-latex STIX script LS1 font definitions
+)
+LaTeX Font Info:    Trying to load font information for LS2+stixex on input lin
+e 154.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/stix/ls2stixex.f
+d
+File: ls2stixex.fd 2015/04/17 v1.1.2-latex STIX extentions LS2 font definitions
+
+)
+LaTeX Font Info:    Trying to load font information for LS1+stixfrak on input l
+ine 154.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/stix/ls1stixfrak
+.fd
+File: ls1stixfrak.fd 2015/04/17 v1.1.2-latex STIX fraktur LS1 font definitions
+)
+LaTeX Font Info:    Trying to load font information for LS1+stixbb on input lin
+e 154.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/stix/ls1stixbb.f
+d
+File: ls1stixbb.fd 2015/04/17 v1.1.2-latex STIX blackboard LS1 font definitions
+
+)
+LaTeX Font Info:    Trying to load font information for LS2+stixcal on input li
+ne 154.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/stix/ls2stixcal.
+fd
+File: ls2stixcal.fd 2015/04/17 v1.1.2-latex STIX calligraphic LS2 font definiti
+ons
+)
+LaTeX Font Info:    Trying to load font information for LS1+stixsf on input lin
+e 154.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/stix/ls1stixsf.f
+d
+File: ls1stixsf.fd 2015/04/17 v1.1.2-latex STIX sans-serif LS1 font definitions
+
+)
+LaTeX Font Info:    Trying to load font information for LS2+stixtt on input lin
+e 154.
+
+(c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/stix/ls2stixtt.f
+d
+File: ls2stixtt.fd 2015/04/17 v1.1.2-latex STIX typewriter LS2 font definitions
+
+)
+Overfull \hbox (346.99213pt too wide) in paragraph at lines 154--154
+[][] | || []|[][] 
+ []
+
+LaTeX Font Info:    Calculating math sizes for size <10.03749> on input line 15
+4.
+
+Package natbib Warning: Citation `roblyer2011' on page 1 undefined on input lin
+e 159.
+
+
+Package natbib Warning: Citation `tank2020' on page 1 undefined on input line 1
+59.
+
+
+Package natbib Warning: Citation `pavlov2018' on page 1 undefined on input line
+ 159.
+
+
+Package natbib Warning: Citation `demidov2018' on page 1 undefined on input lin
+e 159.
+
+
+Package natbib Warning: Citation `ritter2001' on page 1 undefined on input line
+ 159.
+
+
+Package natbib Warning: Citation `roth2017' on page 1 undefined on input line 1
+59.
+
+
+Package natbib Warning: Citation `jones2018' on page 1 undefined on input line 
+159.
+
+
+Package natbib Warning: Citation `skala2010' on page 1 undefined on input line 
+159.
+
+
+Package natbib Warning: Citation `greening2018' on page 1 undefined on input li
+ne 159.
+
+
+Package natbib Warning: Citation `sio2016' on page 1 undefined on input line 15
+9.
+
+
+Package natbib Warning: Citation `kamstra2015' on page 1 undefined on input lin
+e 159.
+
+
+Overfull \vbox (6.46347pt too high) has occurred while \output is active []
+
+[1{c:/Users/aimundo/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/p
+dftex.map}
+
+\openout3 = `Full_document_SIM_rticles_No_Appendix.pag'.
+
+]
+
+Package natbib Warning: Citation `wagenmakers2008' on page 2 undefined on input
+ line 161.
+
+
+Package natbib Warning: Citation `gueorguieva2004' on page 2 undefined on input
+ line 161.
+
+
+Package natbib Warning: Citation `schober2018' on page 2 undefined on input lin
+e 161.
+
+
+Package natbib Warning: Citation `pinheiro2006' on page 2 undefined on input li
+ne 163.
+
+
+Package natbib Warning: Citation `roblyer2011' on page 2 undefined on input lin
+e 163.
+
+
+Package natbib Warning: Citation `skala2010' on page 2 undefined on input line 
+163.
+
+
+Package natbib Warning: Citation `vishwanath2009' on page 2 undefined on input 
+line 163.
+
+
+Package natbib Warning: Citation `dennis2019' on page 2 undefined on input line
+ 166.
+
+
+Package natbib Warning: Citation `wang2019' on page 2 undefined on input line 1
+66.
+
+
+Overfull \vbox (2.4078pt too high) has occurred while \output is active []
+
+[2]
+
+Package natbib Warning: Citation `liu2010' on page 3 undefined on input line 16
+8.
+
+
+Package natbib Warning: Citation `halsey2015' on page 3 undefined on input line
+ 168.
+
+
+Package natbib Warning: Citation `abdi2010' on page 3 undefined on input line 1
+68.
+
+
+Package natbib Warning: Citation `nakagawa2004' on page 3 undefined on input li
+ne 168.
+
+
+Package natbib Warning: Citation `gelman2012' on page 3 undefined on input line
+ 168.
+
+
+Package natbib Warning: Citation `albers2019' on page 3 undefined on input line
+ 168.
+
+
+Package natbib Warning: Citation `ugrinowitsch2004' on page 3 undefined on inpu
+t line 170.
+
+
+Package natbib Warning: Citation `huynh1976' on page 3 undefined on input line 
+170.
+
+
+Package natbib Warning: Citation `greenhouse1959' on page 3 undefined on input 
+line 170.
+
+
+Package natbib Warning: Citation `haverkamp2017' on page 3 undefined on input l
+ine 170.
+
+
+Package natbib Warning: Citation `keselman2001' on page 3 undefined on input li
+ne 170.
+
+
+Package natbib Warning: Citation `charan2013' on page 3 undefined on input line
+ 170.
+
+
+Package natbib Warning: Citation `gueorguieva2004' on page 3 undefined on input
+ line 172.
+
+
+Package natbib Warning: Citation `skala2010' on page 3 undefined on input line 
+174.
+
+
+Package natbib Warning: Citation `vishwanath2009' on page 3 undefined on input 
+line 174.
+
+
+Package natbib Warning: Citation `pinheiro2006' on page 3 undefined on input li
+ne 174.
+
+
+Package natbib Warning: Citation `gueorguieva2004' on page 3 undefined on input
+ line 174.
+
+
+Package natbib Warning: Citation `barr2013' on page 3 undefined on input line 1
+74.
+
+
+Package natbib Warning: Citation `pinheiro2006' on page 3 undefined on input li
+ne 174.
+
+[3]
+
+Package natbib Warning: Citation `rose2012' on page 4 undefined on input line 1
+76.
+
+
+Package natbib Warning: Citation `pedersen2019' on page 4 undefined on input li
+ne 176.
+
+
+Package natbib Warning: Citation `simpson2018' on page 4 undefined on input lin
+e 176.
+
+
+Package natbib Warning: Citation `yang2012' on page 4 undefined on input line 1
+76.
+
+
+Package natbib Warning: Citation `beck1998' on page 4 undefined on input line 1
+76.
+
+
+Package natbib Warning: Citation `wood2017' on page 4 undefined on input line 1
+76.
+
+
+Package natbib Warning: Citation `r' on page 4 undefined on input line 178.
+
+
+Package natbib Warning: Citation `wood2016' on page 4 undefined on input line 1
+78.
+
+
+Package natbib Warning: Citation `wood2017' on page 4 undefined on input line 1
+78.
+
+
+Package natbib Warning: Citation `haverkamp2017' on page 4 undefined on input l
+ine 178.
+
+
+Package natbib Warning: Citation `vishwanath2009' on page 4 undefined on input 
+line 180.
+
+[4]
+
+LaTeX Warning: Reference `eq:linear-model' on page 5 undefined on input line 20
+8.
+
+[5]
+
+LaTeX Warning: Reference `eq:linear-model' on page 6 undefined on input line 22
+8.
+
+
+LaTeX Warning: Reference `eq:ANOVA-by-group' on page 6 undefined on input line 
+228.
+
+
+LaTeX Warning: Reference `eq:ANOVA-lines' on page 6 undefined on input line 228
+.
+
+
+Package natbib Warning: Citation `pinheiro2006' on page 6 undefined on input li
+ne 233.
+
+
+Package natbib Warning: Citation `west2014' on page 6 undefined on input line 2
+33.
+
+
+LaTeX Warning: Reference `eq:linear-model' on page 6 undefined on input line 24
+0.
+
+
+LaTeX Warning: Reference `eq:LMEM' on page 6 undefined on input line 240.
+
+
+LaTeX Warning: Reference `eq:linear-model' on page 6 undefined on input line 24
+0.
+
+
+LaTeX Warning: Reference `eq:LMEM' on page 6 undefined on input line 242.
+
+
+Package natbib Warning: Citation `pinheiro2006' on page 6 undefined on input li
+ne 242.
+
+
+LaTeX Warning: Reference `eq:linear-model' on page 6 undefined on input line 24
+2.
+
+
+LaTeX Warning: Reference `eq:LMEM' on page 6 undefined on input line 242.
+
+[6]
+
+Package natbib Warning: Citation `wolfinger1996' on page 7 undefined on input l
+ine 247.
+
+
+Package natbib Warning: Citation `west2014' on page 7 undefined on input line 2
+47.
+
+
+Package natbib Warning: Citation `weiss2005' on page 7 undefined on input line 
+247.
+
+
+Package natbib Warning: Citation `weiss2005' on page 7 undefined on input line 
+249.
+
+
+Package natbib Warning: Citation `geisser1958' on page 7 undefined on input lin
+e 249.
+
+
+Package natbib Warning: Citation `huynh1976' on page 7 undefined on input line 
+249.
+
+
+Package natbib Warning: Citation `maxwell2017' on page 7 undefined on input lin
+e 249.
+
+
+Package natbib Warning: Citation `gueorguieva2004' on page 7 undefined on input
+ line 249.
+
+
+Package natbib Warning: Citation `ugrinowitsch2004' on page 7 undefined on inpu
+t line 249.
+
+
+Package natbib Warning: Citation `huynh1976' on page 7 undefined on input line 
+249.
+
+
+Package natbib Warning: Citation `greenhouse1959' on page 7 undefined on input 
+line 249.
+
+
+Package natbib Warning: Citation `haverkamp2017' on page 7 undefined on input l
+ine 249.
+
+
+Package natbib Warning: Citation `keselman2001' on page 7 undefined on input li
+ne 249.
+
+
+Package natbib Warning: Citation `pinheiro2006' on page 7 undefined on input li
+ne 251.
+
+
+Package natbib Warning: Citation `molenberghs2004' on page 7 undefined on input
+ line 256.
+
+
+Package natbib Warning: Citation `weiss2005' on page 7 undefined on input line 
+256.
+
+
+Package natbib Warning: Citation `scheffer2002' on page 7 undefined on input li
+ne 256.
+
+
+Package natbib Warning: Citation `potthoff2006' on page 7 undefined on input li
+ne 256.
+
+[7]
+
+Package natbib Warning: Citation `ma2012' on page 8 undefined on input line 258
+.
+
+
+Package natbib Warning: Citation `west2014' on page 8 undefined on input line 2
+58.
+
+
+LaTeX Warning: Reference `eq:linear-model' on page 8 undefined on input line 26
+3.
+
+
+LaTeX Warning: Reference `eq:LMEM' on page 8 undefined on input line 263.
+
+
+Package natbib Warning: Citation `r' on page 8 undefined on input line 263.
+
+
+Package natbib Warning: Citation `nlme' on page 8 undefined on input line 263.
+
+
+LaTeX Warning: Reference `fig:l-q-response' on page 8 undefined on input line 2
+65.
+
+
+LaTeX Warning: Reference `fig:l-q-response' on page 8 undefined on input line 2
+65.
+
+
+LaTeX Warning: Reference `fig:l-q-response' on page 8 undefined on input line 2
+67.
+
+
+LaTeX Warning: Reference `longitudinal-GAMs' on page 8 undefined on input line 
+269.
+
+[8]
+\openout4 = `Full_document_SIM_rticles_No_Appendix.fff'.
+
+(Full_document_SIM_rticles_No_Appendix.fff)
+
+LaTeX Warning: Reference `fig:l-q-response' on page 9 undefined on input line 2
+82.
+
+
+LaTeX Warning: Reference `fig:l-q-response' on page 9 undefined on input line 2
+82.
+
+
+LaTeX Warning: Reference `fig:l-q-response' on page 9 undefined on input line 2
+82.
+
+
+LaTeX Warning: Reference `fig:l-q-response' on page 9 undefined on input line 2
+84.
+
+
+LaTeX Warning: Reference `fig:l-q-response' on page 9 undefined on input line 2
+84.
+
+
+LaTeX Warning: Reference `eq:linear-model' on page 9 undefined on input line 28
+4.
+
+
+LaTeX Warning: Reference `eq:LMEM' on page 9 undefined on input line 284.
+
+
+LaTeX Warning: Reference `fig:l-q-response' on page 9 undefined on input line 2
+84.
+
+
+LaTeX Warning: Reference `fig:l-q-response' on page 9 undefined on input line 2
+86.
+
+
+LaTeX Warning: Reference `fig:l-q-response' on page 9 undefined on input line 2
+86.
+
+
+LaTeX Warning: Reference `fig:l-q-response' on page 9 undefined on input line 2
+86.
+
+
+LaTeX Warning: Reference `fig:l-q-response' on page 9 undefined on input line 2
+86.
+
+
+Package natbib Warning: Citation `nelder1972' on page 9 undefined on input line
+ 296.
+
+
+Package natbib Warning: Citation `simpson2018' on page 9 undefined on input lin
+e 296.
+
+
+Package natbib Warning: Citation `wood2017' on page 9 undefined on input line 2
+96.
+
+
+Package natbib Warning: Citation `hastie1987' on page 9 undefined on input line
+ 296.
+
+[9]
+
+Package natbib Warning: Citation `beck1998' on page 10 undefined on input line 
+305.
+
+
+Package natbib Warning: Citation `simpson2018' on page 10 undefined on input li
+ne 307.
+
+
+LaTeX Warning: Reference `eq:linear-model' on page 10 undefined on input line 3
+07.
+
+
+Package natbib Warning: Citation `hefley2017' on page 10 undefined on input lin
+e 307.
+
+
+LaTeX Warning: Reference `eq:linear-model' on page 10 undefined on input line 3
+07.
+
+
+LaTeX Warning: Reference `eq:GAM' on page 10 undefined on input line 307.
+
+
+Package natbib Warning: Citation `wood2017' on page 10 undefined on input line 
+309.
+
+
+Package natbib Warning: Citation `simpson2018' on page 10 undefined on input li
+ne 309.
+
+
+Package natbib Warning: Citation `wegman1983' on page 10 undefined on input lin
+e 309.
+
+[10]
+
+LaTeX Warning: Reference `fig:l-q-response' on page 11 undefined on input line 
+311.
+
+
+LaTeX Warning: Reference `fig:basis-plot' on page 11 undefined on input line 31
+1.
+
+
+LaTeX Warning: Reference `fig:basis-plot' on page 11 undefined on input line 31
+1.
+
+
+LaTeX Warning: Reference `fig:basis-plot' on page 11 undefined on input line 31
+1.
+
+
+LaTeX Warning: Reference `fig:basis-plot' on page 11 undefined on input line 31
+3.
+
+
+LaTeX Warning: Reference `fig:basis-plot' on page 11 undefined on input line 31
+3.
+
+
+LaTeX Warning: Reference `fig:basis-plot' on page 11 undefined on input line 31
+3.
+
+
+LaTeX Warning: Reference `fig:basis-plot' on page 11 undefined on input line 31
+3.
+
+
+Package natbib Warning: Citation `mcelreath2018' on page 11 undefined on input 
+line 329.
+
+
+Package natbib Warning: Citation `wood2017' on page 11 undefined on input line 
+329.
+
+
+Package natbib Warning: Citation `miller2019' on page 11 undefined on input lin
+e 329.
+
+
+Package natbib Warning: Citation `laird1982' on page 11 undefined on input line
+ 329.
+
+
+Package natbib Warning: Citation `pedersen2019' on page 11 undefined on input l
+ine 329.
+
+
+Package natbib Warning: Citation `pedersen2019' on page 11 undefined on input l
+ine 329.
+
+
+Package natbib Warning: Citation `wood2017' on page 11 undefined on input line 
+329.
+
+
+Package natbib Warning: Citation `miller2019' on page 11 undefined on input lin
+e 329.
+
+
+Package natbib Warning: Citation `wood2017' on page 11 undefined on input line 
+329.
+
+
+Package natbib Warning: Citation `simpson2018' on page 11 undefined on input li
+ne 329.
+
+
+Package natbib Warning: Citation `marra2012' on page 11 undefined on input line
+ 329.
+
+[11]
+! Undefined control sequence.
+l.334 ...\textsf{R}\) and the package \passthrough
+                                                  {\lstinline!mgcv!}. The co...
+ 
+Here is how much of TeX's memory you used:
+ 19483 strings out of 480477
+ 283239 string characters out of 5897413
+ 587430 words of memory out of 5000000
+ 36813 multiletter control sequences out of 15000+600000
+ 520992 words of font info for 151 fonts, out of 8000000 for 9000
+ 40 hyphenation exceptions out of 8191
+ 75i,10n,80p,1938b,450s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!
