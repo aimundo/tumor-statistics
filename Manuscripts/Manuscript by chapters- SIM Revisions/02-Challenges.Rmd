@@ -66,12 +66,13 @@ In the case of an rm-ANOVA analysis, it is typically assumed that the covariance
 
 In the case of LMEMs, one key advantage over rm-ANOVA is that they allow different structures for the variance-covariance matrix including exponential, autoregressive of order 1, rational quadratic and others [@pinheiro2006]. Nevertheless, the analysis required to determine an appropriate variance-covariance structure for the data can be a challenging process by itself. Overall, the spherical assumption for rm-ANOVA may not capture the natural variations of the correlation in the data, and can bias the inferences from the analysis. 
 
+## Unbalanced data
 
-## Missing observations
+**In a longitudinal study, it is frequently the case that the number of observations is different across all subjects. In biomedical research, this situation can be caused by reasons beyond the control of the investigator (such as dropout from patients in clinical studies and attrition or injury in animals in preclinical research) leading to what is known as "missing", "incomplete" or (more properly speaking) unbalanced data [@molenberghs2004]. The rm-ANOVA model is very restrictive in these situations as it assumes that observations exist for all subjects at every time point; if that is not the case subjects with one or more missing observations are excluded from the analysis. This is inconvenient because the remaining subjects might not accurately represent the population, and statistical power is affected by this reduction in sample size [@ma2012].**
 
-Missing observations are an issue that arises frequently in longitudinal studies. In biomedical research, this situation can be caused by reasons beyond the control of the investigator [@molenberghs2004]. Dropout from patients and attrition or injury in animals are among the reasons for missing observations. Statistically, missing information can be classified as _missing at random_ (MAR), _missing completely at random_ (MCAR), and _missing not at random_ (MNAR) [@weiss2005].  In a MAR scenario, the pattern of the missing information is related to some variable in the data, but it is not related to the variable of interest [@scheffer2002]. If the data are MCAR, this means that the missingness is completely unrelated to the collected information [@potthoff2006], and in the case of MNAR the missing values are dependent on their value. 
+**On the other hand, LMEMs and GAMs can work with missing observations, and inferences from the model are valid when the imbalance in the observations are _missing at random_ (MAR) or _completely missing at random_ (MCAR) [@west2014; @weiss2005]. In a MAR scenario, the pattern of the missing information is related to some variable in the data, but it is not related to the variable of interest [@scheffer2002]. If the data are MCAR, this means that the missingness is completely unrelated to the collected information [@potthoff2006], and in the case of MNAR the missing values are dependent on their value. For example, if attrition occurs in all mice that had lower weights at the beginning of a chemotherapy response study, the missing data can be considered MAR because  the missigness is unrelated to other variables of interest. **
 
-An rm-ANOVA model assumes complete observations for all subjects, and therefore subjects with one or more missing observations are excluded from the analysis. This is inconvenient because the remaining subjects might not accurately represent the population, and statistical power is affected by this reduction in sample size [@ma2012]. In the case of LMEMs, inferences from the model are valid when missing observations in the data exist that are MAR or MCAR [@west2014]. For example, if attrition occurs in all mice that had lower weights at the beginning of a chemotherapy response study, the missing data can be considered MAR because  the missigness is unrelated to other variables of interest.
+**However, it is worth reminding that essentially "all models are wrong" [@box1976] and that the ability of LMEMs and GAMs to work with unbalanced data does not make them immune to problems that can arise due to high rates of missing data, such as sampling bias or a drastic reduction in statistical power. Researchers must ensure that the study design is statistically sound and that measures exist to minimize missing observation rates.**
 
 ## What do an rm-ANOVA and LMEM fit look like? A visual representation using simulated data{#simulation}
 
@@ -234,9 +235,9 @@ plot_example <- function(sim_dat) {
               size=3,
               show.legend=FALSE) +
     theme_classic() +
-    theme(plot.title = element_text(size = 30, 
+    theme(plot.title = element_text(size = 20, 
                                   face = "bold"),
-        text=element_text(size=30))+
+        text=element_text(size=20))+
     thm
   
  
@@ -259,9 +260,9 @@ plot_example <- function(sim_dat) {
     scale_size_manual(name = "Predictions", 
                       values=c("Subjects" = 0.5, "Population" = 3)) +
     theme_classic() +
-    theme(plot.title = element_text(size = 30, 
+    theme(plot.title = element_text(size = 20, 
                                   face = "bold"),
-        text=element_text(size=30))+
+        text=element_text(size=20))+
     thm
   
   
@@ -283,16 +284,15 @@ plot_example <- function(sim_dat) {
     scale_size_manual(name = "Predictions", 
                       values=c("Subjects" = 0.5, "Population" = 3)) +
     theme_classic() +
-    theme(plot.title = element_text(size = 30, 
+    theme(plot.title = element_text(size = 20, 
                                   face = "bold"),
-        text=element_text(size=30))+
+        text=element_text(size=20))+
     thm
   
   return((p1+p2+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
     
 }
 
-txt<-18
 A<-plot_example(example(fun_type = "linear", error_type = "correlated")) 
   
 C<-plot_example(example(fun_type = "quadratic", error_type = "correlated")) 
@@ -302,7 +302,7 @@ C<-plot_example(example(fun_type = "quadratic", error_type = "correlated"))
 
 (ref:l-q-response-caption) Simulated responses from two groups with correlated errors using a LMEM and a rm-ANOVA model. Top row: linear response, bottom row: quadratic response. A: Simulated linear data with known mean response (thin lines) and individual responses (points) showing the dispersion of the data. D: Simulated quadratic data with known mean response (thin lines) and individual responses (points) showing the dispersion of the data. B,E: Estimates from the rm-ANOVA model for the mean group response (linear of quadratic). Points represent the original raw data. The rm-ANOVA model not only fails to pick the trend of the quadratic data (D) but also assigns a global estimate that does not take between-subject variation. C, F: Estimates from the LMEM in the linear and quadratic case. The LMEM incorporates a random effect for each subject, but this model and the rm-ANOVA model are unable to follow the trend of the data and grossly bias the initial estimates for each group in the quadratic case (bottom row).
 
-```{r, l-q-response, fig.width=12, fig.height=10, out.width='75%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap ='(ref:l-q-response-caption)'}
+```{r, l-q-response, fig.width=12, fig.height=7, out.width='100%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap ='(ref:l-q-response-caption)'}
 # linear response, correlated errors (subject effect)
 #par(mar = c(0.5, 0.5, 0.5, 0.5))
 A/C+plot_annotation(tag_levels = 'A')
