@@ -1,0 +1,83 @@
+---
+title: |
+    | **Generalized additive models to analyze biomedical non-linear longitudinal data in R:**
+    | Beyond repeated measures ANOVA and Linear Mixed Models
+    | 
+    | Response to reviewers
+header-includes:
+    \usepackage{placeins}
+output:  
+  bookdown::pdf_document2:
+    #template: my-template.tex #if a custom template that removes the additional "and" in the author information is desired
+    pandoc_args: --listings #calls the listings package to fit code within the page margins
+    keep_tex: yes #keep LaTeX file for submission
+    fig_caption: yes #allows captions in figures
+    toc: false #do not include table of contents
+    extra_dependencies:
+      subfig: null #allows for subfigures
+      breqn: null #line breaks for long equations
+      caption: ["font={small}"] #size of the figure captions
+      #float: null #allows for control of placement of figures
+    includes:
+      in_header: latex_docs/preamble_Appendix.sty #additional LaTeX formatting
+  bookdown::word_document2:
+    fig_caption: yes #figure caption
+    keep_md: yes
+  bookdown::html_document2:
+    css: "style.css" #style for the HTML document
+csl: elsevier-with-titles.csl #style for references
+bibliography: refs.bib #references
+link-citations: yes #adds links to the citations
+'': default
+---
+
+# General Comments
+
+
+# Comments from reviewers
+## Missing data
+
+The title for Section 3.4 has been changed from "Missing observations" to "Unbalanced data". We have restructured this section in order to:
+
+- Avoid confusion by using the term "missing data". We now refer to different number of observations as "unbalanced data" (L201-204).
+
+- Make clear that LMEMs also can work with missing observations (L209)
+
+- Emphasize that GAMs are not immune to missing data problems (L217-220)
+
+
+## Unnecesary restriction of LMMs
+
+
+## GLMMs
+
+
+## GLMs, GAMs, and conditional distributions
+
+## Thin plate regression splines
+
+The following changes have been made:
+
+- L297-300 no longer refer to "knots" when referring to the construction of the smooth, now indicating that the number of _basis functions_ is what is specified when working with thin plate regression splines (TPRS), in the updated manuscript this appears in L310-315.
+
+
+## Penalised splines
+
+## Bayesian
+
+
+
+
+## Coverage of confidence intervals
+
+
+## Differences in smooths
+
+
+## Appendix
+
+
+
+
+
+
