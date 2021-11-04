@@ -25,8 +25,8 @@ output:
     keep_md: yes
   bookdown::html_document2:
     css: "style.css" #style for the HTML document
-csl: elsevier-with-titles.csl #style for references
-bibliography: refs.bib #references
+#csl: elsevier-with-titles.csl #style for references
+#bibliography: refs.bib #references
 link-citations: yes #adds links to the citations
 '': default
 ---
@@ -58,18 +58,25 @@ The title for Section 3.4 has been changed from "Missing observations" to "Unbal
 
 The following changes have been made:
 
-- L297-300 no longer refer to "knots" when referring to the construction of the smooth, now indicating that the number of _basis functions_ is what is specified when working with thin plate regression splines (TPRS), in the updated manuscript this appears in L310-315.
+- The information on L289-294 pertaining splines has been changed. L296-307 now give a better description of cubic splines (CS), indicating their limitation due to knot placement. The lack of knot placement for thin plate regression splines (TPRS) is indicated as an advantage over CS. 
+
+- L297-300 no longer refer to "knots" when referring to the construction of the smooth, now indicating that the number of _basis functions_ is what is specified when working with TPRS. In the updated manuscript this appears in L310-315.
 
 
 ## Penalised splines
 
 ## Bayesian
 
+- We have clarified the concept "empirical Bayesian", which appeared on L318-L319 in the original manuscript. In the revised manuscript, L335-336 now indicate that Stan, JAGS or other probabilistic programming language can be used to estimate GAMs using a full Bayesian approach.
 
+- The sentence "Moreover, the use of the restricted maximum likelihood (REML) to estimate the smoothing parameters gives an empirical estimate of the smooth model", which appears in L319 in the original manuscript has been removed from the text. Instead, the concept of REML has been moved to Section 6.2 L390-393, where we state some of the reasons indicated by Wood when choosing restricted maximum likelihood (REML) over the default general cross validation (GCV) method for smooth parameter estimation in _mgcv_. 
 
 
 ## Coverage of confidence intervals
 
+The content in L320-329 regarding confidence intervals (CIs) in the original submission has been changed in the following manner:
+
+- L339-L352 now contain a more detailed and accurate explanation on the differences and interpretation of "pointwise" CIs and "across-the-function" CIs. We also reference the work of Marra and Wood if the reader desires a more in-depth exploration.
 
 ## Differences in smooths
 
