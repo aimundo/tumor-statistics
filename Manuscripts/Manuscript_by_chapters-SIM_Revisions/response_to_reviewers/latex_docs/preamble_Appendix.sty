@@ -2,17 +2,17 @@
 \usepackage[affil-it,blocks]{authblk}
 \usepackage{hyperref}
 \usepackage{graphicx}
-%\usepackage[nomarkers,figuresonly]{endfloat}
+\usepackage[nomarkers,figuresonly]{endfloat}
 %set a box to put the ORCID logo
-\newbox{\myorcidaffilbox}
-\sbox{\myorcidaffilbox}{\large\includegraphics[height=1.7ex]{latex_docs/orcid}}
+%\newbox{\myorcidaffilbox}
+%\sbox{\myorcidaffilbox}{\large\includegraphics[height=1.7ex]{latex_docs/orcid}}
 
 %add hyperlink to the box
-\newcommand{\orcidaffila}[1]{%
-  \href{https://orcid.org/0000-0002-6014-4538}{\usebox{\myorcidaffilbox}}}
+%\newcommand{\orcidaffila}[1]{%
+%  \href{https://orcid.org/0000-0002-6014-4538}{\usebox{\myorcidaffilbox}}}
 
-\newcommand{\orcidaffilb}[1]{%
-  \href{https://orcid.org/0000-0002-6135-8191}{\usebox{\myorcidaffilbox}}}
+%\newcommand{\orcidaffilb}[1]{%
+%  \href{https://orcid.org/0000-0002-6135-8191}{\usebox{\myorcidaffilbox}}}
 
 
 %to have page numbers with letters in the Appendix:
@@ -27,11 +27,7 @@
 %\linenumbers
 
 %authors
-\author{Ariel I. Mundo \orcidaffila{}}
-\affil{Department of Biomedical Engineering, University of Arkansas, Fayetteville, AR, USA}
-\author{John R. Tipton \orcidaffilb{}}
-\affil{Department of Mathematical Sciences, University of Arkansas, Fayetteville, AR, USA}
-\author{Timothy J. Muldoon*}
+\author{Corresponding author: Timothy J. Muldoon*}
 \affil{Department of Biomedical Engineering, University of Arkansas, Fayetteville, AR, USA}
 \affil{tmuldoon@uark.edu}
 
@@ -39,6 +35,7 @@
 %theme colors for the code chunks (originally from latex-solarized on GitHub)
 %https://github.com/jez/latex-solarized
 \usepackage{xcolor}
+\definecolor{reviewersblue}{HTML}{1A30AD}
 \definecolor{sbase03}{HTML}{002B36}
 \definecolor{sbase02}{HTML}{073642}
 \definecolor{sbase01}{HTML}{586E75}
