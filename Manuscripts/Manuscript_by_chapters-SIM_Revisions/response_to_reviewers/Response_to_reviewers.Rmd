@@ -77,7 +77,7 @@ Why not use quadratic effects of time in the LMM? I appreciate this would make t
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-We appreciate the reviewer's perspective regarding the somewhat contradictory argument of fitting a linear effects LMM to quadratic data. However, this is an intentional mistake because we follow the Statistical analysis logic followed by most Biomedical researchers: Fit a LMM, and if you get significant p-values that's good enough. We are trying to convey the point that although "significant" p-values can be obtained, visualizing the model fit is something that should be required, but that is seldomly done. **Incorporate in the section that a strenght of GAMs is that they can learn the function from the data, while LMMs can't.**
+We appreciate the reviewer's perspective regarding the somewhat contradictory argument of fitting a linear effects LMM to quadratic data. However, this is an intentional approach because we follow the statistical analysis logic followed by most biomedical researchers: Fit a LMM or an rm-ANOVA, and if you get significant _p-values_ that's good enough. The purpose of the figure is to convey the point that visualizing the model fit is something necessary, but that is rarely done in the field. **Incorporate in the section that a strenght of GAMs is that they can learn the function from the data, while LMMs can't.**
 
 # GLMMs
 

@@ -3,9 +3,9 @@
 
 ## The repeated measures ANOVA and Linear Mixed Model
 
-The _repeated measures analysis of variance_ (rm-ANOVA) and the _linear mixed model_ (LMEM) are the most commonly used statistical analysis for longitudinal data in biomedical research. These statistical methodologies require certain assumptions for the model to be valid. From a practical view, the assumptions can be divided in three areas: 1) linear relationship between covariates and response, 2) a constant correlation between measurements, and, 3) complete observations for all subjects. Each one of these assumptions is discussed below.
+The _repeated measures analysis of variance_ (rm-ANOVA) and the _linear mixed model_ (LMEM) are the most commonly used statistical analysis for longitudinal data in biomedical research. These statistical methodologies require certain assumptions for the model to be valid. From a practical view, the assumptions can be divided in three areas: 1) an assumed relationship between covariates and response, 2) a constant correlation between measurements, and, 3) complete observations for all subjects. Each one of these assumptions is discussed below.
   
-## Linear relationship 
+## Assumed relationship
 
 ### The repeated measures ANOVA case
 
@@ -43,7 +43,7 @@ y_{ijt} = \begin{cases}
 
 Presenting the model in this manner makes clear that when treating different groups, an rm-ANOVA model is able to accommodate non-parallel lines in each case (different intercepts and slopes per group). In other words, the rm-ANOVA model "expects" a linear relationship between the covariates and the response, this means that either presented as Equation \@ref(eq:linear-model), Equation \@ref(eq:ANOVA-by-group) or Equation \@ref(eq:ANOVA-lines), an rm-ANOVA model is only able to accommodate linear patterns in the data. If the data show non-linear behavior, the rm-ANOVA model will approximate this behavior with non-parallel lines. 
 
-### The Linear Mixed Model Case (LMEM)
+### The Linear Mixed Model (LMEM) Case 
 
 A LMEM is a class of statistical models that incorporates _fixed effects_ to model the relationship between the covariates and the response, and _random effects_ to model subject variability that is not the primary focus of the study but that might be important to distinguish [@pinheiro2006;@west2014]. A LMEM with interaction between time and treatment for a longitudinal study  can be written as:
 
@@ -55,7 +55,9 @@ y_{ijt} = \beta_0+ \beta_1 \times time_{t} + \beta_2 \times treatment_{j} + \bet
 
 When Equation \@ref(eq:linear-model) and Equation \@ref(eq:LMEM) are compared, it is easily noticeable that LMEMs and rm-ANOVA have the same construction regarding the _fixed effects_ of time and treatment, but that the LMEM incorporates an additional source of variation (the term $\mu_{ij}$). This term $\mu_{ij}$ is the one that corresponds to the  _random effect_, accounting for variability in each subject (subject$_i$) within each group (group$_j$). The _random_ component can also be understood as used to model some "noise" in the response, but that is intended to be analyzed and disentangled from the "global noise" term $\varepsilon_{ijt}$ from Equation \@ref(eq:linear-model). 
 
-For example, if the blood concentration of a drug is measured in certain subjects in the early hours of the morning while other subjects are measured in the afternoon, it is possible that the difference in the collection time introduces some "noise" in the data. As the name suggests, this "random" variability needs to be modeled as a variable rather than as a constant value.  The _random effect_ $\mu_{ij}$ in Equation \@ref(eq:LMEM) is assumed to be $\mu_{ij} \sim N(0,\sigma^2_\mu)$. In essence, the _random effect_ in a LMEM enables to fit models with different slopes at the subject-level[@pinheiro2006]. However, the expected linear relationship of the covariates and the response in Equation \@ref(eq:linear-model) and in Equation \@ref(eq:LMEM) is essentially the same, representing a major limitation of LMEMs to fit a non-linear response.
+For example, if the blood concentration of a drug is measured in certain subjects in the early hours of the morning while other subjects are measured in the afternoon, it is possible that the difference in the collection time introduces some "noise" in the data. As the name suggests, this "random" variability needs to be modeled as a variable rather than as a constant value.  The _random effect_ $\mu_{ij}$ in Equation \@ref(eq:LMEM) is assumed to be $\mu_{ij} \sim N(0,\sigma^2_\mu)$. In essence, the _random effect_ in a LMEM enables to fit models with different slopes at the subject-level[@pinheiro2006]. However, the expected linear relationship of the covariates and the response in Equation \@ref(eq:linear-model) and in Equation \@ref(eq:LMEM) is essentially the same, representing a major limitation of LMEMs to fit a non-linear response. 
+
+Of notice, LMEMs are capable of fitting non-linear trends using an "empirical" approach, which is described in detail by Pinheiro and Bates [@pinheiro2006] using polynomial fixed effects instead of linear effects such as in Equation \@ref(eq:LMEM). However, polynomial fits have limited predictive power and cause bias on the boundaries of the covariates [@beck1998]; more importantly, polynomial effects lack biological or mechanistic interpretation [@pinheiro2006] which limits their use in biomedical studies.
 
 ## Covariance in rm-ANOVA and LMEMs
 
@@ -82,7 +84,7 @@ Briefly, two cases for the mean responses for each group are considered: in the 
 
 Specifically, the rationale for the chosen linear and quadratic functions is the expectation that a measured response in two treatment groups is similar in the initial phase of the study, but as therapy progresses a divergence in the trend of the response indicates a treatment effect. In other words, Group 1 can be thought as a "Control" group and Group 2 as a "Treatment" group. From the mean response per group (linear or quadratic), the variability or "error" of individual responses  within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \@ref(fig:l-q-response) B,D). 
 
-A more comprehensive exploration  of the fit of rm-ANOVA and LMEMs for linear and non-linear longitudinal data appears in the Appendix (Figure A.1 and Figure A.2), where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented. We are aware that the simulated data used in this section present an extreme case that might not occur frequently in biomedical research, but they are used as a representation of the consequences of modeling non-linear data with a linear model such as rm-ANOVA or LMEMs. Of notice, in Section \@ref(longitudinal-GAMs) we use simulated data that does follow reported trends in the biomedical literature to implement GAMs.
+A more comprehensive exploration  of the fit of rm-ANOVA and LMEMs for linear and non-linear longitudinal data appears in the Appendix (Figure A.1 and Figure A.2), where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented. We are aware that the simulated data used in this section present an extreme case that might not occur frequently in biomedical research, but they are used to 1) present the consequences of modeling non-linear data with a linear model such as rm-ANOVA or a LMEM with "default" (linear) effects and, 2) demonstrate that, a visual assessment of model fit is an important tool that helps determine the validity of any statistical assumptions. Of notice, in Section \@ref(longitudinal-GAMs) we use simulated data that does follow reported trends in the biomedical literature to implement GAMs.
 
 
 
