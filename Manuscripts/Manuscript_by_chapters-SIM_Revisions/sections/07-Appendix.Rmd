@@ -295,7 +295,7 @@ For the quadratic response case, Figure \@ref(fig:quadratic-cases-Appendix) show
 (ref:quadratic-caption-appendix) Simulated quadratic responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are not able to capture the changes in each group over time.
 
 
-```{r, quadratic-cases-Appendix, fig.width=14, fig.height=10, out.width='75%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:quadratic-caption-appendix)'}
+```{r, quadratic-cases-Appendix, fig.width=12, fig.height=7, out.width='100%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:quadratic-caption-appendix)'}
 # linear response, correlated errors (subject effect)
 C1/D1+plot_annotation(tag_levels = 'A')
 ```
