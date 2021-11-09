@@ -1,0 +1,10 @@
+GLM
+
+Need the two first equations and this one
+
+$\eta_{ijt}=\beta_0+\beta_1x_{ijt}$ This is the GLM
+
+
+GLMMs
+
+$\eta_{ijt}=\beta_0+\beta_1x_{ijt}+\mu_{ij}$ GLMM

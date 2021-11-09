@@ -1,9 +1,34 @@
+# The contemporary statistical landscape
+
+We consider that a proper understanding of GAMs would be incomplete without a brief survey of contemporary statistical models. Particularly because it seems to be a disconnect between biomedical research and the current state of Statistics. Today, the Statistical landscape has changed drastically and yet, biomedical research at large continues to be confined to a 't-test', 'ANOVA' mentality. The shortcomings that such view produces cannot be properly addressed without a brief mention of statistical methods.
+
+In contemporary Statistics, 
+
+## Generalized linear models (GLM)
+
+
+
+Need the two first equations 
+
+$$y_{ijt} \sim \mathcal{D}(\mu_{ijt},\phi)$$
+
+$$E(y_{ijt})=\mu_{ijt}=g^{-1}(\eta_{ijt})$$
+
+and this one
+
+$\eta_{ijt}=\beta_0+\beta_1x_{ijt}$ This is the GLM
+
+
+## Generalized linear mixed models (GLMMs)
+
+$\eta_{ijt}=\beta_0+\beta_1x_{ijt}+\mu_{ij}$ GLMM
+
 
 # Challenges presented by longitudinal studies
 
 ## The repeated measures ANOVA and Linear Mixed Model
 
-The _repeated measures analysis of variance_ (rm-ANOVA) and the _linear mixed model_ (LMEM) are the most commonly used statistical analysis for longitudinal data in biomedical research. These statistical methodologies require certain assumptions for the model to be valid. From a practical view, the assumptions can be divided in three areas: 1) an assumed relationship between covariates and response, 2) a constant correlation between measurements, and, 3) complete observations for all subjects. Each one of these assumptions is discussed below.
+The _repeated measures analysis of variance_ (rm-ANOVA) and the _linear mixed model_ (LMEM) are the most commonly used statistical analysis for longitudinal data in biomedical research. These statistical methodologies require certain assumptions for the model to be valid. From a practical view, the assumptions can be divided in three areas: 1) an assumed relationship between covariates and response, 2) a constant correlation between measurements, and, 3) complete observations for all subjects. Each one of these assumptions is discussed below. 
   
 ## Assumed relationship
 
