@@ -45,7 +45,7 @@ f1<-ggplot(dat,
   labs(y=expression(paste(StO[2],
                           ' (real)')))+
   theme_classic()+
-  thm+
+  thm1+
     scale_x_continuous(breaks=c(0,5,10))+
     scale_y_continuous(breaks=c(0,40))+
   plot_layout(tag_level = 'new')+
@@ -82,17 +82,18 @@ df <- 6
 dat_sim <- simulate_data(dat, n, sd)
 
 #plotting simulated data
-f2<-ggplot(dat_sim, aes(x = Day, y = StO2_sim, color = Group)) +
-    geom_point(show.legend=FALSE,size=1.5,alpha=0.5)+
-    stat_summary(aes(y = StO2_sim,
-                     group=Group), 
-                 fun=mean, geom="line",size=1,show.legend = FALSE)+
+f2<-ggplot(dat_sim, aes(x = Day, y = StO2_sim, color = Group, group=subject)) +
+    geom_point(show.legend=FALSE,size=1.5,alpha=0.6)+
+    geom_line(size=1.1, alpha=0.6)+
+    # stat_summary(aes(y = StO2_sim,
+    #                  group=Group), 
+    #              fun=mean, geom="line",size=1,show.legend = FALSE)+
   labs(y=expression(atop(StO[2],'(simulated)')))+
   theme_classic()+
   theme(
     axis.text=element_text(size=22)
   )+
-  thm+
+  thm1+
     scale_x_continuous(breaks=c(0,2,5,7,10))
   
 
@@ -158,7 +159,6 @@ f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      thm+
   thm1
  
 #plot linear fit for rm-ANOVA
@@ -181,7 +181,6 @@ f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-  thm+
   thm1
 
 
@@ -249,7 +248,6 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-  thm+
   thm1
 
 
@@ -272,7 +270,7 @@ mult_plot<-f2+inset_element(
   theme(
      text=element_text(size=18)
      )&
-  thm
+  thm1
 
 mult_plot
 

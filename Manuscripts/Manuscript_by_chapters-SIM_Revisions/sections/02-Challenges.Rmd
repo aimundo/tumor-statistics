@@ -240,7 +240,7 @@ plot_example <- function(sim_dat) {
     theme(plot.title = element_text(size = 20, 
                                   face = "bold"),
         text=element_text(size=20))+
-    thm
+    thm1
   
  
    #plot the model predictions for rm-ANOVA
@@ -265,7 +265,7 @@ plot_example <- function(sim_dat) {
     theme(plot.title = element_text(size = 20, 
                                   face = "bold"),
         text=element_text(size=20))+
-    thm
+    thm1
   
   
    #plot the model predictions for LMEM
@@ -289,7 +289,7 @@ plot_example <- function(sim_dat) {
     theme(plot.title = element_text(size = 20, 
                                   face = "bold"),
         text=element_text(size=20))+
-    thm
+    thm1
   
   return((p1+p2+p4)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
     

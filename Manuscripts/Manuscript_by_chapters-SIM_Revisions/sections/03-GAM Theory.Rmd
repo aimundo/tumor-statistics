@@ -135,7 +135,7 @@ p11<-ggplot(basis_plot,
              labeller = as_labeller(basis_names)
              )+
   theme_classic()+
-  thm
+  thm1
   
 
 #penalized basis
@@ -155,7 +155,7 @@ p12<-ggplot(basis_plot,
              labeller=as_labeller(basis_names)
              )+
   theme_classic()+
-  thm
+  thm1
 
 #heatmap of the  coefficients
 x_labels<-c("Intercept","1","2","3","4")
