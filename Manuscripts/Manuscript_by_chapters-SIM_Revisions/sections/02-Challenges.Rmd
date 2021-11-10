@@ -1,6 +1,6 @@
 # The contemporary statistical landscape
 
-We consider that a proper understanding of GAMs would be incomplete without a brief survey of contemporary statistical models. Particularly because it seems to be a disconnect between biomedical research and the current state of Statistics. Today, the Statistical landscape has changed drastically and yet, biomedical research at large continues to be confined to a 't-test', 'ANOVA' mentality. The shortcomings that such view produces cannot be properly addressed without a brief mention of statistical methods.
+A proper understanding of GAMs would be incomplete without a brief mention of the current state in statistical models. The advances over the last two decades in computational power and the theoretical framework for statistical models have significantly altered what was once considered "standard" statistical knowledge. Today, the analysis of variance (ANOVA) is considered a model in the class of linear models (LM), where the response is described by fixed effects only. Linear mixed models (LMMs) are models where fixed and random effects are combined. Generalized linear models (GLMs) are those that have fixed effects but where the distribution of the response is not Gaussian. And Generalized Linear Mixed models (GLMMs) are a broader category of models where the distribution can be non-Gaussian, and can have fixed and random effects. 
 
 In contemporary Statistics, 
 
