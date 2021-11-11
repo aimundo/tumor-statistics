@@ -1,23 +1,42 @@
 # The contemporary statistical landscape
 
-A proper understanding of GAMs would be incomplete without a brief mention of the current state in statistical models. The advances over the last two decades in computational power and the theoretical framework for statistical models have significantly altered what was once considered "standard" statistical knowledge. Today, the analysis of variance (ANOVA) is considered a model in the class of linear models (LM), where the response is described by fixed effects only. Linear mixed models (LMMs) are models where fixed and random effects are combined. Generalized linear models (GLMs) are those that have fixed effects but where the distribution of the response is not Gaussian. And Generalized Linear Mixed models (GLMMs) are a broader category of models where the distribution can be non-Gaussian, and can have fixed and random effects. 
+Although the limitations of rm-ANOVA and LMEMs to analyze non-linear trends in longitudinal data have been presented in a general way in the previous section, a proper understanding of the matter would be incomplete without a brief description of the current accepted knowledge regarding statistical models. The advances over the last two decades in computational power and the theoretical framework for statistical models have significantly changed the hierarchy of statistical models. Because the topic itself is far outside of the scope of this work
+
+## Linear Models (LMs) and Linear Mixed Models (LMEMs)
+
+Linear models (LMs) are those that assume a normal (Gaussian) distribution, such as ANOVA. These are by far the models most commonly used to analyze data within the biomedical research community, and only incorporate _fixed effects_. On the other hand, Linear Mixed Effect Models (LMEMs) are those that still assume normality but also incorporate _random effects_, as it has been described before. 
+
+## Generalized Linear Models (GLMs)
+
+A major limitation of LMs is their assumption of normalit, and although it can be forced by the use of a transformation, this procedure can lead to poor model performance [@ohara2010], and can cause problems with the biological interpretation of the model estimates. McCullagh and Nelder [@nelder1972] defined General Linear Models (GLMs) as an extension of LMs, where the data does not need to be normally distributed. To achieve this, consider the following equations:
+
+\begin{equation}
+y_{ijt} \sim \mathcal{D}(\mu_{ijt},\phi)
+(\#eq:GLM-y)
+\end{equation}
+
+Where $y_{ijt}$ is the observed response, which is assumed to follow some distribution $\mathcal{D}$ with some mean $\mu_{ijt}$ and a dispersion parameter $\phi$. The mean $\mu_{ijt}$ is also known as the _expected value_ ($E$) of the observed response.
+
+
+\begin{equation}
+E(y_{ijt})=\mu_{ijt}=g^{-1}(\eta_{ijt})
+(\#eq:GLM-Expectation)
 
 In contemporary Statistics, 
 
-## Generalized linear models (GLM)
+
 
 
 
 Need the two first equations 
 
-$$y_{ijt} \sim \mathcal{D}(\mu_{ijt},\phi)$$
-
-$$E(y_{ijt})=\mu_{ijt}=g^{-1}(\eta_{ijt})$$
 
 and this one
 
-$\eta_{ijt}=\beta_0+\beta_1x_{ijt}$ This is the GLM
-
+\begin{equation}
+$\eta_{ijt}=\beta_0+\beta_1x_{ijt}$ 
+(\#eq:GLM-eta)
+\end{equation}
 
 ## Generalized linear mixed models (GLMMs)
 
