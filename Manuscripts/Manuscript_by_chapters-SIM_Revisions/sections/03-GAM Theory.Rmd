@@ -1,3 +1,56 @@
+# Linear Models, and beyond
+
+Although the limitations of rm-ANOVA and LMEMs to analyze non-linear trends in longitudinal data have been presented in the previous section, it is important to understand current state of statistical models to properly introduce GAMs. This is important because otherwise, the advances in statistical models over the last 30 years can be overlooked their limitations cannot be properly contextualized.
+
+## Linear Models (LMs) and Linear Mixed Models (LMEMs)
+
+Linear models (LMs) are those that assume a normal (Gaussian) distribution of the response, such as rm-ANOVA. These are by far the models most commonly used to analyze data within the biomedical research community, and only incorporate _fixed effects_. On the other hand, Linear Mixed Effect Models (LMEMs) are those that assume a normally-distributed response but also incorporate _random effects_, as it has been described before in Section \@ref(LMEM-case).
+
+In matrix notation, a LM has the general form:
+
+\begin{equation}
+$\textbf{y} = \textbf{X} \boldsymbol{\beta}$
+(\#eq:LM-matrix)
+\end{equation}
+
+Where $\textbf{y}$ a vector of observations, $\textbf{X}$ is a matrix that contains the measured values of the covariates, and $\boldsymbol{\beta}$ is a vector of the parameters to be estimated. The "model equation" form of Equation \@ref(eq:LM-matrix) for a rm-ANOVA model of two treatment groups corresponds to Equation \@ref(eq:linear-model). **do we need to take out the error term from anova? confounding lit about this. Dobson (p.89 has an error term in the normal linear model, but McCullagh, McCulloch and Stroup don't. Or better word that the errors come from the conditional distribution?** 
+
+## Generalized Linear Models (GLMs)
+
+A major limitation of LMs is their assumption of normality, making data transformation necessary if it is non-normal. However, this procedure can lead to poor model performance [@ohara2010], and can cause problems with the biological interpretation of the model estimates. McCullagh and Nelder [@nelder1972] defined General Linear Models (GLMs) as an extension of LMs, where the data does not need to be normally distributed. To achieve this, consider the following:
+
+\begin{equation}
+$y_{ijt} \sim \mathcal{D}(\mu_{ijt},\phi)$
+(\#eq:GLM-y)
+\end{equation}
+
+Where $y_{ijt}$ is the observation $i$ in group $j$ at time $t$, which is assumed to come randomly from some distribution of the exponential family $\mathcal{D}$, with some mean $\mu_{ijt}$ and a dispersion parameter $\phi$ (which in the Gaussian case is the variance $\sigma^{2}$). The mean $\mu_{ijt}$ is also known as the _expected value_ (also called _expectation_) ($E$) of the observed response. Then, the _linear predictor_ $\eta$, which defines the relationship between the mean and the covariates can be defined as
+
+\begin{equation}
+$\eta_{ijt}=\beta_0+\beta_1x_{ijt}$ 
+(\#eq:GLM-eta)
+\end{equation}
+
+Where $\eta_{ijt}$ is the linear predictor for each observation. Both $\beta_0$ (the intercept), and $\beta_1$ are the model parameters; and $x_{ijt}$ represents the covariates from each group at each time point.
+
+Finally, 
+
+\begin{equation}
+$E(y_{ijt})=\mu_{ijt}=g^{-1}(\eta_{ijt})$
+(\#eq:GLM-Expectation)
+\end{equation}
+Where $E(y_{ijt})$ is the expectation, $g^-{1}$ is the inverse of the _link function_, which relates the parameters of the distribution to the linear combination of the  predictors in Equation \@ref(eq:GLM-eta). This shows that LMs (such as rm-ANOVA) are a special case of GLMs.
+
+## Generalized linear mixed models (GLMMs)
+
+Although GLMs relax the normality assumption, they only accomodate fixed effects. Generalized Linear Mixed Models (GLMMs) are an extension of GLMs that incorporate _random effects_, which have an associated probability distribution. Therefore, in GLMMs the _linear predictor_ takes the form
+
+\begin{equation}
+$\eta_{ijt}=\beta_0+\beta_1x_{ijt}+\mu_{ij}$
+(\#eq:GLMM-eta)
+\end{equation}
+
+Where 
 # GAMs as a special case of Generalized Linear Models{#GAM-theory}
 
 ## GAMs and Basis Functions
