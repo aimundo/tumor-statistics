@@ -1,61 +1,63 @@
 # Linear Models, and beyond
 
-Although the limitations of rm-ANOVA and LMEMs to analyze non-linear trends in longitudinal data have been presented in the previous section, it is important to understand current state of statistical models to properly introduce GAMs. This is important because otherwise, the advances in statistical models over the last 30 years can be overlooked their limitations cannot be properly contextualized.
+In reality, rm-ANOVA and LMEMs are just _special cases_ of broader model classes (General Linear Models and Generalized Linear Mixed Models, respectively). Understanding this is critical to fully capture the constraints of such models and to understand how GAMs overcome those limitations. This section will briefly present the different Statistical model classes, indicate how rm-ANOVA and LMEMs fit within that framework and introduce the theory of GAMs.
+
 
 ## Linear Models (LMs) and Linear Mixed Models (LMEMs)
 
-Linear models (LMs) are those that assume a normal (Gaussian) distribution of the response, such as rm-ANOVA. These are by far the models most commonly used to analyze data within the biomedical research community, and only incorporate _fixed effects_. On the other hand, Linear Mixed Effect Models (LMEMs) are those that assume a normally-distributed response but also incorporate _random effects_, as it has been described before in Section \@ref(LMEM-case).
+Linear models (LMs) are those that assume a normal (Gaussian) distribution of the response, such as rm-ANOVA. These are by far the models most commonly used to analyze data within the biomedical research community, and only incorporate _fixed effects_. On the other hand, Linear Mixed Effect Models (LMEMs) are those that assume a normally-distributed response but also incorporate _random effects_, as it has been described in Section \@ref(LMEM-case).
 
 In matrix notation, a LM has the general form:
 
 \begin{equation}
-$\textbf{y} = \textbf{X} \boldsymbol{\beta}$
+\textbf{y} = \textbf{X} \boldsymbol{\beta}
 (\#eq:LM-matrix)
 \end{equation}
 
-Where $\textbf{y}$ a vector of observations, $\textbf{X}$ is a matrix that contains the measured values of the covariates, and $\boldsymbol{\beta}$ is a vector of the parameters to be estimated. The "model equation" form of Equation \@ref(eq:LM-matrix) for a rm-ANOVA model of two treatment groups corresponds to Equation \@ref(eq:linear-model). **do we need to take out the error term from anova? confounding lit about this. Dobson (p.89 has an error term in the normal linear model, but McCullagh, McCulloch and Stroup don't. Or better word that the errors come from the conditional distribution?** 
+Where $\textbf{y}$ a vector of observations, $\textbf{X}$ is a matrix that contains the measured values of the covariates, and $\boldsymbol{\beta}$ is a vector of the parameters to be estimated. The "model equation" form of Equation \@ref(eq:LM-matrix) for a rm-ANOVA model of two treatment groups corresponds to Equation \@ref(eq:linear-model). It is important to remember that the error term $\varepsilon_{ijt}$ in Equation \@ref(eq:linear-model) is due to random sampling from the normal distribution.
 
 ## Generalized Linear Models (GLMs)
 
-A major limitation of LMs is their assumption of normality, making data transformation necessary if it is non-normal. However, this procedure can lead to poor model performance [@ohara2010], and can cause problems with the biological interpretation of the model estimates. McCullagh and Nelder [@nelder1972] defined General Linear Models (GLMs) as an extension of LMs, where the data does not need to be normally distributed. To achieve this, consider the following:
+A major limitation of LMs is their assumption of normality. If the data is non-normal, a transformation is necessary in order to properly fit the model. However, transformation lead to poor model performance [@ohara2010], and can cause problems with the biological interpretation of the model estimates. McCullagh and Nelder [@nelder1972] defined General Linear Models (GLMs) as an extension of LMs, where the data does not need to be normally distributed. To achieve this, consider the following:
 
 \begin{equation}
-$y_{ijt} \sim \mathcal{D}(\mu_{ijt},\phi)$
+y_{ijt} \sim \mathcal{D}(\mu_{ijt},\phi)
 (\#eq:GLM-y)
 \end{equation}
 
 Where $y_{ijt}$ is the observation $i$ in group $j$ at time $t$, which is assumed to come randomly from some distribution of the exponential family $\mathcal{D}$, with some mean $\mu_{ijt}$ and a dispersion parameter $\phi$ (which in the Gaussian case is the variance $\sigma^{2}$). The mean $\mu_{ijt}$ is also known as the _expected value_ (also called _expectation_) ($E$) of the observed response. Then, the _linear predictor_ $\eta$, which defines the relationship between the mean and the covariates can be defined as
 
 \begin{equation}
-$\eta_{ijt}=\beta_0+\beta_1x_{ijt}$ 
+\eta_{ijt}=\beta_0+\beta_{j}x_{ijt}
 (\#eq:GLM-eta)
 \end{equation}
 
-Where $\eta_{ijt}$ is the linear predictor for each observation. Both $\beta_0$ (the intercept), and $\beta_1$ are the model parameters; and $x_{ijt}$ represents the covariates from each group at each time point.
+Where $\eta_{ijt}$ is the linear predictor for each observation, $\beta_0$ is the intercept, and $\beta_{j}$ is the model parameter for each group; and $x_{ijt}$ represents the covariates from each group at each time point.
 
 Finally, 
 
 \begin{equation}
-$E(y_{ijt})=\mu_{ijt}=g^{-1}(\eta_{ijt})$
+E(y_{ijt})=\mu_{ijt}=g^{-1}(\eta_{ijt})
 (\#eq:GLM-Expectation)
 \end{equation}
-Where $E(y_{ijt})$ is the expectation, $g^-{1}$ is the inverse of the _link function_, which relates the parameters of the distribution to the linear combination of the  predictors in Equation \@ref(eq:GLM-eta). This shows that LMs (such as rm-ANOVA) are a special case of GLMs.
+Where $E(y_{ijt})$ is the expectation, $g^-{1}$ is the inverse of the _link function_, which relates the parameters of the distribution to the linear combination of the  predictors in Equation \@ref(eq:GLM-eta). Therefore, LMs (such as rm-ANOVA) are a special case of GLMs where the response is normally distributed.
 
 ## Generalized linear mixed models (GLMMs)
 
-Although GLMs relax the normality assumption, they only accomodate fixed effects. Generalized Linear Mixed Models (GLMMs) are an extension of GLMs that incorporate _random effects_, which have an associated probability distribution. Therefore, in GLMMs the _linear predictor_ takes the form
+Although GLMs relax the normality assumption, they can only accommodate fixed effects. Generalized Linear Mixed Models (GLMMs) are an extension of GLMs that incorporate _random effects_, which have an associated probability distribution [@mcculloch2001]. Therefore, in GLMMs the _linear predictor_ takes the form
 
 \begin{equation}
-$\eta_{ijt}=\beta_0+\beta_1x_{ijt}+\mu_{ij}$
+\eta_{ijt}=\beta_0+\beta_{j}x_{ijt}+\mu_{ij}
 (\#eq:GLMM-eta)
 \end{equation}
 
-Where 
-# GAMs as a special case of Generalized Linear Models{#GAM-theory}
+Where $\mu_{ij}$ corresponds to the random effects that can be estimated within each subject in each group, and all the other symbols correspond to the notation of the previous equations. Therefore, LMEMs are special case of GLMMs where the distribution of the response is normally distributed [@nelder1972]. In-depth and excellent discussions about LMs, GLMs and GLMMs can be found in refs [@dobson2008] and [@stroup2013].
 
-## GAMs and Basis Functions
+### GAMs as a special case of Generalized Linear Models{#GAM-theory}
 
-Generalized linear models (GLMs) are a family of models (which include rm-ANOVA and LMEMs) that fit a linear response function to data that may not have normally distributed errors [@nelder1972]. In contrast, GAMs are a family of regression-based methods for estimating smoothly varying trends and are a broader class of models that contain the GLM family as a special case[@simpson2018;@wood2017;@hastie1987]. A GAM model can be written as:
+#### GAMs and Basis Functions
+
+Generalized additive models (GAMs) are a family of regression-based methods for estimating smoothly varying trends and are an extension of the GLM family [@simpson2018;@wood2017;@hastie1987]. A GAM version of a linear model can be written as:
 
 
 \begin{equation}
@@ -63,7 +65,7 @@ Generalized linear models (GLMs) are a family of models (which include rm-ANOVA 
   (\#eq:GAM)
 \end{equation}
 
-Where $y_{ijt}$ is the response at time $t$ of subject  $i$ in group $j$, $\beta_0$ is the expected value at time 0, the change of $y_{ijt}$ over time is represented by the _smooth function_ $f(x_t\mid \beta_j)$ with inputs as the covariates $x_t$ and parameters $\beta_j$, and $\varepsilon_{ijt}$ represents the residual error.
+Where $y_{ijt}$ is the response at time $t$ of subject  $i$ in group $j$, $\beta_0$ is the expected value at time 0, and where the change of $y_{ijt}$ over time instead of being defined by $\beta_{j}x_{ijt}$ as in Equation \@ref(eq:GLM-eta) is represented by the _smooth function_ $f(x_t\mid \beta_j)$ with inputs as the covariates $x_t$ and parameters $\beta_j$, and $\varepsilon_{ijt}$ represents the residual error.
 
 In contrast to the linear functions used to model the relationship between the covariates and the response in rm-ANOVA or LMEM, GAMs use more flexible _smooth functions_. This approach is advantageous as it does not restrict the model to a linear relationship, although a GAM can estimate a linear relationship if the data is consistent with a linear response. One possible set of functions for $f(x_t\mid \beta_j)$ that allow for non-linear responses are polynomials (which can be used in LMEMs), but a major limitation is that polynomials create a "global" fit as they assume that the same relationship exists everywhere, which can cause problems with inference [@beck1998]. In particular, polynomial fits are known to show boundary effects because as $t$ goes to $\pm \infty$, $f(x_t \mid \beta_j)$ goes to $\pm \infty$ which is almost always unrealistic and causes bias at the endpoints of the time period.
 
@@ -263,7 +265,7 @@ b_plot
 
 ```
 
-# A Bayesian interpretation of GAMs
+### A Bayesian interpretation of GAMs
 
 Bayes' theorem states that the probability of an event can be calculated using prior knowledge or belief [@mcelreath2018]. In the case of data that shows non-linear trends, the belief that the _true_ trend of the data is likely to be smooth rather than extremely "wiggly" introduces the concept of a prior distribution for wiggliness (and therefore a Bayesian view) of GAMs [@wood2017]. Moreover, GAMs are considered "empirical" Bayesian models when fitted using the package _mgcv_ because the smoothing parameters are estimated from the data (and not from a prior distribution as in the "fully Bayesian" case, which can be fitted using JAGS, Stan, or other probabilistic programming language) [@miller2019]. Therefore, the confidence intervals (CIs) calculated for the smooth terms using _mgcv_ are considered empirical Bayesian posterior credible intervals [@pedersen2019], which have good "frequentist" coverage (point-wise coverage or "single point" coverage), and _across the function_ coverage [@wood2017].
 
