@@ -77,14 +77,40 @@ Why not use quadratic effects of time in the LMM? I appreciate this would make t
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-We appreciate the reviewer's perspective regarding the somewhat contradictory argument of fitting a linear effects LMM to quadratic data. However, this is an intentional approach because we follow the statistical analysis logic followed by most biomedical researchers: Fit a LMM or an rm-ANOVA, and if you get significant _p-values_ that's good enough. The purpose of the figure is to convey the point that visualizing the model fit is something necessary, but that is rarely done in the field. **Incorporate in the section that a strenght of GAMs is that they can learn the function from the data, while LMMs can't.**
+We appreciate the reviewer's perspective regarding the somewhat contradictory argument of fitting a linear effects LMM to quadratic data. However, this is an intentional approach because we follow the statistical analysis logic followed by most biomedical researchers to analyze longitudinal data: Fit a LMM or an rm-ANOVA, and if you get significant _p-values_ that's good enough. The purpose of the figure is to convey that changing models (from rm-ANOVA to LMEM) without visualizing the model fit is in this case is something that will propagate bias in the results and does not provide any substantial improvement. However, we acknowledge that this point was not explicitly stated in the original manuscript and the following changes have been made:
+
+- L95: We mention that LMEMs assume a linear relationship "by default", but we indicate that polynomial effects can be used as well, though they have their own shortcomings.
+
+- L119-L120 now reads "the limitations of LMEMs and rm-ANOVA regarding an expected trend in the response", instead of "linearity of response" (L119 in the original manuscript).
+
+- L136 now reads "assumed relationship" instead of  "linear relationship" (L135 in the original manuscript).
+
+- Section 3.2 now is titled "Assumed relationship" instead of "Linear relationship"
+
+- L181-L184 now indicate that polynomial effects can be used in a LMEM, but that they have little predictive power and lack biological or mechanistic interpretation.
+
+- We provide additional context on the purpose of using linear models to fit quadratic data in L250-L251 which now read "We are aware that the simulated data used in this section present an extreme case that might not occur frequently in biomedical research, but they are used to 1) present the consequences of modeling non-linear trends in data with a linear model such as rm-ANOVA or a LMEM with "default" (linear) effects and, 2) demonstrate that, a visual assessment of model fit is an important tool that helps determine the validity of any statistical assumptions."
+
+We believe that the aforementioned change makes a clear statement to the reader about our intentions in Fig.1. We want to emphasize that strictly speaking the term "default" might not be correct, but we are stretching the language to make the point that doing a simple switch from rm-ANOVA to a LMEMs (in R) without any additional changes results in the assumption of linear effects that still provide biased estimates.
+
+- L273-276 now include some of the reasons that complicate the use of polynomial effects in a LMEM for the data in Fig. 1. Specifically, that in reality the true function is not known and that this complicates choosing the degree of the polynomial. We also reference Section 4.3.1, which provides more detail on the limitation of polynomial effects.
+
+- In Section 6 (Discussion)  we emphasize again the rationale for not using polynomial effects on the LMEM in Fig. 1 (L509-513). 
+
 
 # GLMMs
 
+## Reviewer's Comments
 
-# GLMs, GAMs, and conditional distributions
+You don’t even mention generalized linear mixed models; why? In the context of the tutorial they represent the logical bridge between GAM and LMM, especially when you consider that you are really fitting GAMMs here.
 
+## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
+- We appreciate Dr. Simpson's comment here and the equations provided, which we have now incorporated in the manuscript.. We acknowledge that a brief overview of the different statistical model classes was missing in the original manuscript, and we have now extensively edited Section 4 to provide context on LMs, GLMs and GLMMs before introducing GAMs. The changes now appear between L282 (where Section 4 has been renamed to "Linear Models and Beyond") and L321. Because the different model classifications are not commonly known in the biomedical field, we contextualize the previously presented rm-ANOVA and LMEM into their respective classes to provide the reader with a clear understanding of where each model fits and also of where GAMs fit within this framework. We believe this properly addressed the reviewer comments.
+
+- We also acknowledge that the GAM model (Equation 5 in the original manuscript and Equation 10 in the revised document) corresponds to the **linear case**. This change will avoid the propagation of confusion that Dr. Simpson correctly indicated in his comment.
+
+- We have also changed L328 to indicate that the term $\varepsilon_{ijt}$ is the residual, and not a separable error. Of notice, we are following the notation provided by Dr. Simpson in Eq. 3 in the paper "Modelling Modelling Palaeoecological Time Series Using Generalised Additive Models". **do we need this here? I am adding it because we are following the same model specification that he has in this paper**
 
 # Thin plate regression splines
 
@@ -112,11 +138,12 @@ operate throughout the range of the covariate.
 # Penalised splines
 ## Reviewer's Comments
 
-You talk a little about “wiggliness” and penalising the weights for each basis function towards 0 but you don’t really explain this most crucial concept of the model fitting problem and why modern GAMs are so much better than the
-GAMs developed by Hastie and Tibshirani when they first introduced GAMs to the world.
+You talk a little about “wiggliness” and penalising the weights for each basis function towards 0 but you don’t really explain this most crucial concept of the model fitting problem and why modern GAMs are so much better than the GAMs developed by Hastie and Tibshirani when they first introduced GAMs to the world.
 You really need to define wiggliness beyond something that is used to avoid overfitting. Typically it is squared second derivative of the estimated function; so we limit the curvature of the fitted function by default. Technically the penalty is the penalty matrix - it is a matrix and it is fixed once we define the basis functions. What isn’t fixed is (are) the smoothness parameter(s) of the smooth; it is those that control how much penalty we subtract from the log-likelihood of the data given the model estimates. To speak of a “weak” or “strong” penalty was a little confusing for me.
 Hence fitting a GAM requires one to estimate parameters and one or more smoothness parameters for each smooth in the GAM, plus any parameters required for parametric terms.
 By glossing over these important concepts, the reader is left wondering what wiggliness is, how we measure overfit? etc.
+
+## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
 # Bayesian
 
@@ -153,6 +180,11 @@ The content in L320-329 regarding confidence intervals (CIs) in the original sub
 # Differences in smooths
 
 ## Reviewer's Comments
+
+The essence of this is not “if the difference between [credible] intervals of the fitted smooths… is non-zero”. For a variety of reasons this is not how it works. Instead we compute the difference of the smooths and then compute a credible interval around this difference. Also, to interpret this correctly we really need to do a simultaneous interval as you are looking at all points over the range of the covariate. If we just use the usual interval we have to consider the under and over coverage of the Nychka across-the-function intervals. You should talk about this issue in this section if you don’t compute simultaneous intervals.
+This section could also do with a little more explanation; {gratia} (and hence I) tens to consider differences of smooths to exclude the groups means. Here, if I read the paper and the code correctly, you included the group means. This works OK for simple models like this, but what if you had two or more parametric factor terms in the model? Then you would not (at least by default) have any way to isolate the group means for the by factor independently of the levels of the other factor. You would have to create differences conditional upon a level of
+the other factor. Users, however, tend to expect differences to include the group means, as you have chosen to present things here. Hence a note exp
+
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
@@ -200,11 +232,11 @@ blocks with comments.
 
 ## Reviewer's Comments
 
-The figures are too tall — the aspect ratio used for the individual panels is wrong. You should be emphasising the time axis so you should have individual panels that are wider than they are tall.
+The figures are too tall — the aspect ratio used for the individual panels is wrong. You should be emphasizing the time axis so you should have individual panels that are wider than they are tall.
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-We appreciate this comment regarding figure aesthetitcs, we have now made the figures wider to emphasize the time axis.
+We appreciate this comment regarding figure aesthetics, we have now made the figures wider to emphasize the time axis.
 
 ## Reviewer's Comments
 
@@ -213,6 +245,20 @@ Figure 3: on panel A, are the solid lines the truth in the main panel? If they a
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
 Although data simulation is a very common practice in Statistics/Ecology, it not so much in biomedical research. The main goal of Figure 3 A is to show that simulation is indeed a plausible tool to explore data behavior and to test statistical models in biomedical research. It might seem too basic or repetitive, but we are trying to convince the reader that simulation can indeed produce synthetic data that can be useful.
+
+# Figures
+
+## Reviewer's Comments
+
+The figures are too tall — the aspect ratio used for the individual panels is wrong. You should be emphasising the time axis so you should have individual panels that are wider than they are tall.
+
+Figure 3: on panel A, are the solid lines the truth in the main panel? If they are, you don’t need the inset plot, and if they aren’t, are they the mean of the simulated observations? If they are this latter, I think this is superfluous and it would be better to make the solid line the truth, about which you simulated noisy data.
+
+## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
+
+We have changed the aspect of the figures to emphasize the time axis, making them wider.
+
+On Figure 3, we have added the original data to panel A, which now displays both the simulated data (thin lines) and the original data (truth) in order to simplify the figure. We have updated also places in the manuscript that reference this Figure as well.
 
 
 # Minor Comments
@@ -224,7 +270,7 @@ so it is confusing and unnecessary.
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-We appreciate the reviewer's comments here. However, the indicated sentence is not intended in jest. We are using in this sentence (and in the paper in general) a statistical approach that is understandable by biomedical researchers in general. To this day, the field values "significance" (defined by the arbitrarily set threshold of _p_<0.05). We are trying to convince the reader that low _p-values_ are possible with ill fit models using language that is understandable.
+We appreciate the reviewer's comments here. However, the indicated sentence is not intended in jest. We are using in this sentence (and in the paper in general) a statistical approach that is understandable by biomedical researchers in general. To this day, the field values "significance" (defined by the arbitrarily set threshold of _p_<0.05). We are trying to convince the reader that low _p-values_ are possible with ill-fitted models, and we use language that is understandable by the reader.
 
 ## Reviewer's Comments
 
@@ -240,6 +286,7 @@ L93 “distribution of the errors of the random effects” makes no sense. Also 
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
+- We have changed the sentence to "the distribution of the random effects, which need to be independent", which also indicates that errors need not be normally-distributed.
 
 ## Reviewer's Comments
 
@@ -271,7 +318,7 @@ L293 You never really describe what “data-drive flexibility” is. Why are GAM
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-This line has been removed from the revised manuscript. 
+This line has been removed from the revised manuscript. However, we acknowledge that we didn't clearly conveyed this point to the read. In Section 6 (Discussion, L525-526 we now clearly state that a major advantage of GAMs is that they can learn non-linear trends from the data, thus eliminating the requirement of other models such as LMEMs where the relationship needs to be provided.
 
 ## Reviewer's Comments
 

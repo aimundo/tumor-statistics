@@ -83,7 +83,7 @@ Briefly, two cases for the mean responses for each group are considered: in the 
 
 Specifically, the rationale for the chosen linear and quadratic functions is the expectation that a measured response in two treatment groups is similar in the initial phase of the study, but as therapy progresses a divergence in the trend of the response indicates a treatment effect. In other words, Group 1 can be thought as a "Control" group and Group 2 as a "Treatment" group. From the mean response per group (linear or quadratic), the variability or "error" of individual responses  within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \@ref(fig:l-q-response) B,D). 
 
-A more comprehensive exploration  of the fit of rm-ANOVA and LMEMs for linear and non-linear longitudinal data appears in the Appendix (Figure A.1 and Figure A.2), where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented. We are aware that the simulated data used in this section present an extreme case that might not occur frequently in biomedical research, but they are used to 1) present the consequences of modeling non-linear data with a linear model such as rm-ANOVA or a LMEM with "default" (linear) effects and, 2) demonstrate that, a visual assessment of model fit is an important tool that helps determine the validity of any statistical assumptions. Of notice, in Section \@ref(longitudinal-GAMs) we use simulated data that does follow reported trends in the biomedical literature to implement GAMs.
+A more comprehensive exploration  of the fit of rm-ANOVA and LMEMs for linear and non-linear longitudinal data appears in the Appendix (Figure A.1 and Figure A.2), where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented. We are aware that the simulated data used in this section present an extreme case that might not occur frequently in biomedical research, but they are used to 1) present the consequences of modeling non-linear trends in data with a linear model such as rm-ANOVA or a LMEM with "default" (linear) effects and, 2) demonstrate that, a visual assessment of model fit is an important tool that helps determine the validity of any statistical assumptions. Of notice, in Section \@ref(longitudinal-GAMs) we use simulated data that does follow reported trends in the biomedical literature to implement GAMs.
 
 
 
@@ -228,7 +228,8 @@ plot_example <- function(sim_dat) {
                group = treatment, 
                color = treatment)
            ) +
-    geom_point(show.legend=FALSE) +
+    geom_point(alpha=0.5,
+               show.legend=FALSE) +
     labs(y='response')+
     geom_line(aes(x = time, 
                   y = mu, 
@@ -247,10 +248,12 @@ plot_example <- function(sim_dat) {
                aes(x = time, 
                    y = y, 
                    color = treatment)) +
-    geom_point(show.legend=FALSE)+
+    geom_point(alpha=0.5,
+               show.legend=FALSE)+
     labs(y='response')+
     geom_line(aes(y = predict(sim_dat$fit_anova), 
-                  group = subject, size = "Subjects"),show.legend = FALSE) +
+                  group = subject, size = "Subjects"),
+              show.legend = FALSE) +
     geom_line(data = sim_dat$pred_dat, 
               aes(y = predict(sim_dat$fit_anova, 
                               level = 0, 
@@ -272,7 +275,7 @@ plot_example <- function(sim_dat) {
                aes(x = time, 
                    y = y, 
                    color = treatment)) +
-    geom_point()+
+    geom_point(alpha=0.5)+
     labs(y='response')+
     geom_line(aes(y = predict(sim_dat$fit_lme), 
                   group = subject, size = "Subjects")) +

@@ -5,8 +5,8 @@ The previous sections provided the basic framework to understand the GAM framewo
 
 ## Simulated data
 
-The simulated data is based on the reported longitudinal changes in oxygen saturation ($\mbox{StO}_2$) in subcutaneous tumors that appear in Figure 3C in [@vishwanath2009]. In the paper, diffuse reflectance spectroscopy was used to quantify $\mbox{StO}_2$ changes in both groups at the same time points (days 0, 2, 5, 7 and 10). In the "Treatment" group (chemotherapy) an increase in $\mbox{StO}_2$ is observed through time, while a decrease is seen in the "Control" (saline) group. Following the reported trend, we simulated 10 normally distributed observations at each time point with a standard deviation (SD) of 10% (matching the SD in the original paper). 
-The simulated and real data appear in Figure \@ref(fig:sim-smooth-plot)A and the inset, respectively.
+The simulated data is based on the reported longitudinal changes in oxygen saturation ($\mbox{StO}_2$) in subcutaneous tumors (Figure 3C in Vishwanath et. al.[@vishwanath2009]). In the paper, diffuse reflectance spectroscopy was used to quantify $\mbox{StO}_2$ changes in both groups at the same time points (days 0, 2, 5, 7 and 10). In the "Treatment" group (chemotherapy) an increase in $\mbox{StO}_2$ is observed through time, while a decrease is seen in the "Control" (saline) group. Following the reported trend, we simulated 10 normally distributed observations at each time point with a standard deviation (SD) of 10% (matching the SD in the original paper). 
+The simulated and real data appear in Figure \@ref(fig:sim-smooth-plot),A.
 
 ## An interaction GAM for longitudinal data
 
@@ -82,12 +82,21 @@ df <- 6
 dat_sim <- simulate_data(dat, n, sd)
 
 #plotting simulated data
-f2<-ggplot(dat_sim, aes(x = Day, y = StO2_sim, color = Group, group=subject)) +
-    geom_point(show.legend=FALSE,size=1.5,alpha=0.6)+
-    geom_line(size=1.1, alpha=0.6)+
-    # stat_summary(aes(y = StO2_sim,
-    #                  group=Group), 
-    #              fun=mean, geom="line",size=1,show.legend = FALSE)+
+f2<-ggplot(dat_sim, aes(x = Day, 
+                        y = StO2_sim, 
+                        color = Group, 
+                        group=subject)) +
+    geom_point(show.legend=FALSE,
+               size=1.5,
+               alpha=0.6)+
+    geom_line(size=0.6, alpha=0.4)+
+    geom_line(aes(x = Day, 
+               y = StO2,
+               color=Group),
+           size=1.5,
+           data=dat,
+           inherit.aes=FALSE,
+              show.legend = FALSE)+
   labs(y=expression(atop(StO[2],'(simulated)')))+
   theme_classic()+
   theme(
@@ -144,10 +153,10 @@ f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
                    ymax=(fit + 2*se.fit),
                    fill=Group
                    ),
-              alpha=0.3,
+              alpha=0.5,
               data=gam_predict,
             show.legend=FALSE,
-                inherit.aes=FALSE) +
+            inherit.aes=FALSE) +
   geom_line(aes(y=fit,
                 color=Group),
               size=1,data=gam_predict,
@@ -158,15 +167,14 @@ f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
       theme_classic()+
   theme(
     axis.text=element_text(size=22)
-  )+
-  thm1
+  )
  
 #plot linear fit for rm-ANOVA
 f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
     geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legend = FALSE)+
   geom_ribbon(aes( x=Day,ymin=(fit - 2*se.fit), 
                    ymax=(fit + 2*se.fit),fill=Group),
-              alpha=0.3,
+              alpha=0.5,
               data=lm_predict,
               show.legend = FALSE,
                 inherit.aes=FALSE) +
@@ -180,8 +188,7 @@ f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
       theme_classic()+
   theme(
     axis.text=element_text(size=22)
-  )+
-  thm1
+  )
 
 
 ```
@@ -233,7 +240,7 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
                    ymax=(fit + 2*se.fit),
                    fill=Group
                    ),
-              alpha=0.3,
+              alpha=0.5,
               data=m_predict,
             show.legend=FALSE,
                 inherit.aes=FALSE) +
@@ -247,30 +254,23 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
       theme_classic()+
   theme(
     axis.text=element_text(size=22)
-  )+
-  thm1
+  )
 
 
 
 ```
 
-(ref:sim-plot-caption) Simulated data and smooths for oxygen saturation in tumors. A: Simulated data that follows previously reported trends (inset) in tumors under chemotherapy (Treatment) or saline (Control) treatment. Simulated data is from  a normal distribution with standard deviation of 10% with 10 observations per time point. Lines indicate mean oxygen saturation B: Smooths from the GAM model for the full simulated data with interaction of Group and Treatment. Lines represent trends for each group, shaded regions are 95% confidence intervals. C: The rm-ANOVA model for the simulated data, which does not capture the changes in each group over time. D: Smooths for the GAM model for the simulated data with 40% of its observations missing. Lines represent trends for each group, shaded regions are 95% empirical Bayesian confidence intervals.
+(ref:sim-plot-caption) Simulated data and smooths for oxygen saturation in tumors. A: Simulated data (thin lines) that follows previously reported trends (thick lines) in tumors under chemotherapy (Treatment) or saline (Control) treatment. Simulated data is from  a normal distribution with standard deviation of 10% with 10 observations per time point. Lines indicate mean oxygen saturation B: Smooths from the GAM model for the full simulated data with interaction of Group and Treatment. Lines represent trends for each group, shaded regions are 95% confidence intervals. C: The rm-ANOVA model for the simulated data, which does not capture the changes in each group over time. D: Smooths for the GAM model for the simulated data with 40% of its observations missing. Lines represent trends for each group, shaded regions are 95% empirical Bayesian confidence intervals.
 
-```{r,sim-smooth-plot,fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:sim-plot-caption)'}
+```{r,sim-smooth-plot,fig.width=12, fig.height=7, out.width='100%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:sim-plot-caption)'}
 
 
-mult_plot<-f2+inset_element(
-  f1, left = 0.01, 
-  bottom = 0.5, 
-  right = 0.5, 
-  top = 1.0)+
-  f3+f4+f6+
+mult_plot<-f2+f3+f4+f6+
    plot_annotation(tag_levels='A')&
    ylim(c(-7,75)) &
   theme(
      text=element_text(size=18)
-     )&
-  thm1
+     )
 
 mult_plot
 
