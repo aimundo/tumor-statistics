@@ -30,7 +30,8 @@ dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
             Day=rep(c(0,2,5,7,10),times=2),
             Group=as.factor(rep(c("Control","Treatment"),each=5))
             )
-
+#alpha for ribbon
+al<-0.8
 
 ## plot the mean response
 f1<-ggplot(dat, 
@@ -45,7 +46,6 @@ f1<-ggplot(dat,
   labs(y=expression(paste(StO[2],
                           ' (real)')))+
   theme_classic()+
-  thm1+
     scale_x_continuous(breaks=c(0,5,10))+
     scale_y_continuous(breaks=c(0,40))+
   plot_layout(tag_level = 'new')+
@@ -53,7 +53,8 @@ f1<-ggplot(dat,
     plot.background = element_rect(fill = "transparent", 
                                    color = NA),
     axis.text=element_text(size=14)
-  )
+  )+
+    thm1
 
 
 #This function simulates data for the tumor data using default parameters of 10 observations per time point,and Standard deviation (sd) of 5%.
@@ -102,8 +103,8 @@ f2<-ggplot(dat_sim, aes(x = Day,
   theme(
     axis.text=element_text(size=22)
   )+
-  thm1+
-    scale_x_continuous(breaks=c(0,2,5,7,10))
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    thm1
   
 
 ```
@@ -153,7 +154,7 @@ f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
                    ymax=(fit + 2*se.fit),
                    fill=Group
                    ),
-              alpha=0.5,
+              alpha=al,
               data=gam_predict,
             show.legend=FALSE,
             inherit.aes=FALSE) +
@@ -167,14 +168,14 @@ f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
       theme_classic()+
   theme(
     axis.text=element_text(size=22)
-  )
+  )+thm1
  
 #plot linear fit for rm-ANOVA
 f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
     geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legend = FALSE)+
   geom_ribbon(aes( x=Day,ymin=(fit - 2*se.fit), 
                    ymax=(fit + 2*se.fit),fill=Group),
-              alpha=0.5,
+              alpha=al,
               data=lm_predict,
               show.legend = FALSE,
                 inherit.aes=FALSE) +
@@ -188,8 +189,7 @@ f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
       theme_classic()+
   theme(
     axis.text=element_text(size=22)
-  )
-
+  )+thm1
 
 ```
 
@@ -240,7 +240,7 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
                    ymax=(fit + 2*se.fit),
                    fill=Group
                    ),
-              alpha=0.5,
+              alpha=al,
               data=m_predict,
             show.legend=FALSE,
                 inherit.aes=FALSE) +
@@ -254,7 +254,7 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
       theme_classic()+
   theme(
     axis.text=element_text(size=22)
-  )
+  )+thm1
 
 
 

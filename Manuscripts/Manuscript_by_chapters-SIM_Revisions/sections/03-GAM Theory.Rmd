@@ -233,7 +233,7 @@ p13<-ggplot(basis_plot,
 #plotting simulated datapoints and smooth term
 p14<-ggplot(data=dat,
             aes(x=time,y=y))+
-  geom_point(size=sz+1)+
+  geom_point(size=sz+1,alpha=0.5)+
   thm1+
   labs(y='Simulated \n response')+
   geom_line(data=smooth,
