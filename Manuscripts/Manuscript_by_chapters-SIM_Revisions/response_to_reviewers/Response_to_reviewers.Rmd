@@ -145,6 +145,10 @@ By glossing over these important concepts, the reader is left wondering what wig
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
+- We appreciate this comment regarding wiggliness. We have now added a new paragraph in Section 4.3.1 (L369-375) which briefly discuss wiggliness, and uses a physics analogy to convey the overall concept of penalization. Because the intention of our work is to present the practical advantages of GAMs we want to avoid including mathematical notation about penalization in the manuscript, which would be confusing and distracting to the readers from the main purpose of the paper.
+
+- We have substituted "weak" and "strong" for "low" and "high" (L373).
+
 # Bayesian
 
 ## Reviewer's Comments
