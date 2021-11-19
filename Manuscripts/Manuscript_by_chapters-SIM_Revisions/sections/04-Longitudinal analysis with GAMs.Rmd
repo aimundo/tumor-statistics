@@ -33,29 +33,6 @@ dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
 #alpha for ribbon
 al<-0.8
 
-## plot the mean response
-f1<-ggplot(dat, 
-           aes(x = Day, 
-               y = StO2, 
-               color = Group)) +
-    geom_line(size=1,
-              show.legend = FALSE)+
-    geom_point(show.legend = FALSE,
-               size=1.5,
-               alpha=0.5)+
-  labs(y=expression(paste(StO[2],
-                          ' (real)')))+
-  theme_classic()+
-    scale_x_continuous(breaks=c(0,5,10))+
-    scale_y_continuous(breaks=c(0,40))+
-  plot_layout(tag_level = 'new')+
-  theme(
-    plot.background = element_rect(fill = "transparent", 
-                                   color = NA),
-    axis.text=element_text(size=14)
-  )+
-    thm1
-
 
 #This function simulates data for the tumor data using default parameters of 10 observations per time point,and Standard deviation (sd) of 5%.
 #Because physiologically StO2 cannot go below 0%, data is  generated with a cutoff value of 0.0001 (the "StO2_sim")
@@ -352,12 +329,14 @@ return(my_list)
 }
 
 my_list<-pairwise_limits(comp_StO2_full)
-rib_col<-'#EDD03AFF' #color for ribbon
+rib_col<-'#8D7D82' #color for ribbon for confidence interval
+control_rib <- '#875F79' #color for ribbon for control region
+treat_rib <- '#A7D89E' #color for ribbon treatment region
 
 c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
     annotate("rect",
                 xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
-                fill='#30123BFF',
+                fill=control_rib,
                 alpha = 0.5,
                 ) +
   annotate("text",
@@ -369,7 +348,7 @@ c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
            )+
     annotate("rect",
              xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
-             fill='#7A0403FF',
+             fill=treat_rib,
              alpha = 0.5,
     ) +
   annotate("text",
@@ -419,7 +398,7 @@ my_list<-pairwise_limits(comp_StO2_missing)
 c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
     annotate("rect",
              xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
-             fill='#30123BFF',
+             fill=control_rib,
              alpha = 0.5
              ) +
   annotate("text",
@@ -431,7 +410,7 @@ c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
            )+
     annotate("rect",
              xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
-             fill='#7A0403FF',
+             fill= treat_rib,
              alpha = 0.5,
     ) +
   annotate("text",

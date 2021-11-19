@@ -155,7 +155,7 @@ example <- function(n_time = 6, #number of time points
 
 plot_example <- function(sim_dat) {
   ## Plot the simulated data (scatterplot)
-  
+  txt<-20
   p1 <- sim_dat$dat %>%
     ggplot(aes(x = time, 
                y = y, 
@@ -169,10 +169,10 @@ plot_example <- function(sim_dat) {
                   color = treatment),
               show.legend=FALSE) +
     theme_classic() +
-    theme(plot.title = element_text(size = 30, 
+    theme(plot.title = element_text(size = txt, 
                                   face = "bold"),
-        text=element_text(size=30))+
-    thm
+        text=element_text(size=txt))+
+    thm1
   
   #plot the simulated data with trajectories per each subject
   p2 <- sim_dat$dat %>%
@@ -192,10 +192,10 @@ plot_example <- function(sim_dat) {
     labs(y='response')+
     scale_size_manual(name = "Type", values=c("Subjects" = 0.5, "Simulated Truth" = 3)) +
     theme_classic()+
-     theme(plot.title = element_text(size = 30, 
+     theme(plot.title = element_text(size = txt, 
                                 face = "bold"),
-     text=element_text(size=30))+
-    thm
+     text=element_text(size=txt))+
+    thm1
   
   #plot the errors
    p3 <- sim_dat$dat %>%
@@ -206,10 +206,10 @@ plot_example <- function(sim_dat) {
     geom_line(show.legend=FALSE) +
      labs(y='errors')+
      theme_classic()+
-     theme(plot.title = element_text(size = 30, 
+     theme(plot.title = element_text(size = txt, 
                                   face = "bold"),
-        text=element_text(size=30))+
-    thm
+        text=element_text(size=txt))+
+    thm1
   
    #plot the model predictions for rm-ANOVA
   p4 <- ggplot(sim_dat$dat, 
@@ -230,10 +230,10 @@ plot_example <- function(sim_dat) {
     scale_size_manual(name = "Predictions", 
                       values=c("Subjects" = 0.5, "Population" = 3)) +
     theme_classic() +
-    theme(plot.title = element_text(size = 30, 
+    theme(plot.title = element_text(size = txt, 
                                   face = "bold"),
-        text=element_text(size=30))+
-    thm
+        text=element_text(size=txt))+
+    thm1
    
    
    
@@ -255,17 +255,16 @@ plot_example <- function(sim_dat) {
     scale_size_manual(name = "Predictions", 
                       values=c("Subjects" = 0.5, "Population" = 3)) +
     theme_classic() +
-    theme(plot.title = element_text(size = 30, 
+    theme(plot.title = element_text(size = txt, 
                                   face = "bold"),
-        text=element_text(size=30))+
-    thm
+        text=element_text(size=txt))+
+    thm1
   
   return((p1+p3+p2+p4+p5)+plot_layout(nrow=1)+plot_annotation(tag_levels = 'A')) 
   
     
 }
 
-txt<-18
 
 #Store each plot in a separate object
 A1<-plot_example(example(fun_type = "linear", error_type = "correlated")) 
@@ -283,7 +282,7 @@ D1<-plot_example(example(fun_type = "quadratic", error_type = "independent"))
 (ref:linear-cases-appendix) Simulated linear responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are able to capture the trend of the data.
 
 
-```{r, linear-cases-Appendix, fig.width=14, fig.height=10, out.width='75%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:linear-cases-appendix)'}
+```{r, linear-cases-Appendix, fig.width=14, fig.height=12, out.width='100%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:linear-cases-appendix)'}
 # linear response, correlated errors (subject effect)
 A1/B1+plot_annotation(tag_levels = 'A')
 ```
@@ -295,7 +294,7 @@ For the quadratic response case, Figure \@ref(fig:quadratic-cases-Appendix) show
 (ref:quadratic-caption-appendix) Simulated quadratic responses from two groups with correlated (top row) or independent (bottom row) errors using a rm-ANOVA model and a LMEM. A, F:Simulated data with known mean response and individual responses (points) showing the dispersion of the data. B,G: Generated errors showing the difference in the behavior of correlated and independent errors. C,H: Simulated data with thin lines representing individual trajectories. D,I: Estimations from the rm-ANOVA model for the mean group response. E, J: Estimations from the LMEM for the mean group response and individual responses (thin lines). In all panels, thick lines are the predicted mean response per group, thin lines are the random effects for each subject and points represent the original raw data. Both rm-ANOVA and the LMEM are not able to capture the changes in each group over time.
 
 
-```{r, quadratic-cases-Appendix, fig.width=12, fig.height=7, out.width='100%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:quadratic-caption-appendix)'}
+```{r, quadratic-cases-Appendix, fig.width=14, fig.height=12, out.width='100%',fig.align='center', echo=FALSE,message=FALSE,fig.show='hold',fig.cap='(ref:quadratic-caption-appendix)'}
 # linear response, correlated errors (subject effect)
 C1/D1+plot_annotation(tag_levels = 'A')
 ```
@@ -303,7 +302,7 @@ C1/D1+plot_annotation(tag_levels = 'A')
 
 ## Basis functions and GAMs
 
-This code produces Figure \@ref(fig:basis-plot) from the main manuscript. Briefly, a non-linear (quadratic) response is simulated a gam model is fitted and the basis are extracted in order to explain how the smooth is constructed. The code for data simulation is used again here for the sake of keeping the same structure, although the data can be simulated in a more simple fashion.
+This code produces Figure \@ref(fig:basis-plot) from the main manuscript. Briefly, a non-linear (quadratic) response is simulated, a gam model is fitted and the basis are extracted in order to explain how the smooth is constructed. The code for data simulation is used again here for the sake of keeping the same structure, although the data can be simulated in a more simple fashion.
 
 
 ```{r,basis-Appendix, echo=TRUE,include=TRUE,message=FALSE,warning=FALSE,eval=FALSE}
@@ -347,7 +346,7 @@ n_time = 6
  #keep just the response and timepoint columns
    dat<-dat[,c('y','time')]
 
-   #GAM model of time, 5 knots
+   #GAM model of time, 5 basis
 gm<-gam(y~s(time,k=5),data=dat)
 
 #model_matrix (also known as) 'design matrix'
@@ -366,7 +365,7 @@ basis<-basis %>% #pivoting to long format
   )%>%
   arrange(name) #ordering
 
-#length of dataframe to be created: number of knots by number of timepoints (minus 1 for the intercept that we won't plot)
+#length of dataframe to be created: number of basis by number of timepoints (minus 1 for the intercept that we won't plot)
 ln<-6*(length(coef(gm))) 
 
 basis_plot<-data.frame(Basis=integer(ln),
@@ -489,36 +488,12 @@ This section describes how to fit GAMs to longitudinal data using simulated data
 
 
 ```{r,sim-tumor-response-Appendix,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE,eval=FALSE}
-set.seed(1)
-#Dataframe that contains the original reported trends
 dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
             Day=rep(c(0,2,5,7,10),times=2),
             Group=as.factor(rep(c("Control","Treatment"),each=5))
             )
-
-
-## plot the mean response
-f1<-ggplot(dat, 
-           aes(x = Day, 
-               y = StO2, 
-               color = Group)) +
-    geom_line(size=1,
-              show.legend = FALSE)+
-    geom_point(show.legend = FALSE,
-               size=1.5,
-               alpha=0.5)+
-  labs(y=expression(paste(StO[2],
-                          ' (real)')))+
-  theme_classic()+
-  thm+
-    scale_x_continuous(breaks=c(0,5,10))+
-    scale_y_continuous(breaks=c(0,40))+
-  plot_layout(tag_level = 'new')+
-  theme(
-    plot.background = element_rect(fill = "transparent", 
-                                   color = NA),
-    axis.text=element_text(size=14)
-  )
+#alpha for ribbon
+al<-0.8
 
 
 #This function simulates data for the tumor data using default parameters of 10 observations per time point,and Standard deviation (sd) of 5%.
@@ -540,32 +515,35 @@ simulate_data <- function(dat, n = 10, sd = 5) {
 
 
 #subject = factor(paste(subject, treatment, sep = "-")))
+
 n <- 10 #number of observations
 sd <- 10 #approximate sd from paper
 df <- 6
 dat_sim <- simulate_data(dat, n, sd)
 
 #plotting simulated data
-f2<-ggplot(dat_sim, 
-           aes(x = Day, 
-               y = StO2_sim, 
-               color = Group)) +
+f2<-ggplot(dat_sim, aes(x = Day, 
+                        y = StO2_sim, 
+                        color = Group, 
+                        group=subject)) +
     geom_point(show.legend=FALSE,
                size=1.5,
-               alpha=0.5)+
-    stat_summary(aes(y = StO2_sim,
-                     group=Group), 
-                 fun=mean, geom="line",
-                 size=1,
-                 show.legend = FALSE)+
-  labs(y=expression(atop(StO[2],
-                         '(simulated)')))+
+               alpha=0.6)+
+    geom_line(size=0.6, alpha=0.4)+
+    geom_line(aes(x = Day, 
+               y = StO2,
+               color=Group),
+           size=1.5,
+           data=dat,
+           inherit.aes=FALSE,
+              show.legend = FALSE)+
+  labs(y=expression(atop(StO[2],'(simulated)')))+
   theme_classic()+
   theme(
     axis.text=element_text(size=22)
   )+
-  thm+
-    scale_x_continuous(breaks=c(0,2,5,7,10))
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    thm1
   
 
 ```
@@ -576,7 +554,7 @@ This section shows a basic workflow to fit a series of increasingly complex GAMs
 
 ### First model
 
-The first model fitted to the data is one that only accounts for different smooths by day. The model syntax specifies that `gam_00` is the object that will contain all the model information, and that the model attempts to explain changes in `StO2_sim` (simulated $\mbox{StO}_2$) using a smooth per `Day`. The model will use 5 knots (`k=5`) for the smooth. The smooth is constructed by default using thin plate regression splines. The smoothing parameter estimation method used is the restricted maximum likelihood (`REML`).
+The first model fitted to the data is one that only accounts for different smooths by day. The model syntax specifies that `gam_00` is the object that will contain all the model information, and that the model attempts to explain changes in `StO2_sim` (simulated $\mbox{StO}_2$) using a smooth per `Day`. The model will use 5 basis functions (`k=5`) for the smooth. The smooth is constructed by default using thin plate regression splines. The smoothing parameter estimation method used is the restricted maximum likelihood (`REML`).
 
 
 ```{r, first-GAM, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
@@ -862,15 +840,19 @@ comp_StO2 <- cbind(Day = seq(0, 10, length = 400),
                    rbind(comp1))
 
 #use function from the pairwise comparison plot in the manuscript to get the shaded regions
-    
-    my_list<-pairwise_limits(comp_StO2)
-  rib_col<-'#EDD03AFF' #color for the ribbon
+my_list<-pairwise_limits(comp_StO2)
+ 
 #plot the difference
+rib_col<-'#8D7D82' #color for ribbon for confidence interval
+control_rib <- '#875F79' #color for ribbon for control region
+treat_rib <- '#A7D89E' #color for ribbon treatment region
+  
+  
 c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
   #shaded region
   annotate("rect",
                 xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
-                fill='#30123BFF',
+                fill=control_rib,
                 alpha = 0.5,
                 ) +
   annotate("text",
@@ -881,7 +863,7 @@ c1<-ggplot(comp_StO2, aes(x = Day, y = diff, group = pair)) +
   #shaded region  
   annotate("rect",
              xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
-             fill='#7A0403FF',
+             fill= treat_rib,
              alpha = 0.5
            ) +
   annotate("text",
@@ -978,7 +960,6 @@ f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      thm+
   thm1
  
 #plot linear fit for rm-ANOVA
@@ -1001,7 +982,6 @@ f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      thm+
   thm1
  
 ```
@@ -1070,7 +1050,6 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
   theme(
     axis.text=element_text(size=22)
   )+
-      thm+
   thm1
 
 
@@ -1171,12 +1150,14 @@ return(my_list)
 }
 
 my_list<-pairwise_limits(comp_StO2_full)
-rib_col<-'#EDD03AFF'
+rib_col<-'#8D7D82' #color for ribbon for confidence interval
+control_rib <- '#875F79' #color for ribbon for control region
+treat_rib <- '#A7D89E' #color for ribbon treatment region
 
 c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
     annotate("rect",
                 xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
-                fill='#30123BFF',
+                fill=control_rib,
                 alpha = 0.5,
                 ) +
   annotate("text",
@@ -1188,7 +1169,7 @@ c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
            )+
     annotate("rect",
              xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
-             fill='#7A0403FF',
+             fill=treat_rib,
              alpha = 0.5,
     ) +
   annotate("text",
@@ -1238,25 +1219,28 @@ my_list<-pairwise_limits(comp_StO2_missing)
 c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
     annotate("rect",
              xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
-             fill='#30123BFF',
-             alpha = 0.5,
-    ) +
+             fill=control_rib,
+             alpha = 0.5
+             ) +
   annotate("text",
              x=1.5,
              y=-18,
              label="Control>Treatment",
-           size=8
+           size=8,
+           angle=90
            )+
     annotate("rect",
              xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
-             fill='#7A0403FF',
+             fill= treat_rib,
              alpha = 0.5,
     ) +
   annotate("text",
              x=6,
              y=-18,
              label="Treatment>Control",
-             size=8)+
+             size=8,
+           angle=90
+           )+
     geom_ribbon(aes(ymin = lower, ymax = upper),
                 alpha = 0.5,
                 fill=rib_col) +
