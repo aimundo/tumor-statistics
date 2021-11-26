@@ -1,31 +1,20 @@
 # Linear Models, and beyond
 
-In reality, rm-ANOVA and LMEMs are just _special cases_ of broader model classes (General Linear Models and Generalized Linear Mixed Models, respectively). In order to fully capture the constraints of such models and to understand how GAMs overcome those limitations this section will briefly provide an overview of the different  Statistical model classes, indicate how rm-ANOVA and LMEMs fit within that framework and introduce the theory of GAMs.
-
-
-## Linear Models (LMs) and Linear Mixed Models (LMEMs)
-
 Linear models (LMs) are those that assume a normal (Gaussian) distribution of the response, and only incorporate _fixed effects_ (such as rm-ANOVA). These are by far the models most commonly used to analyze data within the biomedical research community.  On the other hand, Linear Mixed Effect Models (LMEMs) are those that assume a normally-distributed response but also incorporate _random effects_, as it has been described in Section \@ref(LMEM-case).
 
-In matrix notation, a LM has the general form
+In reality, rm-ANOVA and LMEMs are just _special cases_ of a broader class of models (General Linear Models and Generalized Linear Mixed Models, respectively). In order to fully capture the constraints of such models and to understand how GAMs overcome those limitations this section will briefly provide an overview of the different classes of models, indicate how rm-ANOVA and LMEMs fit within this framework and introduce the theory of GAMs.
 
-\begin{equation}
-\textbf{y} = \textbf{X} \boldsymbol{\beta}
-(\#eq:LM-matrix)
-\end{equation}
-
-Where $\textbf{y}$ a vector of observations, $\textbf{X}$ is a matrix that contains the measured values of the covariates, and $\boldsymbol{\beta}$ is a vector of the parameters to be estimated. The "model equation" form of Equation \@ref(eq:LM-matrix) for a rm-ANOVA model of two treatment groups corresponds to Equation \@ref(eq:linear-model). It is important to remember that the error term $\varepsilon_{ijt}$ in Equation \@ref(eq:linear-model) represents the variability introduced by random sampling from the normal distribution.
 
 ## Generalized Linear Models (GLMs)
 
-A major limitation of LMs is their assumption of normality. If the data is non-normal, a transformation is necessary in order to properly fit the model. However, transformation lead to poor model performance [@ohara2010], and can cause problems with the biological interpretation of the model estimates. McCullagh and Nelder [@nelder1972] defined General Linear Models (GLMs) as an extension of LMs, where the data does not need to be normally distributed. To achieve this, consider the following
+A major limitation of LMs is their assumption of normality. If the data is non-normal, a transformation is necessary in order to properly fit the model. However, transformation can lead to poor model performance [@ohara2010], and can cause problems with the biological interpretation of the model estimates. McCullagh and Nelder [@nelder1972] introduced General Linear Models (GLMs) as an extension of LMs, where the data does not need to be normally distributed. To achieve this, consider the following model
 
 \begin{equation}
-y_{ijt} \sim \mathcal{D}(\mu_{ijt},\phi)
+y_{ijt} \sim \mathcal{D}(\mu_{ijt},\phi),
 (\#eq:GLM-y)
 \end{equation}
 
-Where $y_{ijt}$ is the observation $i$ in group $j$ at time $t$, which is assumed to come randomly from some distribution of the exponential family $\mathcal{D}$, with some mean $\mu_{ijt}$ and a dispersion parameter $\phi$ (which in the Gaussian case is the variance $\sigma^{2}$). The mean $\mu_{ijt}$ is also known as the _expected value_ (also called _expectation_) ($E$) of the observed response. Then, the _linear predictor_ $\eta$, which defines the relationship between the mean and the covariates can be defined as
+where $y_{ijt}$ is the observation $i$ in group $j$ at time $t$, that is assumed to come from some distribution of the exponential family $\mathcal{D}$, with some mean $\mu_{ijt}$ and potentially, a dispersion parameter $\phi$ (which in the Gaussian case is the variance $\sigma^{2}$). The mean $\mu_{ijt}$ is also known as the _expected value_ (also called _expectation_) ($E(y_{ijt})$) of the observed response $y_{ijt}$. Then, the _linear predictor_ $\eta$, which defines the relationship between the mean and the covariates can be defined as
 
 \begin{equation}
 \eta_{ijt}=\beta_0+\beta_{j}x_{ijt}
@@ -37,17 +26,18 @@ Where $\eta_{ijt}$ is the linear predictor for each observation, $\beta_0$ is th
 Finally, 
 
 \begin{equation}
-E(y_{ijt})=\mu_{ijt}=g^{-1}(\eta_{ijt})
+E(y_{ijt})=\mu_{ijt}=g^{-1}(\eta_{ijt}),
 (\#eq:GLM-Expectation)
 \end{equation}
-Where $E(y_{ijt})$ is the expectation, $g^{-1}$ is the inverse of the _link function_  ($g$). The link function transforms the values from the response scale to the scale of the linear predictor $\eta$ (Equation \@ref(eq:GLM-eta)). Therefore, LMs (such as rm-ANOVA) are a special case of GLMs where the response is normally distributed.
+
+where $E(y_{ijt})$ is the expectation and $g^{-1}$ is the inverse of a _link function_  ($g$). The link function transforms the values from the response scale to the scale of the linear predictor $\eta$ (Equation \@ref(eq:GLM-eta). Therefore, LMs (such as rm-ANOVA) are a special case of GLMs where the response is normally distributed.
 
 ## Generalized linear mixed models (GLMMs)
 
-Although GLMs relax the normality assumption, they can only accommodate fixed effects. Generalized Linear Mixed Models (GLMMs) are an extension of GLMs that incorporate _random effects_, which have an associated probability distribution [@mcculloch2001]. Therefore, in GLMMs the _linear predictor_ takes the form
+Although GLMs relax the normality assumption, they only accommodate fixed effects. Generalized Linear Mixed Models (GLMMs) are an extension of GLMs that incorporate _random effects_, which have an associated probability distribution [@mcculloch2001]. Therefore, in GLMMs the _linear predictor_ takes the form
 
 \begin{equation}
-\eta_{ijt}=\beta_0+\beta_{j}x_{ijt}+\mu_{ij}
+\eta_{ijt}=\beta_0+\beta_{j}x_{ijt}+\alpha_{ij}
 (\#eq:GLMM-eta)
 \end{equation}
 
@@ -57,7 +47,14 @@ Where $\mu_{ij}$ corresponds to the random effects that can be estimated within 
 
 #### GAMs and Basis Functions
 
-Generalized additive models (GAMs) are a family of regression-based methods for estimating smoothly varying trends and are an extension of the GLM family [@simpson2018;@wood2017;@hastie1987]. A GAM version of a linear model can be written as:
+Notice that in the previous sections, the difference between GLMs and GLMMs resides on the linear predictors (Equations \@ref(eq:GLM-eta) and \@ref(eq:GLMM-eta)). A Generalized additive model (GAM) is an extension of the GLM where the linear predictor has the form
+
+\begin{equation}
+\eta_{ijt}=\beta_{0}+ \beta_{1} \times treatment_{j} +f(time_{t}|\beta_{j}).
+(\#eq:GAM-eta)
+\end{equation}
+
+Where $\beta_{0}$ is the intercept, $\beta_{1}$ is the coefficient for each treatment group, and $f(time_{t}|\beta_{j})$ represents the _smooth function_ of time, with coefficient $\beta_{j}$. In this sense, GAMs are a family of regression-based methods for estimating smoothly varying trends  [@simpson2018;@wood2017;@hastie1987]. A GAM version of a linear model can be written as:
 
 
 \begin{equation}
@@ -65,7 +62,7 @@ Generalized additive models (GAMs) are a family of regression-based methods for 
   (\#eq:GAM)
 \end{equation}
 
-Where $y_{ijt}$ is the response at time $t$ of subject  $i$ in group $j$, $\beta_0$ is the expected value at time 0, and the change of $y_{ijt}$ over time (instead of being defined by $\beta_{j}x_{ijt}$ as in Equation \@ref(eq:GLM-eta)) is represented by the _smooth function_ $f(x_t\mid \beta_j)$ with inputs as the covariates $x_t$ and parameters $\beta_j$, and $\varepsilon_{ijt}$ represents the residual due to **random sampling**. 
+Where $y_{ijt}$ is the response at time $t$ of subject  $i$ in group $j$, $\beta_0$ is the expected value at time 0, and the change of $y_{ijt}$ over time (instead of being defined by $\beta_{j}x_{ijt}$ as in Equation \@ref(eq:GLM-eta)) is represented by the _smooth function_ $f(x_t\mid \beta_j)$ with inputs as the covariates $x_t$ and parameters $\beta_j$, and $\varepsilon_{ijt}$ represents the deviation of each observation from the mean.
 
 In contrast to the linear functions used to model the relationship between the covariates and the response in rm-ANOVA or LMEM, GAMs use more flexible _smooth functions_. This approach is advantageous as it does not restrict the model to a linear relationship, although a GAM can estimate a linear relationship if the data is consistent with a linear response. One possible set of functions for $f(x_t\mid \beta_j)$ that allow for non-linear responses are polynomials (which can also be used in LMEMs), but a major limitation is that polynomials create a "global" fit as they assume that the same relationship exists everywhere, which can cause problems with inference [@beck1998]. In particular, polynomial fits are known to show boundary effects because as $t$ goes to $\pm \infty$, $f(x_t \mid \beta_j)$ goes to $\pm \infty$ which is almost always unrealistic and causes bias at the endpoints of the time period.
 
@@ -81,7 +78,7 @@ To further clarify the concept of basis functions and smooth functions, consider
 
 Here, the main idea is that the resulting smooth matches the data and approximates the true function without becoming too "wiggly" due to the noise present. A detailed exploration of wiggliness and smooth functions is beyond the scope of this manuscript, but it suffices to say that the wiggliness (or "roughness") of the fit is achieved by using a smoothness parameter $\lambda$, which is applied to the second derivative of the spline. The second derivative of the spline is a measure of curvature, or the rate of change of the slope [@simpson2018; @wood2017]. A physics analogy to the penalization process would be that if we are driving a car on a hilly and curvy road, we want to minimize abrupt changes in speed  in order to have a "smooth" ride, and we do this by penalizing the acceleration.
 
-If five basis functions are used to fit a GAM for the data that appears in Figure \@ref(fig:l-q-response)C, the resulting fitting process is shown in Figure \@ref(fig:basis-plot)A. The four basis functions (and the intercept) are shown. Each of the basis functions is composed of six different points (because there are six points on the timeline). To control the "wiggliness" of the fit, each of the basis functions of Figure \@ref(fig:basis-plot)A is weighted by multiplying it by the smoothness parameter ($\lambda$) according to the matrix of Figure \@ref(fig:basis-plot)B. The parameter estimates are penalized (shrunk towards 0) where the penalty reduces the wiggliness of the smooth fit to prevent overfitting. A low penalty estimate will result in wiggly functions whereas a high penalty estimate provides evidence that a linear response is appropriate.
+If five basis functions are used to fit a GAM for the data that appears in Figure \@ref(fig:l-q-response)C, the resulting fitting process is shown in Figure \@ref(fig:basis-plot)A. The four basis functions (and the intercept) are shown. Each of the basis functions is evaulated at six different points (because there are six points on the timeline). To control the "wiggliness" of the fit, the coefficients for each of the basis functions of Figure \@ref(fig:basis-plot)A are estimated using a penalized regression with smoothness parameter $\lambda$. The smoothness parameter is multiplied by the integrated square of the second derivative of the spline expansion. As $\lambda$ increases, the parameter estimates are penalized (shrunk towards 0) where the penalty reduces the wiggliness of the smooth fit to prevent overfitting. A low penalty estimate will result in wiggly functions whereas a high penalty estimate provides evidence that a linear response is appropriate. The penalized estimates fitted for our example are shown in Figure \@ref(fig:basis-plot)B. 
 
 
 ```{r,basis-functions-plot, echo=FALSE,include=FALSE,message=FALSE,warning=FALSE}
