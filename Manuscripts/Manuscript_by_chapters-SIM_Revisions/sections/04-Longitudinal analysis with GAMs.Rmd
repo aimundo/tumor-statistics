@@ -67,7 +67,7 @@ f2<-ggplot(dat_sim, aes(x = Day,
     geom_point(show.legend=FALSE,
                size=1.5,
                alpha=0.6)+
-    geom_line(size=0.6, alpha=0.4)+
+    geom_line(size=0.6, alpha=0.4,show.legend=FALSE)+
     geom_line(aes(x = Day, 
                y = StO2,
                color=Group),
@@ -274,7 +274,7 @@ smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
     row2 <- with(newdata, Group == g2)
     ## difference rows of xp for data from comparison
     X <- xp[row1, ] - xp[row2, ]
-    ## zero out cols of X related to splines for other lochs
+   ## zero out cols of X not involved in the comparison
     X[, ! (col1 | col2)] <- 0
     ## zero out the parametric cols
     #X[, !grepl('^s\\(', colnames(xp))] <- 0
@@ -451,7 +451,10 @@ pair_comp+plot_annotation(tag_levels='A')&
 
 ## Determination of significance in GAMs for longitudinal data{#GAM-significance}
 
-At the core of a biomedical longitudinal study lies the question of a significant difference between the effect of two or more treatments in different groups. Whereas in rm-ANOVA a _post-hoc_ analysis is required to answer such question by calculating some _p-values_ after multiple comparisons, GAMs can use a different approach to estimate significance. In essence, the idea behind the estimation of significance in GAMs across different treatment groups is that if the _difference_ between the empirical Bayesian confidence intervals of the fitted smooths for such groups is  non-zero, then a significant difference exists at that time point(s). The absence of a _p-value_ in this case might seem odd, but the empirical Bayesian confidence interval interpretation can be conceptualized in the following manner: Different trends in each group are an indication of an effect by the treatment. This is what happens for the simulated data in Figure \@ref(fig:sim-smooth-plot)A, where the chemotherapy causes $\mbox{StO}_2$ to increase over time. 
+At the core of a biomedical longitudinal study lies the question of a significant difference between the effect of two or more treatments in different groups. Whereas in rm-ANOVA a _post-hoc_ analysis is required to answer such question by calculating some _p-values_ after multiple comparisons, GAMs can use a different approach to estimate significance. In essence, the idea behind the estimation of significance in GAMs across different treatment groups in a model where separate smoothers exists per group (such as in `gam_02`) is that the difference between them can be computed, followed by the estimation of a confidence interval around this difference. 
+**add sentence about the issue of the Nychka across the function intervals **
+
+around that  _difference_ between the empirical Bayesian confidence intervals of the fitted smooths for such groups is  non-zero, then a significant difference exists at that time point(s). The absence of a _p-value_ in this case might seem odd, but the empirical Bayesian confidence interval interpretation can be conceptualized in the following manner: Different trends in each group are an indication of an effect by the treatment. This is what happens for the simulated data in Figure \@ref(fig:sim-smooth-plot)A, where the chemotherapy causes $\mbox{StO}_2$ to increase over time. 
 
 With this expectation of different trends in each group, computing the difference between the trends will identify if the observed difference is significant. The difference between groups with similar trends is likely to yield zero, which would indicate that the treatment is not causing a change in the response in one of the groups (assuming the other group is a Control or Reference group).
 

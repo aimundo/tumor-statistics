@@ -14,27 +14,27 @@ In a longitudinal biomedical study, two or more groups of subjects (e.g., human 
 Mathematically speaking, a rm-ANOVA model with an interaction can be written as:
 
 \begin{equation}
-y_{ijt} = \beta_0+\beta_1 \times time_{t} +\beta_2 \times treatment_{j} +\beta_3 \times time_{t}\times treatment_{j}+\varepsilon_{ijt},\\ 
+y_{ijt} = \beta_0+\beta_1 \times treatment_{j} +\beta_2 \times time_{t} +\beta_3 \times time_{t}\times treatment_{j}+\varepsilon_{ijt},\\ 
 (\#eq:linear-model)
 \end{equation}
 
-In this model $y_{ijt}$ is the response for subject $i$, in treatment group $j$ at time $t$, which can be decomposed in a mean value $\beta_0$, _fixed effects_ of time ($time_t$), treatment ($treatment_j$) and their interaction $time_t*treatment_j$ which have linear slopes given by $\beta_1, \beta_2$ and $\beta_3$, respectively. Independent errors $\varepsilon_{ijt}$ represent **random variation from the sampling process ** assumed to be $\stackrel{i.i.d.}\sim N(0,\sigma^2)$ (independently and identically normally distributed with mean zero and variance $\sigma^2$).
+In this model $y_{ijt}$ is the response for subject $i$, in treatment group $j$ at time $t$, which can be decomposed in a mean value $\beta_0$, _fixed effects_ of treatment ($treatment_j$), time ($time_t$), and their interaction $time_t*treatment_j$ which have linear slopes given by $\beta_1, \beta_2$ and $\beta_3$, respectively. Independent errors $\varepsilon_{ijt}$ represent random variation from the sampling process assumed to be $\stackrel{i.i.d.}\sim N(0,\sigma^2)$ (independently and identically normally distributed with mean zero and variance $\sigma^2$).
 In a  biomedical research context, suppose two treatments groups are used in a study (e.g., "placebo" vs. "novel drug", or "saline" vs. "chemotherapy"). Then, the group terms in Equation \@ref(eq:linear-model) can be written as below with $treatment_j=0$ representing the first treatment group (Group A) and $treatment_j=1$ representing the second treatment group (Group B). With this notation, the linear model then can be expressed as
 
 
 \begin{equation}
 y_{ijt} = \begin{cases}
-\beta_0 + \beta_1\times time_{t}+\varepsilon_{ijt}   & \mbox{if Group A},\\
-\beta_0 + \beta_2+\beta_1 \times time_{t} +\beta_3 \times time_{t}+\varepsilon_{ijt}  & \mbox{if Group B}.\\
+\beta_0 + \beta_2\times time_{t}+\varepsilon_{ijt}   & \mbox{if Group A},\\
+\beta_0 + \beta_1+\beta_2 \times time_{t} +\beta_3 \times time_{t}+\varepsilon_{ijt}  & \mbox{if Group B}.\\
 \end{cases}
 (\#eq:ANOVA-by-group)
 \end{equation}
 
-To further simplify the expression, substitute $\widetilde{\beta_{0}}=\beta_0+\beta_{2}$ and $\widetilde{\beta_{1}}=\beta_{1}+\beta_{3}$ in the equation for Group B. This substitution allows for a different intercept and slope for Groups A and B. The model is then written as
+To further simplify the expression, substitute $\widetilde{\beta_{0}}=\beta_0+\beta_{1}$ and $\widetilde{\beta_{1}}=\beta_{2}+\beta_{3}$ in the equation for Group B. This substitution allows for a different intercept and slope for Groups A and B. The model is then written as
 
 \begin{equation}
 y_{ijt} = \begin{cases}
-\beta_0 + \beta_1\times time_{t}+\varepsilon_{ijt}   & \mbox{if Group A},\\
+\beta_0 + \beta_2\times time_{t}+\varepsilon_{ijt}   & \mbox{if Group A},\\
 \widetilde{\beta_{0}} + \widetilde{\beta_1} \times time_{t}+\varepsilon_{ijt}  & \mbox{if Group B}.\\
 \end{cases}
 (\#eq:ANOVA-lines)
@@ -44,11 +44,11 @@ Presenting the model in this manner makes clear that when treating different gro
 
 ### The Linear Mixed Model (LMEM) Case{#LMEM-case}
 
-A LMEM is a class of statistical models that incorporates _fixed effects_ to model the relationship between the covariates and the response, and _random effects_ to model subject variability that is not the primary focus of the study but that might be important to account for[@pinheiro2006;@west2014]. A LMEM with interaction between time and treatment for a longitudinal study  can be written as:
+A LMEM is a class of statistical models that incorporates _fixed effects_ to model the relationship between the covariates and the response, and _random effects_ to model subject variability that is not the primary focus of the study but that might be important to account for[@pinheiro2006;@west2014]. A LMEM with interaction between time and treatment for a longitudinal study  can be written as
 
 
 \begin{equation}
-y_{ijt} = \beta_0+ \beta_1 \times time_{t} + \beta_2 \times treatment_{j} + \beta_3 \times time_{t}\times treatment_{j}+\alpha_{ij} +\varepsilon_{ijt}\\.
+y_{ijt} = \beta_0+ \beta_1 \times treatment_{j}+ \beta_2 \times time_{t} + \beta_3 \times time_{t}\times treatment_{j}+\alpha_{ij} +\varepsilon_{ijt}\\.
 (\#eq:LMEM)
 \end{equation}
 

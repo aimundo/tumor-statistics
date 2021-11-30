@@ -529,7 +529,7 @@ f2<-ggplot(dat_sim, aes(x = Day,
     geom_point(show.legend=FALSE,
                size=1.5,
                alpha=0.6)+
-    geom_line(size=0.6, alpha=0.4)+
+    geom_line(size=0.6, alpha=0.4,show.legend=FALSE)+
     geom_line(aes(x = Day, 
                y = StO2,
                color=Group),
@@ -1090,7 +1090,7 @@ smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
     row2 <- with(newdata, Group == g2)
     ## difference rows of xp for data from comparison
     X <- xp[row1, ] - xp[row2, ]
-    ## zero out cols of X related to splines for other lochs
+    ## zero out cols of X not involved in the comparison
     X[, ! (col1 | col2)] <- 0
     
     ## zero out the parametric cols
