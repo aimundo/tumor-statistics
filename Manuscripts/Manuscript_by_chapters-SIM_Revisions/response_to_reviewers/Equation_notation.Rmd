@@ -7,6 +7,24 @@ An rm-ANOVA can be defined as:
 
 $y_{ijt}=\delta_{j}+\gamma_{j}+\tau_{t}+(\gamma \times \tau)_{jt}+\varepsilon_{ijt},$
 
-where the response $y$ of subject $i$ in group $j$ at time $t$ is modeled using coefficients $\delta, \gamma$ and $\tau$, which are collectively known as the random parameters or coefficients, and which are generally denoted by $\beta$.
+$y_{ijt}=\delta_{j}+\gamma_{j}+\tau_{t} \times x_{t}+(\gamma \times \tau)_{jt} \times x_{t}+\varepsilon_{ijt},$
+
+where the observed response $y_{ijt}$ of subject $i$ in group $j$ at time $t$ is modeled using coefficients $\delta, \gamma$ and $\tau$, and which are globally referred to as the model "coefficients" $\beta_n$.
+
+$y_{ijt} = \begin{cases}\beta_0 + \beta_1\times time_{t}+\varepsilon_{ijt}   & \mbox{if Group A},\\ \beta_0 + \beta_2+\beta_1 \times time_{t} +\beta_3 \times time_{t}+\varepsilon_{ijt}  & \mbox{if Group B}.\\\end{cases}$
+
+$y_{ijt} = \begin{cases}\delta_{j} + \tau\times x_{t}+\varepsilon_{ijt}   & \mbox{if Group A},\\ \delta_{j} + \gamma+\tau \times x_{t} +(\gamma \times \tau)_{jt}\times x_{t}+\varepsilon_{ijt}  & \mbox{if Group B}.\\\end{cases}$
 
 An LMEM can be defined as:
+
+$y_{ijt}=\delta_{j}+\gamma_{j}+\tau_{t}+(\gamma \times \tau)_{jt}+\alpha_{ij}+\varepsilon_{ijt},$
+
+$y_{ijt}=\delta_{j}+\gamma_{j}+\tau_{t} \times x_{t}+(\gamma \times \tau)_{jt} \times x_{t}+\alpha_{ij}+\varepsilon_{ijt},$
+
+The linear predictor then,
+
+$\eta_{ijt}=\delta_j+\beta_jx_{ijt}$
+
+GAM linear predictor:
+
+$\eta_{ijt}=\delta_j+\tau \times x_t+f(x_t|\beta_j)$
