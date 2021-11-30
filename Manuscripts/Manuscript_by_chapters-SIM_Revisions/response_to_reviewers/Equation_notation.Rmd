@@ -1,0 +1,12 @@
+---
+title: "updated equations"
+output: html_document
+---
+
+An rm-ANOVA can be defined as:
+
+$y_{ijt}=\delta_{j}+\gamma_{j}+\tau_{t}+(\gamma \times \tau)_{jt}+\varepsilon_{ijt},$
+
+where the response $y$ of subject $i$ in group $j$ at time $t$ is modeled using coefficients $\delta, \gamma$ and $\tau$, which are collectively known as the random parameters or coefficients, and which are generally denoted by $\beta$.
+
+An LMEM can be defined as:
