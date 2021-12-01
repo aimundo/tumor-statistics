@@ -62,11 +62,11 @@ just don’t require balance.
 
 We appreciate the comments about clarity in the use of the term "missingness". Please note that the title for Section 3.4 has been changed from "Missing observations" to "Unbalanced data". We have restructured this section in the following manner:
 
-- The term "missing data" has been removed to avoid confusion. We now refer to different number of observations as "unbalanced data" (L201-204).
+- L204-207: The term "missing data" has been removed to avoid confusion. We now refer to different number of observations as "unbalanced data".
 
-- We have made clear that LMEMs can also work with missing observations (L209)
+- L212: We have made clear that LMEMs can also work with missing observations.
 
-- Emphasis has been provided to the fact that GAMs are not immune to missing data problems, and that researchers need to minimize missing observation rates (L217-220).
+- L220-223: Emphasis has been provided to the fact that GAMs are not immune to missing data problems, and that researchers need to minimize missing observation rates.
 
 
 # Unnecesary restriction of LMMs
@@ -87,15 +87,15 @@ We appreciate the reviewer's perspective regarding the somewhat contradictory ar
 
 - Section 3.2 now is titled "Assumed relationship" instead of "Linear relationship"
 
-- L181-L184 now indicate that polynomial effects can be used in a LMEM, but that they have little predictive power and lack biological or mechanistic interpretation.
+- L180-L182 now indicate that polynomial effects can be used in a LMEM, but that they have little predictive power and lack biological or mechanistic interpretation.
 
-- We provide additional context on the purpose of using linear models to fit quadratic data in L250-L251 which now read "We are aware that the simulated data used in this section present an extreme case that might not occur frequently in biomedical research, but they are used to 1) present the consequences of modeling non-linear trends in data with a linear model such as rm-ANOVA or a LMEM with "default" (linear) effects and, 2) demonstrate that, a visual assessment of model fit is an important tool that helps determine the validity of any statistical assumptions."
+- L246-L250: We provide additional context on the purpose of using linear models to fit quadratic data in  which now read "We are aware that the simulated data used in this section present an extreme case that might not occur frequently in biomedical research, but they are used to 1) present the consequences of modeling non-linear trends in data with a linear model such as rm-ANOVA or a LMEM with "default" (linear) effects and, 2) demonstrate that, a visual assessment of model fit is an important tool that helps determine the validity of any statistical assumptions."
 
-We believe that the aforementioned change makes a clear statement to the reader about our intentions in Fig.1. We want to emphasize that strictly speaking the term "default" might not be correct, but we are stretching the language to make the point that doing a simple switch from rm-ANOVA to a LMEMs (in R) without any additional changes results in the assumption of linear effects that still provide biased estimates.
+We believe that the aforementioned change makes a clear statement to the reader about our intentions in Fig.1. We want to emphasize that strictly speaking the term "default" (used for linear effects in a LMEM) might not be correct, but we are stretching the language to make the point that doing a simple switch from rm-ANOVA to a LMEMs (in R) without any additional changes results in the assumption of linear effects that still provide biased estimates.
 
-- L273-276 now include some of the reasons that complicate the use of polynomial effects in a LMEM for the data in Fig. 1. Specifically, that in reality the true function is not known and that this complicates choosing the degree of the polynomial. We also reference Section 4.3.1, which provides more detail on the limitation of polynomial effects.
+- L271-274 now include some of the reasons that complicate the use of polynomial effects in a LMEM for the data in Fig. 1. Specifically, that in reality the true function is not known and that this complicates choosing the degree of the polynomial. We also reference Section 4.3.1, which provides more detail on the limitations of polynomial effects.
 
-- In Section 6 (Discussion)  we emphasize again the rationale for not using polynomial effects on the LMEM in Fig. 1 (L509-513). 
+- L505-509 In Section 6 (Discussion) we emphasize again the limitations of polynomial effects when used on biological data, such as in the case of the simulated data in Fig. 1.
 
 
 # GLMMs
@@ -106,11 +106,15 @@ You don’t even mention generalized linear mixed models; why? In the context of
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-- We appreciate Dr. Simpson's comment here and the equations provided, which we have now incorporated in the manuscript.. We acknowledge that a brief overview of the different statistical model classes was missing in the original manuscript, and we have now extensively edited Section 4 to provide context on LMs, GLMs and GLMMs before introducing GAMs. The changes now appear between L282 (where Section 4 has been renamed to "Linear Models and Beyond") and L321. Because the different model classifications are not commonly known in the biomedical field, we contextualize the previously presented rm-ANOVA and LMEM into their respective classes to provide the reader with a clear understanding of where each model fits and also of where GAMs fit within this framework. We believe this properly addressed the reviewer comments.
+We appreciate Dr. Simpson's comment here and the equations provided, which we have now incorporated in the manuscript. We acknowledge that a brief overview of the different statistical model classes was missing in the original manuscript, and we have now extensively edited Section 4 to provide context on linear models (LMs), generalized linear models (GLMs) and generalized linear mixed models (GLMMs) before introducing GAMs.
 
-- We also acknowledge that the GAM model (Equation 5 in the original manuscript and Equation 10 in the revised document) corresponds to the **linear case**. This change will avoid the propagation of confusion that Dr. Simpson correctly indicated in his comment.
+- L280- L318: Section 4 has been renamed to "Linear Models and Beyond" and the different Subsections cover LMs, GLMs, GLMMs and GAMs. Because the different model classes are not commonly known in the biomedical field, we contextualize the previously presented rm-ANOVA and LMEM into their respective classes to provide the reader with a clear understanding of where each model fits (Section 4.1). We also provide equations for the linear predictors in each case (Equations (6) and (8)) following the notation of Equations (1) through (4). We want to emphasize that because the target audience of this paper are biomedical researchers that are not familiar with Mathematical Statistics, we follow notation that is easy to read (e.g., using $time_t$ instead of $x_t$), although it might not be standard notation followed in Statistical publications. 
 
-- We have also changed L328 to indicate that the term $\varepsilon_{ijt}$ is the residual, and not a separable error. Of notice, we are following the notation provided by Dr. Simpson in Eq. 3 in the paper "Modelling Modelling Palaeoecological Time Series Using Generalised Additive Models". **do we need this here? I am adding it because we are following the same model specification that he has in this paper**
+We believe that because Section 4 now provides context and follows a logical progression of LMs, GLMs, GLMMs and GAMs in a way that is easily understandable, these changes properly addressed the reviewer comments.
+
+- L323: We also acknowledge that the GAM model (Equation 5 in the original manuscript and Equation 10 in the revised document) corresponds to the **linear case**. This change will avoid the propagation of confusion that Dr. Simpson correctly indicated in his comment.
+
+- L325: We indicate that the term $\varepsilon_{ijt}$ is the residual, and not a separable error. Of notice, we are following the notation provided by Dr. Simpson in Eq. 3 in the paper "Modelling Modelling Palaeoecological Time Series Using Generalised Additive Models". **do we need this here? I am adding it because we are following the same model specification that he has in this paper**
 
 # Thin plate regression splines
 
@@ -122,7 +126,7 @@ The authors define the default basis in {mgcv}, the software being used here to 
 
 The following changes have been made:
 
-- The information on L289-294 pertaining splines has been changed. L301-309 now describe cubic splines (CS), thin plate splines (TPS) and thin plate regression splines (TPRS) in a manner that conveys their general properties and advantages (or disadvantages) to a non-Statistical reader.  
+- L343-357: This information that originally appeared in L289-294 pertaining splines has been changed, as we now describe cubic splines (CS), thin plate splines (TPS) and thin plate regression splines (TPRS) in a manner that conveys their general properties and advantages (or disadvantages) to a non-Statistical reader.  Here, we no longer refer to TPRS as an "optimized version" but we indicate that they are a truncated version of thin plate splines (TPS).
 
 ## Reviewer's Comments
 
@@ -132,8 +136,7 @@ operate throughout the range of the covariate.
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-- L297-300 no longer refer to "knots" when referring to the construction of the smooth, now indicating that the number of _basis functions_ is what is specified when constructing the smoother. In the updated manuscript, this change appears in L310-315, and is more clear to the reader due to the changes introduced in L301-L309.
-
+- L358-365, which correspond to L297-300 on the original submission no longer refer to "knots" when referring to the construction of the smooth, now indicating that the number of _basis functions_ is what is specified when constructing the smoother. We believe that this will make sense to the reader  due to the information provided in L343-357.
 
 # Penalised splines
 ## Reviewer's Comments
@@ -145,9 +148,11 @@ By glossing over these important concepts, the reader is left wondering what wig
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-- We appreciate this comment regarding wiggliness. We have now added a new paragraph in Section 4.3.1 (L369-375) which briefly discuss wiggliness, and uses a physics analogy to convey the overall concept of penalization. Because the intention of our work is to present the practical advantages of GAMs we want to avoid including mathematical notation about penalization in the manuscript, which would be confusing and distracting to the readers from the main purpose of the paper.
+- We appreciate this comment regarding wiggliness. For this particular topic, we have implemented changes that address the reviewer's concerns without adding additional notation (which will obscure the topic to the reader). We have used a minimalistic approach here in order to provide some facts about penalization without becoming too technical about it.
 
-- We have substituted "weak" and "strong" for "low" and "high" (L373).
+L366-374 has been added, and is a paragraph which briefly discusses wiggliness, the smoothness parameter $\lambda$ and the penalization process using the integrated square of the seocnd derivative of the spline. Our goal here is for the reader to understand the effect that $\lambda$ in order to prevent overfitting.
+
+- L373: We have substituted "weak" and "strong" for "low" and "high".
 
 # Bayesian
 
@@ -159,9 +164,9 @@ and standard linear mixed model software. However, you can fit the model using t
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-- We have clarified the concept "empirical Bayesian", which appeared on L318-L319 in the original manuscript. In the revised manuscript, L335-338 now indicate that Stan, JAGS or other probabilistic programming language can be used to estimate GAMs using a full Bayesian approach.
+- L392-393 now clarify this by indicating that Stan, JAGS or other probabilistic programming language can be used to estimate GAMs using a full Bayesian approach.
 
-- The sentence "Moreover, the use of the restricted maximum likelihood (REML) to estimate the smoothing parameters gives an empirical estimate of the smooth model", which appears in L319 in the original manuscript has been removed from the text. Instead, the concept of REML has been moved to Section 6.2 L392-395, where we state some of the reasons indicated by Wood when choosing restricted maximum likelihood (REML) over the default general cross validation (GCV) method for smooth parameter estimation in _mgcv_. 
+- The sentence "Moreover, the use of the restricted maximum likelihood (REML) to estimate the smoothing parameters gives an empirical estimate of the smooth model", which appears in L319 in the original manuscript has been removed from the text. Instead, the concept of REML has been moved to Section 5.2 L442-444, where we state some of the reasons indicated by Wood when choosing restricted maximum likelihood (REML) over the default general cross validation (GCV) method for smooth parameter estimation in _mgcv_. 
 
 
 # Coverage of confidence intervals
@@ -179,7 +184,7 @@ than nominal coverage and some areas less than the nominal coverage.
 
 The content in L320-329 regarding confidence intervals (CIs) in the original submission has been changed in the following manner:
 
-- L341-L355 now contain a more detailed and accurate explanation on the differences and interpretation of "poin-twise" CIs and "across-the-function" CIs. We removed the "95% of the time" phrase to avoid confusion, and instead we provide an explanation that focuses on random sampling: "if 100 random samples are obtained and a GAM and CI is calculated for each one of them, it would be expected that 95 out of the 100 fitted CIs entirely contain the true function" (L352-354). We also reference the work of Marra and Wood if the reader desires a more in-depth exploration of across the function CIs.
+- L396-L403 now contain a more detailed and accurate explanation of"across-the-function" CIs. We have used the reviewer's comments to indicate that in GAM fitted using _mgcv_, the close to nominal across-the-function-coverage is true when averaged over the entire function.
 
 # Differences in smooths
 
@@ -200,7 +205,16 @@ In the appendix I think you are needlessly restricting the size of the basis dim
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-In L367 it is indicated that the simulated data used to fit the GAM that the reviewer alludes to has only 5 unique covariates (days 0, 2, 5, 7 and 10). The computational requisite in the smooth estimation of having the maximum number of basis equal to the number of unique values in the covariate makes it impossible to fit a GAM with a k>5, as the error "A term has fewer unique covariate combinations than specified maximum degrees of freedom" is thrown by _mgcv_. We consider that because the k-index for the model is 1.04 the basis dimension for the smooth is adequate (Wood says that "the further below 1 this is, th emore likely it is that there is missed pattern left in the residuals").
+L416 (in the revised manuscript) indicates that the simulated data used to fit the GAM that the reviewer alludes to has only 5 unique covariates (days 0, 2, 5, 7 and 10). The computational requisite in the smooth estimation of having the maximum number of basis equal to the number of unique values in the covariate makes it impossible to fit a GAM with a k>5, as the error "A term has fewer unique covariate combinations than specified maximum degrees of freedom" is thrown by _mgcv_. We consider that because the k-index for the model is 1.04 the basis dimension for the smooth is adequate (Wood says that "the further below 1 this is, the more likely it is that there is missed pattern left in the residuals").
+
+## Reviewer's Comments
+
+A.4.3 You say that gam_00 doesn’t account for the nesting of the data by Group. It does but only partially; you get a separate smooth per group and those smooth will be trying to also account for the different means of the response in the two groups. I think it is much clearer to say just that; it is better to include
+parametric terms for the group means so the smooths capture the time-course differences about these overall group means of $Y$ .
+
+## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
+
+We believe Dr. Simpson refers here to `gam_01` instead of `gam_00`, as the latter does not include `Group` as part of the model specification and because of this, we don't get a separate smooth per group, which can be seen in the resulting single smooth fitted by the model. However, we believe that the clarification he provided here is important, and we have added it to A.4.3 so it is more clear to the reader.
 
 ## Reviewer's Comments
 
@@ -209,7 +223,7 @@ Why change the model object name notation here? You had gam_00 previously and no
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
 - The name of the model has been changed to `gam_02`, and it appears with this notation in Section 6.2, L383 so it matches the workflow of model selection presented in the Appendix.
-- Additionally, we have used some of the source code of the function `gam.check` in order to use the graphical output of `gratia` and the numerical diagnostic information of `gam.check` without repeating the diagnostic plots.
+- Additionally, we have used some of the source code of the function `gam.check` in order to use the graphical output of `gratia` and the numerical diagnostic information of `gam.check` without repeating the diagnostic plots, the code for this is now in the Appendix.
 
 # Suggested Changes
 
@@ -231,6 +245,7 @@ blocks with comments.
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
+We provide the code for the figures and models from the manuscript in order to make the work reproducible, but we are aware that readers will not be interested specifically in such code, but rather in the code for the model selection workflow in the Appendix. For that part of the Appendix (Section A.4) we do follow the reviewer's comment and have updated the order of the code chunks in order to make it similar to a vignette. 
 
 # Figures
 
@@ -248,7 +263,9 @@ Figure 3: on panel A, are the solid lines the truth in the main panel? If they a
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-Although data simulation is a very common practice in Statistics/Ecology, it not so much in biomedical research. The main goal of Figure 3 A is to show that simulation is indeed a plausible tool to explore data behavior and to test statistical models in biomedical research. It might seem too basic or repetitive, but we are trying to convince the reader that simulation can indeed produce synthetic data that can be useful.
+Although data simulation is a very common practice in Statistics/Ecology, it not so much in biomedical research. The main goal of Figure 3 A is to show that simulation is indeed a plausible tool to explore data behavior and to test statistical models in biomedical research. It might seem too basic or repetitive, but we are trying to convince the reader that simulation can indeed produce synthetic data that can be useful. However, we do acknowledge that the inset was repetitive. 
+
+We have updated Figure 3 so that panel A shows both the simulated and real data and therefore it is easier for the reader to see the simulation of the output.
 
 # Figures
 
@@ -282,7 +299,7 @@ Also here we have “non-linear data” which almost surely should be “non-lin
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-We have changed the expression to "data that shows non-linear trends". The change has also been applied to L316 which is now L334 in the revised manuscript.
+We have changed the expression to "data that shows non-linear trends". The change has also been applied to L316 which is now L389 in the revised manuscript.
 
 ## Reviewer's Comments
 
@@ -298,7 +315,7 @@ L185 here and throughout, check for situations where you have combined numerical
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-**leave this to the end as it can be fixed in the final .tex document**
+We have updated all the occurrences of citations within the narrative text by using the last name of the author followed by the citation, which fixes the issue.
 
 ## Reviewer's Comments
 
@@ -314,7 +331,7 @@ L283 I think it is better to say “…the mathematical space within which the t
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-We have updated this line to "the mathematical space within which the true but unknown $f(x_t\mid \beta_j)$  is thought to exist", in L290 in the revised manuscript.
+We have updated this line to "the mathematical space within which the true but unknown $f(x_t\mid \beta_j)$  is thought to exist", in L337 in the revised manuscript.
 
 ## Reviewer's Comments
 
@@ -322,7 +339,7 @@ L293 You never really describe what “data-drive flexibility” is. Why are GAM
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-This line has been removed from the revised manuscript. However, we acknowledge that we didn't clearly conveyed this point to the read. In Section 6 (Discussion, L525-526 we now clearly state that a major advantage of GAMs is that they can learn non-linear trends from the data, thus eliminating the requirement of other models such as LMEMs where the relationship needs to be provided.
+This line has been removed from the revised manuscript. However, we acknowledge that we didn't clearly conveyed this point to the read. In Section 6 (Discussion, L525-527 we now clearly state that a major advantage of GAMs is that they can learn non-linear trends from the data, thus eliminating the requirement of other models such as LMEMs where the relationship needs to be provided.
 
 ## Reviewer's Comments
 
@@ -346,6 +363,7 @@ L356 use straight quotes in code, not curly ones. And speficy the `family` here?
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
+We use the code notation provided by the $LaTeX$ package `listings`, and it provides curly quotes for code. Regarding `family`, we believe that it is not necessary to include it here, but we indicate in L445-446 what the argument exists and that other distributions can be used.
 
 ## Reviewer's Comments
 
@@ -369,7 +387,7 @@ L362 why highlight Gaussian process smooths? They’re not as useful as they see
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-For the length of the covariates explored in this paper TPRS are sufficient. However, we want to make clear to the reader that other types of splines that might be appropriate in each case are available. To acknowledge this, L390 in the updated manuscript now reads "(a description of all the available smooths can be found by typing `?mgcv::smooth.terms` in the Console)".
+For the length of the covariates explored in this paper TPRS are sufficient. However, we want to make clear to the reader that other types of splines that might be appropriate in certain situations are available. To acknowledge this, L440 in the updated manuscript now reads "(a description of all the available smooths can be found by typing `?mgcv::smooth.terms` in the Console)".
 
 ## Reviewer's Comments
 

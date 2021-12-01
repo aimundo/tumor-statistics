@@ -56,7 +56,7 @@ Notice that in the previous sections, the difference between GLMs and GLMMs resi
 (\#eq:GAM-eta)
 \end{equation}
 
-Where $\beta_{0}$ is the intercept, and $\beta_{1}$ is the coefficient for each treatment group. Notice that the construction of the predictor is similar to that of Equation \@ref(GLM-eta), but in this case the parametric terms involving the effect of time have been replaced by $f(time_{t}|\beta_{j})$, which represents the smooth function of time with with inputs as the covariates $time_t$ and parameters $\beta_{j}$. A GAM version of a linear model can be written as:
+Where $\beta_{0}$ is the intercept, and $\beta_{1}$ is the coefficient for each treatment group. Notice that the construction of the predictor is similar to that of Equation \@ref(eq:GLM-eta), but in this case the parametric terms involving the effect of time have been replaced by $f(time_{t}|\beta_{j})$, which represents the smooth function of time with with inputs as the covariates $time_t$ and parameters $\beta_{j}$. A GAM version of a linear model can be written as:
 
 
 \begin{equation}

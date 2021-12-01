@@ -261,48 +261,48 @@ In a longitudinal biomedical study, two or more groups of subjects (e.g., human 
 Mathematically speaking, a rm-ANOVA model with an interaction can be written as:
 
 \begin{equation}
-y_{ijt} = \beta_0+\beta_1 \times time_{t} +\beta_2 \times treatment_{j} +\beta_3 \times time_{t}\times treatment_{j}+\varepsilon_{ijt}\\ 
+y_{ijt} = \beta_0+\beta_1 \times treatment_{j} +\beta_2 \times time_{t} +\beta_3 \times time_{t}\times treatment_{j}+\varepsilon_{ijt},\\ 
 \label{eq:linear-model}
 \end{equation}
 
-In this model \(y_{ijt}\) is the response for subject \(i\), in treatment group \(j\) at time \(t\), which can be decomposed in a mean value \(\beta_0\), \emph{fixed effects} of time (\(time_t\)), treatment (\(treatment_j\)) and their interaction \(time_t*treatment_j\) which have linear slopes given by \(\beta_1, \beta_2\) and \(\beta_3\), respectively. Independent errors \(\varepsilon_{ijt}\) represent \textbf{random variation from the sampling process } assumed to be \(\stackrel{i.i.d.}\sim N(0,\sigma^2)\) (independently and identically normally distributed with mean zero and variance \(\sigma^2\)).
+In this model \(y_{ijt}\) is the response for subject \(i\), in treatment group \(j\) at time \(t\), which can be decomposed in a mean value \(\beta_0\), \emph{fixed effects} of treatment (\(treatment_j\)), time (\(time_t\)), and their interaction \(time_t*treatment_j\) which have linear slopes given by \(\beta_1, \beta_2\) and \(\beta_3\), respectively. Independent errors \(\varepsilon_{ijt}\) represent random variation from the sampling process assumed to be \(\stackrel{i.i.d.}\sim N(0,\sigma^2)\) (independently and identically normally distributed with mean zero and variance \(\sigma^2\)).
 In a biomedical research context, suppose two treatments groups are used in a study (e.g., ``placebo'' vs.~``novel drug,'' or ``saline'' vs.~``chemotherapy''). Then, the group terms in Equation \eqref{eq:linear-model} can be written as below with \(treatment_j=0\) representing the first treatment group (Group A) and \(treatment_j=1\) representing the second treatment group (Group B). With this notation, the linear model then can be expressed as
 
 \begin{equation}
 y_{ijt} = \begin{cases}
-\beta_0 + \beta_1\times time_{t}+\varepsilon_{ijt}   & \mbox{if Group A}\\
-\beta_0 + \beta_2+\beta_1 \times time_{t} +\beta_3 \times time_{t}+\varepsilon_{ijt}  & \mbox{if Group B}\\
+\beta_0 + \beta_2\times time_{t}+\varepsilon_{ijt}   & \mbox{if Group A},\\
+\beta_0 + \beta_1+\beta_2 \times time_{t} +\beta_3 \times time_{t}+\varepsilon_{ijt}  & \mbox{if Group B}.\\
 \end{cases}
 \label{eq:ANOVA-by-group}
 \end{equation}
 
-To further simplify the expression, substitute \(\widetilde{\beta_{0}}=\beta_0+\beta_{2}\) and \(\widetilde{\beta_{1}}=\beta_{1}+\beta_{3}\) in the equation for Group B. This substitution allows for a different intercept and slope for Groups A and B. The model is then written as
+To further simplify the expression, substitute \(\widetilde{\beta_{0}}=\beta_0+\beta_{1}\) and \(\widetilde{\beta_{1}}=\beta_{2}+\beta_{3}\) in the equation for Group B. This substitution allows for a different intercept and slope for Groups A and B. The model is then written as
 
 \begin{equation}
 y_{ijt} = \begin{cases}
-\beta_0 + \beta_1\times time_{t}+\varepsilon_{ijt}   & \mbox{if Group A}\\
-\widetilde{\beta_{0}} + \widetilde{\beta_1} \times time_{t}+\varepsilon_{ijt}  & \mbox{if Group B}\\
+\beta_0 + \beta_2\times time_{t}+\varepsilon_{ijt}   & \mbox{if Group A},\\
+\widetilde{\beta_{0}} + \widetilde{\beta_1} \times time_{t}+\varepsilon_{ijt}  & \mbox{if Group B}.\\
 \end{cases}
 \label{eq:ANOVA-lines}
 \end{equation}
 
-Presenting the model in this manner makes clear that when treating different groups, an rm-ANOVA model is able to accommodate non-parallel lines in each case (different intercepts and slopes per group). In other words, the rm-ANOVA model ``expects'' a linear relationship between the covariates and the response. This means that either presented as Equation \eqref{eq:linear-model}, Equation \eqref{eq:ANOVA-by-group} or Equation \eqref{eq:ANOVA-lines}, an rm-ANOVA model is only able to accommodate linear patterns in the data. If the data show non-linear trends, the rm-ANOVA model will approximate this behavior with non-parallel lines.
+Presenting the model in this manner makes clear that when treating different groups, an rm-ANOVA model is able to accommodate non-parallel lines in each case (different intercepts and slopes per group). In other words, the rm-ANOVA model ``expects'' a linear relationship between the covariates and the response. This means that either presented as Equations \eqref{eq:linear-model}, \eqref{eq:ANOVA-by-group} or \eqref{eq:ANOVA-lines}, an rm-ANOVA model is only able to accommodate linear patterns in the data. If the data show non-linear trends, the rm-ANOVA model will approximate this behavior with non-parallel lines.
 
 \hypertarget{LMEM-case}{%
 \subsubsection{The Linear Mixed Model (LMEM) Case}\label{LMEM-case}}
 
-A LMEM is a class of statistical models that incorporates \emph{fixed effects} to model the relationship between the covariates and the response, and \emph{random effects} to model subject variability that is not the primary focus of the study but that might be important to distinguish {[}\protect\hyperlink{ref-pinheiro2006}{15},\protect\hyperlink{ref-west2014}{40}{]}. A LMEM with interaction between time and treatment for a longitudinal study can be written as:
+A LMEM is a class of statistical models that incorporates \emph{fixed effects} to model the relationship between the covariates and the response, and \emph{random effects} to model subject variability that is not the primary focus of the study but that might be important to account for{[}\protect\hyperlink{ref-pinheiro2006}{15},\protect\hyperlink{ref-west2014}{40}{]}. A LMEM with interaction between time and treatment for a longitudinal study can be written as
 
 \begin{equation}
-y_{ijt} = \beta_0+ \beta_1 \times time_{t} + \beta_2 \times treatment_{j} + \beta_3 \times time_{t}\times treatment_{j}+\mu_{ij} +\varepsilon_{ijt}\\ 
+y_{ijt} = \beta_0+ \beta_1 \times treatment_{j}+ \beta_2 \times time_{t} + \beta_3 \times time_{t}\times treatment_{j}+\alpha_{ij} +\varepsilon_{ijt}\\.
 \label{eq:LMEM}
 \end{equation}
 
-When Equation \eqref{eq:linear-model} and Equation \eqref{eq:LMEM} are compared, it is easily noticeable that LMEMs and rm-ANOVA have the same construction regarding the \emph{fixed effects} of time and treatment, but that the LMEM incorporates an additional source of variation (the term \(\mu_{ij}\)). This term \(\mu_{ij}\) is the one that corresponds to the \emph{random effect}, accounting for variability in each subject (subject\(_i\)) within each group (group\(_j\)). The \emph{random} component can also be understood as used to model some ``noise'' in the response, but that is intended to be analyzed and disentangled from the **``sampling** noise'' term \(\varepsilon_{ijt}\) from Equation \eqref{eq:linear-model}.
+When Equations \eqref{eq:linear-model} and \eqref{eq:LMEM} are compared, it is noticeable that LMEMs and rm-ANOVA have the same construction regarding the \emph{fixed effects} of time and treatment, but that the LMEM incorporates an additional source of variation (the term \(\alpha_{ij}\)). This term \(\alpha_{ij}\) corresponds to the \emph{random effect}, accounting for variability in each subject (subject\(_i\)) within each group (group\(_j\)). The \emph{random} component can also be understood as modeling some ``noise'' in the response, but that does not arise from the sampling error term \(\varepsilon_{ijt}\) from Equations \eqref{eq:linear-model} through \eqref{eq:ANOVA-lines}.
 
-For example, if the blood concentration of a drug is measured in certain subjects in the early hours of the morning while other subjects are measured in the afternoon, it is possible that the difference in the collection time introduces some ``noise'' in the data \textbf{that needs to be accounted for}. As the name suggests, this ``random'' variability needs to be modeled as a variable rather than as a constant value. The \emph{random effect} \(\mu_{ij}\) in Equation \eqref{eq:LMEM} is assumed to be \(\mu_{ij} \sim N(0,\sigma^2_\mu)\). In essence, the \emph{random effect} in a LMEM enables to fit models with different slopes at the subject-level{[}\protect\hyperlink{ref-pinheiro2006}{15}{]}. However, the expected linear relationship of the covariates and the response in Equation \eqref{eq:linear-model} and in Equation \eqref{eq:LMEM} is essentially the same, representing a major limitation of LMEMs to fit a non-linear response.
+For example, if the blood concentration of a drug is measured in certain subjects in the early hours of the morning while other subjects are measured in the afternoon, it is possible that the difference in the collection time introduces some ``noise'' in the data that needs to be accounted for. As the name suggests, this ``random'' variability needs to be modeled as a variable rather than as a constant value. The random effect \(\alpha_{ij}\) in Equation \eqref{eq:LMEM} is assumed to be \(\mu_{ij} \sim N(0,\sigma^2_\mu)\). In essence, the \emph{random effect} in a LMEM enables fitting models with different intercepts at the subject-level{[}\protect\hyperlink{ref-pinheiro2006}{15}{]}. However, the expected linear relationship of the covariates and the response in Equation \eqref{eq:linear-model} and in Equation \eqref{eq:LMEM} is essentially the same, representing a major limitation of LMEMs to fit a non-linear response.
 
-Of notice, LMEMs are capable of fitting non-linear trends using an ``empirical'' approach, which is described in detail by Pinheiro and Bates {[}\protect\hyperlink{ref-pinheiro2006}{15}{]} using polynomial fixed effects instead of linear effects such as in Equation \eqref{eq:LMEM}. However, polynomial fits have limited predictive power and cause bias on the boundaries of the covariates {[}\protect\hyperlink{ref-beck1998}{36}{]}; more importantly, polynomial effects lack biological or mechanistic interpretation {[}\protect\hyperlink{ref-pinheiro2006}{15}{]} which limits their use in biomedical studies.
+Of note, LMEMs are capable of fitting non-linear trends using an ``empirical'' approach (using polynomial fixed effects instead of linear effects such as in Equation \eqref{eq:LMEM}), which is described in detail by Pinheiro and Bates {[}\protect\hyperlink{ref-pinheiro2006}{15}{]}. However, polynomial fits have limited predictive power and cause bias on the boundaries of the covariates {[}\protect\hyperlink{ref-beck1998}{36}{]}; more importantly, polynomial effects lack biological or mechanistic interpretation {[}\protect\hyperlink{ref-pinheiro2006}{15}{]} which limits their use in biomedical studies.
 
 \hypertarget{covariance-in-rm-anova-and-lmems}{%
 \subsection{Covariance in rm-ANOVA and LMEMs}\label{covariance-in-rm-anova-and-lmems}}
@@ -316,7 +316,7 @@ In the case of LMEMs, one key advantage over rm-ANOVA is that they allow differe
 \hypertarget{unbalanced-data}{%
 \subsection{Unbalanced data}\label{unbalanced-data}}
 
-In a longitudinal study, it is frequently the case that the number of observations is different across subjects. In biomedical research, this imbalance in sample size can be caused by reasons beyond the control of the investigator (such as dropout from patients in clinical studies and attrition or injury of animals in preclinical research) leading to what is known as ``missing,'' ``incomplete'' or (more generally speaking) unbalanced data {[}\protect\hyperlink{ref-molenberghs2004}{45}{]}. The rm-ANOVA model is very restrictive in these situations as it assumes that observations exist for all subjects at every time point; if that is not the case subjects with one or more missing observations are excluded from the analysis. This is inconvenient because the remaining subjects might not accurately represent the population, and statistical power is affected by this reduction in sample size {[}\protect\hyperlink{ref-ma2012}{46}{]}.
+In a longitudinal study, it is frequently the case that the number of observations is different across subjects. In biomedical research, this imbalance in sample size can be caused by reasons beyond the control of the investigator (such as dropout from patients in clinical studies and attrition or injury of animals in preclinical research) leading to what is known as ``missing,'' ``incomplete,'' or (more generally speaking) unbalanced data {[}\protect\hyperlink{ref-molenberghs2004}{45}{]}. The rm-ANOVA model is very restrictive in these situations as it assumes that observations exist for all subjects at every time point; if that is not the case subjects with one or more missing observations are excluded from the analysis. This is inconvenient because the remaining subjects might not accurately represent the population and statistical power is affected by this reduction in sample size {[}\protect\hyperlink{ref-ma2012}{46}{]}.
 
 On the other hand, LMEMs and GAMs can work with missing observations, and inferences from the model are valid when the imbalance in the observations are \emph{missing at random} (MAR) or \emph{completely missing at random} (MCAR) {[}\protect\hyperlink{ref-west2014}{40},\protect\hyperlink{ref-weiss2005}{42}{]}. In a MAR scenario, the pattern of the missing information is related to some variable in the data, but it is not related to the variable of interest {[}\protect\hyperlink{ref-scheffer2002}{47}{]}. If the data are MCAR, this means that the missingness is completely unrelated to the collected information {[}\protect\hyperlink{ref-potthoff2006}{48}{]}. Missing observations can also be \emph{missing not at random} (MNAR) and in the case the missing observations are dependent on their value. For example, if attrition occurs in all mice that had lower weights at the beginning of a chemotherapy response study, the missing data can be considered MAR because the missigness is unrelated to other variables of interest.
 
@@ -325,13 +325,13 @@ However, it is worth reminding that ``all models are wrong'' {[}\protect\hyperli
 \hypertarget{simulation}{%
 \subsection{What do an rm-ANOVA and LMEM fit look like? A visual representation using simulated data}\label{simulation}}
 
-To visually demonstrate the limitations of rm-ANOVA an LMEMs for longitudinal data with non-linear trends, this section presents a simulation experiment of a normally distributed response of two groups of 10 subjects each. An rm-ANOVA model (Equation \eqref{eq:linear-model}), and a LMEM (Equation \eqref{eq:LMEM}) are fitted to each group, using R {[}\protect\hyperlink{ref-r}{38}{]} and the package \emph{nlme} {[}\protect\hyperlink{ref-nlme}{50}{]}.
+To visually demonstrate the limitations of rm-ANOVA and LMEMs for longitudinal data with non-linear trends, this section presents a simulation experiment of a normally distributed response of two groups of 10 subjects each. An rm-ANOVA model (Equation \eqref{eq:linear-model}), and a LMEM (Equation \eqref{eq:LMEM}) are fitted to each group, using R {[}\protect\hyperlink{ref-r}{38}{]} and the package \emph{nlme} {[}\protect\hyperlink{ref-nlme}{50}{]}.
 
-Briefly, two cases for the mean responses for each group are considered: in the first case, the mean response in each group is a linear function over time with different intercepts and slopes; a negative slope is used for Group 1 and a positive slope is used for Group 2 (Figure \ref{fig:l-q-response}A). In the second case, a second-degree polynomial (quadratic) function is used for the mean response per group: the quadratic function is concave down for Group 1 and it is concave up for Group 2 (Figure \ref{fig:l-q-response}C). In both the linear and quadratic simulated data, the groups start with the same mean value at the first time point. This is intentional in order to simulate the expected temporal evolution of some physiological quantity, which is typical in biomedical experiments where a strong non-linear trend is present.
+Briefly, two cases for the mean response for each group are considered: in the first case, the mean response in each group is a linear function over time with different intercepts and slopes; a negative slope is used for Group 1 and a positive slope is used for Group 2 (Figure \ref{fig:l-q-response}A). In the second case, a second-degree polynomial (quadratic) function is used for the mean response per group: the quadratic function is concave down for Group 1 and it is concave up for Group 2 (Figure \ref{fig:l-q-response}C). In both the linear and quadratic simulated data, the groups start with the same mean value at the first time point. This is intentional in order to simulate the expected temporal evolution of some physiological quantity, which is typical in biomedical experiments where a strong non-linear trend is present.
 
 Specifically, the rationale for the chosen linear and quadratic functions is the expectation that a measured response in two treatment groups is similar in the initial phase of the study, but as therapy progresses a divergence in the trend of the response indicates a treatment effect. In other words, Group 1 can be thought as a ``Control'' group and Group 2 as a ``Treatment'' group. From the mean response per group (linear or quadratic), the variability or ``error'' of individual responses within each group is simulated using a covariance matrix with compound symmetry (constant variance across time). Thus, the response per subject in both the linear and quadratic simulation corresponds to the mean response per group plus the error (Figure \ref{fig:l-q-response} B,D).
 
-A more comprehensive exploration of the fit of rm-ANOVA and LMEMs for linear and non-linear longitudinal data appears in the Appendix (Figure A.1 and Figure A.2), where simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) and the plot of simulated errors, and fitted parameters in presented. We are aware that the simulated data used in this section present an extreme case that might not occur frequently in biomedical research, but they are used to 1) present the consequences of modeling non-linear trends in data with a linear model such as rm-ANOVA or a LMEM with ``default'' (linear) effects and, 2) demonstrate that a visual assessment of model fit is an important tool that helps determine the validity of any statistical assumptions. Of notice, in Section \ref{longitudinal-GAMs} we use simulated data that does follow reported trends in the biomedical literature to implement GAMs.
+A more comprehensive exploration of the fit of rm-ANOVA and LMEMs for linear and non-linear longitudinal data appears in the Appendix (Figure A.1 and Figure A.2), where a simulation with compound symmetry and independent errors (errors generated from a normal distribution that are not constant over time) is presented. We are aware that the simulated data used in this section present an extreme case that might not occur frequently in biomedical research, but they are used to 1) present the consequences of modeling non-linear trends in data with a linear model such as rm-ANOVA or a LMEM with ``default'' (linear) effects and, 2) demonstrate that a visual assessment of model fit is an important tool that helps determine the validity of any statistical assumptions. In Section \ref{longitudinal-GAMs} we use simulated data that does follow reported trends in the biomedical literature to implement GAMs.
 
 
 
@@ -350,67 +350,58 @@ However, consider the case when the data follows a non-linear trend, such as the
 
 Comparing the fitted responses of the LMEM and the rm-ANOVA models used in the simulated quadratic data (Figure \ref{fig:l-q-response}E, F) indicates that the models are not capturing the changes within each group. Specifically, note that the fitted mean response of both models shows that the change (increase for Treatment 1 or decrease for Treatment 2) in the response through time points 2 and 4 is not being captured.
 
-The LMEM is only able to account for between-subject variation by providing estimates for each subject (Figure \ref{fig:l-q-response}F), but both models are unable to capture the fact that the initial values are the same in each group, and instead fit non-parallel lines that have initial values that are markedly different from the ``true'' initial values in each case (compare Figure \ref{fig:l-q-response}D with Figure \ref{fig:l-q-response}E, F). If such a change has important physiological implications, both rm-ANOVA and LMEMs omit it from the fitted mean response. Thus, even though the model correctly detects a divergence between treatment groups, the exact nature of this difference is not correctly identified, limiting valuable inferences from the data. It could be argued that a LMEM with quadratic effects should have been used to fit the data in Figure\ref{fig:l-q-response}, F. However, because in reality the true function is not known, choosing a polynomial degree causes more questions (e.g., is it quadratic?, cubic?, or a higher degree?). Additionally, polynomial effects have other limitations, which we cover in Section \ref{GAM-theory}.
+The LMEM is only able to account for between-subject variation by providing estimates for each subject (Figure \ref{fig:l-q-response}F), but both models are unable to capture the fact that the initial values are the same in each group, and instead fit non-parallel lines that have initial values that are markedly different from the ``true'' initial values in each case (compare Figure \ref{fig:l-q-response}D with Figure \ref{fig:l-q-response}E, F). If such a change has important physiological implications, both rm-ANOVA and LMEMs omit it from the fitted mean response. Thus, even though the model correctly detects a divergence between treatment groups, the exact nature of this difference is not correctly identified, limiting valuable inferences from the data. It could be argued that a LMEM with quadratic effects should have been used to fit the data in Figure\ref{fig:l-q-response}F. However, because in reality the true function is not known, choosing a polynomial degree causes more questions (e.g., is it quadratic?, cubic?, or a higher degree?). Additionally, polynomial effects have other limitations, which we cover in Section \ref{GAM-theory}.
 
 This section has used simulation to better convey and visulize the limitations of linearity and correlation in the response in data with non-linear trends using an rm-ANOVA model and a LMEM, where the main issue is the expected linear trend in the response. Notice that the model misspecification is easily noticeable if the model fit and the response are visualized. In the following section, we provide a brief overview of linear models, general linear models and generalized linear mixed models before presenting the theory of GAMs.
 
 \hypertarget{linear-models-and-beyond}{%
 \section{Linear Models, and beyond}\label{linear-models-and-beyond}}
 
-In reality, rm-ANOVA and LMEMs are just \emph{special cases} of broader model classes (General Linear Models and Generalized Linear Mixed Models, respectively). In order to fully capture the constraints of such models and to understand how GAMs overcome those limitations this section will briefly provide an overview of the different Statistical model classes, indicate how rm-ANOVA and LMEMs fit within that framework and introduce the theory of GAMs.
+Linear models (LMs) are those that assume a normal (Gaussian) distribution of the errors, and only incorporate \emph{fixed effects} (such as rm-ANOVA). These are by far the models most commonly used to analyze data within the biomedical research community. On the other hand, Linear Mixed Effect Models (LMEMs) also incorporate \emph{random effects}, as it has been described in Section \ref{LMEM-case}.
 
-\hypertarget{linear-models-lms-and-linear-mixed-models-lmems}{%
-\subsection{Linear Models (LMs) and Linear Mixed Models (LMEMs)}\label{linear-models-lms-and-linear-mixed-models-lmems}}
-
-Linear models (LMs) are those that assume a normal (Gaussian) distribution of the response, and only incorporate \emph{fixed effects} (such as rm-ANOVA). These are by far the models most commonly used to analyze data within the biomedical research community. On the other hand, Linear Mixed Effect Models (LMEMs) are those that assume a normally-distributed response but also incorporate \emph{random effects}, as it has been described in Section \ref{LMEM-case}.
-
-In matrix notation, a LM has the general form
-
-\begin{equation}
-\textbf{y} = \textbf{X} \boldsymbol{\beta}
-\label{eq:LM-matrix}
-\end{equation}
-
-Where \(\textbf{y}\) a vector of observations, \(\textbf{X}\) is a matrix that contains the measured values of the covariates, and \(\boldsymbol{\beta}\) is a vector of the parameters to be estimated. The ``model equation'' form of Equation \eqref{eq:LM-matrix} for a rm-ANOVA model of two treatment groups corresponds to Equation \eqref{eq:linear-model}. It is important to remember that the error term \(\varepsilon_{ijt}\) in Equation \eqref{eq:linear-model} represents the variability introduced by random sampling from the normal distribution.
+In reality, rm-ANOVA and LMEMs are just \emph{special cases} of a broader class of models (General Linear Models and Generalized Linear Mixed Models, respectively). In order to fully capture the constraints of such models and to understand how GAMs overcome those limitations this section will briefly provide an overview of the different classes of models, indicate how rm-ANOVA and LMEMs fit within this framework and introduce the theory of GAMs.
 
 \hypertarget{generalized-linear-models-glms}{%
 \subsection{Generalized Linear Models (GLMs)}\label{generalized-linear-models-glms}}
 
-A major limitation of LMs is their assumption of normality. If the data is non-normal, a transformation is necessary in order to properly fit the model. However, transformation lead to poor model performance {[}\protect\hyperlink{ref-ohara2010}{51}{]}, and can cause problems with the biological interpretation of the model estimates. McCullagh and Nelder {[}\protect\hyperlink{ref-nelder1972}{52}{]} defined General Linear Models (GLMs) as an extension of LMs, where the data does not need to be normally distributed. To achieve this, consider the following
+A major limitation of LMs is their assumption of normality in the errors. If the residuals are non-normal, a transformation is necessary in order to properly fit the model. However, transformation can lead to poor model performance {[}\protect\hyperlink{ref-ohara2010}{51}{]}, and can cause problems with the biological interpretation of the model estimates. McCullagh and Nelder {[}\protect\hyperlink{ref-nelder1972}{52}{]} introduced General Linear Models (GLMs) as an extension of LMs, where the errors do not need to be normally distributed. To achieve this, consider the following model
 
 \begin{equation}
-y_{ijt} \sim \mathcal{D}(\mu_{ijt},\phi)
+y_{ijt} \sim \mathcal{D}(\mu_{ijt},\phi),
 \label{eq:GLM-y}
 \end{equation}
 
-Where \(y_{ijt}\) is the observation \(i\) in group \(j\) at time \(t\), which is assumed to come randomly from some distribution of the exponential family \(\mathcal{D}\), with some mean \(\mu_{ijt}\) and a dispersion parameter \(\phi\) (which in the Gaussian case is the variance \(\sigma^{2}\)). The mean \(\mu_{ijt}\) is also known as the \emph{expected value} (also called \emph{expectation}) (\(E\)) of the observed response. Then, the \emph{linear predictor} \(\eta\), which defines the relationship between the mean and the covariates can be defined as
+where \(y_{ijt}\) is the observation \(i\) in group \(j\) at time \(t\), that is assumed to come from some distribution of the exponential family \(\mathcal{D}\), with some mean \(\mu_{ijt}\) and potentially, a dispersion parameter \(\phi\) (which in the Gaussian case is the variance \(\sigma^{2}\)). The mean (\(\mu_{ijt}\)) is also known as the \emph{expected value} (or \emph{expectation}), \(E(y_{ijt})\) of the observed response \(y_{ijt}\).
+
+Then, the \emph{linear predictor} \(\eta\), which defines the relationship between the mean and the covariates can be defined as
 
 \begin{equation}
-\eta_{ijt}=\beta_0+\beta_{j}x_{ijt}
+\eta_{ijt}=\beta_0+\beta_1 \times treatment_{j} +\beta_2 \times time_{t} +\beta_3 \times time_{t}\times treatment_{j},
 \label{eq:GLM-eta}
 \end{equation}
 
-Where \(\eta_{ijt}\) is the linear predictor for each observation, \(\beta_0\) is the intercept, and \(\beta_{j}\) is the model parameter for each group; and \(x_{ijt}\) represents the covariates from each subject in each group at each time point.
+where \(\eta_{ijt}\) is the linear predictor for each observation in each group at each timepoint, and \(\beta_0\) (the intercept), \(\beta_{1}, \beta_2,\) and \(\beta_3\) are the model parameters for each group, which can be referred globally to as \(\beta_j\). Finally, \(time_{ijt}\) represents the covariates from each subject in each group at each time point.
 
 Finally,
 
 \begin{equation}
-E(y_{ijt})=\mu_{ijt}=g^{-1}(\eta_{ijt})
+E(y_{ijt})=\mu_{ijt}=g^{-1}(\eta_{ijt}),
 \label{eq:GLM-Expectation}
 \end{equation}
-Where \(E(y_{ijt})\) is the expectation, \(g^{-1}\) is the inverse of the \emph{link function} (\(g\)). The link function transforms the values from the response scale to the scale of the linear predictor \(\eta\) (Equation \eqref{eq:GLM-eta}). Therefore, LMs (such as rm-ANOVA) are a special case of GLMs where the response is normally distributed.
+
+where \(E(y_{ijt})\) is the expectation, and \(g^{-1}\) is the inverse of a \emph{link function} (\(g\)). The link function transforms the values from the response scale to the scale of the linear predictor \(\eta\) (Equation \eqref{eq:GLM-eta}. Therefore, it can be seen that LMs (such as rm-ANOVA) are a special case of GLMs where the response is normally distributed.
 
 \hypertarget{generalized-linear-mixed-models-glmms}{%
 \subsection{Generalized linear mixed models (GLMMs)}\label{generalized-linear-mixed-models-glmms}}
 
-Although GLMs relax the normality assumption, they can only accommodate fixed effects. Generalized Linear Mixed Models (GLMMs) are an extension of GLMs that incorporate \emph{random effects}, which have an associated probability distribution {[}\protect\hyperlink{ref-mcculloch2001}{53}{]}. Therefore, in GLMMs the \emph{linear predictor} takes the form
+Although GLMs relax the normality assumption, they only accommodate fixed effects. Generalized Linear Mixed Models (GLMMs) are an extension of GLMs that incorporate \emph{random effects}, which have an associated probability distribution {[}\protect\hyperlink{ref-mcculloch2001}{53}{]}. Therefore, in GLMMs the linear predictor takes the form
 
 \begin{equation}
-\eta_{ijt}=\beta_0+\beta_{j}x_{ijt}+\mu_{ij}
+\eta_{ijt}=\beta_0+\beta_1 \times treatment_{j} + \beta_2 \times time_{t} + +\beta_3 \times time_{t}\times treatment_{j}+\alpha_{ij},
 \label{eq:GLMM-eta}
 \end{equation}
 
-Where \(\mu_{ij}\) corresponds to the random effects that can be estimated within each subject in each group, and all the other symbols correspond to the notation of Equation \eqref{eq:GLM-eta}. Therefore, LMEMs are special case of GLMMs where the distribution of the response is normally distributed {[}\protect\hyperlink{ref-nelder1972}{52}{]}. In-depth and excellent discussions about LMs, GLMs and GLMMs can be found in Dobson {[}\protect\hyperlink{ref-dobson2008}{54}{]} and Stroup {[}\protect\hyperlink{ref-stroup2013}{55}{]}.
+where \(\alpha_{ij}\) corresponds to the random effects that can be estimated within each subject in each group, and all the other symbols correspond to the notation of Equation \eqref{eq:GLM-eta}. Therefore, LMEMs are special case of GLMMs where the distribution of the response is normally distributed {[}\protect\hyperlink{ref-nelder1972}{52}{]}, and GLMs are a special case of GLMMs where there are no random effects. In-depth and excellent discussions about LMs, GLMs and GLMMs can be found in Dobson {[}\protect\hyperlink{ref-dobson2008}{54}{]} and Stroup {[}\protect\hyperlink{ref-stroup2013}{55}{]}.
 
 \hypertarget{GAM-theory}{%
 \subsubsection{GAMs as a special case of Generalized Linear Models}\label{GAM-theory}}
@@ -418,30 +409,37 @@ Where \(\mu_{ij}\) corresponds to the random effects that can be estimated withi
 \hypertarget{gams-and-basis-functions}{%
 \paragraph{GAMs and Basis Functions}\label{gams-and-basis-functions}}
 
-Generalized additive models (GAMs) are a family of regression-based methods for estimating smoothly varying trends and are an extension of the GLM family {[}\protect\hyperlink{ref-simpson2018}{34},\protect\hyperlink{ref-wood2017}{37},\protect\hyperlink{ref-hastie1987}{56}{]}. A GAM version of a linear model can be written as:
+Notice that in the previous sections, the difference between GLMs and GLMMs resides on their linear predictors (Equations \eqref{eq:GLM-eta}, \eqref{eq:GLMM-eta}). Generalized additive models (GAMs) are an extension of the GLM family that allow the estimation of smoothly varying trends where the relationship between the covariates and the response is modeled using \emph{smooth functions} {[}\protect\hyperlink{ref-simpson2018}{34},\protect\hyperlink{ref-wood2017}{37},\protect\hyperlink{ref-hastie1987}{56}{]}. In a GAM, the linear predictor has the form
 
 \begin{equation}
-  y_{ijt}=\beta_0+f(x_t\mid \beta_j)+\varepsilon_{ijt}
+\eta_{ijt}=\beta_{0}+ \beta_{1} \times treatment_{j} +f(time_{t}|\beta_{j}).
+\label{eq:GAM-eta}
+\end{equation}
+
+Where \(\beta_{0}\) is the intercept, and \(\beta_{1}\) is the coefficient for each treatment group. Notice that the construction of the predictor is similar to that of Equation \eqref{eq:GLM-eta}, but in this case the parametric terms involving the effect of time have been replaced by \(f(time_{t}|\beta_{j})\), which represents the smooth function of time with with inputs as the covariates \(time_t\) and parameters \(\beta_{j}\). A GAM version of a linear model can be written as:
+
+\begin{equation}
+  y_{ijt}=\beta_0+f(time_t\mid \beta_j)+\varepsilon_{ijt}
   \label{eq:GAM}
 \end{equation}
 
-Where \(y_{ijt}\) is the response at time \(t\) of subject \(i\) in group \(j\), \(\beta_0\) is the expected value at time 0, and the change of \(y_{ijt}\) over time (instead of being defined by \(\beta_{j}x_{ijt}\) as in Equation \eqref{eq:GLM-eta}) is represented by the \emph{smooth function} \(f(x_t\mid \beta_j)\) with inputs as the covariates \(x_t\) and parameters \(\beta_j\), and \(\varepsilon_{ijt}\) represents the residual due to \textbf{random sampling}.
+Where \(y_{ijt}\) is the response at time \(t\) of subject \(i\) in group \(j\), \(\beta_0\) is the expected value at time 0, the change of \(y_{ijt}\) over time is represented by the smooth function \(f(time_t\mid \beta_j)\), and \(\varepsilon_{ijt}\) represents the deviation of each observation from the mean.
 
-In contrast to the linear functions used to model the relationship between the covariates and the response in rm-ANOVA or LMEM, GAMs use more flexible \emph{smooth functions}. This approach is advantageous as it does not restrict the model to a linear relationship, although a GAM can estimate a linear relationship if the data is consistent with a linear response. One possible set of functions for \(f(x_t\mid \beta_j)\) that allow for non-linear responses are polynomials (which can also be used in LMEMs), but a major limitation is that polynomials create a ``global'' fit as they assume that the same relationship exists everywhere, which can cause problems with inference {[}\protect\hyperlink{ref-beck1998}{36}{]}. In particular, polynomial fits are known to show boundary effects because as \(t\) goes to \(\pm \infty\), \(f(x_t \mid \beta_j)\) goes to \(\pm \infty\) which is almost always unrealistic and causes bias at the endpoints of the time period.
+In contrast to the linear functions used to model the relationship between the covariates and the response in rm-ANOVA or LMEM, the use of smooth functions in GAMs is more advantageous as it allows more flexibility because it does not restrict the model to a linear relationship, although a GAM can estimate a linear relationship if the data is consistent with a linear response. One possible set of functions for \(f(time_t\mid \beta_j)\) that allow for non-linear responses are polynomials (which can also be used in LMEMs), but a major limitation is that polynomials create a ``global'' fit as they assume that the same relationship exists everywhere, which can cause problems with inference {[}\protect\hyperlink{ref-beck1998}{36}{]}. In particular, polynomial fits are known to show boundary effects because as \(t\) goes to \(\pm \infty\), \(f(time_t \mid \beta_j)\) goes to \(\pm \infty\) which is almost always unrealistic and causes bias at the endpoints of the time period.
 
-The smooth functional relationship between the covariates and the response in GAMs is specified using a semi-parametric relationship that can be fit within the GLM framework, by using \emph{basis function} expansions of the covariates and by estimating random coefficients associated with these basis functions. A \emph{basis} is a set of functions that spans the mathematical space within which the true but unknown \(f(x_t\mid \beta_j)\) is thought to exist {[}\protect\hyperlink{ref-simpson2018}{34}{]}. For the linear model in Equation \eqref{eq:linear-model}, the basis coefficients are \(\beta_1\), \(\beta_2\) and \(\beta_3\) and the basis vectors are \(time_t\), \(treatment_j\) and \(time_t \times treatment_j\). The basis function then, is the combination of basis coefficients and basis vectors that map the possible relationship between the covariates and the response {[}\protect\hyperlink{ref-hefley2017}{57}{]}, which in the case of Equation \eqref{eq:linear-model} is restricted to a linear family of functions. In the case of Equation \eqref{eq:GAM}, the basis functions are contained in the expression \(f(x_t\mid \beta_j)\), which means that the model allows for non-linear relationships among the covariates.
+The smooth functional relationship between the covariates and the response in GAMs is specified using a semi-parametric relationship that can be fit within the GLM framework, by using a \emph{basis function} expansion of the covariates and by estimating random coefficients associated with these basis functions. A \emph{basis} is a set of functions that spans the mathematical space within which the true but unknown \(f(time_t)\) is thought to exist {[}\protect\hyperlink{ref-simpson2018}{34}{]}. For the linear model in Equation \eqref{eq:linear-model}, the basis coefficients are \(\beta_1\), \(\beta_2\) and \(\beta_3\) and the basis vectors are \(treatment_j\), \(time_t\), and \(time_t \times treatment_j\). The basis function then, is the linear combination of basis coefficients and basis vectors that map the possible relationship between the covariates and the response {[}\protect\hyperlink{ref-hefley2017}{57}{]}, which in the case of Equation \eqref{eq:linear-model} is restricted to a linear family of functions. In the case of Equation \eqref{eq:GAM}, the basis functions are contained in the expression \(f(time_t\mid \beta_j)\), which means that the model allows for non-linear relationships among the covariates.
 
-Splines (which derive their name from the physical devices used by draughtsmen to draw smooth curves) are commonly used as \emph{basis functions}, as they have a long history in solving semi-parametric statistical problems and are often a default choice to fit GAMs as they are a simple, flexible and powerful option to obtain smoothness {[}\protect\hyperlink{ref-wegman1983}{58}{]}. Although different types of splines exist, cubic, thin plate splines, and thin plate regression splines will be briefly discussed next to give a general idea of these type of basis functions, and their use within the GAM framework.
+Splines (which derive their name from the physical devices used by draughtsmen to draw smooth curves) are commonly used as basis functions as they have a long history in solving semi-parametric statistical problems and are often a default choice to fit GAMs as they are a simple, flexible, and powerful option to obtain smoothness {[}\protect\hyperlink{ref-wegman1983}{58}{]}. Although different types of splines exist, cubic, thin plate splines, and thin plate regression splines will be briefly discussed next to give a general idea of these type of basis functions, and their use within the GAM framework.
 
-Cubic splines (CS), are smooth curves constructed from cubic polynomials joined together in a manner that enforces smoothness. The use of CS as smoothers in GAMs was discussed within the original GAM framework {[}\protect\hyperlink{ref-hastie1987}{56}{]}, but they are limited by the fact that their implementation requires the selection of some points along the covariates (known as `knots,' the points where the bending of the smooth will occur) to obtain the reduced basis, which could affect the model fit {[}\protect\hyperlink{ref-wood2003}{59}{]}. A solution to the ``knot'' placement of CS is provided by thin plate splines (TPS), which provide optimal smooth estimation without knot placement, but that are computationally costly to calculate {[}\protect\hyperlink{ref-wood2017}{37},\protect\hyperlink{ref-wood2003}{59}{]}.
+Cubic splines (CS) are smooth curves constructed from cubic polynomials joined together in a manner that enforces smoothness. The use of CS as smoothers in GAMs was discussed within the original GAM framework {[}\protect\hyperlink{ref-hastie1987}{56}{]}, but they are limited by the fact that their implementation requires the selection of some points along the covariates (known as `knots,' the points where the basis functions meet) to obtain the finite basis, which could affect the model fit {[}\protect\hyperlink{ref-wood2003}{59}{]}. A solution to the ``knot'' placement of CS is provided by thin plate splines (TPS), which provide optimal smooth estimation without knot placement, but that are computationally costly to calculate {[}\protect\hyperlink{ref-wood2017}{37},\protect\hyperlink{ref-wood2003}{59}{]}.
 
-In contrast, thin plate regression splines (TPRS) provide a reasonable ``low rank'' (truncated) approximation to the optimal TPS estimation, which can be implemented in an efficient computational manner {[}\protect\hyperlink{ref-wood2003}{59}{]}. Like TPS, TPRS only require the number of basis to be used to create the smoother (for mathematical details on both TPS and TPRS see Wood{[}\protect\hyperlink{ref-wood2017}{37},\protect\hyperlink{ref-wood2003}{59}{]}).
+In contrast, thin plate regression splines (TPRS) provide a reasonable ``low rank'' (truncated) approximation to the optimal TPS estimation, which can be implemented in an efficient computational manner {[}\protect\hyperlink{ref-wood2003}{59}{]}. Like TPS, TPRS only require the number of basis functions to be used to create the smoother (for mathematical details on both TPS and TPRS see Wood{[}\protect\hyperlink{ref-wood2017}{37},\protect\hyperlink{ref-wood2003}{59}{]}).
 
-To further clarify the concept of basis functions and smooth functions, consider the simulated response for Group 1 in Figure \ref{fig:l-q-response}C. The simplest GAM model that can be used to estimate such response is that of a single smooth term for the time effect; i.e., a model that fits a smooth to the trend of the group through time. A computational requisite is that the number of basis functions to be used to create the smooth cannot be larger than the number of unique values from the independent variable. Because the data has six unique time points, we can specify a maximum of six basis functions (including the intercept) to create the smooth. It is important to note that is not necessary to specify a number of basis equal to the number of unique values in the independent variable; less basis functions can be specified to create the smooth as well, as long as they reasonably capture the trend of the data.
+To further clarify the concept of basis functions and smooth functions, consider the simulated response for Group 1 in Figure \ref{fig:l-q-response}C. The simplest GAM model that can be used to estimate such response is that of a single smooth term for the time effect; i.e., a model that fits a smooth to the trend of the group through time. A computational requisite in \emph{mgcv} is that the number of basis functions to be used to create the smooth cannot be larger than the number of unique values from the independent variable. Because the data has six unique time points, we can specify a maximum of six basis functions (including the intercept) to create the smooth. It is important to note that is not necessary to specify a number of basis equal to the number of unique values in the independent variable; fewer basis functions can be specified to create the smooth as well, as long as they reasonably capture the trend of the data.
 
-Here, the main idea is that the resulting smooth matches the data and approximates the true function without becoming too ``wiggly'' due to the noise present. A detailed exploration of wiggliness and smooth functions is beyond the scope of this manuscript, but it suffices to say that the wiggliness (or ``roughness'') of the fit is achieved by using a smoothness parameter \(\lambda\), which is applied to the second derivative of the spline. The second derivative of the spline is a measure of curvature, or the rate of change of the slope {[}\protect\hyperlink{ref-simpson2018}{34},\protect\hyperlink{ref-wood2017}{37}{]}. A physics analogy to the penalization process would be that if we are driving a car on a hilly and curvy road, we want to minimize abrupt changes in speed in order to have a ``smooth'' ride, and we do this by penalizing the acceleration.
+Here, the main idea is that the resulting smooth matches the data and approximates the true function without becoming too ``wiggly'' due to the noise present. A detailed exploration of wiggliness and smooth functions is beyond the scope of this manuscript, but in essence controlling the wiggliness (or ``roughness'') of the fit is achieved by using a \emph{smoothness parameter} (\(\lambda\)), which is used to penalize the likelihood by multiplying it with the integrated square of the second derivative of the spline. The second derivative of the spline is a measure of curvature, or the rate of change of the slope {[}\protect\hyperlink{ref-simpson2018}{34},\protect\hyperlink{ref-wood2017}{37}{]}, and increasing the penalty by increasing \(\lambda\) results in models with less curvature. As \(\lambda\) increases, the parameter estimates are penalized (shrunk towards 0) where the penalty reduces the wiggliness of the smooth fit to prevent overfitting. In other words,a low penalty estimate will result in wiggly functions whereas a high penalty estimate provides evidence that a linear response is appropriate.
 
-If five basis functions are used to fit a GAM for the data that appears in Figure \ref{fig:l-q-response}C, the resulting fitting process is shown in Figure \ref{fig:basis-plot}A. The four basis functions (and the intercept) are shown. Each of the basis functions is composed of six different points (because there are six points on the timeline). To control the ``wiggliness'' of the fit, each of the basis functions of Figure \ref{fig:basis-plot}A is weighted by multiplying it by the smoothness parameter (\(\lambda\)) according to the matrix of Figure \ref{fig:basis-plot}B. The parameter estimates are penalized (shrunk towards 0) where the penalty reduces the wiggliness of the smooth fit to prevent overfitting. A low penalty estimate will result in wiggly functions whereas a high penalty estimate provides evidence that a linear response is appropriate.
+With this in mind, if five basis functions are used to fit a GAM for the data that appears in Figure \ref{fig:l-q-response}C, the resulting fitting process is shown in Figure \ref{fig:basis-plot}A. The four basis functions (and the intercept) are shown. Each of the basis functions is evaluated at six different points (because there are six points on the timeline). The coefficients for each of the basis functions of Figure \ref{fig:basis-plot}A are estimated using a penalized regression with smoothness parameter \(\lambda\), that is estimated when fitting the model. The penalized estimates fitted for our example are shown in Figure \ref{fig:basis-plot}B.
 
 To get the weighted basis functions, each basis (from Figure Figure \ref{fig:basis-plot}A) is multiplied by the corresponding coefficients in Figure \ref{fig:basis-plot}B, thereby increasing or decreasing the original basis functions. Figure \ref{fig:basis-plot}C shows the resulting weighted basis functions. Note that the magnitude of the weighting for the first basis function has resulted in a decrease of its overall contribution to the smoother term (because the coefficient for that basis function is negative and less than 1). On the other hand, the third basis function has roughly doubled its contribution to the smooth term. Finally, the weighted basis functions are added at each timepoint to produce the smooth term. The resulting smooth term for the effect of \emph{time} is shown in Figure \ref{fig:basis-plot}D (orange line), along the simulated values per group, which appear as points.
 
@@ -459,11 +457,9 @@ To get the weighted basis functions, each basis (from Figure Figure \ref{fig:bas
 \hypertarget{a-bayesian-interpretation-of-gams}{%
 \subsubsection{A Bayesian interpretation of GAMs}\label{a-bayesian-interpretation-of-gams}}
 
-Bayes' theorem states that the probability of an event can be calculated using prior knowledge or belief {[}\protect\hyperlink{ref-mcelreath2018}{60}{]}. In the case of data that shows non-linear trends, the belief that the \emph{true} trend of the data is likely to be smooth rather than extremely ``wiggly'' introduces the concept of a prior distribution for wiggliness (and therefore a Bayesian view) of GAMs {[}\protect\hyperlink{ref-wood2017}{37}{]}. Moreover, GAMs are considered ``empirical'' Bayesian models when fitted using the package \emph{mgcv} because the smoothing parameters are estimated from the data (and not from a prior distribution as in the ``fully Bayesian'' case, which can be fitted using JAGS, Stan, or other probabilistic programming language) {[}\protect\hyperlink{ref-miller2019}{61}{]}. Therefore, the confidence intervals (CIs) calculated for the smooth terms using \emph{mgcv} are considered empirical Bayesian posterior credible intervals {[}\protect\hyperlink{ref-pedersen2019}{33}{]}, which have good ``frequentist'' coverage (point-wise coverage or ``single point'' coverage), and \emph{across the function} coverage {[}\protect\hyperlink{ref-wood2017}{37}{]}.
+Bayes' theorem states that the probability of an event can be calculated using prior knowledge {[}\protect\hyperlink{ref-mcelreath2018}{60}{]}. In the case of data that shows non-linear trends, the prior that the \emph{true} trend of the data is likely to be smooth rather than ``wiggly'' introduces the concept of a prior distribution for wiggliness (and therefore a Bayesian view) of GAMs {[}\protect\hyperlink{ref-wood2017}{37}{]}. Moreover, GAMs are considered ``empirical'' Bayesian models when fitted using the package \emph{mgcv} because the smoothing parameters are estimated from the data (and not from a posterior distribution as in the ``fully Bayesian'' case, which can be fitted using JAGS, Stan, or other probabilistic programming language) {[}\protect\hyperlink{ref-miller2019}{61}{]}. Therefore, the confidence intervals (CIs) calculated for the smooth terms using \emph{mgcv} are considered empirical Bayesian credible intervals {[}\protect\hyperlink{ref-pedersen2019}{33}{]}, which have good \emph{across the function} (``frequentist'') coverage{[}\protect\hyperlink{ref-wood2017}{37}{]}.
 
-To understand this last part, it is worth reminding that a CI provides an estimate of the region where the ``true'' or ``mean'' value of a function exists, taking into account the randomness introduced by the sampling process. Because random samples from the population are used to calculate the ``true'' value of the function, there is inherent variability in the estimation process and the CI provides a region with a nominal value (usually, 95\%) where the function is expected to lie. In a ``point-wise'' CI for non-linear data, the ``true'' function will lie outside of the CI in certain regions at a given frequency (because the data does not follow a linear trend). This means that if a point-wise CI is obtained for 100 random samples, the total number of CIs that contain the true function \emph{entirely} is much less than the nominal value of the CI (95\%, usually).
-
-Contrary to this, an \emph{across the function} CI (like those estimated for GAMs using \emph{mgcv}) contains the true function through the entire range of the covariates (which would be time in the case of longitudinal data). For GAMs this means that if repeated samples are taken and a GAM and corresponding CIs are calculated, the percentage of CIs entirely containing the true function over the entire time period would be close to the nominal value (i.e., if 100 random samples are obtained and a GAM and CI is calculated for each one of them, it would be expected that 95 out of the 100 fitted CIs entirely contain the true function), thereby allowing more robust estimates from the model. In-depth theory of the Bayesian interpretation of GAMs is beyond the scope of this paper, but can be found in Miller {[}\protect\hyperlink{ref-miller2019}{61}{]}, Wood{[}\protect\hyperlink{ref-wood2017}{37}{]}, Simpson {[}\protect\hyperlink{ref-simpson2018}{34}{]} and Marra {[}\protect\hyperlink{ref-marra2012}{62}{]}. With this brief introduction to the Bayesian interpretation of GAMs, we henceforth refer to the confidence intervals for the smooths in GAMs as ``empirical Bayesian'' through the rest of this paper.
+To understand this last part, it is worth reminding that a CI provides an estimate of the region where the ``true'' or ``mean'' value of a function exists, taking into account the randomness introduced by the sampling process. Because random samples from the population are used to calculate the ``true'' value of the function, there is inherent variability in the estimation process and the CI provides a region with a nominal value (usually, 95\%) where the function is expected to lie. In an \emph{across the function} CI (like those estimated for GAMs using \emph{mgcv}) if we average the coverage of the interval over the entire function we get approximately the nominal coverage (95\%). In other words, we expect that about 95\% of the points that compose the true function will be covered by the across the function CI and for this to occur, some areas of the function must have more than nominal coverage and some areas less than the nominal coverage. In-depth theory of the Bayesian interpretation of GAMs is beyond the scope of this paper, but can be found in Miller {[}\protect\hyperlink{ref-miller2019}{61}{]}, Wood{[}\protect\hyperlink{ref-wood2017}{37}{]}, Simpson {[}\protect\hyperlink{ref-simpson2018}{34}{]} and Marra {[}\protect\hyperlink{ref-marra2012}{62}{]}. With this brief introduction to the Bayesian interpretation of GAMs, we henceforth refer to the confidence intervals for the smooths in GAMs as ``empirical Bayesian'' through the rest of this paper.
 
 \hypertarget{longitudinal-GAMs}{%
 \section{The analyisis of longitudinal biomedical data using GAMs}\label{longitudinal-GAMs}}
@@ -487,9 +483,11 @@ For the data in Figure \ref{fig:sim-smooth-plot}, A the main effect of interest 
 gam_02 <- gam(StO2_sim ~ Group + s(Day, by=Group, k=5), method='REML', data = dat_sim)
 \end{lstlisting}
 
-This syntax specifies that \passthrough{\lstinline!gam\_02!} (named this way so it matches the model workflow from the Appendix) contains the fitted model, and that the change in the simulated oxygen saturation (\passthrough{\lstinline!StO2\_sim!}) is modeled using independent smooths over \passthrough{\lstinline!Day!} for each \passthrough{\lstinline!Group!} (the parenthesis preceded by \passthrough{\lstinline!s!}) using four basis functions (plus the intercept). The smooth is constructed by default using TPRS, but other splines can be used if desired, including Gaussian process smooths {[}\protect\hyperlink{ref-simpson2018}{34}{]} (a description of all the available smooths can be found by typing \passthrough{\lstinline!?mgcv::smooth.terms!} in the Console). The parametric term \passthrough{\lstinline!Group!} is added to quantify overall mean differences in the effect of treatment between groups. Although the default \passthrough{\lstinline!method!} used to estimate the smoothing parameters in \emph{mgcv} is generalized cross validation (GCV), Wood{[}\protect\hyperlink{ref-wood2017}{37}{]} showed the restricted maximum likelihood (REML) to be more resistant to overfitting while also easing the quantification of uncertainty in the smooth parameters; therefore in this manuscript REML is always used for smooth parameter estimation.
+This syntax specifies that \passthrough{\lstinline!gam\_02!} (named this way so it matches the model workflow from the Appendix) contains the fitted model, and that the change in the simulated oxygen saturation (\passthrough{\lstinline!StO2\_sim!}) is modeled using independent smooths over \passthrough{\lstinline!Day!} for each \passthrough{\lstinline!Group!} (the parenthesis preceded by \passthrough{\lstinline!s!}) using four basis functions (plus the intercept). The smooth is constructed by default using TPRS, but other splines can be used if desired, including Gaussian process smooths {[}\protect\hyperlink{ref-simpson2018}{34}{]} (a description of all the available smooths can be found by typing \passthrough{\lstinline!?mgcv::smooth.terms!} in the Console).
 
-When the smooths are plotted over the raw data, it is clear that the model has been able to capture the trend of the change of \(\mbox{StO}_2\) for each group across time (Figure \ref{fig:sim-smooth-plot}B). Model diagnostics can be obtained using the \passthrough{\lstinline!gam.check!} function, and the function \passthrough{\lstinline!appraise!} from the package \emph{gratia} {[}\protect\hyperlink{ref-gratia}{63}{]}. A guide for model selection and diagnostics is in the \protect\hyperlink{workflow}{Appendix}, and an in-depth analysis can be found in {[}\protect\hyperlink{ref-wood2017}{37}{]} and {[}\protect\hyperlink{ref-harezlak2018}{64}{]}.
+The parametric term \passthrough{\lstinline!Group!} is added to quantify overall mean differences in the effect of treatment between groups. Although the default \passthrough{\lstinline!method!} used to estimate the smoothing parameters in \emph{mgcv} is generalized cross validation (GCV), Wood{[}\protect\hyperlink{ref-wood2017}{37}{]} showed the restricted maximum likelihood (REML) to be more resistant to overfitting while also easing the quantification of uncertainty in the smooth parameters; therefore in this manuscript REML is always used for smooth parameter estimation. An additional argument (\passthrough{\lstinline!family!}) allows to specify the expected distribution of the response, but it is not used in this model because we expect a normally-distributed response (which is the default \passthrough{\lstinline!family!} in \emph{mgcv}).
+
+When the smooths are plotted over the raw data, it is clear that the model has been able to capture the trend of the change of \(\mbox{StO}_2\) for each group across time (Figure \ref{fig:sim-smooth-plot}B). Model diagnostics can be obtained using the \passthrough{\lstinline!gam.check!} function, and the function \passthrough{\lstinline!appraise!} from the package \emph{gratia} {[}\protect\hyperlink{ref-gratia}{63}{]}. A guide for model selection and diagnostics is in the \protect\hyperlink{workflow}{Appendix}, and an in-depth analysis can be found in Wood {[}\protect\hyperlink{ref-wood2017}{37}{]} and Harezlak {[}\protect\hyperlink{ref-harezlak2018}{64}{]}.
 
 One question that might arise at this point is ``what is the fit that an rm-ANOVA model produces for the simulated data?'' The rm-ANOVA model, which corresponds to Equation \eqref{eq:linear-model} is presented in Figure \ref{fig:sim-smooth-plot}C. This is a typical case of model misspecification: The slopes of each group are different, which would lead to a \emph{p-value} indicating significance for the treatment and time effects, but the model is not capturing the changes that occur at days 2 and between days 5 and 7, whereas the GAM model is able to reliably estimate the trend over all timepoints (Figure \ref{fig:sim-smooth-plot}B) .
 
@@ -520,7 +518,10 @@ Because GAMs do not require equally-spaced or complete observations for all subj
 \hypertarget{GAM-significance}{%
 \subsection{Determination of significance in GAMs for longitudinal data}\label{GAM-significance}}
 
-At the core of a biomedical longitudinal study lies the question of a significant difference between the effect of two or more treatments in different groups. Whereas in rm-ANOVA a \emph{post-hoc} analysis is required to answer such question by calculating some \emph{p-values} after multiple comparisons, GAMs can use a different approach to estimate significance. In essence, the idea behind the estimation of significance in GAMs across different treatment groups is that if the \emph{difference} between the empirical Bayesian confidence intervals of the fitted smooths for such groups is non-zero, then a significant difference exists at that time point(s). The absence of a \emph{p-value} in this case might seem odd, but the empirical Bayesian confidence interval interpretation can be conceptualized in the following manner: Different trends in each group are an indication of an effect by the treatment. This is what happens for the simulated data in Figure \ref{fig:sim-smooth-plot}A, where the chemotherapy causes \(\mbox{StO}_2\) to increase over time.
+At the core of a biomedical longitudinal study lies the question of a significant difference between the effect of two or more treatments in different groups. Whereas in rm-ANOVA a \emph{post-hoc} analysis is required to answer such question by calculating some \emph{p-values} after multiple comparisons, GAMs can use a different approach to estimate significance. In essence, the idea behind the estimation of significance in GAMs across different treatment groups in a model where separate smoothers exists per group (such as in \passthrough{\lstinline!gam\_02!}) is that the difference between them can be computed, followed by the estimation of a confidence interval around this difference.
+\textbf{add sentence about the issue of the Nychka across the function intervals }
+
+around that \emph{difference} between the empirical Bayesian confidence intervals of the fitted smooths for such groups is non-zero, then a significant difference exists at that time point(s). The absence of a \emph{p-value} in this case might seem odd, but the empirical Bayesian confidence interval interpretation can be conceptualized in the following manner: Different trends in each group are an indication of an effect by the treatment. This is what happens for the simulated data in Figure \ref{fig:sim-smooth-plot}A, where the chemotherapy causes \(\mbox{StO}_2\) to increase over time.
 
 With this expectation of different trends in each group, computing the difference between the trends will identify if the observed difference is significant. The difference between groups with similar trends is likely to yield zero, which would indicate that the treatment is not causing a change in the response in one of the groups (assuming the other group is a Control or Reference group).
 
@@ -1390,7 +1391,7 @@ f2<-ggplot(dat_sim, aes(x = Day,
     geom_point(show.legend=FALSE,
                size=1.5,
                alpha=0.6)+
-    geom_line(size=0.6, alpha=0.4)+
+    geom_line(size=0.6, alpha=0.4,show.legend=FALSE)+
     geom_line(aes(x = Day, 
                y = StO2,
                color=Group),
@@ -1423,7 +1424,7 @@ gam_00<-gam(StO2_sim ~ s(Day, k = 5),
             data  = dat_sim)
 \end{lstlisting}
 
-To obtain model diagnostics, two methodologies are to be used: 1) graphical diagnostics, and 2) a model check. In the first case, the functions \passthrough{\lstinline!appraise!} and \passthrough{\lstinline!draw!} from the package \emph{gratia} can be used to obtain a single output with all the graphical diagnostics. For model check, the functions \passthrough{\lstinline!gam.check!} and \passthrough{\lstinline!summary!} from \emph{mgcv} provide detailed information about the model fit and its parameters. Keep in mind that \passthrough{\lstinline!gam.check!} is a function that also provides the graphical diagnostics obtained using \emph{gratia}, if such graphical output is not desired the source code can be accessed typing \passthrough{\lstinline!gam.check!} in the Console, and the code without the graphical output can be used in a custom function (see @ref(\#gam-00-model-check) for an implementation of this).
+To obtain model diagnostics, two methodologies are to be used: 1) graphical diagnostics, and 2) a model check. In the first case, the functions \passthrough{\lstinline!appraise!} and \passthrough{\lstinline!draw!} from the package \emph{gratia} can be used to obtain a single output with all the graphical diagnostics. For model check, the functions \passthrough{\lstinline!gam.check!} and \passthrough{\lstinline!summary!} from \emph{mgcv} provide detailed information about the model fit and its parameters. Keep in mind that \passthrough{\lstinline!gam.check!} is a function that also provides the graphical diagnostics obtained using \emph{gratia}, if such graphical output is not desired the source code can be accessed typing \passthrough{\lstinline!gam.check!} in the Console, and the code without the graphical output can be used in a custom function, which is the approach we follow later).
 
 
 \hypertarget{graphical-diagnostics}{%
@@ -1445,91 +1446,9 @@ The \passthrough{\lstinline!draw!} function permits to plot the smooths as \pass
 \hypertarget{gam-00-model-check}{%
 \paragraph{Model check}\label{gam-00-model-check}}
 
-Special attention must be paid to the parameter `k-index' from \passthrough{\lstinline!gam.check!} (which calls the function \passthrough{\lstinline!k.check!} to perform the calculation). This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trends in the data, this is indicated by a low k-index value (\textless1). Because we plot the model diagnostics using \passthrough{\lstinline!appraise!} later, the graphical output from \passthrough{\lstinline!gam.check!} will be suppressed by creating a custom function to obtain just the model estimates, thus avoiding repetition of the diagnostic plots. This will be achieved by calling the source code of \passthrough{\lstinline!gam.check!} and using the appropriate code in a new function that will be called \passthrough{\lstinline!gam.diagnostics!}.
+Special attention must be paid to the parameter `k-index' from \passthrough{\lstinline!gam.check!} (which calls \passthrough{\lstinline!k.check!} to perform the calculation). This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trends in the data, this is indicated by a low k-index value (\textless1). Because we plot the model diagnostics using \passthrough{\lstinline!appraise!} later, the graphical output from \passthrough{\lstinline!gam.check!} will be suppressed by creating a custom function to obtain just the model estimates, thus avoiding repetition of the diagnostic plots. This will be achieved by calling the source code of \passthrough{\lstinline!gam.check!} and using the appropriate code in a new function that will be called \passthrough{\lstinline!gam.diagnostics!}. We are not including in the Appendix the code for the function \passthrough{\lstinline!gam.diagnostics!} as it is rather long, but if desired it can be accessed by going to the \passthrough{\lstinline!Appendix.Rmd!} file in the GitHub repository and scrolling to this exact place (the code is not included in the final output, but is evaluated to create the function).
 
-\begin{lstlisting}[language=R]
-#Function that uses the source code of `gam.check` to obtain the estimates without the plots. The source can be checked by typing `gam.check` in the console.
-gam.diagnostics<-function (b, old.style = FALSE, type = c("deviance", "pearson", 
-    "response"), k.sample = 5000, k.rep = 200, rep = 0, 
-    level = 0.9, rl.col = 2, rep.col = "gray80", ...) 
-{
-    type <- match.arg(type)
-    resid <- residuals(b, type = type)
-    linpred <- if (is.matrix(b$linear.predictors) && !is.matrix(resid)) 
-        napredict(b$na.action, b$linear.predictors[, 1])
-    else napredict(b$na.action, b$linear.predictors)
-    
-    fv <- if (inherits(b$family, "extended.family")) 
-        predict(b, type = "response")
-    else fitted(b)
-    if (is.matrix(fv) && !is.matrix(b$y)) 
-        fv <- fv[, 1]
-    gamm <- !(b$method %in% c("GCV", "GACV", "UBRE", 
-        "REML", "ML", "P-ML", "P-REML", 
-        "fREML"))
-    if (gamm) {
-        cat("\n'gamm' based fit - care required with interpretation.")
-        cat("\nChecks based on working residuals may be misleading.")
-    }
-    else {
-        cat("\nMethod:", b$method, "  Optimizer:", 
-            b$optimizer)
-        if (!is.null(b$outer.info)) {
-            if (b$optimizer[2] %in% c("newton", "bfgs")) {
-                boi <- b$outer.info
-                cat("\n", boi$conv, " after ", boi$iter, 
-                  " iteration", sep = "")
-                if (boi$iter == 1) 
-                  cat(".")
-                else cat("s.")
-                cat("\nGradient range [", min(boi$grad), 
-                  ",", max(boi$grad), "]", sep = "")
-                cat("\n(score ", b$gcv.ubre, " & scale ", 
-                  b$sig2, ").", sep = "")
-                ev <- eigen(boi$hess)$values
-                if (min(ev) > 0) 
-                  cat("\nHessian positive definite, ")
-                else cat("\n")
-                cat("eigenvalue range [", min(ev), ",", 
-                  max(ev), "].\n", sep = "")
-            }
-            else {
-                cat("\n")
-                print(b$outer.info)
-            }
-        }
-        else {
-            if (length(b$sp) == 0) 
-                cat("\nModel required no smoothing parameter selection")
-            else {
-                cat("\nSmoothing parameter selection converged after", 
-                  b$mgcv.conv$iter, "iteration")
-                if (b$mgcv.conv$iter > 1) 
-                  cat("s")
-                if (!b$mgcv.conv$fully.converged) 
-                  cat(" by steepest\ndescent step failure.\n")
-                else cat(".\n")
-                cat("The RMS", b$method, "score gradient at convergence was", 
-                  b$mgcv.conv$rms.grad, ".\n")
-                if (b$mgcv.conv$hess.pos.def) 
-                  cat("The Hessian was positive definite.\n")
-                else cat("The Hessian was not positive definite.\n")
-            }
-        }
-        if (!is.null(b$rank)) {
-            cat("Model rank = ", b$rank, "/", length(b$coefficients), 
-                "\n")
-        }
-    }
-    cat("\n")
-    kchck <- k.check(b, subsample = k.sample, n.rep = k.rep)
-    if (!is.null(kchck)) {
-        cat("Basis dimension (k) checking results. Low p-value (k-index<1) may\n")
-        cat("indicate that k is too low, especially if edf is close to k'.\n\n")
-        printCoefmat(kchck, digits = 3)
-    }
-}
-\end{lstlisting}
+We now call \passthrough{\lstinline!gam.diagnostics!} to provide the desired diagnostic output, as well as a summary of the fitted model, which is obtained by calling \passthrough{\lstinline!summary!}.
 
 \begin{lstlisting}[language=R]
 gam.diagnostics(gam_00)
@@ -1552,6 +1471,8 @@ gam.diagnostics(gam_00)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{lstlisting}
+
+From the output, it can be seen that the \passthrough{\lstinline!k-index!} is 0.36, which indicates that the model is not capturing the variability in the data. The \passthrough{\lstinline!edf!} (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
 
 \begin{lstlisting}[language=R]
 summary(gam_00)
@@ -1581,18 +1502,16 @@ summary(gam_00)
 ## -REML = 444.01  Scale est. = 450.66    n = 100
 \end{lstlisting}
 
-From the output, it can be seen that the \passthrough{\lstinline!k-index!} is 0.36, which indicates that the model is not capturing the variability in the data. The \passthrough{\lstinline!edf!} (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
-
 From the \passthrough{\lstinline!summary!} function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is `identity' as the model does not make any transformation on the predictors. The `significance of smooth terms' \emph{p-value} indicates if each smooth is adding significance to the model. Here, the \emph{p-value} is low but we have seen that there are issues with the model from the previous outputs. Finally, the `deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to \(\approx\) 17\%.
 
 \hypertarget{second-model}{%
 \subsubsection{Second model}\label{second-model}}
 
-The major flaw of \passthrough{\lstinline!gam\_00!} is that this model is not taking into account the fact that the data is nested in groups. The next iteration is a model where a different smooth of time (Day) is assigned for each group using \passthrough{\lstinline!by=Group!} in the model syntax.
+The major flaw of \passthrough{\lstinline!gam\_00!} is that this model is not taking into account the fact that the data is nested in groups. The next iteration is a model where a different smooth of time (Day) is assigned for each group using \passthrough{\lstinline!by = Group!} in the model syntax.
 
 \begin{lstlisting}[language=R]
 gam_01<-gam(StO2_sim ~ s(Day, by=Group,k = 5),
-            method='REML',
+            method ='REML',
             data  = dat_sim)
 
 gam.diagnostics(gam_01)
@@ -1616,6 +1535,8 @@ gam.diagnostics(gam_01)
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{lstlisting}
+
+Diagnostics for this model indicate that the k-index is still below 1 (0.43 from \passthrough{\lstinline!gam.check!}), and that the residuals are still not following a normal distribution (Figure \ref{fig:second-GAM-diag}). Moreover, the smooths (plotted via the \passthrough{\lstinline!draw()!} function) appear with a fairly linear profile, which indicates they are still not capturing the trends observed in the data.
 
 \begin{lstlisting}[language=R]
 summary(gam_01)
@@ -1646,7 +1567,7 @@ summary(gam_01)
 ## -REML = 423.39  Scale est. = 280.88    n = 100
 \end{lstlisting}
 
-Diagnostics for this model indicate that the k-index is still below 1 (0.43 from \passthrough{\lstinline!gam.check!}), and that the residuals are still not following a normal distribution (Figure \ref{fig:second-GAM-diag}). Moreover, the smooths (plotted via the \passthrough{\lstinline!draw()!} function) appear with a fairly linear profile, which indicates they are still not capturing the trends observed in the data. From \passthrough{\lstinline!summary()!}, the deviance explained by the model is \(\approx\) 51\%.
+From \passthrough{\lstinline!summary()!}, the deviance explained by the model is \(\approx\) 51\%.
 
 
 
@@ -1691,6 +1612,8 @@ gam.diagnostics(gam_02)
 ## s(Day):GroupTreatment 4.00 3.88    1.02    0.56
 \end{lstlisting}
 
+The resulting model is \passthrough{\lstinline!gam\_02!}, which is the model fitted in the main manuscript. By using \passthrough{\lstinline!appraise()!} and \passthrough{\lstinline!draw!} on this model (Figure \ref{fig:final-GAM-diag}) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group. From \passthrough{\lstinline!gam.check!}, the k-index is now at an acceptable value (\(\approx\) 1.02).
+
 \begin{lstlisting}[language=R]
 summary(gam_02)
 \end{lstlisting}
@@ -1721,7 +1644,7 @@ summary(gam_02)
 ## -REML = 355.86  Scale est. = 64.533    n = 100
 \end{lstlisting}
 
-The resulting model is \passthrough{\lstinline!gam\_02!}, which is the model fitted in the main manuscript. By using \passthrough{\lstinline!appraise()!} and \passthrough{\lstinline!draw!} on this model (Figure \ref{fig:final-GAM-diag}) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group. From \passthrough{\lstinline!gam.check!}, the k-index is now at an acceptable value (\(\approx\) 1.02), and \passthrough{\lstinline!summary!} now indicates that the model is able to capture 89\% of the variance in the data.
+From \passthrough{\lstinline!summary!}, the model is able to capture 89\% of the variance in the data, which is a substantial improvement over the variance explained by \passthrough{\lstinline!gam\_00!} and \passthrough{\lstinline!gam\_01!}.
 
 
 
@@ -2064,7 +1987,7 @@ smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
     row2 <- with(newdata, Group == g2)
     ## difference rows of xp for data from comparison
     X <- xp[row1, ] - xp[row2, ]
-    ## zero out cols of X related to splines for other lochs
+    ## zero out cols of X not involved in the comparison
     X[, ! (col1 | col2)] <- 0
     
     ## zero out the parametric cols
