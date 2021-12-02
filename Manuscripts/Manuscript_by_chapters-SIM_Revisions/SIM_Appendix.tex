@@ -258,7 +258,7 @@ The \emph{repeated measures analysis of variance} (rm-ANOVA) and the \emph{linea
 
 In a longitudinal biomedical study, two or more groups of subjects (e.g., human subject, mice, samples) are subject to different treatments (e.g., a ``treatment'' group receives a novel drug or intervention vs.~a ``control'' group that receives a placebo), and measurements from each subject within each group are collected at specific time points. The collected response is modeled with \emph{fixed} components. The \emph{fixed} component can be understood as a constant value in the response which the researcher is interested in measuring, i.e., the average effect of the novel drug/intervention in the ``treatment'' group.
 
-Mathematically speaking, a rm-ANOVA model with an interaction can be written as:
+Mathematically speaking, a rm-ANOVA model with an interaction can be written as
 
 \begin{equation}
 y_{ijt} = \beta_0+\beta_1 \times treatment_{j} +\beta_2 \times time_{t} +\beta_3 \times time_{t}\times treatment_{j}+\varepsilon_{ijt},\\ 
@@ -1583,7 +1583,9 @@ From \passthrough{\lstinline!summary()!}, the deviance explained by the model is
 \hypertarget{third-model}{%
 \subsubsection{Third model}\label{third-model}}
 
-Model \passthrough{\lstinline!gam\_00!} was built for didactic purposes to cover the simplest case, but it does not account for the nesting of the data by Group, which is apparent from the type of smooth fitted, the model diagnostics, and, the low variance explained by the model. On the other hand, \passthrough{\lstinline!gam\_01!} takes into account the nesting within each group and provides better variance explanation, but as indicated in Section \ref{longitudinal-GAMs}, in order to differentiate between each group a parametric term needs to be added to the model for the interaction of \emph{Day} and \emph{Group}.
+Model \passthrough{\lstinline!gam\_00!} was built for didactic purposes to cover the simplest case, but it does not account for the nesting of the data by Group, which is apparent from the type of smooth fitted (a single smooth), the model diagnostics, and, the low variance explained by the model. On the other hand, \passthrough{\lstinline!gam\_01!} takes into account the nesting within each group and provides better variance explanation, but as indicated in Section \ref{longitudinal-GAMs}, in order to differentiate between each group a parametric term needs to be added to the model for the interaction of \emph{Day} and \emph{Group}.
+
+This is because in \passthrough{\lstinline!gam\_01!} separate smooths were fitted per group and those smooths also tried to account for the different means of the response in the two groups. Adding a parametric term for \passthrough{\lstinline!Group!} enables the smooths to capture the time course-differences of each group. The resulting model is \passthrough{\lstinline!gam\_02!}, which is the model fitted in the main manuscript.
 
 \begin{lstlisting}[language=R]
 #GAM for StO2
@@ -1612,7 +1614,7 @@ gam.diagnostics(gam_02)
 ## s(Day):GroupTreatment 4.00 3.88    1.02    0.56
 \end{lstlisting}
 
-The resulting model is \passthrough{\lstinline!gam\_02!}, which is the model fitted in the main manuscript. By using \passthrough{\lstinline!appraise()!} and \passthrough{\lstinline!draw!} on this model (Figure \ref{fig:final-GAM-diag}) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group. From \passthrough{\lstinline!gam.check!}, the k-index is now at an acceptable value (\(\approx\) 1.02).
+By using \passthrough{\lstinline!appraise()!} and \passthrough{\lstinline!draw!} on this model (Figure \ref{fig:final-GAM-diag}) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group. From \passthrough{\lstinline!gam.check!}, the k-index is now at an acceptable value (\(\approx\) 1.02).
 
 \begin{lstlisting}[language=R]
 summary(gam_02)

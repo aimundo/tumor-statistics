@@ -11,7 +11,7 @@ The _repeated measures analysis of variance_ (rm-ANOVA) and the _linear mixed mo
 In a longitudinal biomedical study, two or more groups of subjects (e.g., human subject, mice, samples) are subject to different treatments (e.g., a "treatment" group receives a novel drug or intervention vs. a "control" group that receives a placebo), and measurements from each subject within each group are collected at specific time points. The collected response is modeled with _fixed_ components. The _fixed_ component can be understood as a constant value in the response which the researcher is interested in measuring, i.e., the average effect of the novel drug/intervention in the "treatment" group. 
 
 
-Mathematically speaking, a rm-ANOVA model with an interaction can be written as:
+Mathematically speaking, a rm-ANOVA model with an interaction can be written as
 
 \begin{equation}
 y_{ijt} = \beta_0+\beta_1 \times treatment_{j} +\beta_2 \times time_{t} +\beta_3 \times time_{t}\times treatment_{j}+\varepsilon_{ijt},\\ 
