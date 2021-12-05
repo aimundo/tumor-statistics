@@ -1,7 +1,28 @@
-set.seed(2021)
+---
+title: "Untitled"
+author: "Ariel Mundo"
+date: "12/3/2021"
+output: html_document
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r,setup}
+library(tidyverse)
+library(mgcv)
+library(gratia)
+library(viridis)
+library(scico)
+set.seed(2021) #set seed for reproducibility
 thm1<-scale_fill_scico_d(palette="tokyo",begin=0.3, end=0.8, direction = -1, aesthetics = c("colour","fill"))
 
+```
+
+I follow the same approach from our paper here: simulated from the truth, 10 repeated measurements at each timepoint.
+
+```{r,generate-simulated-data}
 #data, "the truth"
 dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
             Day=rep(c(0,2,5,7,10),times=2),
@@ -31,27 +52,24 @@ sd <- 10 #approximate sd from paper
 df <- 6
 dat_sim <- simulate_data(dat, n, sd)
 
+```
+
+Now, I fit the GAM.
+
+```{r,fit-GAM}
 #GAM, interaction of time and treatment
 
 gam_02 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),
               method='REML',
               data  = dat_sim)
+```
 
 
-#creates a dataframe using the length of the covariates for the GAM
-gam_predict <- expand_grid(Group = factor(c("Control", "Treatment")),
-                           Day = seq(0, 10, by = 0.1),
-                           subject=factor(rep(1:10)))
 
-#adds the predictions to the grid and creates a confidence interval for GAM
-gam_predict<-gam_predict%>%
-    mutate(fit = predict(gam_02,gam_predict,se.fit = TRUE,type='response')$fit,
-           se.fit = predict(gam_02, gam_predict,se.fit = TRUE,type='response')$se.fit)
+Now I follow the exact code from G. Simpson's post to generate the simutaneous interval (link to the original post below):
+https://fromthebottomoftheheap.net/2016/12/15/simultaneous-interval-revisited/
 
-
-##Here I follow the exact code from G. Simpson's post to generate the simutaneous interval:
-#https://fromthebottomoftheheap.net/2016/12/15/simultaneous-interval-revisited/
-
+```{r,simulatenous-interval}
 #Generate random values from multivariate normal
 rmvn <- function(n, mu, sig) { ## MVN random deviates
     L <- mroot(sig)
@@ -105,19 +123,27 @@ pred <- transform(cbind(data.frame(pred), newd),
 
 #plot the simultaneous and pointwise intervals
 ggplot(pred, aes(x =Day,group=Group,color=Group,fill=Group)) +
+    geom_path(aes(y=fit),lwd=2)+
     geom_ribbon(aes(ymin = lwrS, ymax = uprS), alpha = 0.2) +
     geom_ribbon(aes(ymin = lwrP, ymax = uprP), alpha = 0.2) +
     labs(y = "Tumor data",
          x = "Days")+
     thm1
 
+```
 
-#Below is the modified version of G. Simpson's code for the pairwise comparisons (pointwise)
-#https://fromthebottomoftheheap.net/2017/10/10/difference-splines-i/
 
+
+Below is the code for the pairwise comparisons. I used G. Simpson's base code from:
+https://fromthebottomoftheheap.net/2017/10/10/difference-splines-i/
+
+But I have made some modifications (are they right?). First, in the original code the design matrix was calculated again (`xp`, L145 below). But from what I understand we have already calculated this matrix (`Cg` which we calculated for the simultaneous interval on L100 above), also I understand than instead of calculating `dif` using the model coefficients (L158 below), `dif` in our case is essentially `simDev`, which was already calculated above (L103)
+
+
+```{simultaneous-diff}
 ##calculate simultaneous diff
 
-    #xp <- predict(model, newdata = newdata, type = 'lpmatrix')
+    xp <- predict(gam_02, newdata = newdata, type = 'lpmatrix')
     #Find columns in xp where the name contains "Control" and "Treatment"
     col1 <- grepl("Control", colnames(Cg))
     col2 <- grepl("Treatment", colnames(Cg))
@@ -131,7 +157,7 @@ ggplot(pred, aes(x =Day,group=Group,color=Group,fill=Group)) +
     ## zero out the parametric cols
     #X[, !grepl('^s\\(', colnames(Cg))] <- 0
     dif <- X %*% coef(gam_02)
-    se <- sqrt(rowSums((X %*% vcov(gam_02, unconditional = FALSE)) * X))
+    se <- sqrt(rowSums((X %*% vcov(gam_02, unconditional = TRUE)) * X))
     crit <- qt(0.05/2, df.residual(gam_02), lower.tail = FALSE)
     upr <- dif + (crit * se)
     lwr <- dif - (crit * se)
