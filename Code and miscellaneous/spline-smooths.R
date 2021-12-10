@@ -206,7 +206,7 @@ p1 <- ggplot(ci, aes(x = x, y = est, group = smooth)) +
                 mapping = aes(ymin = lower, ymax = upper, x = x, group = smooth),
                 fill = "grey80", inherit.aes = FALSE, alpha = 0.5)
 
-p1
+p1 #this plot here produces confidence intervals that appear to be shifted, why?
 
 
 

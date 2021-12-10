@@ -279,7 +279,7 @@ smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
    ## zero out cols of X not involved in the comparison
     X[, ! (col1 | col2)] <- 0
     ## zero out the parametric cols
-    #X[, !grepl('^s\\(', colnames(xp))] <- 0
+    X[, !grepl('^s\\(', colnames(xp))] <- 0
     dif <- X %*% coef(model)
     se <- sqrt(rowSums((X %*% vcov(model, unconditional = unconditional)) * X))
     crit <- qt(alpha/2, df.residual(model), lower.tail = FALSE)

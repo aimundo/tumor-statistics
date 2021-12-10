@@ -155,7 +155,7 @@ But I have made some modifications (are they right?). First, in the original cod
     ## zero out cols of X not involved in the comparison
     X[, ! (col1 | col2)] <- 0
     ## zero out the parametric cols
-    #X[, !grepl('^s\\(', colnames(Cg))] <- 0
+    X[, !grepl('^s\\(', colnames(Cg))] <- 0
     dif <- X %*% coef(gam_02)
     se <- sqrt(rowSums((X %*% vcov(gam_02, unconditional = TRUE)) * X))
     crit <- qt(0.05/2, df.residual(gam_02), lower.tail = FALSE)
