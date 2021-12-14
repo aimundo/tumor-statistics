@@ -64,7 +64,7 @@ dat_sim <- simulate_data(dat, n, sd)
 #plotting simulated data
 f2<-ggplot(dat_sim, aes(x = Day, 
                         y = StO2_sim, 
-                        color = Group, 
+                        color = Group,
                         group=subject)) +
     geom_point(show.legend=FALSE,
                size=1.5,
@@ -103,11 +103,33 @@ gam_02 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),
 #linear model
 lm1<-lm(StO2_sim ~ Day + Group + Day * Group, data = dat_sim)
 
+## point-wise interval
+ci <- confint(gam_02, parm = "s(Day)", partial_match = TRUE, type = "confidence")
+## simultaneous interval
+si <- confint(gam_02, parm = "s(Day)", type = "simultaneous", partial_match = TRUE)
 
-#creates a dataframe using the length of the covariates for the GAM
-gam_predict <- expand_grid(Group = factor(c("Control", "Treatment")),
-                         Day = seq(0, 10, by = 0.1),
-                         subject=factor(rep(1:10)))
+
+# mean shift for Treatment group
+const <- coef(gam_02)[2]
+
+#pointwise confidence interval
+ci <- ci %>%
+mutate(est = case_when(Group == "Treatment" ~ est + const,
+TRUE ~ est),
+lower = case_when(Group == "Treatment" ~ lower + const,
+TRUE ~ lower),
+upper = case_when(Group == "Treatment" ~ upper + const,
+TRUE ~ upper))
+
+#simultaneous interval
+si <- si %>%
+mutate(est = case_when(Group == "Treatment" ~ est + const,
+TRUE ~ est),
+lower = case_when(Group == "Treatment" ~ lower + const,
+TRUE ~ lower),
+upper = case_when(Group == "Treatment" ~ upper + const,
+TRUE ~ upper))
+
 
 #creates a dataframe using the length of the covariates for rm-ANOVA
 lm_predict<-expand_grid(Group = factor(c("Control", "Treatment")),
@@ -116,38 +138,35 @@ lm_predict<-expand_grid(Group = factor(c("Control", "Treatment")),
                           )
 lm_predict$subject<-factor(paste(lm_predict$subject, lm_predict$Group, sep = "-"))
 
-#adds the predictions to the grid and creates a confidence interval for GAM
-gam_predict<-gam_predict%>%
-    mutate(fit = predict(gam_02,gam_predict,se.fit = TRUE,type='response')$fit,
-           se.fit = predict(gam_02, gam_predict,se.fit = TRUE,type='response')$se.fit)
-
 #using lm
 lm_predict<-lm_predict%>%
     mutate(fit = predict(lm1,lm_predict,se.fit = TRUE,type='response')$fit,
            se.fit = predict(lm1, lm_predict,se.fit = TRUE,type='response')$se.fit)
 
-#plot smooths and confidence interval for GAM
-f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
-    geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legend = FALSE)+
-  geom_ribbon(aes( x=Day,ymin=(fit - 2*se.fit), 
-                   ymax=(fit + 2*se.fit),
-                   fill=Group
-                   ),
-              alpha=al,
-              data=gam_predict,
-            show.legend=FALSE,
-            inherit.aes=FALSE) +
-  geom_line(aes(y=fit,
-                color=Group),
-              size=1,data=gam_predict,
-              show.legend = FALSE)+
-  #facet_wrap(~Group)+
-  labs(y=expression(atop(StO[2],'complete')))+
+#plot smooths and pointwise and simulatenous confidence intervals for GAM
+f3<-ggplot(ci, aes(x = Day, y = est, group = smooth)) +
+geom_line(lwd = 1) +
+geom_ribbon(data = ci, mapping = aes(ymin = lower, ymax = upper, x = Day, group = smooth,fill = Group),
+inherit.aes = FALSE, alpha = 0.7,
+show.legend=FALSE) +
+geom_ribbon(data = si,
+mapping = aes(ymin = lower, ymax = upper, x = Day, group = smooth,fill =Group),
+inherit.aes = FALSE, alpha = 0.4,
+show.legend=FALSE)+
+    geom_point(data=dat_sim, aes(x = Day, 
+                        y = StO2_sim, 
+                        color = Group), 
+                        size=1.5,
+                        alpha=0.6, 
+               inherit.aes = FALSE,
+               show.legend = FALSE)+
+    labs(y=expression(atop(StO[2],'complete')))+
     scale_x_continuous(breaks=c(0,2,5,7,10))+
       theme_classic()+
   theme(
     axis.text=element_text(size=22)
   )+thm1
+
  
 #plot linear fit for rm-ANOVA
 f4<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
@@ -204,38 +223,52 @@ mod_m1 <- gam(StO2_sim ~ Group+s(Day,by=Group,k=5), data  = dat_missing,family=s
 appraise(mod_m1)
 
 
-m_predict <- expand_grid(Group = factor(c("Control", "Treatment")),
-                         Day = seq(0, 10, by = 0.1))
-
-#adds the predictions to the grid and creates a confidence interval
-m_predict<-m_predict%>%
-    mutate(fit = predict(mod_m1,m_predict,se.fit = TRUE,type='response')$fit,
-           se.fit = predict(mod_m1, m_predict,se.fit = TRUE,type='response')$se.fit)
+ci <- confint(mod_m1, parm = "s(Day)", partial_match = TRUE, type = "confidence")
+## simultaneous interval
+si <- confint(mod_m1, parm = "s(Day)", type = "simultaneous", partial_match = TRUE)
 
 
-f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
-    geom_point(aes(color=Group),size=1.5,alpha=0.5,show.legend = FALSE)+
-  geom_ribbon(aes( x=Day,ymin=(fit - 2*se.fit), 
-                   ymax=(fit + 2*se.fit),
-                   fill=Group
-                   ),
-              alpha=al,
-              data=m_predict,
-            show.legend=FALSE,
-                inherit.aes=FALSE) +
-  geom_line(aes(y=fit,
-                color=Group),
-              size=1,data=m_predict,
-              show.legend = TRUE)+
-  #facet_wrap(~Group)+
-  labs(y=expression(atop(StO[2],'missing')))+
+# mean shift for group 2
+const <- coef(mod_m1)[2]
+
+ci <- ci %>%
+mutate(est = case_when(Group == "Treatment" ~ est + const,
+TRUE ~ est),
+lower = case_when(Group == "Treatment" ~ lower + const,
+TRUE ~ lower),
+upper = case_when(Group == "Treatment" ~ upper + const,
+TRUE ~ upper))
+
+si <- si %>%
+mutate(est = case_when(Group == "Treatment" ~ est + const,
+TRUE ~ est),
+lower = case_when(Group == "Treatment" ~ lower + const,
+TRUE ~ lower),
+upper = case_when(Group == "Treatment" ~ upper + const,
+TRUE ~ upper))
+
+
+f6<-ggplot(ci, aes(x = Day, y = est, group = smooth)) +
+geom_line(lwd = 1) +
+geom_ribbon(data = ci, mapping = aes(ymin = lower, ymax = upper, x = Day, group = smooth,fill = Group),
+inherit.aes = FALSE, alpha = 0.7,
+show.legend=FALSE) +
+geom_ribbon(data = si,
+mapping = aes(ymin = lower, ymax = upper, x = Day, group = smooth,fill =Group),
+inherit.aes = FALSE, alpha = 0.4,
+show.legend=FALSE)+
+    geom_point(data=dat_missing, aes(x = Day, 
+                        y = StO2_sim, 
+                        color = Group), 
+                            size=1.5,
+                        alpha=0.6, 
+               inherit.aes = FALSE)+
+    labs(y=expression(atop(StO[2],'missing')))+
     scale_x_continuous(breaks=c(0,2,5,7,10))+
       theme_classic()+
   theme(
-    axis.text=element_text(size=22)
-  )+thm1
-
-
+    axis.text=element_text(size=22))+
+        thm1
 
 ```
 
@@ -246,7 +279,7 @@ f6<-ggplot(data=dat_missing, aes(x=Day, y=StO2_sim, group=Group)) +
 
 mult_plot<-f2+f3+f4+f6+
    plot_annotation(tag_levels='A')&
-   ylim(c(-7,75)) &
+   ylim(c(-20,75)) &
   theme(
      text=element_text(size=18)
      )
@@ -258,66 +291,133 @@ mult_plot
 
 
 ```{r,pairwise-comp,echo=FALSE,include=FALSE,message=FALSE,warning=FALSE}
+
 ##Pairwise comparisons
 
-pdat <- expand.grid(Day = seq(0, 10, length = 400),
-                    Group = c('Control', 'Treatment'))
 
-#this function takes the model, grid and groups to be compared using the lpmatrix
+calc_difference_R <- function(f1, f2, smooth, by_var, smooth_var, data, Xp, V, coefs, nrep = 1000) {
+  ## make sure f1 and f2 are characters
+  f1 <-  as.character(f1)
+  f2 <-  as.character(f2)
+  cnames <- colnames(Xp)
+  ## columns of Xp associated with pair of smooths
+  c1 <- grepl(gratia:::mgcv_by_smooth_labels(smooth, by_var, f1), cnames, fixed = TRUE)
+  c2 <- grepl(gratia:::mgcv_by_smooth_labels(smooth, by_var, f2), cnames, fixed = TRUE)
+  ## rows of Xp associated with pair of smooths
+  r1 <- data[[by_var]] == f1
+  r2 <- data[[by_var]] == f2
 
-smooth_diff <- function(model, newdata, g1, g2, alpha = 0.05,
-                        unconditional = FALSE) {
-    xp <- predict(model, newdata = newdata, type = 'lpmatrix')
-    #Find columns in xp where the name contains "Control" and "Treatment"
-    col1 <- grepl(g1, colnames(xp))
-    col2 <- grepl(g2, colnames(xp))
-    #Find rows in xp that correspond to each treatment
-    row1 <- with(newdata, Group == g1)
-    row2 <- with(newdata, Group == g2)
-    ## difference rows of xp for data from comparison
-    X <- xp[row1, ] - xp[row2, ]
-   ## zero out cols of X not involved in the comparison
-    X[, ! (col1 | col2)] <- 0
-    ## zero out the parametric cols
-    X[, !grepl('^s\\(', colnames(xp))] <- 0
-    dif <- X %*% coef(model)
-    se <- sqrt(rowSums((X %*% vcov(model, unconditional = unconditional)) * X))
-    crit <- qt(alpha/2, df.residual(model), lower.tail = FALSE)
-    upr <- dif + (crit * se)
-    lwr <- dif - (crit * se)
-    data.frame(pair = paste(g1, g2, sep = '-'),
-               diff = dif,
-               se = se,
-               upper = upr,
-               lower = lwr)
+  ## difference rows of Xp for pair of smooths
+  X <- Xp[r1, ] - Xp[r2, ]
+
+  ## zero the cols related to other splines
+ # X[, ! (c1 | c2)] <- 0
+
+  ## zero out the parametric cols
+  #X[, !grepl('^s\\(', cnames)] <- 0
+
+  ## compute difference
+  sm_diff <- drop(X %*% coefs)
+  se <- sqrt(rowSums((X %*% V) * X))
+  nr <- NROW(X)
+
+  ## Calculate posterior simulation for smooths
+  coefs_sim <- t(rmvn(nrep, rep(0, nrow(V)), V))
+  rownames(coefs_sim) <- rownames(V)
+  simDev <- X %*% coefs_sim
+  absDev <- abs(sweep(simDev, 1, se, FUN = "/"))
+  masd <- apply(absDev, 2, max)
+  crit_s <- quantile(masd, prob = 0.95, type = 8)
+
+
+  out <- list(smooth = rep(smooth, nr), by = rep(by_var, nr),
+              level_1 = rep(f1, nr),
+              level_2 = rep(f2, nr),
+              diff = sm_diff, se = se,
+              lower_s = sm_diff - crit_s * se,
+              upper_s = sm_diff + crit_s*se)
+
+  out <- new_tibble(out, nrow = NROW(X), class = "difference_smooth")
+  ## Only need rows associated with one of the levels
+  out <- bind_cols(out, data[r1, smooth_var])
+
+  out
 }
 
-comp1<-smooth_diff(gam_02,pdat,'Control','Treatment')
+#does both ci and si
+difference_smooths_R <- function(model,
+                                 smooth,
+                                 n = 100,
+                                 ci_level = 0.95,
+                                 newdata = NULL,
+                                 partial_match = TRUE,
+                                 unconditional = FALSE,
+                                 frequentist = FALSE,
+                                 nrep = 10000,
+                                 include_means = TRUE,
+                                 ...) {
+  if (missing(smooth)) {
+    stop("Must specify a smooth to difference via 'smooth'.")
+  }
 
-comp_StO2_full <- cbind(Day = seq(0, 10, length = 400),
-                   rbind(comp1)) %>%
-  mutate(interval=case_when(
-    upper>0 & lower<0~"no-diff",
-    upper<0~"less",
-    lower>0~"greater"
-  ))
+  # smooths in model
+  S <- gratia::smooths(model) # vector of smooth labels - "s(x)"
+  # select smooths
+  select <-
+    gratia:::check_user_select_smooths(smooths = S, select = smooth,
+                                       partial_match = partial_match)#,
+  # model_name = expr_label(substitute(object)))
+  sm_ids <- which(select)
+  smooths <- gratia::get_smooths_by_id(model, sm_ids)
+  sm_data <- map(sm_ids, gratia:::smooth_data,
+                 model = model, n = n, include_all = TRUE)
+  sm_data <- bind_rows(sm_data)
+  by_var <- by_variable(smooths[[1L]])
+  smooth_var <- gratia:::smooth_variable(smooths[[1L]])
+  pairs <- as_tibble(as.data.frame(t(combn(levels(sm_data[[by_var]]), 2)),
+                                   stringsAsFactor = FALSE))
+  names(pairs) <- paste0("f", 1:2)
+
+  Xp <- predict(model, newdata = sm_data, type = "lpmatrix")
+  V <- gratia:::get_vcov(model, unconditional = unconditional,
+                         frequentist = frequentist)
+  coefs <- coef(model)
+
+  out <- pmap(pairs, calc_difference_R, smooth = smooth, by_var = by_var,
+              smooth_var = smooth_var, data = sm_data, Xp = Xp, V = V,
+              coefs = coefs, nrep = nrep)
+  out <- bind_rows(out)
+  crit <- qnorm((1 - ci_level) / 2, lower.tail = FALSE)
+
+  out <- add_column(out,
+                    lower = out$diff - (crit * out$se),
+                    upper = out$diff + (crit * out$se),
+                    .after = 6L)
+  out
+}
+
+#compute difference between smooths and calculate confidence interval: complete data
+diff_complete <- difference_smooths_R(gam_02, smooth = "s(Day)", newdata = newdat,
+                     unconditional = TRUE, frequentist = FALSE,
+                     n=100, partial_match = TRUE, nrep=10000)
+
 
 #function to obtain values for the shading regions
 pairwise_limits<-function(dataframe){
     #extract values where the lower limit of the ribbon is greater than zero
     #this is the region where the control group effect is greater
+
     v1<-dataframe%>%
-        filter(lower>0)%>%
+        filter(lower_s>0)%>%
         select(Day)
     #get day  initial value
     init1=v1$Day[[1]]
     #get day final value
     final1=v1$Day[[nrow(v1)]]
-
     #extract values where the value of the upper limit of the ribbon is lower than zero
     #this corresponds to the region where the treatment group effect is greater
-    v2<-comp_StO2_full%>%
-        filter(upper<0)%>%
+    v2<-dataframe%>%
+        filter(upper_s<0)%>%
         select(Day)
 
     init2=v2$Day[[1]]
@@ -327,21 +427,25 @@ pairwise_limits<-function(dataframe){
                   final1=final1,
                   init2=init2,
                   final2=final2)
-return(my_list)
+    return(my_list)
+
+    
+
 }
 
-my_list<-pairwise_limits(comp_StO2_full)
+my_list<-pairwise_limits(diff_complete)
 rib_col<-'#8D7D82' #color for ribbon for confidence interval
 control_rib <- '#875F79' #color for ribbon for control region
 treat_rib <- '#A7D89E' #color for ribbon treatment region
 
-c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
+c1 <- ggplot() +
+  geom_line(data = diff_complete, aes(x = Day, y = diff),size=1, alpha=0.5) +
     annotate("rect",
                 xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
                 fill=control_rib,
                 alpha = 0.5,
-                ) +
-  annotate("text",
+                )+
+    annotate("text",
              x=1.5,
              y=-18,
              label="Control>Treatment",
@@ -350,6 +454,40 @@ c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
            )+
     annotate("rect",
              xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
+             fill=treat_rib,
+             alpha = 0.5
+             ) +
+  annotate("text",
+             x=6,
+             y=-18,
+             label="Treatment>Control",
+             size=8,
+           angle=90
+           )+
+  geom_ribbon(data = diff_complete, aes(x = Day, ymin = lower_s, ymax = upper_s),
+              alpha = 0.5, fill = rib_col, inherit.aes = FALSE) +
+  geom_hline(yintercept = 0, lty = 2, color = "red")+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    theme(
+    axis.text=element_text(size=22))+
+    theme_classic()
+    
+
+###compute difference in smooths for missing data
+diff_missing <- difference_smooths_R(mod_m1, smooth = "s(Day)", newdata = newdat,
+                     unconditional = TRUE, frequentist = FALSE,
+                     n=100, partial_match = TRUE, nrep=10000)
+
+v2<- diff_missing %>%
+        filter(upper_s<0)%>%
+        select(Day)
+init2=v2$Day[[1]]
+final2=v2$Day[[nrow(v2)]]
+
+c2 <- ggplot() +
+  geom_line(data = diff_missing, aes(x = Day, y = diff),size=1, alpha=0.5) +
+    annotate("rect",
+             xmin =init2, xmax = final2,ymin=-Inf,ymax=Inf,
              fill=treat_rib,
              alpha = 0.5,
     ) +
@@ -360,81 +498,15 @@ c1<-ggplot(comp_StO2_full, aes(x = Day, y = diff, group = pair)) +
              size=8,
            angle=90
            )+
-    geom_ribbon(aes(ymin = lower, ymax = upper),
-                alpha = 0.5,
-                fill=rib_col) +
-    geom_line(data=comp_StO2_full,aes(y=0),size=0.5)+
-    geom_line(color='black',size=1) +
-
-    facet_wrap(~ pair) +
-    theme_classic()+
-    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
+  geom_ribbon(data = diff_missing, aes(x = Day, ymin = lower_s, ymax = upper_s),
+              alpha = 0.5, fill = rib_col, inherit.aes = FALSE) +
+  geom_hline(yintercept = 0, lty = 2, color = "red")+
     scale_x_continuous(breaks=c(0,2,5,7,10))+
     theme(
-        text=element_text(size=18),
-        legend.title=element_blank()
-    )
+    axis.text=element_text(size=22))+
+    theme_classic()
+    
 
-
-###for missing data
-comp2<-smooth_diff(mod_m1,pdat,'Control','Treatment')
-comp_StO2_missing <- cbind(Day = seq(0, 10, length = 400),
-                   rbind(comp2))
-
-missing_plot<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
-    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
-    geom_line(color='black',size=1) +
-    facet_wrap(~ pair) +
-    labs(x = 'Days', 
-         y = expression(paste('Difference in StO'[2],'\n (missing data)' 
-                              )))+
-  scale_x_continuous(breaks=c(0,2,5,7,10))+
-  theme_classic()+
-  theme(
-     text=element_text(size=18),
-     legend.title=element_blank()
-     )
-
-my_list<-pairwise_limits(comp_StO2_missing)
-
-c2<-ggplot(comp_StO2_missing, aes(x = Day, y = diff, group = pair)) +
-    annotate("rect",
-             xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
-             fill=control_rib,
-             alpha = 0.5
-             ) +
-  annotate("text",
-             x=1.5,
-             y=-18,
-             label="Control>Treatment",
-           size=8,
-           angle=90
-           )+
-    annotate("rect",
-             xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
-             fill= treat_rib,
-             alpha = 0.5,
-    ) +
-  annotate("text",
-             x=6,
-             y=-18,
-             label="Treatment>Control",
-             size=8,
-           angle=90
-           )+
-    geom_ribbon(aes(ymin = lower, ymax = upper),
-                alpha = 0.5,
-                fill=rib_col) +
-    geom_line(data=comp_StO2_missing,aes(y=0),size=0.5)+
-    geom_line(color='black',size=1) +
-    facet_wrap(~ pair) +
-    theme_classic()+
-    labs(x = 'Days', y = expression(paste('Difference in StO'[2] )))+
-    scale_x_continuous(breaks=c(0,2,5,7,10))+
-    theme(
-        text=element_text(size=18),
-        legend.title=element_blank()
-    )
 
 pair_comp<-c1+c2
 ```
@@ -444,10 +516,9 @@ pair_comp<-c1+c2
 ```{r,plot-pairwise-comp,fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:pairwise-comp)'}
 
 pair_comp+plot_annotation(tag_levels='A')&
-  theme(
+    theme(
      text=element_text(size=18)
      )
-
 ```
 
 

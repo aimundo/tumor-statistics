@@ -57,7 +57,7 @@ calc_difference_R <- function(f1, f2, smooth, by_var, smooth_var, data, Xp, V, c
   out
 }
 
-
+#does both ci and si
 difference_smooths_R <- function(model,
                                  smooth,
                                  n = 100,
@@ -118,7 +118,7 @@ difference_smooths_R <- function(model,
 ## Simulate some data like we have in our example ----
 ##
 
-# set.seed(2)
+#  set.seed(2)
 # n <- 50
 # dat <- data.frame(x=seq(1:n), group = factor(rep(c(1, 2), each = n)))
 # # create the grouped smooths
