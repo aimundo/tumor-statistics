@@ -114,7 +114,7 @@ We believe that because Section 4 now provides context and follows a logical pro
 
 - L323: We also acknowledge that the GAM model (Equation 5 in the original manuscript and Equation 10 in the revised document) corresponds to the **linear case**. This change will avoid the propagation of confusion that Dr. Simpson correctly indicated in his comment.
 
-- L325: We indicate that the term $\varepsilon_{ijt}$ is the residual, and not a separable error. Of notice, we are following the notation provided by Dr. Simpson in Eq. 3 in the paper "Modelling Modelling Palaeoecological Time Series Using Generalised Additive Models". **do we need this here? I am adding it because we are following the same model specification that he has in this paper**
+- L325: We indicate that the term $\varepsilon_{ijt}$ is the deivation of each observation from the mean.
 
 # Thin plate regression splines
 
@@ -184,7 +184,11 @@ than nominal coverage and some areas less than the nominal coverage.
 
 The content in L320-329 regarding confidence intervals (CIs) in the original submission has been changed in the following manner:
 
-- L396-L403 now contain a more detailed and accurate explanation of"across-the-function" CIs. We have used the reviewer's comments to indicate that in GAM fitted using _mgcv_, the close to nominal across-the-function-coverage is true when averaged over the entire function.
+- L396-L404 now contain a more detailed and accurate explanation of"across-the-function" CIs. We have used the reviewer's comments to indicate that in GAM fitted using _mgcv_, the close to nominal across-the-function-coverage is true when averaged over the entire function.
+
+- L405-411 now provide a brief explanation of simultaneous CIs. With this, we want to provide the reader with an intuitive understanding on why simultaneous CIs are more robust than across the function CIs.
+
+- We have modified Figure 3 to now include across the function and simultaneous CIs. Figs. 3B,D now show the fitted smooths and both intervals, and we explain their inclusion in L473-478. In this way, the reader has a visual understanding of the difference between across the function and simultaneous CIs.
 
 # Differences in smooths
 
@@ -192,10 +196,20 @@ The content in L320-329 regarding confidence intervals (CIs) in the original sub
 
 The essence of this is not “if the difference between [credible] intervals of the fitted smooths… is non-zero”. For a variety of reasons this is not how it works. Instead we compute the difference of the smooths and then compute a credible interval around this difference. Also, to interpret this correctly we really need to do a simultaneous interval as you are looking at all points over the range of the covariate. If we just use the usual interval we have to consider the under and over coverage of the Nychka across-the-function intervals. You should talk about this issue in this section if you don’t compute simultaneous intervals.
 This section could also do with a little more explanation; {gratia} (and hence I) tens to consider differences of smooths to exclude the groups means. Here, if I read the paper and the code correctly, you included the group means. This works OK for simple models like this, but what if you had two or more parametric factor terms in the model? Then you would not (at least by default) have any way to isolate the group means for the by factor independently of the levels of the other factor. You would have to create differences conditional upon a level of
-the other factor. Users, however, tend to expect differences to include the group means, as you have chosen to present things here. Hence a note exp
+the other factor. Users, however, tend to expect differences to include the group means, as you have chosen to present things here. Hence a note explaining the implications of this choice would be useful to forewarn the user.
 
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
+
+We have made major changes to this section based on the reviewer's comments. 
+
+- We have removed the sentence "if the difference between the credible intervals of the fitted smooths... is non-zero", and now L484 reads: "is that the difference between them can be computed, followed by the estimation of a confidence interval around this difference."
+
+- L490 now reads "unlikely to be distinguishable from zero".
+
+- L493-502 now indicate that we are computing the difference using a simultaneous CI, and that we _included_ the group means in our pairwise comparison. We also indicate to the reader the fact that if multiple parametric terms exist in the model the inclusion of the means can become problematic. 
+
+However, we believe that including the means makes the comparison more intuitive, as in that way the researcher can directly compare both the fitted smooths and the pairwise comparisons to infer any significant changes and their associated magnitude. In the Appendix we also have made the corrections to the calculation of the pairwise comparisons in Section A.4.4.1 (the GAM workflow section) so the reader is aware again that in our code we keep the group means.
 
 # Appendix
 
