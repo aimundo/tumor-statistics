@@ -1955,7 +1955,7 @@ inherit.aes = FALSE, alpha = 0.7,
 show.legend=FALSE) +
 geom_ribbon(data = si,
 mapping = aes(ymin = lower, ymax = upper, x = Day, group = smooth,fill =Group),
-inherit.aes = FALSE, alpha = 0.4,
+inherit.aes = FALSE, alpha = 0.3,
 show.legend=FALSE)+
     geom_point(data=dat_sim, aes(x = Day, 
                         y = StO2_sim, 
@@ -1964,6 +1964,8 @@ show.legend=FALSE)+
                         alpha=0.6, 
                inherit.aes = FALSE,
                show.legend = FALSE)+
+    geom_line(data=si,aes(Day,upper,color=Group), size=0.8, alpha=0.7)+
+    geom_line(data=si,aes(Day,lower,color=Group), size=0.8, alpha=0.7)+
     labs(y=expression(atop(StO[2],'(complete observations)')))+
     scale_x_continuous(breaks=c(0,2,5,7,10))+
       theme_classic()+
@@ -2062,6 +2064,8 @@ geom_ribbon(data = si,
 mapping = aes(ymin = lower, ymax = upper, x = Day, group = smooth,fill =Group),
 inherit.aes = FALSE, alpha = 0.4,
 show.legend=TRUE)+
+    geom_line(data=si,aes(Day,upper,color=Group), size=0.8, alpha=0.7)+
+    geom_line(data=si,aes(Day,lower,color=Group), size=0.8, alpha=0.7)+
     geom_point(data=dat_missing, aes(x = Day, 
                         y = StO2_sim, 
                         color = Group), 
