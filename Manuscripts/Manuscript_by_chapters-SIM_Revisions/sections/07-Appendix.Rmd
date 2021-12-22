@@ -5,7 +5,8 @@
 
 <!-- Allows for figure numbers with letters for Appendix -->
 \counterwithin{figure}{section}
-# APPENDIX
+
+\section{Appendix A: Code and Functions for Plotting}
 
 This section presents the code used to generate figures, models and simulated data from the main manuscript.
 
@@ -21,7 +22,6 @@ First, a function is created to simulate data across six timepoints using a line
 ```{r, responses-Appendix,include=TRUE,message=FALSE,echo=TRUE}
 ##########Section for calculations###########
 
-<<testing>>
 ## Example with linear response
 
 #This function simulates data using a linear or quadratic mean response and each with correlated
@@ -300,8 +300,9 @@ For the quadratic response case, Figure \@ref(fig:quadratic-cases-Appendix) show
 C1/D1+plot_annotation(tag_levels = 'A')
 ```
 
+\section {Appendix B: Basis Functions}
 
-## Basis functions and GAMs
+# Basis functions and GAMs
 
 This code produces Figure \@ref(fig:basis-plot) from the main manuscript. Briefly, a non-linear (quadratic) response is simulated, a gam model is fitted and the basis are extracted in order to explain how the smooth is constructed. The code for data simulation is used again here for the sake of keeping the same structure, although the data can be simulated in a more simple fashion.
 
@@ -549,11 +550,11 @@ f2<-ggplot(dat_sim, aes(x = Day,
 
 ```
 
-## A basic Workflow for GAMs{#workflow}
+\section {Appendix C: A basic Workflow for GAMs}
 
 This section shows a basic workflow to fit a series of increasingly complex GAMs to the simulated data from the previous section. Graphical and parameter diagnostics for goodness of fit are discussed, as well as model comparison via AIC (Aikake Information Criterion). For simplicity, the confidence intervals (CIs) shown in this section for the models are the across the function CIs created by `mgcv` by default. However, for the pairwise comparisons of the third model we use _simultaneous intervals_ as in the main manuscript, and the code for creating simultaneous CIs for the smooths can be found in Section \@ref(GAM-linear-plot).
 
-### First model
+## First model
 
 The first model fitted to the data is one that only accounts for different smooths by day. The model syntax specifies that `gam_00` is the object that will contain all the model information, and that the model attempts to explain changes in `StO2_sim` (simulated $\mbox{StO}_2$) using a smooth per `Day`. The model will use 5 basis functions (`k=5`) for the smooth. The smooth is constructed by default using thin plate regression splines. The smoothing parameter estimation method used is the restricted maximum likelihood (`REML`).
 
@@ -592,7 +593,7 @@ layout2 <- c(
 
 ```
 
-#### Graphical diagnostics
+### Graphical diagnostics
 
 
 ```{r, first-GAM-diag, fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:first-GAM-caption)'}
@@ -609,7 +610,7 @@ From the output of the function `appraise` in Figure \@ref(fig:first-GAM-diag), 
 
 The `draw` function permits to plot the smooths as `ggplot2` objects, which eases subsequent manipulation, if desired. Because model `gam_00` specifies only one smooth for the time covariate (Day), the plot only contains only one smooth. Note that the smooth shows an almost linear profile.
 
-#### Model check{#gam-00-model-check}
+### Model check{#gam-00-model-check}
 
 Special attention must be paid to the parameter 'k-index' from `gam.check` (which calls `k.check` to perform the calculation). This parameter indicates if the basis dimension of the smooth is adequate, i.e., it checks that the basis used to create the smooth are adequate to capture the trends in the data. If the model is not adequately capturing the trends in the data, this is indicated by a low k-index value (<1). Because we plot the model diagnostics using `appraise` later, the graphical output from `gam.check` will be suppressed by creating a custom function to obtain just the model estimates, thus avoiding repetition of the diagnostic plots. This will be achieved by calling the source code of `gam.check` and using the appropriate code in a new function that will be called `gam.diagnostics`. We are not including in the Appendix the code for the function `gam.diagnostics` as it is rather long, but if desired it can be accessed by going to the `Appendix.Rmd` file in the GitHub repository and scrolling to this exact place (the code is not included in the final output, but is evaluated to create the function). 
 
@@ -714,7 +715,7 @@ summary(gam_00)
 
 From the `summary` function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is 'identity' as the model does not make any transformation on the predictors. The 'significance of smooth terms' _p-value_ indicates if each smooth is adding significance to the model. Here, the _p-value_ is low but we have seen that there are issues with the model from the previous outputs. Finally, the 'deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to $\approx$ 17%.
 
-### Second model
+## Second model
 
 The major flaw of `gam_00` is that this model is not taking into account the fact that the data is nested in groups. The next iteration is a model where a different smooth of time (Day) is assigned for each group using `by = Group` in the model syntax.
 
@@ -749,7 +750,7 @@ visual_check2<-appr2+sm2
 visual_check2+plot_layout(design=layout1)
 ```
 
-### Third model
+## Third model
 
 Model `gam_00` was built for didactic purposes to cover the simplest case, but it does not account for the nesting of the data by Group, which is apparent from the type of smooth fitted (a single smooth), the model diagnostics, and, the low variance explained by the model. On the other hand, `gam_01` takes into account the nesting within each group and provides better variance explanation, but as indicated in Section \@ref(longitudinal-GAMs), in order to differentiate between each group a parametric term needs to be added to the model for the interaction of _Day_ and _Group_. 
 
@@ -790,7 +791,7 @@ visual_check3+plot_layout(design=layout2)
 ```
 
 
-### Comparing models via AIC
+## Comparing models via AIC
 
 One final  comparison that can be made for model selection involves the use of the Aikake Information Criterion (AIC). This metric is used to estimate information loss, which we want to minimize with an appropriate model. Therefore, when 2 or more models are compared, the model with lower AIC is preferred. In R, the comparison is done using the `AIC` function.
 
@@ -802,7 +803,7 @@ AIC(gam_00,gam_01,gam_02)
 
 The output in this case is expected: model `gam_02` has a lower AIC (712.46) whereas the initial two models have higher AICs (900 and 858). The AIC should not be considered as the only estimator of model quality, instead to be used as complimentary information to the graphical diagnostics and model checks described above.
 
-#### Pairwise comparisons of smooth confidence intervals
+### Pairwise comparisons of smooth confidence intervals
 
 The estimation of significant differences between each treatment group can be achieved via pairwise comparisons of the smooth confidence intervals as described in section \@ref(GAM-significance). 
 
