@@ -58,6 +58,8 @@ set.seed(2021) #set seed for reproducibility
 #alpha for ribbon in the smooth plots
 al<-0.8
 
+thm1<-scale_fill_scico_d(palette="tokyo",begin=0.3, end=0.8, direction = -1, aesthetics = c("colour","fill"))
+
 
 ```
 
