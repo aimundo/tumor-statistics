@@ -341,6 +341,13 @@ c1
 ```
  \FloatBarrier
  
+## Final considerations
+
+In this Appendix we have shown a basic model selection workflow for GAMs. Our goal here is to familiarize the reader with the logic behind the construction of each model and the kind of diagnostic information that needs to be checked to ensure the model is adequate. One final consideration must be given to the conditional distribution of the response. In the main manuscript and through this workflow, we have assumed a normal distribution for the response, which we believe is appropriate in many biomedical scenarios. However, we must remind the reader that the normal distribution is not intended to be used as a "one size fits all" distribution. Depending on the type of data (counts, binary outcomes) the user can choose different conditional distributions in _mgcv_.
+
+We also want to indicate that one of the major advantages of fitting GAMs in R using _mgcv_ is that once the appropriate conditional distribution has been chosen and model diagnostics are assessed, the user only needs to choose a basis dimension (the number of basis functions to use), and check if the basis dimension is adequately capturing the trend of the data using `k.check`. If that is  not the case, then the user needs to increase `k` a bit and check `k.check` again. The process might seem mechanic, but we hope that with the theory presented in the main manuscript and the workflow of this Appendix the user has a good understanding of what the model is doing and the rationale for choosing a GAM as a tool for statistical analysis.
+ 
+ 
 ## Additional resources
 
 Multiple and excellent resources are available for biomedical researchers that want to gain more insight on the theory and computation of GAMs. Here we provide a brief list of resources that cover additional topics as well as available packages that are worth considering:
@@ -374,4 +381,6 @@ Vignette:
 - The book "Generalized Additive Models: An Introduction with R" (the 2nd. Edition can be found [here](https://www.routledge.com/Generalized-Additive-Models-An-Introduction-with-R-Second-Edition/Wood/p/book/9781498728331)) by Simon Wood is an excellent resource for in-depth material on GAM theory, mathematical derivation, examples, and detailed descriptions on the computational aspect of _mgcv_.
 
 
+Finally, Noam Ross has assembled a list of online tools and resources for learning about and using GAMs in R, which cover a range of very useful videos, slides, and courses from different authors. The list can be found in Noam Ross's GitHub profile here:
 
+[Resources for Learning About and Using GAMs in R](https://github.com/noamross/gam-resources)

@@ -1,0 +1,359 @@
+---
+title: Testing the simultaneous CI functions
+---
+
+
+```{r setup, message = FALSE,include=FALSE}
+#the packages needed to run the code
+
+library(patchwork)
+library(tidyverse)
+library(mvnfast)
+library(nlme)
+library(mgcv)
+library(gratia)
+library(scico)
+set.seed(2021) #set seed for reproducibility
+thm1<-scale_fill_scico_d(palette="tokyo",begin=0.3, end=0.8, direction = -1, aesthetics = c("colour","fill"))
+```
+
+I want to test if there's a difference because when knitting I get the message:
+
+`In gratia:::get_vcov(model, unconditional = unconditional, frequentist = frequentist) :Covariance corrected for smoothness uncertainty not available.`
+
+```{r,generate-simulated-data}
+#data, "the truth"
+dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
+            Day=rep(c(0,2,5,7,10),times=2),
+            Group=as.factor(rep(c("Control","Treatment"),each=5))
+)
+
+#simulate data
+simulate_data <- function(dat, n = 10, sd = 5) {
+    dat_sim <- dat %>%
+        slice(rep(1:n(), each = n)) %>%
+        group_by(Group, Day) %>%
+        mutate(
+            StO2_sim = pmax(rnorm(n, StO2, sd), 0.0001),
+            subject=rep(1:10),
+            subject=factor(paste(subject, Group, sep = "-"))
+        ) %>%
+        ungroup()
+
+    return(dat_sim)
+}
+
+
+#subject = factor(paste(subject, treatment, sep = "-")))
+
+n <- 10 #number of observations
+sd <- 10 #approximate sd from paper
+df <- 6
+dat_sim <- simulate_data(dat, n, sd)
+
+
+#plot data
+
+c<-ggplot(dat_sim, aes(x = Day, 
+                        y = StO2_sim, 
+                        color = Group,
+                        group=subject)) +
+    
+    geom_line(size=0.6, alpha=0.4,show.legend=FALSE)+
+    geom_line(aes(x = Day, 
+               y = StO2,
+               color=Group),
+           size=1.5,
+           data=dat,
+           inherit.aes=FALSE,
+              show.legend = FALSE)+
+  labs(y=expression(atop(StO[2],'(simulated)')))+
+  theme_classic()+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    thm1
+
+```
+
+Now, I fit the GAM.
+
+```{r,fit-GAM}
+#GAM, interaction of time and treatment
+
+gam_02 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),
+              method='REML',
+              data  = dat_sim)
+```
+
+Now I follow the exact code from G. Simpson's post to generate the simultaneous interval (link to the original post below):
+https://fromthebottomoftheheap.net/2016/12/15/simultaneous-interval-revisited/
+
+
+```{r,simulatenous-interval}
+#Generate random values from multivariate normal
+rmvn <- function(n, mu, sig) { ## MVN random deviates
+    L <- mroot(sig)
+    m <- ncol(L)
+    t(mu + L %*% matrix(rnorm(m*n), m, n))
+}
+
+
+#Bayesian covariance matrix of the model coefficients
+Vb <- vcov(gam_02)
+
+#grid of values for confidence band
+newd <- expand_grid(Group = factor(c("Control", "Treatment")),
+                                   Day = seq(0, 10, by = 0.1),
+                                   subject=factor(rep(1:10)))
+
+#Generate predictions and standard errors
+pred <- predict(gam_02, newd, se.fit = TRUE)
+se.fit <- pred$se.fit
+
+#number of draws
+N <- 10000
+
+#bias of the estimated model coefficients
+BUdiff <- rmvn(N, mu = rep(0, nrow(Vb)), sig = Vb)
+
+#evaluate the basis functions at the locations of x
+Cg <- predict(gam_02, newd, type = "lpmatrix")
+
+#Computes deviations between the fitted and true parameters
+simDev <- Cg %*% t(BUdiff)
+
+#compute absolute values of the standardized deviations from the true model
+absDev <- abs(sweep(simDev, 1, se.fit, FUN = "/"))
+
+#find maximum of the absolute standardized deviations at the grid of values of x for each simulation
+masd <- apply(absDev, 2L, max)
+
+#Find critical value used to scale the standard errors to yield the simultaneous interval
+
+crit <- quantile(masd, prob = 0.95, type = 8)
+
+
+
+
+pred <- transform(cbind(data.frame(pred), newd),
+                  uprP = fit + (2 * se.fit),
+                  lwrP = fit - (2 * se.fit),
+                  uprS = fit + (crit * se.fit),
+                  lwrS = fit - (crit * se.fit))
+
+#plot the simultaneous and pointwise intervals
+a<-ggplot(pred, aes(x =Day,group=Group,color=Group,fill=Group)) +
+    geom_path(aes(y=fit),lwd=2,show.legend = FALSE)+
+    geom_ribbon(aes(ymin = lwrS, ymax = uprS), alpha = 0.2,show.legend = FALSE) +
+    geom_ribbon(aes(ymin = lwrP, ymax = uprP), alpha = 0.2,show.legend = FALSE) +
+    labs(y = "G. Simpson's code")+
+   geom_hline(yintercept = 60,color="red")+
+    geom_hline(yintercept = 20,color="red")+
+    geom_hline(yintercept = 0,color="red")+
+    theme_classic()+
+    thm1
+
+```
+
+Now I will use the code from our paper to get the same intervals
+
+```{r,code-from-paper}
+
+ci <- confint(gam_02, parm = "s(Day)", partial_match = TRUE, type = "confidence")
+## simultaneous interval
+si <- confint(gam_02, parm = "s(Day)", type = "simultaneous", partial_match = TRUE)
+
+
+# mean shift for group 2
+
+Intercept <-coef(gam_02)[1]
+const <- coef(gam_02)[2]+Intercept
+
+ci <- ci %>%
+mutate(est = case_when(Group == "Treatment" ~ est + const,
+TRUE ~ est+Intercept),
+lower = case_when(Group == "Treatment" ~ lower + const,
+TRUE ~ lower+Intercept),
+upper = case_when(Group == "Treatment" ~ upper + const,
+TRUE ~ upper+Intercept))
+
+si <- si %>%
+mutate(est = case_when(Group == "Treatment" ~ est + const,
+TRUE ~ est+Intercept),
+lower = case_when(Group == "Treatment" ~ lower + const,
+TRUE ~ lower+Intercept),
+upper = case_when(Group == "Treatment" ~ upper + const,
+TRUE ~ upper+Intercept))
+
+
+b<-ggplot(ci, aes(x = Day, y = est, group = smooth)) +
+geom_line(lwd = 1,show.legend = FALSE) +
+geom_ribbon(data = ci, mapping = aes(ymin = lower, ymax = upper, x = Day, group = smooth,fill = Group),
+inherit.aes = FALSE, alpha = 0.7,
+show.legend=FALSE) +
+geom_ribbon(data = si,
+mapping = aes(ymin = lower, ymax = upper, x = Day, group = smooth,fill =Group),
+inherit.aes = FALSE, alpha = 0.4,
+show.legend=FALSE)+
+    geom_line(data=si,aes(Day,upper,color=Group),show.legend = FALSE)+
+    geom_line(data=si,aes(Day,lower,color=Group),show.legend = FALSE)+
+    geom_hline(yintercept = 60,color="red")+
+    geom_hline(yintercept = 20,color="red")+
+    geom_hline(yintercept = 0,color="red")+
+    scale_x_continuous(breaks=c(0,2,5,7,10))+
+     labs(y = "Our code")+
+      theme_classic()+
+        thm1
+
+```
+
+Now I plot both results and is strange, but the intervals that we get from G. Simpson's code are wider! why?
+
+```{r,plotting-data-and-intervals}
+#plot both
+c+a+b+scale_y_continuous(breaks=c(-20,0,20,40,60))
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r,poitwise-diff}
+##this function determines the pointwise confidence interval of a difference between two smooths
+
+difference_pointwise <- function(f1, f2, smooth, by_var, smooth_var, data, Xp, V, coefs, nrep = 1000) {
+    ## make sure f1 and f2 are characters
+    f1 <-  as.character(f1)
+    f2 <-  as.character(f2)
+    cnames <- colnames(Xp)
+    ## columns of Xp associated with pair of smooths
+    c1 <- grepl(gratia:::mgcv_by_smooth_labels(smooth, by_var, f1), cnames, fixed = TRUE)
+    c2 <- grepl(gratia:::mgcv_by_smooth_labels(smooth, by_var, f2), cnames, fixed = TRUE)
+    ## rows of Xp associated with pair of smooths
+    r1 <- data[[by_var]] == f1
+    r2 <- data[[by_var]] == f2
+
+    ## difference rows of Xp for pair of smooths
+    X <- Xp[r1, ] - Xp[r2, ]
+
+    ######IMPORTANT: uncommenting the following two lines
+    #removes the group means from the comparison######
+
+    ## zero the cols related to other splines
+    # X[, ! (c1 | c2)] <- 0
+
+    ## zero out the parametric cols
+    #X[, !grepl('^s\\(', cnames)] <- 0
+
+    ## compute difference
+    sm_diff <- drop(X %*% coefs)
+    se <- sqrt(rowSums((X %*% V) * X))
+    nr <- NROW(X)
+
+    ## Calculate posterior simulation for smooths
+    coefs_sim <- t(rmvn(nrep, rep(0, nrow(V)), V))
+    rownames(coefs_sim) <- rownames(V)
+    simDev <- X %*% coefs_sim
+    absDev <- abs(sweep(simDev, 1, se, FUN = "/"))
+    masd <- apply(absDev, 2, max)
+    crit_s <- quantile(masd, prob = 0.95, type = 8)
+
+
+    out <- list(smooth = rep(smooth, nr), by = rep(by_var, nr),
+                level_1 = rep(f1, nr),
+                level_2 = rep(f2, nr),
+                diff = sm_diff, se = se,
+                lower_s = sm_diff - crit_s * se,
+                upper_s = sm_diff + crit_s*se)
+
+    out <- new_tibble(out, nrow = NROW(X), class = "difference_smooth")
+    ## Only need rows associated with one of the levels
+    out <- bind_cols(out, data[r1, smooth_var])
+
+    out
+}
+
+```
+
+
+And this:
+
+```{r,difference-smooths}
+#this function calculates the pointwise (by calling pointwise_comparisons.R) CI and the simultaneous CI
+# for a pairwise comparison between two smooths
+difference_smooths <- function(model,
+                               smooth,
+                               n = 100,
+                               ci_level = 0.95,
+                               newdata = NULL,
+                               partial_match = TRUE,
+                               unconditional = FALSE,
+                               frequentist = FALSE,
+                               nrep = 10000,
+                               include_means = TRUE,
+                               ...) {
+    if (missing(smooth)) {
+        stop("Must specify a smooth to difference via 'smooth'.")
+    }
+
+    # smooths in model
+    S <- gratia::smooths(model) # vector of smooth labels - "s(x)"
+    # select smooths
+    select <-
+        gratia:::check_user_select_smooths(smooths = S, select = smooth,
+                                           partial_match = partial_match)#,
+    # model_name = expr_label(substitute(object)))
+    sm_ids <- which(select)
+    smooths <- gratia::get_smooths_by_id(model, sm_ids)
+    sm_data <- map(sm_ids, gratia:::smooth_data,
+                   model = model, n = n, include_all = TRUE)
+    sm_data <- bind_rows(sm_data)
+    by_var <- by_variable(smooths[[1L]])
+    smooth_var <- gratia:::smooth_variable(smooths[[1L]])
+    pairs <- as_tibble(as.data.frame(t(combn(levels(sm_data[[by_var]]), 2)),
+                                     stringsAsFactor = FALSE))
+    names(pairs) <- paste0("f", 1:2)
+
+    Xp <- predict(model, newdata = sm_data, type = "lpmatrix")
+    V <- gratia:::get_vcov(model, unconditional = unconditional,
+                           frequentist = frequentist)
+    coefs <- coef(model)
+
+    out <- pmap(pairs, difference_pointwise, smooth = smooth, by_var = by_var,
+                smooth_var = smooth_var, data = sm_data, Xp = Xp, V = V,
+                coefs = coefs, nrep = nrep)
+    out <- bind_rows(out)
+    crit <- qnorm((1 - ci_level) / 2, lower.tail = FALSE)
+
+    out <- add_column(out,
+                      lower = out$diff - (crit * out$se),
+                      upper = out$diff + (crit * out$se),
+                      .after = 6L)
+    out
+}
+```
+
+Let's get the fit then:
+
+```{r,testing}
+diff_testing <- difference_smooths(gam_02, smooth = "s(Day)", newdata = newdat,
+                     unconditional = TRUE, frequentist = FALSE,
+                     n=100, partial_match = TRUE, nrep=10000)
+
+```

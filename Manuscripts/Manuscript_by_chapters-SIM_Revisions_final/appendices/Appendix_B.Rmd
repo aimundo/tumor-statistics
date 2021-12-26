@@ -373,10 +373,10 @@ C1/D1+plot_annotation(tag_levels = 'A')
 
 ## Basis Functions
 
-The next chunk presents the code used to create Figure 2 in the main manuscript. Here, we simulate data from the same concave down quadratic trend from Figure \@ref(fig:quadratic-cases-Appendix)A and use the package `mgcv` to fit a GAM to fit the trend of the data over time. The GAM in this case can be represented as
+The next chunk presents the code used to create Figure 2 in the main manuscript. Here, we simulate data from the same concave down quadratic trend from Figure \@ref(fig:quadratic-cases-Appendix)A and use the package _mgcv_ to fit a GAM to fit the trend of the data over time. The GAM in this case can be represented as
 
  $$Response= \beta_0 + f(time_t|\beta_1)$$
- Because we only use the data from one group and we do not account for interaction. The model in `mgcv` is written as:
+ Because we only use the data from one group and we do not account for interaction. The model in _mgcv_ is written as:
 
 `gm<-gam( y~ s(time,k = 5),data = dat, method = "REML")`
 
@@ -603,7 +603,7 @@ In this subsection we present the code used to create the pointwise and simultan
 
 We do not use a custom function in this case but instead extract the pointwise and simultaneous CIs after fitting the GAM by using the function `confint` from base R. The boundaries for the pairwise and simultaneous CIs are obtained by using the type `"confindence"` or `"simultaneous"` in `confint` and are stored in `ci` and `si` respectively.
 
-Because we want to include the group means for plotting purposes, we extract the intercept (`const`) and add it to the Treatment group estimates in both `ci` and `si` order to shift the interval so it matches the scale of the response. Finally, we create a `ggplot2` object for plotting.
+Because we want to include the group means for plotting purposes, we extract the intercept (`const`) and add it to the Treatment group estimates in both `ci` and `si` order to shift the interval so it matches the scale of the response. Finally, we create a _ggplot2_ object for plotting.
 
 ```{r,pointwise-plot, eval=FALSE}
 #the same model used for the full dataset
@@ -828,7 +828,7 @@ pairwise_limits<-function(dataframe){
 
 ## GAM diagnostics function
 
-In Appendix A we discuss the use of quantitative and graphical diagnostics to assess the goodness of fit of a GAM. The package `mgcv` has the function `gam.check` to provide such information, but its graphical diagnostics are made using base R graphics and therefore it is not straightforward to use them in conjunction with a `ggplot2` object. Therefore we create the function `gam_diagnostics` that uses the same code from `gam.check` but without the graphical output. In this way, we can use `appraise` from the package `gratia` to create a graphical output in ggplot2 format and the quantitative information from `gam.check`.
+In Appendix A we discuss the use of quantitative and graphical diagnostics to assess the goodness of fit of a GAM. The package _mgcv_ has the function `gam.check` to provide such information, but its graphical diagnostics are made using base R graphics and therefore it is not straightforward to use them in conjunction with a _ggplot2_ object. Therefore we create the function `gam_diagnostics` that uses the same code from `gam.check` but without the graphical output. In this way, we can use `appraise` from the package _gratia_ to create a graphical output in _ggplot2_ format and the quantitative information from `gam.check`.
 
 ```{r,gam-diagnostics-Appendix, eval=FALSE}
 #Function that uses the source code of `gam.check` to obtain the estimates without the plots. The source can be checked by typing `gam.check` in the console.

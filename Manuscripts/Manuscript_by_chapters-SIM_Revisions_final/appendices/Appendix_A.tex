@@ -207,6 +207,8 @@ set.seed(2021) #set seed for reproducibility
 
 #alpha for ribbon in the smooth plots
 al<-0.8
+
+thm1<-scale_fill_scico_d(palette="tokyo",begin=0.3, end=0.8, direction = -1, aesthetics = c("colour","fill"))
 \end{lstlisting}
 
 Next, we create a data frame with the same trends from the main manuscript:
@@ -597,6 +599,13 @@ The resulting plot (Figure \ref{fig:pairwise-comp-workflow-fig}) shows the estim
 \end{figure}
  \FloatBarrier
 
+\hypertarget{final-considerations}{%
+\subsection{Final considerations}\label{final-considerations}}
+
+In this Appendix we have shown a basic model selection workflow for GAMs. Our goal here is to familiarize the reader with the logic behind the construction of each model and the kind of diagnostic information that needs to be checked to ensure the model is adequate. One final consideration must be given to the conditional distribution of the response. In the main manuscript and through this workflow, we have assumed a normal distribution for the response, which we believe is appropriate in many biomedical scenarios. However, we must remind the reader that the normal distribution is not intended to be used as a ``one size fits all'' distribution. Depending on the type of data (counts, binary outcomes) the user can choose different conditional distributions in \emph{mgcv}.
+
+We also want to indicate that one of the major advantages of fitting GAMs in R using \emph{mgcv} is that once the appropriate conditional distribution has been chosen and model diagnostics are assessed, the user only needs to choose a basis dimension (the number of basis functions to use), and check if the basis dimension is adequately capturing the trend of the data using \passthrough{\lstinline!k.check!}. If that is not the case, then the user needs to increase \passthrough{\lstinline!k!} a bit and check \passthrough{\lstinline!k.check!} again. The process might seem mechanic, but we hope that with the theory presented in the main manuscript and the workflow of this Appendix the user has a good understanding of what the model is doing and the rationale for choosing a GAM as a tool for statistical analysis.
+
 \hypertarget{additional-resources}{%
 \subsection{Additional resources}\label{additional-resources}}
 
@@ -642,5 +651,9 @@ Vignette:
 \item
   The book ``Generalized Additive Models: An Introduction with R'' (the 2nd. Edition can be found \href{https://www.routledge.com/Generalized-Additive-Models-An-Introduction-with-R-Second-Edition/Wood/p/book/9781498728331}{here}) by Simon Wood is an excellent resource for in-depth material on GAM theory, mathematical derivation, examples, and detailed descriptions on the computational aspect of \emph{mgcv}.
 \end{itemize}
+
+Finally, Noam Ross has assembled a list of online tools and resources for learning about and using GAMs in R, which cover a range of very useful videos, slides, and courses from different authors. The list can be found in Noam Ross's GitHub profile here:
+
+\href{https://github.com/noamross/gam-resources}{Resources for Learning About and Using GAMs in R}
 
 \end{document}

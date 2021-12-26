@@ -95,25 +95,26 @@ si <- confint(gam_02, parm = "s(Day)", type = "simultaneous", partial_match = TR
 
 
 # mean shift for Treatment group
-const <- coef(gam_02)[2]
+Intercept<-coef(gam_02)[1]
+const <- coef(gam_02)[2]+Intercept
 
 #pointwise confidence interval
 ci <- ci %>%
 mutate(est = case_when(Group == "Treatment" ~ est + const,
-TRUE ~ est),
+TRUE ~ est+Intercept),
 lower = case_when(Group == "Treatment" ~ lower + const,
-TRUE ~ lower),
+TRUE ~ lower+Intercept),
 upper = case_when(Group == "Treatment" ~ upper + const,
-TRUE ~ upper))
+TRUE ~ upper+Intercept))
 
 #simultaneous interval
 si <- si %>%
 mutate(est = case_when(Group == "Treatment" ~ est + const,
-TRUE ~ est),
+TRUE ~ est+Intercept),
 lower = case_when(Group == "Treatment" ~ lower + const,
-TRUE ~ lower),
+TRUE ~ lower+Intercept),
 upper = case_when(Group == "Treatment" ~ upper + const,
-TRUE ~ upper))
+TRUE ~ upper+Intercept))
 
 
 #creates a dataframe using the length of the covariates for rm-ANOVA
@@ -213,7 +214,8 @@ si <- confint(mod_m1, parm = "s(Day)", type = "simultaneous", partial_match = TR
 
 
 # mean shift for group 2
-const <- coef(mod_m1)[2]
+Intercept<-coef(mod_m1)[1]
+const <- coef(mod_m1)[2]+Intercept
 
 ci <- ci %>%
 mutate(est = case_when(Group == "Treatment" ~ est + const,
@@ -376,7 +378,7 @@ c2 <- ggplot() +
               alpha = 0.5, fill = rib_col, inherit.aes = FALSE) +
   geom_hline(yintercept = 0, lty = 2, color = "red")+
     scale_x_continuous(breaks=c(0,2,5,7,10))+
-    labs(y="Difference\n(Missing observations)")+
+    labs(y="Difference\n(Incomplete observations)")+
     theme_classic()+
     theme(
     axis.text=element_text(size=22))
@@ -389,7 +391,7 @@ pair_comp<-c1+c2
 
 At the core of a biomedical longitudinal study lies the question of a significant difference between the effect of two or more treatments in different groups. Whereas in rm-ANOVA a _post-hoc_ analysis is required to answer such question by calculating some _p-values_ after multiple comparisons, GAMs can use a different approach to estimate significance. In essence, the idea behind the estimation of significance in GAMs across different treatment groups in a model where separate smoothers exists per group (such as in `gam_02`) is that the difference between them can be computed, followed by the estimation of an empirical Bayesian simultaneous CI around this difference. 
 
-(ref:pairwise-comp) Pairwise comparisons for smooth terms. **A**: Pairwise comparisons for the full dataset.  **B**: Pairwise comparisons for the dataset with missing observations. Significant differences exist where the 95% empirical Bayesian credible interval does not cover 0. In both cases the effect of treatment is significant after day 3. In both cases, a simultaneous CI has been computed around the smooth difference.
+(ref:pairwise-comp) Pairwise comparisons for smooth terms. **A**: Pairwise comparisons for the full dataset.  **B**: Pairwise comparisons for the dataset with incomplete observations. Significant differences exist where the 95% empirical Bayesian simultaneous CI does not cover 0. In both cases the effect of treatment is significant after day 3. For the difference, we have included the means so the the value of the difference has direct correspondence with the scale of the response (Figure \@ref(fig:sim-smooth-plot)A).
 
 ```{r,plot-pairwise-comp,fig.width=12, fig.height=7, out.width='100%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:pairwise-comp)'}
 
@@ -405,7 +407,7 @@ The absence of a _p-value_ in this context might seem odd, but its interpretatio
 
 With this expectation of different trends in each group, computing the difference between the trends will identify if and _when_ the observed difference is significant. A difference between groups with similar trends is unlikely to be distinguishable from zero, which would indicate that the treatment is not causing a change in the response in one of the groups (assuming the other group is a Control or Reference group). Therefore, the estimation of the difference between the smooths and the correspondent simultaneous empirical Bayesian CI of this difference provides an estimation of significance that is more robust that a mere _p-value_ because the estimated difference is able to indicates the significant time interval and we know that on average, the correction provided by the simultaneous empirical Bayesian CI ensures that it will contain _the whole function_ at a nominal value (say, 95%).
 
-Consider the calculation of pairwise differences for the smooths in Figure \@ref(fig:sim-smooth-plot)B, D. Figure \@ref(fig:plot-pairwise-comp) shows the difference between each treatment group trend for the full and missing datasets with a simultaneous CI computed around the difference. Here, the  "Control" group is used as the reference to which "Treatment" group is being compared. Notice that because we have included the means of each group, there is correspondence between the scale of the original data and the scale of the pairwise comparisons. This can be seen in Figure \@ref(fig:sim-smooth-plot)B, where at day 5 there is essentially a difference of 50% between $\mbox{StO}_2$ in both groups, which corresponds to the -50% difference in \@ref(fig:plot-pairwise-comp)A. However, if there are multiple parametric terms in the model (more factors that need to be specified), such inclusion of the means can become problematic. However, we believe that the model we have presented here suffices in a wide range of situations where adding the group means is a relatively easy implementation that can help better visualize the estimation from the model from a biological perspective.
+Consider the calculation of pairwise differences for the fitted smooths that appear in Figure \@ref(fig:sim-smooth-plot)B, D. Figure \@ref(fig:plot-pairwise-comp) shows the difference between each treatment group trend for the full and missing datasets with a simultaneous CI computed around the difference. Here, the  "Control" group is used as the reference to which "Treatment" group is being compared. Notice that because we have included the means of each group, there is correspondence between the scale of the original data and the scale of the pairwise comparisons. This can be seen in Figure \@ref(fig:sim-smooth-plot)B, where at day 5 there is essentially a difference of 50% between $\mbox{StO}_2$ in both groups, which corresponds to the -50% difference in \@ref(fig:plot-pairwise-comp)A. However, if there are multiple parametric terms in the model (more factors that need to be specified), such inclusion of the means can become problematic. However, we believe that the model we have presented here suffices in a wide range of situations where adding the group means is a relatively easy implementation that can help better visualize the estimation from the model from a biological perspective.
 
 In Figure \@ref(fig:plot-pairwise-comp)A, the shaded regions over the confidence interval (where it does not cover 0) indicate the time interval where each group has a different effect than the other. Notice that the shaded region between days 1 and $\approx$ 2 for the full dataset indicates that through that time, the "Control" group has higher mean $\mbox{StO}_2$, but as therapy progresses the effect is reversed and by day $\approx$ 3  it is the "Treatment" group that statistically on average has greater $\mbox{StO}_2$. This would suggest that the effect of chemotherapy in the "Treatment" group becomes significant after day 3 for the given model. Moreover, notice that although there is no actual measurement at day 3, the model is capable of providing an estimate of when the shift in mean $\mbox{StO}_2$ occurs. 
 

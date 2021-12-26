@@ -66,7 +66,7 @@ gam_02 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),
 
 
 
-Now I follow the exact code from G. Simpson's post to generate the simutaneous interval (link to the original post below):
+Now I follow the exact code from G. Simpson's post to generate the simultaneous interval (link to the original post below):
 https://fromthebottomoftheheap.net/2016/12/15/simultaneous-interval-revisited/
 
 ```{r,simulatenous-interval}

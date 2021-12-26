@@ -59,10 +59,6 @@ library(mgcv)
 library(gratia)
 library(scico)
 set.seed(2021) #set seed for reproducibility
-
-#global themes for plotting
-#thm<-scale_color_viridis_d(option="turbo",begin=0,end=1)
-#thm1<-scale_fill_viridis_d(option="turbo",begin=0,end=1)#global theme for plotting
 thm1<-scale_fill_scico_d(palette="tokyo",begin=0.3, end=0.8, direction = -1, aesthetics = c("colour","fill"))
 
 #this function will remove the default "author information" that is the Pandoc LaTeX template. Otherwise, and additional "and" will appear at the end of the author list.Or, the custom template that is in the YAML header and that has the "author" line deleted may be used as well. An explanation in detail is provided at:
@@ -115,7 +111,6 @@ An Appendix which contains all the code used to create this manuscript, along wi
 
 ***
 
-\newpage
 # References
 
 <div id="refs"></div>
