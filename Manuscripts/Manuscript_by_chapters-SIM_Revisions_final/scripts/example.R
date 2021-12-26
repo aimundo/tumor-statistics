@@ -2,7 +2,7 @@
 #responses with correlated or uncorrelated errors and fits a linear model to the data.
 
 example <- function(n_time = 6, #number of time points
-                    fun_type = "linear", #type of reponse
+                    fun_type = "linear", #type of response
                     error_type = "correlated") {
 
     if (!(fun_type %in% c("linear", "quadratic")))
