@@ -143,12 +143,14 @@ pred <- transform(cbind(data.frame(pred), newd),
 #plot the simultaneous and pointwise intervals
 a<-ggplot(pred, aes(x =Day,group=Group,color=Group,fill=Group)) +
     geom_path(aes(y=fit),lwd=2,show.legend = FALSE)+
-    geom_ribbon(aes(ymin = lwrS, ymax = uprS), alpha = 0.2,show.legend = FALSE) +
-    geom_ribbon(aes(ymin = lwrP, ymax = uprP), alpha = 0.2,show.legend = FALSE) +
+    geom_ribbon(aes(ymin = lwrS, ymax = uprS), alpha = 0.4,show.legend = FALSE) +
+    geom_ribbon(aes(ymin = lwrP, ymax = uprP), alpha = 0.7,show.legend = FALSE) +
     labs(y = "G. Simpson's code")+
    geom_hline(yintercept = 60,color="red")+
+    geom_hline(yintercept = 35.77,color="red")+
     geom_hline(yintercept = 20,color="red")+
     geom_hline(yintercept = 0,color="red")+
+    scale_x_continuous(breaks=seq(1,10,1))+
     theme_classic()+
     thm1
 
@@ -158,9 +160,9 @@ Now I will use the code from our paper to get the same intervals
 
 ```{r,code-from-paper}
 
-ci <- confint(gam_02, parm = "s(Day)", partial_match = TRUE, type = "confidence")
+ci <- confint(gam_02, parm = "s(Day)", partial_match = TRUE, type ="confidence")
 ## simultaneous interval
-si <- confint(gam_02, parm = "s(Day)", type = "simultaneous", partial_match = TRUE)
+si <- confint(gam_02, parm = "s(Day)", type = "simultaneous", partial_match = TRUE,nsim=10000)
 
 
 # mean shift for group 2
@@ -199,24 +201,102 @@ show.legend=FALSE)+
     geom_hline(yintercept = 60,color="red")+
     geom_hline(yintercept = 20,color="red")+
     geom_hline(yintercept = 0,color="red")+
-    scale_x_continuous(breaks=c(0,2,5,7,10))+
+    geom_hline(yintercept = 35.77,color="red")+
+    scale_x_continuous(breaks=seq(1,10,1))+
      labs(y = "Our code")+
       theme_classic()+
         thm1
 
 ```
 
+Additional test: use the approach we used initially to draw the confidence intervals, see if there's a difference:
+
+```{r}
+
+#creates a dataframe using the length of the covariates for the GAM
+gam_predict <- expand_grid(Group = factor(c("Control", "Treatment")),
+                         Day = seq(0, 10, by = 0.1),
+                         subject=factor(rep(1:10)))
+
+
+#adds the predictions to the grid and creates a confidence interval for GAM
+gam_predict<-gam_predict%>%
+    mutate(fit = predict(gam_02,gam_predict,se.fit = TRUE,type='response')$fit,
+           se.fit = predict(gam_02, gam_predict,se.fit = TRUE,type='response')$se.fit)
+
+
+#plot smooths and confidence interval for GAM
+f3<-ggplot(data=dat_sim, aes(x=Day, y=StO2_sim, group=Group)) +
+  geom_ribbon(aes( x=Day,ymin=(fit - 2*se.fit), 
+                   ymax=(fit + 2*se.fit),
+                   fill=Group
+                   ),
+              alpha=0.3,
+              data=gam_predict,
+            show.legend=FALSE,
+                inherit.aes=FALSE) +
+  geom_line(aes(y=fit,
+                color=Group),
+              size=1,data=gam_predict,
+              show.legend = FALSE)+
+    geom_hline(yintercept = 60,color="red")+
+    geom_hline(yintercept = 20,color="red")+
+    geom_hline(yintercept = 0,color="red")+
+    geom_hline(yintercept = 35.77,color="red")+
+  labs(y='previous method')+
+    scale_x_continuous(breaks=seq(1,10,1))+
+      theme_classic()+
+    thm1
+  
+ 
+```
+
 Now I plot both results and is strange, but the intervals that we get from G. Simpson's code are wider! why?
 
 ```{r,plotting-data-and-intervals}
 #plot both
-c+a+b+scale_y_continuous(breaks=c(-20,0,20,40,60))
+c+a+b+f3+scale_y_continuous(breaks=c(-20,0,20,40,60))&theme_bw()
+
+#plot the pointiwse intervals only
+
+ggplot()+
+geom_ribbon(aes(ymin = lwrP, ymax = uprP,x=Day,group=Group,fill='red'),
+            alpha = 0.1,
+            show.legend = FALSE,
+            data=pred) +
+    geom_ribbon(aes( x=Day,ymin=(fit - 2*se.fit), 
+                   ymax=(fit + 2*se.fit),
+                   group=Group
+                   ),
+              alpha=0.1,
+              fill='green',
+              data=gam_predict,
+            show.legend=FALSE,
+            inherit.aes = FALSE)+
+    geom_ribbon(data = ci, mapping = aes(ymin = lower, ymax = upper, x = Day, group = smooth,fill = 'yellow'),
+inherit.aes = FALSE, alpha = 0.8,
+show.legend=FALSE)
 
 
+ggplot()+
+    geom_ribbon(aes(ymin = lwrS, ymax = uprS,x=Day,group=Group),
+                fill='yellow',
+                alpha = 0.4,
+                show.legend = FALSE,data=pred) +
+geom_ribbon(data = si,
+mapping = aes(ymin = lower, ymax = upper, x = Day, group = smooth),
+fill ='red',
+inherit.aes = FALSE, alpha = 0.4,
+show.legend=FALSE)
+    
+    
 ```
 
+From the plots, this is apparent:
 
+The limits of the CI interval are the same in G.Simpson's code and in our original approach to the matter, they overlap perfectly. From our code however, the pointwise CI is slightly wider.
 
+For the simultaneous CIs, the CI computed by G. Simpson's code is wider than the one we obtain using the `confint` function. Why is this?
 
 
 
