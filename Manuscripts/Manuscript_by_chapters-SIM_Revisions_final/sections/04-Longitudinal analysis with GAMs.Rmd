@@ -203,7 +203,9 @@ dat_missing %>%
 
 
 #the same model used for the full dataset
-mod_m1 <- gam(StO2_sim ~ Group+s(Day,by=Group,k=5), data  = dat_missing)
+mod_m1 <- gam(StO2_sim ~ Group+s(Day,by=Group,k=5),
+              method='REML',
+              data  = dat_missing)
 #appraise the model
 appraise(mod_m1)
 
