@@ -1,14 +1,14 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
 ]{article}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -38,10 +38,10 @@
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
   colorlinks=true,
-  linkcolor=Maroon,
-  filecolor=Maroon,
-  citecolor=Blue,
-  urlcolor=blue,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
@@ -167,15 +167,15 @@
 \usepackage{breqn}
 \usepackage[font={small}]{caption}
 \usepackage{float}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 
 \title{SUPPLEMENTARY MATERIALS for\\
-~\\
+\strut \\
 \textbf{Generalized additive models to analyze biomedical non-linear longitudinal data in R:}\\
 Beyond repeated measures ANOVA and Linear Mixed Models\\
-~\\
+\strut \\
 APPENDIX B: CODE}
 \author{}
 \date{\vspace{-2.5em}}
@@ -341,7 +341,7 @@ example <- function(n_time = 6, #number of time points
 \hypertarget{a-composite-plot-for-the-trends}{%
 \subsubsection{A composite plot for the trends}\label{a-composite-plot-for-the-trends}}
 
-Function \passthrough{\lstinline!plot\_example()!} from the file \passthrough{\lstinline!plot\_example.R!} in the folder \passthrough{\lstinline!scripts/!} uses the output of \passthrough{\lstinline!example.R!} to show the fit of a rm-ANOVA and a LMEM. This function can be used to show an expanded version of Figure 1 in the main manuscript, presenting simulated data with correlated and uncorrelated errors and how the individual trends vary in each case. The corresponding rm-ANOVA and LMEM fits are also presented, and we show the complete output in the next subsection.
+The function \passthrough{\lstinline!plot\_example()!} from the file \passthrough{\lstinline!plot\_example.R!} in the folder \passthrough{\lstinline!scripts/!} uses the output of \passthrough{\lstinline!example.R!} to show the fit of a rm-ANOVA and a LMEM. This function can be used to show an expanded version of Figure 1 in the main manuscript, presenting simulated data with correlated and uncorrelated errors and how the individual trends vary in each case. The corresponding rm-ANOVA and LMEM fits are also presented, and we show the complete output in the next subsection.
 
 \begin{lstlisting}[language=R]
 ## This function plots the rm-ANOVA and LMEM for the data simulated in example.R
@@ -441,14 +441,14 @@ plot_example <- function(sim_dat) {
 \hypertarget{plotting-rm-anova-and-lmem-fits-for-linear-and-quadratic-trends-in-data}{%
 \subsubsection{Plotting rm-ANOVA and LMEM fits for linear and quadratic trends in data}\label{plotting-rm-anova-and-lmem-fits-for-linear-and-quadratic-trends-in-data}}
 
-In this subsection, we use \passthrough{\lstinline!example.R!} and \passthrough{\lstinline!plot\_example.R!} to create an expanded version of Figure 1 on the main manuscript. The difference here is that in the main manuscript \passthrough{\lstinline!plot\_example.R!} uses \passthrough{\lstinline!option='simple'!} to create the plot, and therefore only shows the simulated data, and the rm-ANOVA and LMEM fit. Here, we use the option \passthrough{\lstinline!composite!} to generate the additional panels for the uncorrelated errors and their respective rm-ANOVA and LMEM fits.
+In this subsection, we use the \passthrough{\lstinline!example()!} and \passthrough{\lstinline!plot\_example()!} functions to create an expanded version of Figure 1 in the main manuscript. The difference here is that in the main manuscript \passthrough{\lstinline!plot\_example()!} uses \passthrough{\lstinline!option='simple'!} to create the plot, and therefore only shows the simulated data, and the rm-ANOVA and LMEM fit to the simulated data with correlated errors. Here, we use the option \passthrough{\lstinline!composite!} to generate the additional panels for the uncorrelated errors and their respective rm-ANOVA and LMEM fits.
 
 Figure \ref{fig:linear-cases-Appendix} show in panels A and D the simulated mean responses and individual data points. Panels C and G show a visual interpretation of ``correlation'' in the responses: In panel C, subjects that have a value of the random error \(\varepsilon\) either above or below the mean group response are more likely to have other observations that follow the same trajectory, thereby demonstrating correlation in the response. In panel G,because the errors are independent, there is no expectation that responses are likely to follow a similar pattern. Panels D and H show the predictions from the rm-ANOVA model.
 
 \hypertarget{fits-for-linear-trends}{%
 \paragraph{Fits for linear trends}\label{fits-for-linear-trends}}
 
-The chunk below sources both \passthrough{\lstinline!example.R!} and \passthrough{\lstinline!plot\_example\_Appendix.R!} to simulate data and create the composite plots.
+The chunk below sources both \passthrough{\lstinline!example.R!} and \passthrough{\lstinline!plot\_example\_Appendix.R!} files to simulate data and create the composite plots.
 
 \begin{lstlisting}[language=R]
 source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", 
@@ -456,16 +456,16 @@ source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final",
 source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", 
                   "scripts", "plot_example.R"))
 
-A1<-plot_example(example(fun_type = "linear", error_type = "correlated"),
+A1 <- plot_example(example(fun_type = "linear", error_type = "correlated"),
                  option = 'composite') 
 
-B1<-plot_example(example(fun_type = "linear", error_type = "independent"),
+B1 <- plot_example(example(fun_type = "linear", error_type = "independent"),
                  option = 'composite') 
 
-C1<-plot_example(example(fun_type = "quadratic", error_type = "correlated"), 
+C1 <- plot_example(example(fun_type = "quadratic", error_type = "correlated"), 
                  option = 'composite') 
 
-D1<-plot_example(example(fun_type = "quadratic", error_type = "independent"), 
+D1 <- plot_example(example(fun_type = "quadratic", error_type = "independent"), 
                  option = 'composite') 
 \end{lstlisting}
 
@@ -506,7 +506,7 @@ Because we only use the data from one group and we do not account for interactio
 
 \passthrough{\lstinline!gm<-gam( y\~ s(time,k = 5),data = dat, method = "REML")!}
 
-From the model, we extract the original and weighed four basis functions (and the intercept), and add these last weighed basis functions to construct the smoother.
+From the model, we extract the original and weighted four basis functions (and the intercept), and add these last weighted basis functions to construct the smoother.
 
 \begin{lstlisting}[language=R]
 #basis functions: this script creates Fig 2. by calculating a GAM for the Group 1 data of Figure 1,
@@ -685,7 +685,7 @@ simulate_data <- function(dat, n = 10, sd = 5) {
 
 In this subsection we present the code used to create the pointwise and simultaneous empirical Bayesian confidence intervals (CIs) that are shown along the fitted smooths for the data in Figure 3 in the main manuscript. The computation is the same in the case of the complete and incomplete simulated data, and therefore we present here only the code for the incomplete data case.
 
-We do not use a custom function in this case but instead extract the pointwise and simultaneous CIs after fitting the GAM by using the function \passthrough{\lstinline!confint!} from base R. The boundaries for the pairwise and simultaneous CIs are obtained by using the type \passthrough{\lstinline!"confindence"!} or \passthrough{\lstinline!"simultaneous"!} in \passthrough{\lstinline!confint!} and are stored in \passthrough{\lstinline!ci!} and \passthrough{\lstinline!si!} respectively.
+We do not use a custom function in this case but instead extract the pointwise and simultaneous CIs after fitting the GAM by using the function \passthrough{\lstinline!confint!} methods from the \emph{gratia} package. The boundaries for the pairwise and simultaneous CIs are obtained by using the type \passthrough{\lstinline!"confindence"!} or \passthrough{\lstinline!"simultaneous"!} in \passthrough{\lstinline!confint!} and are stored in \passthrough{\lstinline!ci!} and \passthrough{\lstinline!si!} respectively.
 
 Because we want to include the group means for plotting purposes, we extract the intercept (\passthrough{\lstinline!const!}) and add it to the Treatment group estimates in both \passthrough{\lstinline!ci!} and \passthrough{\lstinline!si!} order to shift the interval so it matches the scale of the response. Finally, we create a \emph{ggplot2} object for plotting.
 
@@ -748,7 +748,7 @@ f6 <- ggplot(ci, aes(x = Day, y = est, group = smooth)) +
 \hypertarget{pairwise-comparisons}{%
 \subsection{Pairwise comparisons}\label{pairwise-comparisons}}
 
-This subsection presents the code used in functions \passthrough{\lstinline!pointwise\_comparisons.R!} and \passthrough{\lstinline!difference\_smooths.R!}, which generate the pointwise and simultaenous CI for the estimated difference between the smooths. In essence, \passthrough{\lstinline!pointwise\_comparisons.R!} computes the difference between the smooths and the pointwise CI. Then, \passthrough{\lstinline!difference\_comparisons.R!} uses the output of \passthrough{\lstinline!pointwise\_comparisons.R!} to estimate the simultaneous CI.
+This subsection presents the code used in functions \passthrough{\lstinline!pointwise\_comparisons()!} and \passthrough{\lstinline!difference\_smooths()!} from the files \passthrough{\lstinline!pointwise\_comparisons.R!} and \passthrough{\lstinline!difference\_smooths.R!} in the \passthrough{\lstinline!scripts/!} folder, which generate the across the function (pointwise) and simultaenous CI for the estimated difference between the smooths. In essence, \passthrough{\lstinline!pointwise\_comparisons()!} computes the difference between the smooths and the pointwise CI. Then, \passthrough{\lstinline!difference\_comparisons()!} uses the output of \passthrough{\lstinline!pointwise\_comparisons.R!} to estimate the simultaneous CI.
 
 The chunk below presents the code for \passthrough{\lstinline!pointwise\_comparisons.R!}. Note that as we indicate in Appendix A in this case we include the group means to estimate the confidence intervals so they can be directly compared with the original data. This works for the model we used in the paper, but if there are more parametric terms in the model the computation is not straightforward and will require a careful implementation because with an increase in parametric terms the number of pairwise comparisons also increases greatly.
 

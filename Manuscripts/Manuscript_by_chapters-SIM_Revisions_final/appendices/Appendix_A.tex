@@ -1,14 +1,14 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
 ]{article}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -38,10 +38,10 @@
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
   colorlinks=true,
-  linkcolor=Maroon,
-  filecolor=Maroon,
-  citecolor=Blue,
-  urlcolor=blue,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
@@ -167,15 +167,15 @@
 \usepackage{breqn}
 \usepackage[font={small}]{caption}
 \usepackage{float}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 
 \title{SUPPLEMENTARY MATERIALS for\\
-~\\
+\strut \\
 \textbf{Generalized additive models to analyze biomedical non-linear longitudinal data in R:}\\
 Beyond repeated measures ANOVA and Linear Mixed Models\\
-~\\
+\strut \\
 APPENDIX A: WORKFLOW FOR GAMs FOR BIOMEDICAL LONGITUDINAL DATA}
 \author{}
 \date{\vspace{-2.5em}}
@@ -362,7 +362,7 @@ gam_diagnostics(gam_01)
 ## 
 ## Method: REML   Optimizer: outer newton
 ## full convergence after 9 iterations.
-## Gradient range [-5.875578e-07,1.450759e-08]
+## Gradient range [-5.875578e-07,1.45076e-08]
 ## (score 400.4803 & scale 164.8662).
 ## Hessian positive definite, eigenvalue range [0.892525,48.57694].
 ## Model rank =  9 / 9 
