@@ -37,10 +37,14 @@ urlcolor: blue
 <!-- Allows for figure numbers with letters for Appendix -->
 \counterwithin{figure}{section}
 
-This appendix shows a basic workflow to fit a series of increasingly complex GAMs to simulated data that follows the trends presented in Section 5.1 in the main manuscript. Graphical and parameter diagnostics for goodness of fit are discussed, as well as model comparison via AIC (Aikake Information Criterion). For simplicity, the confidence intervals (CIs) shown in this section for the models are the across the function CIs created by `mgcv` by default. However, for the pairwise comparisons of the third model we use _simultaneous intervals_ as in the main manuscript, and the code for creating simultaneous CIs for the smooths can be found in **Appendix XXX**.
+This appendix shows a basic workflow to fit a series of increasingly complex GAMs to simulated data that follows the trends presented in Section 5.1 in the main manuscript. Graphical and parameter diagnostics for goodness of fit are discussed, as well as model comparison via AIC (Aikake Information Criterion). For simplicity, the confidence intervals (CIs) shown in this section for the models are the across the function CIs created by `mgcv` by default. However, for the pairwise comparisons of the third model we use _simultaneous intervals_ as in the main manuscript, and the code for creating simultaneous CIs for the smooths can be found in Appendix B.
 
 
 ## Setup and data simulation
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(tidy = TRUE)
+```
 
 First, we load the libraries needed for all analyses and figures. We also set seed for reproducibility.
 
@@ -56,9 +60,10 @@ library(scico)
 set.seed(2021) #set seed for reproducibility
 
 #alpha for ribbon in the smooth plots
-al<-0.8
+al <- 0.8
 
-thm1<-scale_fill_scico_d(palette="tokyo",begin=0.3, end=0.8, direction = -1, aesthetics = c("colour","fill"))
+thm1 <- scale_fill_scico_d(palette = "tokyo", begin = 0.3, end = 0.8,
+                         direction = -1, aesthetics = c("colour", "fill"))
 
 
 ```
@@ -70,10 +75,9 @@ Next, we create a data frame with the same trends from the main manuscript:
 - Trends in $\mbox{StO}_2$ for both groups
 
 ```{r,data, echo= TRUE}
-dat<-tibble(StO2=c(4,27,3,2,0.5,7,4,50,45,56),
-            Day=rep(c(0,2,5,7,10),times=2),
-            Group=as.factor(rep(c("Control","Treatment"),each=5))
-            )
+dat<-tibble(StO2  = c(4, 27, 3, 2, 0.5, 7,4, 50, 45, 56),
+            Day   = rep(c(0, 2, 5, 7, 10), times = 2),
+            Group = as.factor(rep(c("Control", "Treatment"), each = 5)))
 ```
 
 We do not include a plot of the simulated data here because it follows the same trend from Figure 3A in the main manuscript (however, it can be easily plotted if desired).
@@ -82,21 +86,22 @@ Finally, we call the function `simulate_data` in the script `simulate_data.R` to
 ```{r,simulation}
 n <- 10 #number of observations
 sd <- 10 #approximate sd from paper
-source(here("Manuscripts/Manuscript_by_chapters-SIM_Revisions_final/scripts","simulate_data.R"))
+source(here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final",
+            "scripts", "simulate_data.R"))
 dat_sim <- simulate_data(dat, n, sd)
 ```
 
 ## First model
 
 
-The first model fitted to the data is one that only accounts for different smooths by day. The model syntax specifies that `gam_00` is the object that will contain all the model information, and that the model attempts to explain changes in `StO2_sim` (simulated $\mbox{StO}_2$) using a smooth per `Day`. The model will use 5 basis functions (`k=5`) for the smooth. The smooth is constructed by default using thin plate regression splines. The smoothing parameter estimation method used is the restricted maximum likelihood (`REML`).
+The first model fitted to the data is one that only assumes a single smooth over time shared by both the treatment and control groups The model syntax specifies that `gam_00` is the object that will contain all the model information, and that the model attempts to explain changes in `StO2_sim` (simulated $\mbox{StO}_2$) using a smooth per `Day`. The model will use four basis functions (`k = 5`) for the smooth. The smooth is constructed by default using thin plate regression splines. The smoothing parameter estimation method used is the restricted maximum likelihood (`REML`).
 
 
 ```{r, first-GAM, echo=TRUE, include=TRUE, message=FALSE,warning=FALSE}
 
 gam_00<-gam(StO2_sim ~ s(Day, k = 5),
-            method='REML',
-            data  = dat_sim)
+            method   ='REML',
+            data     = dat_sim)
 
 ```
 
@@ -127,14 +132,15 @@ layout2 <- c(
 
 ### Graphical diagnostics
 
+The following code chunk generates graphical checks for the fitted GAM model with a single shared smooth shared between the treatment and control groups.
 
-```{r, first-GAM-diag, fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:first-GAM-caption)'}
+```{r, first-GAM-diag, fig.width=10, fig.height=7, out.width='75%', fig.align='center', message=FALSE, warning=FALSE,fig.cap='(ref:first-GAM-caption)'}
 
-appr1<-appraise(gam_00)
-sm1<-draw(gam_00)
-visual_check<-appr1+sm1
+appr1 <- appraise(gam_00)
+sm1 <- draw(gam_00)
+visual_check <- appr1 + sm1
 
-visual_check+plot_layout(design=layout1)
+visual_check + plot_layout(design = layout1)
 ```
 
 (ref:first-GAM-caption) Graphical diagnostics for the first GAM model. Left: Graphical diagnostics provided by the function `appraise` from the package _gratia_. Right: Fitted smooth for the model, provided by the function `draw`.
@@ -150,21 +156,21 @@ Special attention must be paid to the parameter 'k-index' from `gam.check` (whic
 In the next code chunk, we call `gam.diagnostics` to provide the desired diagnostic output: 
 
 ```{r,gam-00-diagnostics, echo=TRUE, include=TRUE}
-source(here("Manuscripts/Manuscript_by_chapters-SIM_Revisions_final/scripts","gam_diagnostics.R"))
+source(here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final",
+            "scripts", "gam_diagnostics.R"))
 gam_diagnostics(gam_00)
 
 ```
 
-And now obtain a summary of the fitted model, which is obtained by calling `summary`.
+From the output of `gam_diagnostics`, it can be seen that the `k-index` is 0.35, which indicates that the model is not capturing the variability in the data. The `edf` (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial. And now obtain a summary of the fitted model, which is obtained by calling `summary`.
 
 ```{r, summary-gam_00}
 summary(gam_00)
 
 ```
 
-From the output of `gam_diagnostics`, it can be seen that the `k-index` is 0.35, which indicates that the model is not capturing the variability in the data. The `edf` (effective degrees of freedom) is an indicator of the complexity of the smooth. Here the complexity of the smooth is comparable to that of a 4th degree polynomial.
 
-From the `summary` function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is 'identity' as the model does not make any transformation on the predictors. The 'significance of smooth terms' _p-value_ indicates if each smooth is adding significance to the model. Here, the _p-value_ is low but we have seen that there are issues with the model from the previous outputs. Finally, the 'deviance explained' indicates how much of the data the model is able to capture, which in this case corresponds to $\approx$ 12%.
+From the `summary` function, information about the assumed distribution of the errors (Gaussian in this case) and the link function can be obtained. The link function is 'identity' as the model does not make any transformation on the predictors. The 'significance of smooth terms' _p-value_ indicates if each smooth is significantly different from a constant mean 0 under the model. Here, the _p-value_ is low but we have seen that there are issues with the model from the previous outputs. Finally, the 'deviance explained' indicates how much of the variation in the data the model is able to capture, which in this case corresponds to $\approx$ 12%.
 
 ## Second model
 
@@ -173,11 +179,10 @@ The major flaw of `gam_00` is that this model is not taking into account the fac
 
 ```{r, second-GAM, echo=TRUE, fig.width=10, fig.height=7, out.width='75%', fig.align='center', include=TRUE, message=FALSE,warning=FALSE}
 
-gam_01<-gam(StO2_sim ~ s(Day, by=Group,k = 5),
+gam_01<-gam(StO2_sim ~ s(Day, by=Group, k = 5),
             method ='REML',
-            data  = dat_sim)
+            data   = dat_sim)
 
-source(here("Manuscripts/Manuscript_by_chapters-SIM_Revisions_final/scripts","gam_diagnostics.R"))
 gam_diagnostics(gam_01)
 ```
 
@@ -194,12 +199,12 @@ From `summary()`, the deviance explained by the model is $\approx$ 65%.
 
 ```{r, second-GAM-diag, fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:second-GAM-caption)'}
 #need to add figure number and caption
-appr2<-appraise(gam_01)
-sm2<-draw(gam_01)
+appr2 <- appraise(gam_01)
+sm2 <- draw(gam_01)
 
-visual_check2<-appr2+sm2
+visual_check2 <- appr2 + sm2
 
-visual_check2+plot_layout(design=layout1)
+visual_check2 + plot_layout(design = layout1)
 ```
 
 ## Third model
@@ -214,17 +219,15 @@ This is because in `gam_01`  separate smooths were fitted per group and those sm
 #GAM for StO2
 
 gam_02 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),
-            method='REML',
-            data  = dat_sim)
-
-source(here("Manuscripts/Manuscript_by_chapters-SIM_Revisions_final/scripts","gam_diagnostics.R"))
+            method ='REML',
+            data   = dat_sim)
 
 gam_diagnostics(gam_02)
 
 
 ```
 
-By using `appraise()` and `draw` on this model (Figure  \@ref(fig:final-GAM-diag)) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably distributed, and the smooths are capturing the trend of the data within each group. From `gam_diagnostics`, the k-index is now at an acceptable value ($\approx$ **1.23**).
+By using `appraise()` and `draw` on this model (Figure  \@ref(fig:final-GAM-diag) we see that the trend on the QQ plot has improved, the histogram of the residuals appears to be reasonably close to an normal distribution, and the smooths are capturing the trend of the data within each group. From `gam_diagnostics`, the k-index is now at an acceptable value ($\approx$ 1.23).
 
 ```{r,summary-gam_02}
 summary(gam_02)
@@ -236,12 +239,12 @@ From `summary`, the model is able to capture 86.7% of the variance in the data, 
 
 ```{r, final-GAM-diag, fig.width=10, fig.height=7, out.width='75%', fig.align='center',echo=FALSE,message=FALSE, warning=FALSE,fig.cap='(ref:final-GAM-caption)'}
 
-appr3<-appraise(gam_02)
-sm3<-draw(gam_02)
+appr3 <- appraise(gam_02)
+sm3 <- draw(gam_02)
 
-visual_check3<-appr3+sm3
+visual_check3 <- appr3 + sm3
 
-visual_check3+plot_layout(design=layout2)
+visual_check3 + plot_layout(design = layout2)
 ```
 
 ### Comparing models via AIC
@@ -250,11 +253,11 @@ One final  comparison that can be made for model selection involves the use of t
 
 ```{r,model-selection-AIC}
 
-AIC(gam_00,gam_01,gam_02)
+AIC(gam_00, gam_01, gam_02)
 
 ```
 
-The output in this case is expected: model `gam_02` has a lower AIC **(710.54)** whereas the initial two models have higher AICs (**884.43** and **805.30**). The AIC should not be considered as the only estimator of model quality, instead to be used as complimentary information to the graphical diagnostics and model checks described above.
+The output in this case is expected: model `gam_02` has a lower AIC (710.54) whereas the initial two models have higher AICs (884.43 and 805.30). The AIC should not be considered as the only estimator of model quality, instead to be used as complimentary information to the graphical diagnostics and model checks described above.
 
 ## Pairwise comparisons of smooth confidence intervals
 
@@ -262,7 +265,7 @@ The estimation of significant differences between each treatment group can be ac
 
 In this case, the "design matrix" is used to estimate the pairwise comparisons (see main manuscript for details and associated references). Briefly, the "design matrix" (also known as the "Xp matrix") from the selected model (`gam_02`) is used to calculate a 95% confidence interval of the difference between the smooth terms for each group. This approach allows to estimate the time intervals where a significant difference exists between the groups (confidence interval above or below 0). 
 
-We want to emphasize that for through the manuscript and for the comparisons on `gam_02`, we included the group means in order to keep the pairwise comparisons on the scale of the response. By default, pairwise comparisons available in other software packages (such as in G. Simpson's _gratia_) do not include the group means. However, we decided to include them because for our approach, it is easier to see the magnitude in the change of the difference between two treatment groups when the means are included.
+We want to emphasize that throught the manuscript and for the comparisons on `gam_02`, we included the group means in order to keep the pairwise comparisons on the scale of the response. By default, pairwise comparisons available in other software packages (such as in G. Simpson's _gratia_) do not include the group means. However, we decided to include them because for our approach, it is easier to see the magnitude in the change of the difference between two treatment groups when the means are included.
 
 The change we allude to (mean group inclusion) can be found in the script `pointwise_comparisons.R`, at the line where we have added a comment that reads: 
 
@@ -277,57 +280,50 @@ However, we do believe that the model presented in the paper covers a wide range
 
 ```{r,pairwise-comp-workflow-A,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
 
-source(here::here("Manuscripts/Manuscript_by_chapters-SIM_Revisions_final/scripts","pointwise_comparisons.R"))
-source(here::here("Manuscripts/Manuscript_by_chapters-SIM_Revisions_final/scripts","difference_smooths.R"))
-source(here::here("Manuscripts/Manuscript_by_chapters-SIM_Revisions_final/scripts","pairwise_limits.R"))
+source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", 
+                  "scripts","pointwise_comparisons.R"))
+source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final",
+                  "scripts", "difference_smooths.R"))
+source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", 
+                  "scripts", "pairwise_limits.R"))
 #compute difference between smooths and calculate confidence interval: complete data
-diff_complete <- difference_smooths(gam_02, smooth = "s(Day)", newdata = newdat,
-                     unconditional = TRUE, frequentist = FALSE,
-                     n=100, partial_match = TRUE, nrep=10000)
-my_list<-pairwise_limits(diff_complete)
+diff_complete <- difference_smooths(gam_02, smooth = "s(Day)", 
+                                    newdata = newdat, 
+                                    unconditional = TRUE,
+                                    frequentist = FALSE,
+                                    n = 100, partial_match = TRUE, 
+                                    nrep=10000)
+my_list <- pairwise_limits(diff_complete)
 ```
 
 Next, we plot the comparisons from `diff_complete` and create a `ggplot2` object (c1) so we can also shade the regions of significant differences easily.
 
 ```{r,pairwise-comp-workflow-B,echo=TRUE,include=TRUE,message=FALSE,warning=FALSE}
-rib_col<-'#8D7D82' #color for ribbon for confidence interval
+rib_col <- '#8D7D82'     #color for ribbon for confidence interval
 control_rib <- '#875F79' #color for ribbon for control region
-treat_rib <- '#A7D89E' #color for ribbon treatment region
+treat_rib <- '#A7D89E'   #color for ribbon treatment region
 
 c1 <- ggplot() +
-  geom_line(data = diff_complete, aes(x = Day, y = diff),size=1, alpha=0.5) +
-  annotate("rect",
-              xmin =my_list$init1, xmax =my_list$final1,ymin=-Inf,ymax=Inf,
-              fill=control_rib,
-              alpha = 0.5,
-              )+
-  annotate("text",
-           x=1.5,
-           y=-18,
-           label="Control>Treatment",
-         size=6,
-         angle=90
-         )+
-    annotate("rect",
-             xmin =my_list$init2, xmax =my_list$final2,ymin=-Inf,ymax=Inf,
-             fill=treat_rib,
-             alpha = 0.5
-             ) +
-  annotate("text",
-             x=6,
-             y=-18,
-             label="Treatment>Control",
-             size=6,
-           angle=90
-           )+
-  geom_ribbon(data = diff_complete, aes(x = Day, ymin = lower_s, ymax = upper_s),
+  geom_line(data = diff_complete, aes(x = Day, y = diff), 
+            size = 1, alpha = 0.5) +
+  annotate("rect", xmin = my_list$init1, xmax = my_list$final1,
+           ymin = -Inf, ymax = Inf, fill = control_rib,
+           alpha = 0.5) + 
+  annotate("text", x = 1.5, y = -18, label = "Control>Treatment",
+           size = 6, angle = 90) +
+  annotate("rect", xmin = my_list$init2, xmax = my_list$final2,
+           ymin = -Inf, ymax = Inf, fill = treat_rib,
+           alpha = 0.5) +
+  annotate("text", x = 6, y = -18, label = "Treatment>Control",
+           size = 6, angle = 90) +
+  geom_ribbon(data = diff_complete, 
+              aes(x = Day, ymin = lower_s, ymax = upper_s),
               alpha = 0.5, fill = rib_col, inherit.aes = FALSE) +
-  geom_hline(yintercept = 0, lty = 2, color = "red")+
-    scale_x_continuous(breaks=c(0,2,5,7,10))+
-    labs(y="Difference\n(Complete observations)")+
-    theme_classic()+
-    theme(
-    axis.text=element_text(size=22))
+  geom_hline(yintercept = 0, lty = 2, color = "red") +
+  scale_x_continuous(breaks = c(0, 2, 5, 7, 10)) +
+  labs(y = "Difference\n(Complete observations)") +
+  theme_classic()+
+  theme(axis.text = element_text(size = 22))
     
 ```
 
@@ -345,7 +341,7 @@ c1
 
 In this Appendix we have shown a basic model selection workflow for GAMs. Our goal here is to familiarize the reader with the logic behind the construction of each model and the kind of diagnostic information that needs to be checked to ensure the model is adequate. One final consideration must be given to the conditional distribution of the response. In the main manuscript and through this workflow, we have assumed a normal distribution for the response, which we believe is appropriate in many biomedical scenarios. However, we must remind the reader that the normal distribution is not intended to be used as a "one size fits all" distribution. Depending on the type of data (counts, binary outcomes) the user can choose different conditional distributions in _mgcv_.
 
-We also want to indicate that one of the major advantages of fitting GAMs in R using _mgcv_ is that once the appropriate conditional distribution has been chosen and model diagnostics are assessed, the user only needs to choose a basis dimension (the number of basis functions to use), and check if the basis dimension is adequately capturing the trend of the data using `k.check`. If that is  not the case, then the user needs to increase `k` a bit and check `k.check` again. The process might seem mechanic, but we hope that with the theory presented in the main manuscript and the workflow of this Appendix the user has a good understanding of what the model is doing and the rationale for choosing a GAM as a tool for statistical analysis.
+We also want to indicate that one of the major advantages of fitting GAMs in R using _mgcv_ is that once the appropriate conditional distribution has been chosen and model diagnostics are assessed, the user only needs to choose a basis dimension (the number of basis functions to use), and check if the basis dimension is adequately capturing the trend of the data using `k.check`. If that is  not the case, then the user needs to increase `k` a bit and check `k.check` again. The process might seem mechanistic, but we hope that with the theory presented in the main manuscript and the workflow of this Appendix the user has a good understanding of what the model is doing and the rationale for choosing a GAM as a tool for statistical analysis.
  
  
 ## Additional resources
