@@ -11,7 +11,8 @@ plot_example <- function(sim_dat,
                    group = treatment,
                    color = treatment)
         ) +
-        geom_point(show.legend=FALSE) +
+        geom_point(show.legend=FALSE,
+                   alpha = 0.5) +
         labs(y='response')+
         geom_line(aes(x = time,
                       y = mu,
@@ -65,7 +66,8 @@ plot_example <- function(sim_dat,
                  aes(x = time,
                      y = y,
                      color = treatment)) +
-        geom_point(show.legend=FALSE)+
+        geom_point(show.legend = FALSE,
+                   alpha=0.5)+
         labs(y='response')+
         geom_line(aes(y = predict(sim_dat$fit_anova),
                       group = subject, size = "Subjects"),show.legend = FALSE) +
@@ -91,7 +93,7 @@ plot_example <- function(sim_dat,
                  aes(x = time,
                      y = y,
                      color = treatment)) +
-        geom_point()+
+        geom_point(alpha = 0.5)+
         labs(y='response')+
         geom_line(aes(y = predict(sim_dat$fit_lme),
                       group = subject, size = "Subjects")) +
