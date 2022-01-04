@@ -41,7 +41,7 @@ We would like to thank the reviewer for the careful and thorough analysis of thi
 
 Dr. Platt, 
 
-The authors thank you for your determination that our manuscript may be suitable for resubmission in _Statistics in Medicine_ after addressing the reviewer's comments. To this end, we have addressed all critiques. We hope these revisions, submitted on December 5, 2021, improve the manuscript so it is deemed worthy of publication in _Statistics in Medicine_. Following are our detailed responses to reviewer comments.
+The authors thank you for your determination that our manuscript may be suitable for resubmission in _Statistics in Medicine_ after addressing the reviewer's comments. To this end, we have addressed all critiques. We hope these revisions, submitted on January 4th, 2022, improve the manuscript so it is deemed worthy of publication in _Statistics in Medicine_. Following are our detailed responses to reviewer comments.
 
 ## Reviewer's Introduction
 Mundo and colleagues present a tutorial on the use of generalized additive models to analyze longitudinal data. A comparison with repeated measures ANOVA and linear mixed models is provided and a recurring example using simulated
@@ -318,7 +318,9 @@ so it is confusing and unnecessary.
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-We appreciate the reviewer's comments here. However, the indicated sentence is not intended in jest. We are using in this sentence (and in the paper in general) a statistical approach that is understandable by biomedical researchers in general. To this day, the field values "significance" (defined by the arbitrarily set threshold of _p_<0.05). We are trying to convince the reader that low _p-values_ are possible with ill-fitted models, and we use language that is understandable by the reader.
+We appreciate the reviewer's comments here. However, the indicated sentence is not intended in jest. We are using in this sentence (and in the paper in general) a statistical approach that is understandable by biomedical researchers in general. To this day, the field values "significance" (defined by the arbitrarily set threshold of _p_<0.05). We are trying to convince the reader that low _p-values_ are possible with ill-fitted models, and we use language that is understandable by the reader. 
+
+The updated sentence in L59 now reads "significant effects (_p-value_<0.05)".
 
 ## Reviewer's Comments
 
@@ -366,7 +368,7 @@ L293 You never really describe what “data-drive flexibility” is. Why are GAM
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-This line has been removed from the revised manuscript. However, we acknowledge that we didn't clearly conveyed this point to the read. In Section 6 (Discussion), L549-550 we now clearly state that a major advantage of GAMs is that they can learn non-linear trends from the data, thus eliminating the requirement of other models such as LMEMs where the relationship needs to be provided.
+This line has been removed from the revised manuscript. However, we acknowledge that we didn't clearly conveyed this point to the read. In Section 6 (Discussion), L549-550 we now clearly state that a major advantage of GAMs is that they can learn non-linear trends from the data, thus eliminating the requirement of other models such as LMEMs where the relationship needs to be provided _a priori_ by the user.
 
 ## Reviewer's Comments
 
@@ -447,7 +449,7 @@ L381 “little” -> “few”
 
 ## \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-The word "few" has been removed. The sentence now reads "...with as few as 4 observations per group..." (L482)
+The sentence now reads "...with as few as 4 observations per group..." (L482)
 
 ## Reviewer's Comments
 
