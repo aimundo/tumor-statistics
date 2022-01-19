@@ -133,6 +133,8 @@
 \definecolor{sgreen}{HTML}{859900}
 %command to set parameter(s) in package listings
 \lstset{
+    language=R,
+    upquote=true,
     % How/what to match
     sensitive=true,
     % Border (above and below)
@@ -203,13 +205,13 @@ library(mgcv)
 library(gratia)
 library(here)
 library(scico)
-set.seed(2021) #set seed for reproducibility
+set.seed(2021)  #set seed for reproducibility
 
-#alpha for ribbon in the smooth plots
+# alpha for ribbon in the smooth plots
 al <- 0.8
 
-thm1 <- scale_fill_scico_d(palette = "tokyo", begin = 0.3, end = 0.8,
-                         direction = -1, aesthetics = c("colour", "fill"))
+thm1 <- scale_fill_scico_d(palette = "tokyo", begin = 0.3, end = 0.8, direction = -1,
+    aesthetics = c("colour", "fill"))
 \end{lstlisting}
 
 Next, we create a data frame with the same trends from the main manuscript:
@@ -225,19 +227,18 @@ Next, we create a data frame with the same trends from the main manuscript:
 \end{itemize}
 
 \begin{lstlisting}[language=R]
-dat<-tibble(StO2  = c(4, 27, 3, 2, 0.5, 7,4, 50, 45, 56),
-            Day   = rep(c(0, 2, 5, 7, 10), times = 2),
-            Group = as.factor(rep(c("Control", "Treatment"), each = 5)))
+dat <- tibble(StO2 = c(4, 27, 3, 2, 0.5, 7, 4, 50, 45, 56), Day = rep(c(0, 2, 5,
+    7, 10), times = 2), Group = as.factor(rep(c("Control", "Treatment"), each = 5)))
 \end{lstlisting}
 
 We do not include a plot of the simulated data here because it follows the same trend from Figure 3A in the main manuscript (however, it can be easily plotted if desired).
 Finally, we call the function \passthrough{\lstinline!simulate\_data!} in the script \passthrough{\lstinline!simulate\_data.R!} to create 10 replicates at each time point from a normal distribution with a standard deviation of 10\% in \(\mbox{StO2}\).
 
 \begin{lstlisting}[language=R]
-n <- 10 #number of observations
-sd <- 10 #approximate sd from paper
-source(here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final",
-            "scripts", "simulate_data.R"))
+n <- 10  #number of observations
+sd <- 10  #approximate sd from paper
+source(here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", "scripts",
+    "simulate_data.R"))
 dat_sim <- simulate_data(dat, n, sd)
 \end{lstlisting}
 
@@ -247,9 +248,7 @@ dat_sim <- simulate_data(dat, n, sd)
 The first model fitted to the data is one that only assumes a single smooth over time shared by both the treatment and control groups The model syntax specifies that \passthrough{\lstinline!gam\_00!} is the object that will contain all the model information, and that the model attempts to explain changes in \passthrough{\lstinline!StO2\_sim!} (simulated \(\mbox{StO}_2\)) using a smooth per \passthrough{\lstinline!Day!}. The model will use four basis functions (\passthrough{\lstinline!k = 5!}) for the smooth. The smooth is constructed by default using thin plate regression splines. The smoothing parameter estimation method used is the restricted maximum likelihood (\passthrough{\lstinline!REML!}).
 
 \begin{lstlisting}[language=R]
-gam_00<-gam(StO2_sim ~ s(Day, k = 5),
-            method   ='REML',
-            data     = dat_sim)
+gam_00 <- gam(StO2_sim ~ s(Day, k = 5), method = "REML", data = dat_sim)
 \end{lstlisting}
 
 To obtain model diagnostics, two methodologies are to be used: 1) graphical diagnostics, and 2) a model check. In the first case, the functions \passthrough{\lstinline!appraise!} and \passthrough{\lstinline!draw!} from the package \emph{gratia} can be used to obtain a single output with all the graphical diagnostics. For model check, the functions \passthrough{\lstinline!gam.check!} and \passthrough{\lstinline!summary!} from \emph{mgcv} provide detailed information about the model fit and its parameters. Keep in mind that \passthrough{\lstinline!gam.check!} is a function that also provides the graphical diagnostics obtained using \emph{gratia}, if such graphical output is not desired the source code can be accessed typing \passthrough{\lstinline!gam.check!} in the Console, and the code without the graphical output can be used in a custom function (which is the approach we follow later on this Appendix).
@@ -290,8 +289,8 @@ Special attention must be paid to the parameter `k-index' from \passthrough{\lst
 In the next code chunk, we call \passthrough{\lstinline!gam.diagnostics!} to provide the desired diagnostic output:
 
 \begin{lstlisting}[language=R]
-source(here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final",
-            "scripts", "gam_diagnostics.R"))
+source(here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", "scripts",
+    "gam_diagnostics.R"))
 gam_diagnostics(gam_00)
 \end{lstlisting}
 
@@ -351,9 +350,7 @@ From the \passthrough{\lstinline!summary!} function, information about the assum
 The major flaw of \passthrough{\lstinline!gam\_00!} is that this model is not taking into account the fact that the data is nested in groups. The next iteration is a model where a different smooth of time (Day) is assigned for each group using \passthrough{\lstinline!by = Group!} in the model syntax. Below we fit such model, which is saved as \passthrough{\lstinline!gam\_01!}, and use \passthrough{\lstinline!gam\_diagnostiscs!} to obtain information from the model fit.
 
 \begin{lstlisting}[language=R]
-gam_01<-gam(StO2_sim ~ s(Day, by=Group, k = 5),
-            method ='REML',
-            data   = dat_sim)
+gam_01 <- gam(StO2_sim ~ s(Day, by = Group, k = 5), method = "REML", data = dat_sim)
 
 gam_diagnostics(gam_01)
 \end{lstlisting}
@@ -429,11 +426,9 @@ Model \passthrough{\lstinline!gam\_00!} was built for didactic purposes to cover
 This is because in \passthrough{\lstinline!gam\_01!} separate smooths were fitted per group and those smooths also tried to account for the different means of the response in the two groups. Adding a parametric term for \passthrough{\lstinline!Group!} enables the smooths to capture the time course-differences of each group. The resulting model is \passthrough{\lstinline!gam\_02!}, which is the model fitted in the main manuscript.
 
 \begin{lstlisting}[language=R]
-#GAM for StO2
+# GAM for StO2
 
-gam_02 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5),
-            method ='REML',
-            data   = dat_sim)
+gam_02 <- gam(StO2_sim ~ Group + s(Day, by = Group, k = 5), method = "REML", data = dat_sim)
 
 gam_diagnostics(gam_02)
 \end{lstlisting}
@@ -530,8 +525,8 @@ We want to emphasize that throught the manuscript and for the comparisons on \pa
 The change we allude to (mean group inclusion) can be found in the script \passthrough{\lstinline!pointwise\_comparisons.R!}, at the line where we have added a comment that reads:
 
 \begin{lstlisting}[language=R]
-######IMPORTANT: uncommenting the following two lines
-    #removes the group means from the comparison######
+###### IMPORTANT: uncommenting the following two lines removes the group means
+###### from the comparison######
 \end{lstlisting}
 
 The inclusion of group means works well for models like \passthrough{\lstinline!gam\_02!}, but implementing this on models with more parametric terms can be challenging and we want the reader to be aware of this.
@@ -539,50 +534,36 @@ The inclusion of group means works well for models like \passthrough{\lstinline!
 However, we do believe that the model presented in the paper covers a wide range of situations and our approach here for the pairwise comparisons will be useful for most biomedical researchers. We first call the script \passthrough{\lstinline!pointwise\_comparisons.R!} to estimate the pointwise difference, then call the script \passthrough{\lstinline!difference\_smooths.R!} which calculates the simultaneous confidence interval for the difference, and finally \passthrough{\lstinline!pairwise\_limits.R!}, which estimates the regions to be shaded for the intervals with significance in the final figure. We use \passthrough{\lstinline!difference\_smooths!} on model \passthrough{\lstinline!gam\_02!} and save the estimates in \passthrough{\lstinline!diff\_complete!}.
 
 \begin{lstlisting}[language=R]
-source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", 
-                  "scripts","pointwise_comparisons.R"))
-source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final",
-                  "scripts", "difference_smooths.R"))
-source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", 
-                  "scripts", "pairwise_limits.R"))
-#compute difference between smooths and calculate confidence interval: complete data
-diff_complete <- difference_smooths(gam_02, smooth = "s(Day)", 
-                                    newdata = newdat, 
-                                    unconditional = TRUE,
-                                    frequentist = FALSE,
-                                    n = 100, partial_match = TRUE, 
-                                    nrep=10000)
+source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", "scripts",
+    "pointwise_comparisons.R"))
+source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", "scripts",
+    "difference_smooths.R"))
+source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", "scripts",
+    "pairwise_limits.R"))
+# compute difference between smooths and calculate confidence interval:
+# complete data
+diff_complete <- difference_smooths(gam_02, smooth = "s(Day)", newdata = newdat,
+    unconditional = TRUE, frequentist = FALSE, n = 100, partial_match = TRUE, nrep = 10000)
 my_list <- pairwise_limits(diff_complete)
 \end{lstlisting}
 
 Next, we plot the comparisons from \passthrough{\lstinline!diff\_complete!} and create a \passthrough{\lstinline!ggplot2!} object (c1) so we can also shade the regions of significant differences easily.
 
 \begin{lstlisting}[language=R]
-rib_col <- '#8D7D82'     #color for ribbon for confidence interval
-control_rib <- '#875F79' #color for ribbon for control region
-treat_rib <- '#A7D89E'   #color for ribbon treatment region
+rib_col <- "#8D7D82"  #color for ribbon for confidence interval
+control_rib <- "#875F79"  #color for ribbon for control region
+treat_rib <- "#A7D89E"  #color for ribbon treatment region
 
-c1 <- ggplot() +
-  geom_line(data = diff_complete, aes(x = Day, y = diff), 
-            size = 1, alpha = 0.5) +
-  annotate("rect", xmin = my_list$init1, xmax = my_list$final1,
-           ymin = -Inf, ymax = Inf, fill = control_rib,
-           alpha = 0.5) + 
-  annotate("text", x = 1.5, y = -18, label = "Control>Treatment",
-           size = 6, angle = 90) +
-  annotate("rect", xmin = my_list$init2, xmax = my_list$final2,
-           ymin = -Inf, ymax = Inf, fill = treat_rib,
-           alpha = 0.5) +
-  annotate("text", x = 6, y = -18, label = "Treatment>Control",
-           size = 6, angle = 90) +
-  geom_ribbon(data = diff_complete, 
-              aes(x = Day, ymin = lower_s, ymax = upper_s),
-              alpha = 0.5, fill = rib_col, inherit.aes = FALSE) +
-  geom_hline(yintercept = 0, lty = 2, color = "red") +
-  scale_x_continuous(breaks = c(0, 2, 5, 7, 10)) +
-  labs(y = "Difference\n(Complete observations)") +
-  theme_classic()+
-  theme(axis.text = element_text(size = 22))
+c1 <- ggplot() + geom_line(data = diff_complete, aes(x = Day, y = diff), size = 1,
+    alpha = 0.5) + annotate("rect", xmin = my_list$init1, xmax = my_list$final1,
+    ymin = -Inf, ymax = Inf, fill = control_rib, alpha = 0.5) + annotate("text",
+    x = 1.5, y = -18, label = "Control>Treatment", size = 6, angle = 90) + annotate("rect",
+    xmin = my_list$init2, xmax = my_list$final2, ymin = -Inf, ymax = Inf, fill = treat_rib,
+    alpha = 0.5) + annotate("text", x = 6, y = -18, label = "Treatment>Control",
+    size = 6, angle = 90) + geom_ribbon(data = diff_complete, aes(x = Day, ymin = lower_s,
+    ymax = upper_s), alpha = 0.5, fill = rib_col, inherit.aes = FALSE) + geom_hline(yintercept = 0,
+    lty = 2, color = "red") + scale_x_continuous(breaks = c(0, 2, 5, 7, 10)) + labs(y = "Difference\n(Complete observations)") +
+    theme_classic() + theme(axis.text = element_text(size = 22))
 \end{lstlisting}
 
 The resulting plot (Figure \ref{fig:pairwise-comp-workflow-fig}) shows the estimated difference in the smooths with a 95\% simultaneous CI. As a reminder, because we have kept the group means, we can directly see that the Treatment starts to have a significant effect around day 3. As therapy progresses, the effect continues, and the magnitude of the difference (\(\approx\) 40\%) at day five corresponds directly with the magnitude in the increase in \(\mbox{StO}_2\) in the group at the same time point in the data.

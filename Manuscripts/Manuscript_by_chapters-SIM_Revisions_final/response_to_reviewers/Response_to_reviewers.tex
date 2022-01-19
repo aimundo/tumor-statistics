@@ -76,6 +76,9 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage[nomarkers,figuresonly]{endfloat}
+\usepackage{setspace}
+\setlength{\affilsep}{0.5em}
+
 %set a box to put the ORCID logo
 %\newbox{\myorcidaffilbox}
 %\sbox{\myorcidaffilbox}{\large\includegraphics[height=1.7ex]{latex_docs/orcid}}
@@ -100,6 +103,7 @@
 %\linenumbers
 
 %authors
+\singlespacing
 \author{Corresponding author: Timothy J. Muldoon*}
 \affil{Department of Biomedical Engineering, University of Arkansas, Fayetteville, AR, USA}
 \affil{tmuldoon@uark.edu}
@@ -164,24 +168,32 @@
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 
-\title{\textbf{Generalized additive models to analyze biomedical non-linear longitudinal data in R:}\\
+\title{\textbf{Generalized additive models to analyze non-linear trends in biomedical longitudinal data using R:}\\
 Beyond repeated measures ANOVA and Linear Mixed Models\\
 \strut \\
 \textbf{Response to Reviewer's Comments}\\
-\strut \\
-Journal of Submission: Statistics in Medicine\\
-\strut \\
-Manuscript ID: SIM-21-0640}
+Journal of Submission: Statistics in Medicine}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Manuscript ID: SIM-21-0640.R1}
 \author{}
 \date{\vspace{-2.5em}}
 
 \begin{document}
 \maketitle
 
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
 \hypertarget{general-comments-to-the-reviewers}{%
 \section{General Comments to the Reviewers}\label{general-comments-to-the-reviewers}}
 
-We would like to thank the reviewer for the careful and thorough analysis of this manuscript to \emph{Statistics in Medicine} and for the thoughtful comments and constructive suggestions, which helped improve the quality of this manuscript. We carefully considered the reviewer's comments and in this document, explain how we revised the manuscript based on those comments and suggestions.
+We would like to thank the reviewers for the careful and thorough analysis of this manuscript to \emph{Statistics in Medicine} and for the thoughtful comments and constructive suggestions, which helped improve the quality of this manuscript. We carefully considered the reviewers comments and in this document, explain how we revised the manuscript based on those comments and suggestions.
 
 \hypertarget{general-comments-to-the-editor}{%
 \section{General Comments to the Editor}\label{general-comments-to-the-editor}}
@@ -189,6 +201,9 @@ We would like to thank the reviewer for the careful and thorough analysis of thi
 Dr.~Platt,
 
 The authors thank you for your determination that our manuscript may be suitable for resubmission in \emph{Statistics in Medicine} after addressing the reviewer's comments. To this end, we have addressed all critiques. We hope these revisions, submitted on January 4th, 2022, improve the manuscript so it is deemed worthy of publication in \emph{Statistics in Medicine}. Following are our detailed responses to reviewer comments.
+
+\hypertarget{reviewer-1}{%
+\section{Reviewer \#1}\label{reviewer-1}}
 
 \hypertarget{reviewers-introduction}{%
 \subsection{Reviewer's Introduction}\label{reviewers-introduction}}
@@ -201,14 +216,14 @@ data is used to illustrate the differences among the methods and the advantages 
 
 We greatly appreciate Dr.~Simpson's comments and critiques to our manuscript.
 
-\hypertarget{comments-from-reviewers}{%
-\section{Comments from reviewers}\label{comments-from-reviewers}}
+\hypertarget{comments-from-reviewer}{%
+\subsection{Comments from Reviewer}\label{comments-from-reviewer}}
 
 \hypertarget{missing-data}{%
-\section{Missing data}\label{missing-data}}
+\subsection{Missing data}\label{missing-data}}
 
 \hypertarget{reviewers-comments}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments}}
 
 I found this use of ``missing'' data to be a little confusing. I understand what the authors are getting at, but it suggests that GAMs can handle this whereas rm-ANOVA and LMMs can't. While I appreciate that rm-ANOVA might require
 balanced observations for the group errors, LMMs are just as able to handle ``missingness'' (in the sense implied by the authors) as GAMs are. Additionally, the ``missingness'' isn't meant solely as missing in the statistical sense, but really it is due to irregular or incomplete sampling, more generally.
@@ -216,7 +231,7 @@ It would be helpful to make the discussion of missingness about balanced data an
 just don't require balance.
 
 \hypertarget{section-1}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-1}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-1}}
 
 We appreciate the comments about clarity in the use of the term ``missingness''. Please note that the title for Section 3.4 has been changed from ``Missing observations'' to ``Unbalanced data''. We have restructured this section in the following manner:
 
@@ -230,15 +245,15 @@ We appreciate the comments about clarity in the use of the term ``missingness''.
 \end{itemize}
 
 \hypertarget{unnecesary-restriction-of-lmms}{%
-\section{Unnecesary restriction of LMMs}\label{unnecesary-restriction-of-lmms}}
+\subsection{Unnecesary restriction of LMMs}\label{unnecesary-restriction-of-lmms}}
 
 \hypertarget{reviewers-comments-1}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-1}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-1}}
 
 Why not use quadratic effects of time in the LMM? I appreciate this would make the model more complex, but trying to fit a quadratic effect with a linear model strikes me as futile and somewhat of a straw person argument to make.
 
 \hypertarget{section-2}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-2}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-2}}
 
 We appreciate the reviewer's perspective regarding the somewhat contradictory argument of fitting a linear effects LMM to quadratic data. However, this is an intentional approach because we follow the statistical analysis logic followed by most biomedical researchers to analyze longitudinal data: Fit a LMM or an rm-ANOVA, and if a \emph{post-hoc} analysis gives \emph{p-values} below a certain threshold (usually 0.05) that's good enough. The purpose of the figure is to convey that changing models (from rm-ANOVA to LMEM) without visualizing the model fit is in this case is something that will propagate bias in the results and does not provide any substantial improvement to the analysis. However, we acknowledge that this point was not explicitly stated in the original manuscript and the following changes have been made:
 
@@ -261,21 +276,21 @@ We believe that the aforementioned change makes a clear statement to the reader 
 
 \begin{itemize}
 \item
-  L270-L273 now include some of the reasons that complicate the use of polynomial effects in a LMEM for the data in Fig. 1. Specifically, that in reality the true function is not known and that this complicates choosing the degree of the polynomial. We also reference Section 4.3.1, which provides more detail on the limitations of polynomial effects.
+  L270-L273 now include some of the reasons that complicate the use of polynomial effects in a LMEM for the data in Figure 1. Specifically, that in reality the true function is not known and that this complicates choosing the degree of the polynomial. We also reference Section 4.3.1, which provides more detail on the limitations of polynomial effects.
 \item
-  L547-L549 In Section 6 (Discussion) emphasize again the limitations of polynomial effects when used on biological data, such as in the case of the simulated data in Fig. 1.
+  L550-L552 In Section 6 (Discussion) emphasize again the limitations of polynomial effects when used on biological data, such as in the case of the simulated data in Fig. 1.
 \end{itemize}
 
 \hypertarget{glmms}{%
-\section{GLMMs}\label{glmms}}
+\subsection{GLMMs}\label{glmms}}
 
 \hypertarget{reviewers-comments-2}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-2}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-2}}
 
 You don't even mention generalized linear mixed models; why? In the context of the tutorial they represent the logical bridge between GAM and LMM, especially when you consider that you are really fitting GAMMs here.
 
 \hypertarget{section-3}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-3}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-3}}
 
 We appreciate Dr.~Simpson's comment here and the equations provided, which we have now incorporated in the manuscript. We acknowledge that a brief overview of the different statistical model classes was missing in the original manuscript, and we have now extensively edited Section 4 to provide context on linear models (LMs), generalized linear models (GLMs) and generalized linear mixed models (GLMMs) before introducing GAMs.
 
@@ -295,15 +310,15 @@ We believe that because Section 4 now provides context and follows a logical pro
 \end{itemize}
 
 \hypertarget{thin-plate-regression-splines}{%
-\section{Thin plate regression splines}\label{thin-plate-regression-splines}}
+\subsection{Thin plate regression splines}\label{thin-plate-regression-splines}}
 
 \hypertarget{reviewers-comments-3}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-3}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-3}}
 
 The authors define the default basis in \{mgcv\}, the software being used here to illustrate fitting GAMs, as ``\ldots thin plate regression splines are an optimized version that work well with noisy data.'' This is not a good description of what a thin plate regression spline (hereafter TPRS) is, and is not a good description of what the low-rank versions in \{mgcv\} are.
 
 \hypertarget{section-4}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-4}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-4}}
 
 The following changes have been made:
 
@@ -314,13 +329,13 @@ The following changes have been made:
 \end{itemize}
 
 \hypertarget{reviewers-comments-4}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-4}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-4}}
 
 Much better, I believe, is to talk about this in terms of basis functions, of which there are five in this example. You can use the same terminology to refer to the CRS basis, and others. That in the CRS if you want \emph{k} basis functions you need \emph{k} knots (IIRC). CRS require you to specify the knot locations (or let the software spread them evenly through the data); TPRS don't.
 Hence the paragraph starting on L195 is confusing and misleading. The basis functions are not piece-wise polynomial and there are not ``region{[}s{]} where a different set of basis functions will be used''. Indeed, the functions you show operate throughout the range of the covariate.
 
 \hypertarget{section-5}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-5}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-5}}
 
 \begin{itemize}
 \tightlist
@@ -329,10 +344,10 @@ Hence the paragraph starting on L195 is confusing and misleading. The basis func
 \end{itemize}
 
 \hypertarget{penalised-splines}{%
-\section{Penalised splines}\label{penalised-splines}}
+\subsection{Penalised splines}\label{penalised-splines}}
 
 \hypertarget{reviewers-comments-5}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-5}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-5}}
 
 You talk a little about ``wiggliness'' and penalising the weights for each basis function towards 0 but you don't really explain this most crucial concept of the model fitting problem and why modern GAMs are so much better than the GAMs developed by Hastie and Tibshirani when they first introduced GAMs to the world.
 You really need to define wiggliness beyond something that is used to avoid overfitting. Typically it is squared second derivative of the estimated function; so we limit the curvature of the fitted function by default. Technically the penalty is the penalty matrix - it is a matrix and it is fixed once we define the basis functions. What isn't fixed is (are) the smoothness parameter(s) of the smooth; it is those that control how much penalty we subtract from the log-likelihood of the data given the model estimates. To speak of a ``weak'' or ``strong'' penalty was a little confusing for me.
@@ -340,7 +355,7 @@ Hence fitting a GAM requires one to estimate parameters and one or more smoothne
 By glossing over these important concepts, the reader is left wondering what wiggliness is, how we measure overfit? etc.
 
 \hypertarget{section-6}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-6}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-6}}
 
 \begin{itemize}
 \tightlist
@@ -357,30 +372,30 @@ L367-375 has been added, and is a paragraph which briefly discusses wiggliness, 
 \end{itemize}
 
 \hypertarget{bayesian}{%
-\section{Bayesian}\label{bayesian}}
+\subsection{Bayesian}\label{bayesian}}
 
 \hypertarget{reviewers-comments-6}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-6}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-6}}
 
 GAMs in \{mgcv\} are considered to be empirical Bayesian models, but in general GAMs can be fully Bayesian. You can fit fully Bayesian GAMs using INLA and JAGS using functions from \{mgcv\}, and the \{brms\} package allows full Bayesian GAMs to be estimated simply using Stan for example. This needs to be clarified.
 I'm not really sure what you mean by the sentence beginning ``Moreover, the use of the restricted maximum\ldots{}''. I think I get what you mean; by casting the wiggly parts of smooths as random effects we can estimate the fit using REML
 and standard linear mixed model software. However, you can fit the model using the full fat version of maximum likelihood and these models would still be empirical Bayes if fitted by \{mgcv\}.
 
 \hypertarget{section-7}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-7}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-7}}
 
 \begin{itemize}
 \item
-  L395 now clarifies this by indicating that Stan, JAGS or other probabilistic programming language can be used to estimate GAMs using a full Bayesian approach.
+  L394-L395 now clarifies this by indicating that Stan, JAGS or other probabilistic programming language can be used to estimate GAMs using a full Bayesian approach.
 \item
-  The sentence ``Moreover, the use of the restricted maximum likelihood (REML) to estimate the smoothing parameters gives an empirical estimate of the smooth model'', which appears in L319 in the original manuscript has been removed from the text. Instead, the concept of REML has been moved to Section 5.2 L456-459, where we state some of the reasons indicated by Wood when choosing restricted maximum likelihood (REML) over the default general cross validation (GCV) method for smooth parameter estimation in \emph{mgcv}.
+  The sentence ``Moreover, the use of the restricted maximum likelihood (REML) to estimate the smoothing parameters gives an empirical estimate of the smooth model'', which appears in L319 in the original manuscript has been removed from the text. Instead, the concept of REML has been moved to Section 5.2 L457-460, where we state some of the reasons indicated by Wood when choosing restricted maximum likelihood (REML) over the default general cross validation (GCV) method for smooth parameter estimation in \emph{mgcv}.
 \end{itemize}
 
 \hypertarget{coverage-of-confidence-intervals}{%
-\section{Coverage of confidence intervals}\label{coverage-of-confidence-intervals}}
+\subsection{Coverage of confidence intervals}\label{coverage-of-confidence-intervals}}
 
 \hypertarget{reviewers-comments-7}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-7}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-7}}
 
 This entire section from L320 onward through to the end of Section 5 needs some work. When viewed from the Bayesian perspective, the intervals are Bayesian credible intervals. When viewed from a frequentist perspective, the same intervals are confidence intervals but instead of having the typical point-wise interpretation they have an across the function interpretation.
 The description of what this means is wrong --- you are almost giving the incorrect definition of a confidence interval here. The interval either does or does not contain the true function. That is given. I'm sure this is just a slip then on L324-325.
@@ -390,7 +405,7 @@ What across-the-function means is simply that if we average the coverage of the 
 than nominal coverage and some areas less than the nominal coverage.
 
 \hypertarget{section-8}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-8}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-8}}
 
 The content in L320-329 regarding confidence intervals (CIs) in the original submission has been changed in the following manner:
 
@@ -398,22 +413,22 @@ The content in L320-329 regarding confidence intervals (CIs) in the original sub
 \item
   L398-L405 now contain a more detailed and accurate explanation of''across-the-function'' CIs. We have used the reviewer's comments to indicate that in GAM fitted using \emph{mgcv}, the close to nominal across-the-function coverage is true when averaged over the entire function.
 \item
-  L406-L412 now provide a brief explanation of simultaneous CIs. With this explanation we want to provide the reader with an intuitive understanding on the advantages of simultaneous CIs over across the function CIs when computing comparisons between different groups (which we discuss in L417-L419).
+  L406-L413 now provide a brief explanation of simultaneous CIs and how they correct for the across the function CI. With this explanation we want to provide the reader with an intuitive understanding on the advantages of simultaneous CIs over across the function CIs when computing comparisons between different groups (which we discuss in L485-L503).
 \item
-  We have modified Figure 3 to now include across the function and simultaneous CIs. Fig. 3B,D now show the fitted smooths and both intervals (across the function and simultaneous), and we explain the rationale for their inclusion in L477-L482. In this way, the reader has a visual understanding of the difference between across the function and simultaneous CIs.
+  We have modified Figure 3 to now include across the function and simultaneous CIs. Figure 3B, D now show the fitted smooths and both intervals (across the function and simultaneous), and we explain the rationale for their inclusion in L478-L483. In this way, the reader has a visual understanding of the difference between across the function and simultaneous CIs.
 \end{itemize}
 
 \hypertarget{differences-in-smooths}{%
-\section{Differences in smooths}\label{differences-in-smooths}}
+\subsection{Differences in smooths}\label{differences-in-smooths}}
 
 \hypertarget{reviewers-comments-8}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-8}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-8}}
 
 The essence of this is not ``if the difference between {[}credible{]} intervals of the fitted smooths\ldots{} is non-zero''. For a variety of reasons this is not how it works. Instead we compute the difference of the smooths and then compute a credible interval around this difference. Also, to interpret this correctly we really need to do a simultaneous interval as you are looking at all points over the range of the covariate. If we just use the usual interval we have to consider the under and over coverage of the Nychka across-the-function intervals. You should talk about this issue in this section if you don't compute simultaneous intervals.
 This section could also do with a little more explanation; \{gratia\} (and hence I) tens to consider differences of smooths to exclude the groups means. Here, if I read the paper and the code correctly, you included the group means. This works OK for simple models like this, but what if you had two or more parametric factor terms in the model? Then you would not (at least by default) have any way to isolate the group means for the by factor independently of the levels of the other factor. You would have to create differences conditional upon a level of the other factor. Users, however, tend to expect differences to include the group means, as you have chosen to present things here. Hence a note explaining the implications of this choice would be useful to forewarn the user.
 
 \hypertarget{section-9}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-9}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-9}}
 
 We have made major changes to this section based on the reviewer's comments.
 
@@ -421,44 +436,44 @@ We have made major changes to this section based on the reviewer's comments.
 \item
   We have removed the sentence ``if the difference between the credible intervals of the fitted smooths\ldots{} is non-zero'', and now L487-L489 now read: ``is that the difference between them can be computed, followed by the estimation of an empirical Bayesian simultaneous CI around this difference.''
 \item
-  L494 now reads ``unlikely to be distinguishable from zero''.
+  L497-L498 The sentence now reads ``unlikely to be distinguishable from zero''.
 \item
-  L504-510 now indicate that we are computing a simultaneous CI around the difference, and that we \emph{included} the group means in our pairwise comparison. We also indicate to the reader the fact that if multiple parametric terms exist in the model the inclusion of the means can become problematic.
+  L507-513 now indicate that we are computing a simultaneous CI around the difference, and that we \emph{included} the group means in our pairwise comparison. We also indicate to the reader the fact that if multiple parametric terms exist in the model the inclusion of the means can become problematic.
 \end{itemize}
 
 However, we want to point that our belief is that including the means makes the comparison more intuitive, as in that way the researcher can directly compare both the fitted smooths and the pairwise comparisons to infer any significant changes and their associated magnitude. In Appendix A we also have made the corrections to the calculation of the pairwise comparisons in Section A.5 (the GAM workflow section) so the reader is aware again that in our code we keep the group means.
 
 \hypertarget{appendix}{%
-\section{Appendix}\label{appendix}}
+\subsection{Appendix}\label{appendix}}
 
 \hypertarget{reviewers-comments-9}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-9}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-9}}
 
 In the appendix I think you are needlessly restricting the size of the basis dimension to be k = 5, hence 4 basis functions per smooth when identifiability constraints are applied. Is there a reason I'm seeing here why you could leave this at the default k = 10 and really see the effect of the shrinkage as the EDF of the resulting smooths should be similar to the EDF you have with k = 5? This would also likely help with the k-index being low because there's not a lot of shrinkage you can do when the maximum EDF possible is 4 (per smooth).
 
 \hypertarget{section-10}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-10}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-10}}
 
-L429 (in the revised manuscript) indicates that the simulated data used to fit the GAM that the reviewer alludes to has only 5 unique covariates (days 0, 2, 5, 7 and 10). The computational requisite in the smooth estimation of having the maximum number of basis equal to the number of unique values in the covariate makes it impossible to fit a GAM with a k\textgreater5, as the error ``A term has fewer unique covariate combinations than specified maximum degrees of freedom'' is thrown by \emph{mgcv}. We consider that because the k-index for the model is 1.04 the basis dimension for the smooth is adequate (Wood says that ``the further below 1 this is, the more likely it is that there is missed pattern left in the residuals'').
+L430 (in the revised manuscript) indicates that the simulated data used to fit the GAM that the reviewer alludes to has only 5 unique covariates (days 0, 2, 5, 7 and 10). The computational requisite in the smooth estimation of having the maximum number of basis equal to the number of unique values in the covariate makes it impossible to fit a GAM with a k\textgreater5, as the error ``A term has fewer unique covariate combinations than specified maximum degrees of freedom'' is thrown by \emph{mgcv}. We consider that because the k-index for the model is 1.04 the basis dimension for the smooth is adequate (Wood says that ``the further below 1 this is, the more likely it is that there is missed pattern left in the residuals'').
 
 \hypertarget{reviewers-comments-10}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-10}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-10}}
 
 A.4.3 You say that gam\_00 doesn't account for the nesting of the data by Group. It does but only partially; you get a separate smooth per group and those smooth will be trying to also account for the different means of the response in the two groups. I think it is much clearer to say just that; it is better to include
 parametric terms for the group means so the smooths capture the time-course differences about these overall group means of \(Y\) .
 
 \hypertarget{section-11}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-11}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-11}}
 
 We believe Dr.~Simpson refers here to \passthrough{\lstinline!gam\_01!} instead of \passthrough{\lstinline!gam\_00!}, as the latter does not include \passthrough{\lstinline!Group!} as part of the model specification and because of this, we don't get a separate smooth per group, which can be seen in the resulting single smooth fitted by the model. However, we believe that the clarification he provided here is important, and we have added it to the first paragraph of Section A.4 (Third model) so it is more clear to the reader.
 
 \hypertarget{reviewers-comments-11}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-11}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-11}}
 
 Why change the model object name notation here? You had gam\_00 previously and now you call the model m1? As you are already showing appraise() output for the diagnostic plots, you could use check.k() from \{mgcv\} to just get the basis dimension check.
 
 \hypertarget{section-12}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-12}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-12}}
 
 \begin{itemize}
 \item
@@ -468,10 +483,10 @@ Why change the model object name notation here? You had gam\_00 previously and n
 \end{itemize}
 
 \hypertarget{suggested-changes}{%
-\section{Suggested Changes}\label{suggested-changes}}
+\subsection{Suggested Changes}\label{suggested-changes}}
 
 \hypertarget{reviewers-comments-12}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-12}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-12}}
 
 Essentially now that we have knot-free splines, we can focus on the concept of the user's prior for the upper limit on the wiggliness of the each smooth; this is set using k. You also should explain that we need to increase k a little above this prior expectation because the basis of dimension k + K has a richer set of functions of complexity k than a basis of dimension k. From a practical point of view, the user really only needs to think about some anticipated amount of wiggliness and set k to be a little larger than this, then fit the model.
 Next the user should do the check.k() test on the size of the basis to see if it was large enough. If it isn't, consider increasing k a bit and then refit and recheck k. Rinse and repeat.
@@ -479,21 +494,21 @@ Next the user should do the check.k() test on the size of the basis to see if it
 Beyond the usual model diagnostics and choosing the conditional distribution of the response, that's all the user really needs to do to get fitting GAMs. And this basic concept is largely missing from the manuscript and the worked tutorial.
 
 \hypertarget{section-13}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-13}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-13}}
 
-Our goal in the main manuscript is to familiarize biomedical researchers with the theory of GAMs and their advantages to analyze non-linear trends in longitudinal data. We have incorporated Dr.~Simpson's comments about the concept of GAM fitting in the Section ``Final Considerations'' in Appendix A. Our rationale for adding the information Dr.~Simpson mentions here is that we want the reader to understand that fitting GAMs needs has to be more than a mechanic exercise in order to be effective. Too often, researchers fit a statistical model in a mechanic fashion, and our goal in this work is to move away from this.
+Our goal in the main manuscript is to familiarize biomedical researchers with the theory of GAMs and their advantages to analyze non-linear trends in longitudinal data. We have incorporated Dr.~Simpson's comments about the concept of GAM fitting in the Section ``Final Considerations'' in Appendix A. Our rationale for adding the information Dr.~Simpson mentions here is that we want the reader to understand that fitting GAMs needs has to be more than a mechanic exercise in order to be effective. Too often, researchers fit a statistical model in a mechanic fashion, and our goal in this work is to convince the read to move away from such approach.
 
 After presenting the theory in the main manuscript and the workflow for model selection in Appendix A, we consider that the reader will better appreciate that using \passthrough{\lstinline!k.check!} is the last step of the chain of thought required to fit a GAM.
 
 \hypertarget{reviewers-comments-13}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-13}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-13}}
 
 For the Appendix, I would suggest that you break up the code a bit to include a little narrative code explaining what each sub-chunk is doing. At the moment you have these monolithic blocks of code that produce a figure and/or some
 printed console output and the user is largely left to figure out what the code is doing. I appreciate that there are comments, but for a tutorial, it would be better to have something more like a vignette rather than monolithic code
 blocks with comments.
 
 \hypertarget{section-14}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-14}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-14}}
 
 We have taken the following approach to address this comment:
 
@@ -510,80 +525,80 @@ Because we consider that the majority of the readers will be interested in Appen
 Readers interested in the code itself can then revise Appendix B, and in this way we avoid to show long sections of code upfront to the reader by using a single Appendix.
 
 \hypertarget{figures}{%
-\section{Figures}\label{figures}}
+\subsection{Figures}\label{figures}}
 
 \hypertarget{reviewers-comments-14}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-14}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-14}}
 
 The figures are too tall --- the aspect ratio used for the individual panels is wrong. You should be emphasizing the time axis so you should have individual panels that are wider than they are tall.
 
 \hypertarget{section-15}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-15}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-15}}
 
 We appreciate this comment regarding figure aesthetics, we have now made the figures wider to emphasize the time axis.
 
 \hypertarget{reviewers-comments-15}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-15}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-15}}
 
 Figure 3: on panel A, are the solid lines the truth in the main panel? If they are, you don't need the inset plot, and if they aren't, are they the mean of the simulated observations? If they are this latter, I think this is superfluous and it would be better to make the solid line the truth, about which you simulated noisy data.
 
 \hypertarget{section-16}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-16}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-16}}
 
 Although data simulation is a very common practice in Statistics/Ecology, it not so much in biomedical research. The main goal of Figure 3 A is to show that simulation is indeed a plausible tool to explore data behavior and to test statistical models in biomedical research. It might seem too basic or repetitive, but we are trying to convince the reader that simulation can indeed produce synthetic data that can be useful. However, we do acknowledge that the inset was repetitive.
 
 We have updated Figure 3 so that panel A shows both the simulated and real data and therefore it is easier for the reader to see the simulation of the output.
 
 \hypertarget{figures-1}{%
-\section{Figures}\label{figures-1}}
+\subsection{Figures}\label{figures-1}}
 
 \hypertarget{reviewers-comments-16}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-16}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-16}}
 
 The figures are too tall --- the aspect ratio used for the individual panels is wrong. You should be emphasising the time axis so you should have individual panels that are wider than they are tall.
 
 Figure 3: on panel A, are the solid lines the truth in the main panel? If they are, you don't need the inset plot, and if they aren't, are they the mean of the simulated observations? If they are this latter, I think this is superfluous and it would be better to make the solid line the truth, about which you simulated noisy data.
 
 \hypertarget{section-17}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-17}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-17}}
 
 We have changed the aspect of the figures to emphasize the time axis, making them wider.
 
 On Figure 3, we have added the original data to panel A, which now displays both the simulated data (thin lines) and the original data (truth) in order to simplify the figure. We have updated also places in the manuscript that reference this Figure as well.
 
 \hypertarget{minor-comments}{%
-\section{Minor Comments}\label{minor-comments}}
+\subsection{Minor Comments}\label{minor-comments}}
 
 \hypertarget{reviewers-comments-17}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-17}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-17}}
 
 L57 \emph{p} values cannot be significant or otherwise, they just are. They might indicate statistically significant effects, where the weight of evidence against the null hypothesis is sufficient to meet some threshold of ``significance''. I note the use of scare quotes so perhaps this sentence was intended in jest but even
 so it is confusing and unnecessary.
 
 \hypertarget{section-18}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-18}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-18}}
 
 We appreciate the reviewer's comments here. However, the indicated sentence is not intended in jest. We are using in this sentence (and in the paper in general) a statistical approach that is understandable by biomedical researchers in general. To this day, the field values ``significance'' (defined by the arbitrarily set threshold of \emph{p}\textless0.05). We are trying to convince the reader that low \emph{p-values} are possible with ill-fitted models, and we use language that is understandable by the reader.
 
 The updated sentence in L59 now reads ``significant effects (\emph{p-value}\textless0.05)''.
 
 \hypertarget{reviewers-comments-18}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-18}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-18}}
 
 Also here we have ``non-linear data'' which almost surely should be ``non-linear effects'' --- data aren't non-linear, but relationships between variables, ``effects'', might be. See also L316
 
 \hypertarget{section-19}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-19}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-19}}
 
 We have changed the expression to ``data that shows non-linear trends''. The change has also been applied to L316 which is now L391 in the revised manuscript.
 
 \hypertarget{reviewers-comments-19}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-19}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-19}}
 
 L93 ``distribution of the errors of the random effects'' makes no sense. Also LMMs do not restrict random effects to be i.i.d. Gaussian --- they could be i.i.d. gamma or t distributed for example. That typical R software (and mgcv from the GAM side) makes an assumption that the distribution of individual random effects terms is Gaussian, doesn't mean the model class is so restricted.
 
 \hypertarget{section-20}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-20}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-20}}
 
 \begin{itemize}
 \tightlist
@@ -592,183 +607,287 @@ L93 ``distribution of the errors of the random effects'' makes no sense. Also LM
 \end{itemize}
 
 \hypertarget{reviewers-comments-20}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-20}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-20}}
 
 L185 here and throughout, check for situations where you have combined numerical citations to literature within narrative text; Here it should be ``\ldots see refs 40 \& 42.)'' for example, not superscript numerals.
 
 \hypertarget{section-21}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-21}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-21}}
 
 We have updated all the occurrences of citations within the narrative text by using the last name of the author followed by the citation, which fixes the issue.
 
 \hypertarget{reviewers-comments-21}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-21}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-21}}
 
 L244 ``global'' is perhaps more conventionally described as ``population'' in the mixed model literature.
 
 \hypertarget{section-22}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-22}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-22}}
 
 We have changed the word from ``global'' to ``population''.
 
 \hypertarget{reviewers-comments-22}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-22}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-22}}
 
 L283 I think it is better to say ``\ldots the mathematical space within which the true but unknown \(f(x_t)\) is thought to exist.''
 
 \hypertarget{section-23}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-23}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-23}}
 
 We have updated this line to ``the mathematical space within which the true but unknown \(f(x_t\mid \beta_j)\) is thought to exist'', in L339 in the revised manuscript.
 
 \hypertarget{reviewers-comments-23}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-23}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-23}}
 
 L293 You never really describe what ``data-drive flexibility'' is. Why are GAMs data driven and LMMs and GLMs not? This is a critical concept to convey I feel.
 
 \hypertarget{section-24}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-24}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-24}}
 
-This line has been removed from the revised manuscript. However, we acknowledge that we didn't clearly conveyed this point to the read. In Section 6 (Discussion), L549-550 we now clearly state that a major advantage of GAMs is that they can learn non-linear trends from the data, thus eliminating the requirement of other models such as LMEMs where the relationship needs to be provided \emph{a priori} by the user.
+This line has been removed from the revised manuscript. However, we acknowledge that we didn't clearly conveyed this point to the reader. In Section 6 (Discussion), L549-550 we now clearly state that a major advantage of GAMs is that they can learn non-linear trends from the data, thus eliminating the requirement of other models such as LMEMs where the relationship needs to be provided \emph{a priori} by the user.
 
 \hypertarget{reviewers-comments-24}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-24}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-24}}
 
 L351 Better to say ``separate smooths'' not ``independent''. These factor-by smooths share a common basis, they just get an entirely separate set of model coefficients and smoothness parameters for each level of the factor.
 
 \hypertarget{section-25}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-25}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-25}}
 
-The sentence now reads ``separate smooths for\ldots{}'' (L441 in the revised manuscript)
+The sentence now reads ``separate smooths for\ldots{}'' (L442 in the revised manuscript)
 
 \hypertarget{reviewers-comments-25}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-25}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-25}}
 
 L354 ``difference between group means'' because the smooth encodes differences between the groups too, just not difference in the means. Be a little more specific here.
 
 \hypertarget{section-26}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-26}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-26}}
 
-The sentence now reads ``any differences between the group means'' (L444).
+The sentence now reads ``any differences between the group means'' (L445).
 
 \hypertarget{reviewers-comments-26}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-26}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-26}}
 
 L356 use straight quotes in code, not curly ones. And speficy the \passthrough{\lstinline!family!} here?
 
 \hypertarget{section-27}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-27}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-27}}
 
-We use the code notation provided by the \(LaTeX\) package \passthrough{\lstinline!listings!}, and it provides curly quotes for code. Regarding \passthrough{\lstinline!family!}, we believe that it is not necessary to include it here, but we indicate in L459-460 what the argument exists and that other distributions can be used.
+We use the code notation provided by the \(LaTeX\) package \passthrough{\lstinline!listings!}, and have updated the quotes to be straight in all code chunks. Regarding \passthrough{\lstinline!family!}, we believe that it is not necessary to include it here, but we indicate in L459-460 what the argument exists and that other distributions can be used.
 
 \hypertarget{reviewers-comments-27}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-27}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-27}}
 
 L359 ``contain the fitted'' instead of ``store the''
 
 \hypertarget{section-28}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-28}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-28}}
 
-The sentence now reads ``contains the fitted model'' (L449-L450).
+The sentence now reads ``contains the fitted model'' (L450-L451).
 
 \hypertarget{reviewers-comments-28}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-28}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-28}}
 
 L360 Not ``knots'' - there are k-1 basis functions, but as described above, because this is a TPRS there are knots at the unique data values and then we decompose the full basis and take the required eigenvectors as the basis to use.
 
 \hypertarget{section-29}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-29}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-29}}
 
-The updated sentence now reads ``using four basis functions (plus the intercept)'' (L451).
+The updated sentence now reads ``using four basis functions (plus the intercept)'' (L452).
 
 \hypertarget{reviewers-comments-29}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-29}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-29}}
 
 L362 why highlight Gaussian process smooths? They're not as useful as they seem as you need to optimise the length scale parameter yourself as otherwise, especially for longitudinal data they aren't great - the length scale is the largest separate in time of any pair of observations.
 
 \hypertarget{section-30}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-30}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-30}}
 
-For the length of the covariates explored in this paper TPRS are sufficient. However, we want to make clear to the reader that other types of splines that might be appropriate in certain situations are available. To acknowledge this, L453 in the updated manuscript now reads ``(a description of all the available smooths can be found by typing \passthrough{\lstinline!?mgcv::smooth.terms!} in the Console)''.
+For the length of the covariates explored in this paper TPRS are sufficient. However, we want to make clear to the reader that other types of splines that might be appropriate in certain situations are available. To acknowledge this, L454 in the updated manuscript now reads ``(a description of all the available smooths can be found by typing \passthrough{\lstinline!?mgcv::smooth.terms!} in the Console)''.
 
 \hypertarget{reviewers-comments-30}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-30}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-30}}
 
 L366 See also Matteo Fasiolo's \{mgcViz\} package
 
 \hypertarget{section-31}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-31}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-31}}
 
 We acknowledge the existence of Dr.~Fasiolo's \emph{mgcvViz} package in Appendix A in the Section ``Additional Resources''.
 
 \hypertarget{reviewers-comments-31}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-31}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-31}}
 
 L373 Do rm-ANOVA and LMMs require equally-spaced or complete observations?
 
 \hypertarget{section-32}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-32}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-32}}
 
-Only rm-ANOVA requires equally-spaced and complete observations. To avoid confusion, the line now reads ``Because GAMs do not require equally-spaced or complete observations for all subjects (as rm-ANOVA does)''.
+Only rm-ANOVA requires equally-spaced and complete observations. To avoid confusion, the line now reads ``Because GAMs do not require equally-spaced or complete observations for all subjects (as rm-ANOVA does)'' (L471).
 
 \hypertarget{reviewers-comments-32}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-32}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-32}}
 
 L377 delete ``total''
 
 \hypertarget{section-33}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-33}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-33}}
 
-The word ``total'' has been removed. The sentence now reads ``consider the random deletion of 40\% of the\ldots{}'' (L474)
+The word ``total'' has been removed. The sentence now reads ``consider the random deletion of 40\% of the\ldots{}'' (L475)
 
 \hypertarget{reviewers-comments-33}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-33}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-33}}
 
 L381 ``little'' -\textgreater{} ``few''
 
 \hypertarget{section-34}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-34}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-34}}
 
-The sentence now reads ``\ldots with as few as 4 observations per group\ldots{}'' (L482)
+The sentence now reads ``\ldots with as few as 4 observations per group\ldots{}'' (L483)
 
 \hypertarget{reviewers-comments-34}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-34}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-34}}
 
 L393 ``observed difference is significant'' (not ``change'')
 
 \hypertarget{section-35}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-35}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-35}}
 
-The sentence has been rewritten. It now reads ``\ldots the observed difference is significant\ldots{}'' (L494).
+The sentence has been rewritten. It now reads ``\ldots the observed difference is significant\ldots{}'' (L496-L497).
 
 \hypertarget{reviewers-comments-35}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-35}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-35}}
 
 Also, it is (exceedingly) unlikely to yield 0. Better to say that the estimated difference is unlikely to be distinguishable from 0.
 
 \hypertarget{section-36}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-36}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-36}}
 
-The sentence in L494-L495 now reads ``is unlikely to be distinguishable from zero''.
+The sentence in L497-L498 now reads ``is unlikely to be distinguishable from zero''.
 
 \hypertarget{reviewers-comments-36}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-36}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-36}}
 
 L410 This needs to be reworded as what is written can be read as any difference between the control and treatment (and there is a difference as the controls are higher than the treated group before day 3) where you mean that the treatment group is only higher than the control group post day 3.
 
 \hypertarget{section-37}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-37}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-37}}
 
-This was an unintentional mistake based on some previous simulation results. We have updated the paragraph, and it now reads ``However, because the model is still able to pick the overall trend in \(\mbox{StO}_2\), the pairwise comparison is able to estimate the change on day 3 where the mean difference between groups becomes statistically significant as in the full dataset smooth pairwise comparison'' (L520-L522). The change acknowledges that Control was higher before day 3, and that the Treatment Group becomes significant after day 3 in relation to L513-L517.
+This was an unintentional mistake based on some previous simulation results. We have updated the paragraph, and it now reads ``However, because the model is still able to pick the overall trend in \(\mbox{StO}_2\), the pairwise comparison is able to estimate the change on day 3 where the mean difference between groups becomes statistically significant as in the full dataset smooth pairwise comparison'' (L523-L525). The change acknowledges that Control was higher before day 3, and that the Treatment Group becomes significant after day 3 in relation to L515-L519.
 
 \hypertarget{reviewers-comments-37}{%
-\subsection{Reviewer's Comments}\label{reviewers-comments-37}}
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-37}}
 
 L441 Delete ``significant'' here - we estimate the difference of the effects (what you call ``change'') and make inference using the uncertainty estimates of that difference. Perhaps you mean ``identify'' or similar instead of ``estimate'' here, instead.
 
 \hypertarget{section-38}{%
-\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-38}}
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-38}}
 
-We have made the appropriate changes. The sentence now reads ``The GAM model is therefore able to identify changes between the groups at time points\ldots{}'' (L557)
+We have made the appropriate changes. The sentence now reads ``The GAM is therefore able to identify changes between the groups at time points\ldots{}'' (L566)
+
+\hypertarget{reviewer-2}{%
+\section{Reviewer \# 2}\label{reviewer-2}}
+
+\hypertarget{reviewers-introduction-1}{%
+\subsection{Reviewer's Introduction}\label{reviewers-introduction-1}}
+
+This is a well-written paper that gives a useful overview of methods that are underused in the field. It is written with great clarity all is well-targeted towards this journal's audience. I recommend accepting with only minor revisions.
+
+\hypertarget{section-39}{%
+\subsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Introduction}}{}}\label{section-39}}
+
+The authors thank the reviewer for deeming our within the scope of the Journal.
+
+\hypertarget{comments-from-reviewer-1}{%
+\subsection{Comments from Reviewer}\label{comments-from-reviewer-1}}
+
+There is one are where I feel expanded discussion would improve the paper: interpretability. A common challenge in presenting GAMs is the lack of interpretability of coefficients. While, in general, linear model coefficients simultaneously can be used to present effect sizes and significance, GAM models do not present estimands with such clear meaning. This is an area that practitioners will run into in taking up this new method, and it would serve them best to address it directly. A common approach to this is thinking carefully about the quantity of interest (such as the difference in outcomes at two specific values of a predictor, rather than a slope), and calculating this value, with uncertainties, using posterior samples. This is a natural extension of section 6.3., where one can discuss how calculations from the posterior can be used to determine the value of these quantities of interest in addition to significance. It would be useful to discuss posterior probabilities and the notion of a q-value as a Bayesian measure of significance that can be quantitative in addition to visual. The \{gratia\} package provides some tools for sampling from GAM posteriors that could be demonstrated.
+
+\hypertarget{section-40}{%
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-40}}
+
+Although we acknowledge that these concepts are important, in our manuscript we want to focus on the visualization part as we believe is more intuitive and informative in a biomedical context. We have addressed the comment from the reviewer by providing context about interpretability and posterior simulation without doing an in-depth discussion which would be beyond the scope of our work.
+To this end, the following changes have been made:
+
+L409-L413: We describe the use of simulation from the empirical Bayesian posterior distribution to correct for the coverage of the across the function CI, in a similar fashion of the correction that \emph{q-values} provide.
+
+L485-493: We indicate here that \emph{p-values} for GAMs do not have the same interpretation of effect size as in unlike linear models, but that we can use the model to estimate the instantaneous effect size by doing pairwise comparisons and constructing a simultaneous CI around the difference. Additionally, in Appendix B, Section B.5 we indicate that we use \{gratia\} to estimate the simulatenous and pointwise CIs.
+
+\hypertarget{reviewers-small-notes}{%
+\subsection{Reviewer's Small Notes}\label{reviewers-small-notes}}
+
+L14: GAMs aren't really what permit missing data or other correlative structures, all of which can be incorporated into LMEMs. I see this is addressed down in section 3.4, but it is somewhat misleading here.
+
+\hypertarget{section-41}{%
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-41}}
+
+We have corrected the line above and now L11-L12 make clear that LMEMs can work with unbalanced data and non-constant correlation as well. Later, in L16-L17 we indicate that GAMs can also permit incomplete observations and different correlation structures. We believe this will clear any confusion about the capabilities of LMEMs.
+
+\hypertarget{reviewers-comments-38}{%
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-38}}
+
+L99: LMEMs do not need normally distributed or independent data, though non-normal hierarchical effects tend to require more advanced tooling.
+
+\hypertarget{section-42}{%
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-42}}
+
+L95: we have removed the part about normality, and we now only indicate that random effects need to be independent.
+
+\hypertarget{reviewers-comments-39}{%
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-39}}
+
+L179: I believe equation 4 need a term of random effect times time
+
+\hypertarget{section-43}{%
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-43}}
+
+Our random effect \(\alpha_{ij}\) is just a random intercept for each individual, and therefore it does not vary over time, which is the general case of a LMEM we cover in the paper.
+
+\hypertarget{reviewers-comments-40}{%
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-40}}
+
+L303: I believe it is important to note here that GAMs do not extrapolate well either. While they don't suffer from steep slopes right at the end of the data, beyond the range of the data they only reflect the assumptions built into the basis functions, be that flat values or linear extrapolation of the slope.
+
+\hypertarget{section-44}{%
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-44}}
+
+We have incorporated the reviewer suggestion in Section 6 (Discussion), as we believe it is the appropriate place to briefly present the limitations of GAMs regarding extrapolation. In L552-L557 we have followed the basic structure of the reviewer's comment in order to indicate the extrapolation limitations from GAMs. The section of the paragraph now reads:
+
+``This does not mean, however, that as any other statistical model GAMs do not have certain limitations. In particular, beyond the range of the data GAMs only reflect the assumptions built into the basis functions, be that flat values or linear extrapolation of the slope. Therefore, researchers need to be careful when using GAMs for extrapolating purposes. In addition, both polynomial and GAMs show higher variance in estimates near the boundary of the data, but additive models generally have less variance than polynomials.''
+
+We believe this change acknowledges the limitations of GAMs regarding extrapolation.
+
+\hypertarget{reviewers-comments-41}{%
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-41}}
+
+L342, Figure 2: I believe the Y axis of (C), ``Penalized Basis Functions'', should be ````Weighted Basis Functions''.
+
+\hypertarget{section-45}{%
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-45}}
+
+The label on the y axis now reads `Weighted Basis Functions'.
+
+\hypertarget{reviewers-comments-42}{%
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-42}}
+
+L360: The word ``framework'' is used twice here
+
+\hypertarget{section-46}{%
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-46}}
+
+We believe the reviewer refers to L331 in the original manuscript. In the revised manuscript the sentence now reads:
+
+``The previous sections provided the basic understanding of the GAM framework and how these models\ldots{}'' (L421).
+
+\hypertarget{reviewers-comments-43}{%
+\subsubsection{Reviewer's Comments}\label{reviewers-comments-43}}
+
+Finally, I was pleased to find I could reproduce all your results and re-render the results from the GitHub repository. I commend the authors on this good work.
+
+\hypertarget{section-47}{%
+\subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-47}}
+
+We appreciate the dedication of the reviewer to ensure the reproducibility of our results.
 
 \end{document}

@@ -133,6 +133,8 @@
 \definecolor{sgreen}{HTML}{859900}
 %command to set parameter(s) in package listings
 \lstset{
+    language=R,
+    upquote=true,
     % How/what to match
     sensitive=true,
     % Border (above and below)
@@ -203,13 +205,13 @@ library(mgcv)
 library(gratia)
 library(here)
 library(scico)
-set.seed(2021) #set seed for reproducibility
+set.seed(2021)  #set seed for reproducibility
 
-#alpha for ribbon in the smooth plots
-al<-     0.8
+# alpha for ribbon in the smooth plots
+al <- 0.8
 
-thm1 <- scale_fill_scico_d(palette = "tokyo", begin = 0.3, end = 0.8,
-                           direction = -1, aesthetics = c("colour", "fill"))
+thm1 <- scale_fill_scico_d(palette = "tokyo", begin = 0.3, end = 0.8, direction = -1,
+    aesthetics = c("colour", "fill"))
 \end{lstlisting}
 
 \hypertarget{linear-and-quadratic-longitudinal-trends}{%
@@ -344,97 +346,57 @@ example <- function(n_time = 6, #number of time points
 The function \passthrough{\lstinline!plot\_example()!} from the file \passthrough{\lstinline!plot\_example.R!} in the folder \passthrough{\lstinline!scripts/!} uses the output of \passthrough{\lstinline!example.R!} to show the fit of a rm-ANOVA and a LMEM. This function can be used to show an expanded version of Figure 1 in the main manuscript, presenting simulated data with correlated and uncorrelated errors and how the individual trends vary in each case. The corresponding rm-ANOVA and LMEM fits are also presented, and we show the complete output in the next subsection.
 
 \begin{lstlisting}[language=R]
-## This function plots the rm-ANOVA and LMEM for the data simulated in example.R
+## This function plots the rm-ANOVA and LMEM for the data simulated in
+## example.R
 plot_example <- function(sim_dat) {
-  txt <- 20
-  p1 <- sim_dat$dat %>%
-    ggplot(aes(x = time, y = y, group = treatment, color = treatment)) +
-    geom_point(show.legend = FALSE) +
-    labs(y = 'response')+
-    geom_line(aes(x = time, y = mu, color = treatment), 
-              show.legend = FALSE) +
-    theme_classic() +
-    theme(plot.title = element_text(size = txt, face = "bold"),
-          text=element_text(size = txt)) +
-    thm1
-  
-  #plot the simulated data with trajectories per each subject
-  p2 <- sim_dat$dat %>%
-    ggplot(aes(x = time, y = y, group = subject, color = treatment)) +
-    geom_line(aes(size = "Subjects"), show.legend = FALSE) +
-    # facet_wrap(~ treatment) +
-    geom_line(aes(x = time, y = mu, color = treatment, 
-                  size = "Simulated Truth"),
-              lty = 1, show.legend = FALSE) +
-    labs(y = 'response') +
-    scale_size_manual(name = "Type", 
-                      values = c("Subjects" = 0.5, "Simulated Truth" = 3)) +
-    theme_classic() +
-    theme(plot.title = element_text(size = txt, face = "bold"),
-          text = element_text(size = txt)) +
-    thm1
-  
-  #plot the errors
-  p3 <- sim_dat$dat %>%
-    ggplot(aes(x = time, y = errors, group = subject, color = treatment)) +
-    geom_line(show.legend = FALSE) +
-    labs(y = 'errors') +
-    theme_classic() +
-    theme(plot.title = element_text(size = txt, face = "bold"),
-          text = element_text(size = txt))+
-    thm1
-  
-  #plot the model predictions for rm-ANOVA
-  p4 <- ggplot(sim_dat$dat, aes(x = time, y = y, color = treatment)) +
-    geom_point(show.legend = FALSE) +
-    labs(y = 'response')+
-    geom_line(aes(y = predict(sim_dat$fit_anova), 
-                  group = subject, 
-                  size = "Subjects"),
-              show.legend = FALSE) +
-    geom_line(data = sim_dat$pred_dat,
-              aes(y = predict(sim_dat$fit_anova,
-                              level = 0,
-                              newdata = sim_dat$pred_dat),
-                  size = "Population"),
-              show.legend=FALSE) +
-    guides(color = guide_legend(override.aes = list(size = 2))) +
-    scale_size_manual(name = "Predictions",
-                      values=c("Subjects" = 0.5, "Population" = 3)) +
-    theme_classic() +
-    theme(plot.title = element_text(size = txt, face = "bold"),
-          text = element_text(size = txt)) +
-    thm1
-  
-  
-  
-  #plot the LMEM predictions
-  p5 <- ggplot(sim_dat$dat, aes(x = time, y = y, color = treatment)) +
-    geom_point()+
-    labs(y = 'response')+
-    geom_line(aes(y = predict(sim_dat$fit_lme),
-                  group = subject, size = "Subjects")) +
-    geom_line(data = sim_dat$pred_dat,
-              aes(y = predict(sim_dat$fit_lme, 
-                              level = 0,
-                              newdata = sim_dat$pred_dat),
-                  size = "Population")) +
-    guides(color = guide_legend(override.aes = list(size = 2)))+
-    scale_size_manual(name = "Predictions",
-                      values=c("Subjects" = 0.5, "Population" = 3)) +
-    theme_classic() +
-    theme(plot.title = element_text(size = txt, face = "bold"),
-          text = element_text(size=txt))+
-    thm1
-  
-  if(option=='simple'){
-    return((p1 + p4 + p5) + plot_layout(nrow = 1) + 
-             plot_annotation(tag_levels = 'A'))
-  }
-  else {
-    return((p1 + p3 + p2 + p4 + p5) + plot_layout(nrow = 1) + 
-             plot_annotation(tag_levels = 'A'))
-  }
+    txt <- 20
+    p1 <- sim_dat$dat %>%
+        ggplot(aes(x = time, y = y, group = treatment, color = treatment)) + geom_point(show.legend = FALSE) +
+        labs(y = "response") + geom_line(aes(x = time, y = mu, color = treatment),
+        show.legend = FALSE) + theme_classic() + theme(plot.title = element_text(size = txt,
+        face = "bold"), text = element_text(size = txt)) + thm1
+
+    # plot the simulated data with trajectories per each subject
+    p2 <- sim_dat$dat %>%
+        ggplot(aes(x = time, y = y, group = subject, color = treatment)) + geom_line(aes(size = "Subjects"),
+        show.legend = FALSE) + # facet_wrap(~ treatment) + show.legend = FALSE)
+        show.legend = FALSE) + # facet_wrap(~ treatment) + + # facet_wrap(~
+        show.legend = FALSE) + # facet_wrap(~ treatment) + treatment) +
+    geom_line(aes(x = time, y = mu, color = treatment, size = "Simulated Truth"),
+        lty = 1, show.legend = FALSE) + labs(y = "response") + scale_size_manual(name = "Type",
+        values = c(Subjects = 0.5, `Simulated Truth` = 3)) + theme_classic() + theme(plot.title = element_text(size = txt,
+        face = "bold"), text = element_text(size = txt)) + thm1
+
+    # plot the errors
+    p3 <- sim_dat$dat %>%
+        ggplot(aes(x = time, y = errors, group = subject, color = treatment)) + geom_line(show.legend = FALSE) +
+        labs(y = "errors") + theme_classic() + theme(plot.title = element_text(size = txt,
+        face = "bold"), text = element_text(size = txt)) + thm1
+
+    # plot the model predictions for rm-ANOVA
+    p4 <- ggplot(sim_dat$dat, aes(x = time, y = y, color = treatment)) + geom_point(show.legend = FALSE) +
+        labs(y = "response") + geom_line(aes(y = predict(sim_dat$fit_anova), group = subject,
+        size = "Subjects"), show.legend = FALSE) + geom_line(data = sim_dat$pred_dat,
+        aes(y = predict(sim_dat$fit_anova, level = 0, newdata = sim_dat$pred_dat),
+            size = "Population"), show.legend = FALSE) + guides(color = guide_legend(override.aes = list(size = 2))) +
+        scale_size_manual(name = "Predictions", values = c(Subjects = 0.5, Population = 3)) +
+        theme_classic() + theme(plot.title = element_text(size = txt, face = "bold"),
+        text = element_text(size = txt)) + thm1
+
+    # plot the LMEM predictions
+    p5 <- ggplot(sim_dat$dat, aes(x = time, y = y, color = treatment)) + geom_point() +
+        labs(y = "response") + geom_line(aes(y = predict(sim_dat$fit_lme), group = subject,
+        size = "Subjects")) + geom_line(data = sim_dat$pred_dat, aes(y = predict(sim_dat$fit_lme,
+        level = 0, newdata = sim_dat$pred_dat), size = "Population")) + guides(color = guide_legend(override.aes = list(size = 2))) +
+        scale_size_manual(name = "Predictions", values = c(Subjects = 0.5, Population = 3)) +
+        theme_classic() + theme(plot.title = element_text(size = txt, face = "bold"),
+        text = element_text(size = txt)) + thm1
+
+    if (option == "simple") {
+        return((p1 + p4 + p5) + plot_layout(nrow = 1) + plot_annotation(tag_levels = "A"))
+    } else {
+        return((p1 + p3 + p2 + p4 + p5) + plot_layout(nrow = 1) + plot_annotation(tag_levels = "A"))
+    }
 }
 \end{lstlisting}
 
@@ -451,22 +413,18 @@ Figure \ref{fig:linear-cases-Appendix} show in panels A and D the simulated mean
 The chunk below sources both \passthrough{\lstinline!example.R!} and \passthrough{\lstinline!plot\_example\_Appendix.R!} files to simulate data and create the composite plots.
 
 \begin{lstlisting}[language=R]
-source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", 
-                  "scripts", "example.R"))
-source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", 
-                  "scripts", "plot_example.R"))
+source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", "scripts",
+    "example.R"))
+source(here::here("Manuscripts", "Manuscript_by_chapters-SIM_Revisions_final", "scripts",
+    "plot_example.R"))
 
-A1 <- plot_example(example(fun_type = "linear", error_type = "correlated"),
-                 option = 'composite') 
+A1 <- plot_example(example(fun_type = "linear", error_type = "correlated"), option = "composite")
 
-B1 <- plot_example(example(fun_type = "linear", error_type = "independent"),
-                 option = 'composite') 
+B1 <- plot_example(example(fun_type = "linear", error_type = "independent"), option = "composite")
 
-C1 <- plot_example(example(fun_type = "quadratic", error_type = "correlated"), 
-                 option = 'composite') 
+C1 <- plot_example(example(fun_type = "quadratic", error_type = "correlated"), option = "composite")
 
-D1 <- plot_example(example(fun_type = "quadratic", error_type = "independent"), 
-                 option = 'composite') 
+D1 <- plot_example(example(fun_type = "quadratic", error_type = "independent"), option = "composite")
 \end{lstlisting}
 
 
@@ -651,32 +609,29 @@ b_plot <- p11 + p13 + p12 + p14 + plot_annotation(tag_levels = 'A') &
 The next chunk presents the code of the function \passthrough{\lstinline!simulate\_data()!} from the file \passthrough{\lstinline!simulate\_data.R!} in the \passthrough{\lstinline!scripts/!} folder, which we use in the main manuscript to simulate data that follows the reported trends in \(\mbox{StO}_2\) in the literature. Although the default standard deviation (SD) to generate the normally-distributed data in the function is 10\%, we use a standard deviation of 10\% in the main manuscript. We use the default number of 10 observations at each time point in the simulated data. Note that the input for the function is \passthrough{\lstinline!dat!}, needs to be a dataframe that contains the original values for the trends in each group over time from the literature. In our manuscript, we use the dataframe
 
 \begin{lstlisting}[language=R]
-#data from Vishwanath et. al.
-dat <- tibble(StO2 = c(4, 27, 3, 2, 0.5, 7, 4, 50, 45, 56),
-              Day = rep(c(0, 2, 5, 7, 10), times = 2),
-              Group = as.factor(rep(c("Control", "Treatment"), each = 5)))
+# data from Vishwanath et. al.
+dat <- tibble(StO2 = c(4, 27, 3, 2, 0.5, 7, 4, 50, 45, 56), Day = rep(c(0, 2, 5,
+    7, 10), times = 2), Group = as.factor(rep(c("Control", "Treatment"), each = 5)))
 \end{lstlisting}
 
 As the input for the function. Here, dataframe contains the trends in \(\mbox{StO}_2\) for each group through the five time points and the labels for each treatment group (\passthrough{\lstinline!Control!} or \passthrough{\lstinline!Treatment!}).
 
 \begin{lstlisting}[language=R]
-#This function simulates data for the tumor data using default parameters of 10 observations per time point,and Standard deviation (sd) of 5%.
-#Because physiologically StO2 cannot go below 0%, data is
-#generated with a cutoff value of 0.0001 (the "StO2_sim")
+# This function simulates data for the tumor data using default parameters of
+# 10 observations per time point,and Standard deviation (sd) of 5%. Because
+# physiologically StO2 cannot go below 0%, data is generated with a cutoff
+# value of 0.0001 (the 'StO2_sim')
 
 
 simulate_data <- function(dat, n = 10, sd = 5) {
-  dat_sim <- dat %>%
-    slice(rep(1:n(), each = n)) %>%
-    group_by(Group, Day) %>%
-    mutate(
-      StO2_sim = pmax(rnorm(n, StO2, sd), 0.0001),
-      subject = rep(1:10),
-      subject = factor(paste(subject, Group, sep = "-"))
-    ) %>%
-    ungroup()
-  
-  return(dat_sim)
+    dat_sim <- dat %>%
+        slice(rep(1:n(), each = n)) %>%
+        group_by(Group, Day) %>%
+        mutate(StO2_sim = pmax(rnorm(n, StO2, sd), 1e-04), subject = rep(1:10), subject = factor(paste(subject,
+            Group, sep = "-"))) %>%
+        ungroup()
+
+    return(dat_sim)
 }
 \end{lstlisting}
 
@@ -690,59 +645,40 @@ We do not use a custom function in this case but instead extract the pointwise a
 Because we want to include the group means for plotting purposes, we extract the intercept (\passthrough{\lstinline!const!}) and add it to the Treatment group estimates in both \passthrough{\lstinline!ci!} and \passthrough{\lstinline!si!} order to shift the interval so it matches the scale of the response. Finally, we create a \emph{ggplot2} object for plotting.
 
 \begin{lstlisting}[language=R]
-#the same model used for the full dataset
-mod_m1 <- gam(StO2_sim ~ Group+s(Day, by = Group, k = 5), 
-              data  = dat_missing)
-#appraise the model
+# the same model used for the full dataset
+mod_m1 <- gam(StO2_sim ~ Group + s(Day, by = Group, k = 5), data = dat_missing)
+# appraise the model
 appraise(mod_m1)
 
 
-ci <- confint(mod_m1, parm = "s(Day)", partial_match = TRUE,
-              type = "confidence")
+ci <- confint(mod_m1, parm = "s(Day)", partial_match = TRUE, type = "confidence")
 ## simultaneous interval
-si <- confint(mod_m1, parm = "s(Day)", type = "simultaneous",
-              partial_match = TRUE)
+si <- confint(mod_m1, parm = "s(Day)", type = "simultaneous", partial_match = TRUE)
 
 
 # mean shift for group 2
 const <- coef(mod_m1)[2]
 
 ci <- ci %>%
-  mutate(est = case_when(Group == "Treatment" ~ est + const,
-                         TRUE ~ est),
-         lower = case_when(Group == "Treatment" ~ lower + const,
-                           TRUE ~ lower),
-         upper = case_when(Group == "Treatment" ~ upper + const,
-                           TRUE ~ upper))
+    mutate(est = case_when(Group == "Treatment" ~ est + const, TRUE ~ est), lower = case_when(Group ==
+        "Treatment" ~ lower + const, TRUE ~ lower), upper = case_when(Group == "Treatment" ~
+        upper + const, TRUE ~ upper))
 
 si <- si %>%
-  mutate(est = case_when(Group == "Treatment" ~ est + const,
-                         TRUE ~ est),
-         lower = case_when(Group == "Treatment" ~ lower + const,
-                           TRUE ~ lower),
-         upper = case_when(Group == "Treatment" ~ upper + const,
-                           TRUE ~ upper))
+    mutate(est = case_when(Group == "Treatment" ~ est + const, TRUE ~ est), lower = case_when(Group ==
+        "Treatment" ~ lower + const, TRUE ~ lower), upper = case_when(Group == "Treatment" ~
+        upper + const, TRUE ~ upper))
 
 
-f6 <- ggplot(ci, aes(x = Day, y = est, group = smooth)) +
-  geom_line(lwd = 1) +
-  geom_ribbon(data = ci, 
-              aes(ymin = lower, ymax = upper, x = Day, 
-                  group = smooth, fill = Group),
-              inherit.aes = FALSE, alpha = 0.7, show.legend = FALSE) +
-  geom_ribbon(data = si,
-              aes(ymin = lower, ymax = upper, x = Day, 
-                  group = smooth, fill =Group),
-              inherit.aes = FALSE, alpha = 0.4, show.legend = TRUE) +
-  geom_line(data = si, aes(Day, upper, color = Group), 
-            size = 0.8, alpha = 0.7) +
-  geom_point(data = dat_missing, aes(x = Day, y = StO2_sim, color=Group), 
-             size = 1.5, alpha = 0.6, inherit.aes = FALSE) +
-  labs(y = expression(atop(StO[2], '(incomplete observations)'))) +
-  scale_x_continuous(breaks = c(0, 2, 5, 7, 10)) +
-  theme_classic() +
-  theme(axis.text=element_text(size = 22)) +
-  thm1
+f6 <- ggplot(ci, aes(x = Day, y = est, group = smooth)) + geom_line(lwd = 1) + geom_ribbon(data = ci,
+    aes(ymin = lower, ymax = upper, x = Day, group = smooth, fill = Group), inherit.aes = FALSE,
+    alpha = 0.7, show.legend = FALSE) + geom_ribbon(data = si, aes(ymin = lower,
+    ymax = upper, x = Day, group = smooth, fill = Group), inherit.aes = FALSE, alpha = 0.4,
+    show.legend = TRUE) + geom_line(data = si, aes(Day, upper, color = Group), size = 0.8,
+    alpha = 0.7) + geom_point(data = dat_missing, aes(x = Day, y = StO2_sim, color = Group),
+    size = 1.5, alpha = 0.6, inherit.aes = FALSE) + labs(y = expression(atop(StO[2],
+    "(incomplete observations)"))) + scale_x_continuous(breaks = c(0, 2, 5, 7, 10)) +
+    theme_classic() + theme(axis.text = element_text(size = 22)) + thm1
 \end{lstlisting}
 
 \hypertarget{pairwise-comparisons}{%
@@ -815,50 +751,41 @@ Then, \passthrough{\lstinline!difference\_smooths()!} function from the file \pa
 We present the code below.
 
 \begin{lstlisting}[language=R]
-#this function calculates the pointwise (by calling pointwise_comparisons.R) CI and the simultaneous CI
-# for a pairwise comparison between two smooths
-difference_smooths <- function(model, smooth, n = 100, ci_level = 0.95, 
-                               newdata = NULL, partial_match = TRUE,
-                               unconditional = FALSE, frequentist = FALSE,
-                               nrep = 10000, include_means = TRUE, ...) {
-  if (missing(smooth)) {
-    stop("Must specify a smooth to difference via 'smooth'.")
-  }
-  
-  # smooths in model
-  S <- gratia::smooths(model) # vector of smooth labels - "s(x)"
-  # select smooths
-  select <-
-    gratia:::check_user_select_smooths(smooths = S, select = smooth,
-                                       partial_match = partial_match)
+# this function calculates the pointwise (by calling pointwise_comparisons.R)
+# CI and the simultaneous CI for a pairwise comparison between two smooths
+difference_smooths <- function(model, smooth, n = 100, ci_level = 0.95, newdata = NULL,
+    partial_match = TRUE, unconditional = FALSE, frequentist = FALSE, nrep = 10000,
+    include_means = TRUE, ...) {
+    if (missing(smooth)) {
+        stop("Must specify a smooth to difference via 'smooth'.")
+    }
 
-  sm_ids <- which(select)
-  smooths <- gratia::get_smooths_by_id(model, sm_ids)
-  sm_data <- map(sm_ids, gratia:::smooth_data,
-                 model = model, n = n, include_all = TRUE)
-  sm_data <- bind_rows(sm_data)
-  by_var <- by_variable(smooths[[1L]])
-  smooth_var <- gratia:::smooth_variable(smooths[[1L]])
-  pairs <- as_tibble(as.data.frame(t(combn(levels(sm_data[[by_var]]), 2)),
-                                   stringsAsFactor = FALSE))
-  names(pairs) <- paste0("f", 1:2)
-  
-  Xp <- predict(model, newdata = sm_data, type = "lpmatrix")
-  V <- gratia:::get_vcov(model, unconditional = unconditional,
-                         frequentist = frequentist)
-  coefs <- coef(model)
-  
-  out <- pmap(pairs, difference_pointwise, smooth = smooth, 
-              by_var = by_var, smooth_var = smooth_var, data = sm_data,
-              Xp = Xp, V = V, coefs = coefs, nrep = nrep)
-  out <- bind_rows(out)
-  crit <- qnorm((1 - ci_level) / 2, lower.tail = FALSE)
-  
-  out <- add_column(out,
-                    lower = out$diff - (crit * out$se),
-                    upper = out$diff + (crit * out$se),
-                    .after = 6L)
-  out
+    # smooths in model
+    S <- gratia::smooths(model)  # vector of smooth labels - 's(x)'
+    # select smooths
+    select <- gratia:::check_user_select_smooths(smooths = S, select = smooth, partial_match = partial_match)
+
+    sm_ids <- which(select)
+    smooths <- gratia::get_smooths_by_id(model, sm_ids)
+    sm_data <- map(sm_ids, gratia:::smooth_data, model = model, n = n, include_all = TRUE)
+    sm_data <- bind_rows(sm_data)
+    by_var <- by_variable(smooths[[1L]])
+    smooth_var <- gratia:::smooth_variable(smooths[[1L]])
+    pairs <- as_tibble(as.data.frame(t(combn(levels(sm_data[[by_var]]), 2)), stringsAsFactor = FALSE))
+    names(pairs) <- paste0("f", 1:2)
+
+    Xp <- predict(model, newdata = sm_data, type = "lpmatrix")
+    V <- gratia:::get_vcov(model, unconditional = unconditional, frequentist = frequentist)
+    coefs <- coef(model)
+
+    out <- pmap(pairs, difference_pointwise, smooth = smooth, by_var = by_var, smooth_var = smooth_var,
+        data = sm_data, Xp = Xp, V = V, coefs = coefs, nrep = nrep)
+    out <- bind_rows(out)
+    crit <- qnorm((1 - ci_level)/2, lower.tail = FALSE)
+
+    out <- add_column(out, lower = out$diff - (crit * out$se), upper = out$diff +
+        (crit * out$se), .after = 6L)
+    out
 }
 \end{lstlisting}
 
@@ -868,34 +795,33 @@ difference_smooths <- function(model, smooth, n = 100, ci_level = 0.95,
 The next function has the purpose of extracting the time intervals where the simultaneous CI does not cover zero from the object where the output of \passthrough{\lstinline!difference\_smooths.R!} is stored in order to overlay two rectangles that help visualize the regions where each group is statistically significant.
 
 \begin{lstlisting}[language=R]
-#function to obtain values for the shading regions of the pairwise comparison between the smooths
+# function to obtain values for the shading regions of the pairwise comparison
+# between the smooths
 
 pairwise_limits <- function(dataframe) {
-  #extract values where the lower limit of the ribbon is greater than zero
-  #this is the region where the control group effect is greater
-  
-  v1 <- dataframe %>%
-    filter(lower_s > 0) %>%
-    select(Day)
-  #get day  initial value
-  init1 = v1$Day[[1]]
-  #get day final value
-  final1 = v1$Day[[nrow(v1)]]
-  #extract values where the value of the upper limit of the ribbon is lower than zero
-  #this corresponds to the region where the treatment group effect is greater
-  v2 <- dataframe %>%
-    filter(upper_s < 0) %>%
-    select(Day)
-  
-  init2 = v2$Day[[1]]
-  final2 = v2$Day[[nrow(v2)]]
-  #store values
-  my_list <- list(init1 = init1,
-                  final1 = final1,
-                  init2 = init2,
-                  final2 = final2)
-  return(my_list)
-  
+    # extract values where the lower limit of the ribbon is greater than zero
+    # this is the region where the control group effect is greater
+
+    v1 <- dataframe %>%
+        filter(lower_s > 0) %>%
+        select(Day)
+    # get day initial value
+    init1 = v1$Day[[1]]
+    # get day final value
+    final1 = v1$Day[[nrow(v1)]]
+    # extract values where the value of the upper limit of the ribbon is lower
+    # than zero this corresponds to the region where the treatment group effect
+    # is greater
+    v2 <- dataframe %>%
+        filter(upper_s < 0) %>%
+        select(Day)
+
+    init2 = v2$Day[[1]]
+    final2 = v2$Day[[nrow(v2)]]
+    # store values
+    my_list <- list(init1 = init1, final1 = final1, init2 = init2, final2 = final2)
+    return(my_list)
+
 }
 \end{lstlisting}
 
@@ -905,81 +831,71 @@ pairwise_limits <- function(dataframe) {
 In Appendix A we discuss the use of quantitative and graphical diagnostics to assess the goodness of fit of a GAM. The package \emph{mgcv} has the function \passthrough{\lstinline!gam.check!} to provide such information, but its graphical diagnostics are made using base R graphics and therefore it is not straightforward to use them in conjunction with a \emph{ggplot2} object. Therefore we create the function \passthrough{\lstinline!gam\_diagnostics!} that uses the same code from \passthrough{\lstinline!gam.check!} but without the graphical output. In this way, we can use \passthrough{\lstinline!appraise!} from the package \emph{gratia} to create a graphical output in \emph{ggplot2} format and the quantitative information from \passthrough{\lstinline!gam.check!}.
 
 \begin{lstlisting}[language=R]
-#Function that uses the source code of `gam.check` to obtain the estimates without the plots. The source can be checked by typing `gam.check` in the console.
-gam_diagnostics <- function (b, old.style = FALSE, 
-                           type = c("deviance", "pearson", "response"), 
-                           k.sample = 5000, k.rep = 200, rep = 0,
-                           level = 0.9, rl.col = 2, rep.col = "gray80", 
-                           ...) {
-  type <- match.arg(type)
-  resid <- residuals(b, type = type)
-  linpred <- if (is.matrix(b$linear.predictors) && !is.matrix(resid))
-    napredict(b$na.action, b$linear.predictors[, 1])
-  else napredict(b$na.action, b$linear.predictors)
-  
-  fv <- if (inherits(b$family, "extended.family"))
-    predict(b, type = "response")
-  else fitted(b)
-  if (is.matrix(fv) && !is.matrix(b$y))
-    fv <- fv[, 1]
-  gamm <- !(b$method %in% c("GCV", "GACV", "UBRE",
-                            "REML", "ML", "P-ML", "P-REML",
-                            "fREML"))
-  if (gamm) {
-    message("\n'gamm' based fit - care required with interpretation.")
-    message("\nChecks based on working residuals may be misleading.")
-  }
-  else {
-    message("\nMethod:", b$method, "  Optimizer:", b$optimizer)
-    if (!is.null(b$outer.info)) {
-      if (b$optimizer[2] %in% c("newton", "bfgs")) {
-        boi <- b$outer.info
-        message("\n", boi$conv, " after ", boi$iter, " iteration", sep = "")
-        if (boi$iter == 1)
-          message(".")
-        else message("s.")
-        message("\nGradient range [", min(boi$grad), ",", max(boi$grad), "]", sep = "")
-        message("\n(score ", b$gcv.ubre, " & scale ", b$sig2, ").", sep = "")
-        ev <- eigen(boi$hess)$values
-        if (min(ev) > 0)
-          message("\nHessian positive definite, ")
-        else message("\n")
-        message("eigenvalue range [", min(ev), ",", max(ev), "].\n", sep = "")
-      }
-      else {
-        message("\n")
-        print(b$outer.info)
-      }
+# Function that uses the source code of `gam.check` to obtain the estimates
+# without the plots. The source can be checked by typing `gam.check` in the
+# console.
+gam_diagnostics <- function(b, old.style = FALSE, type = c("deviance", "pearson",
+    "response"), k.sample = 5000, k.rep = 200, rep = 0, level = 0.9, rl.col = 2,
+    rep.col = "gray80", ...) {
+    type <- match.arg(type)
+    resid <- residuals(b, type = type)
+    linpred <- if (is.matrix(b$linear.predictors) && !is.matrix(resid))
+        napredict(b$na.action, b$linear.predictors[, 1]) else napredict(b$na.action, b$linear.predictors)
+
+    fv <- if (inherits(b$family, "extended.family"))
+        predict(b, type = "response") else fitted(b)
+    if (is.matrix(fv) && !is.matrix(b$y))
+        fv <- fv[, 1]
+    gamm <- !(b$method %in% c("GCV", "GACV", "UBRE", "REML", "ML", "P-ML", "P-REML",
+        "fREML"))
+    if (gamm) {
+        message("\n'gamm' based fit - care required with interpretation.")
+        message("\nChecks based on working residuals may be misleading.")
+    } else {
+        message("\nMethod:", b$method, "  Optimizer:", b$optimizer)
+        if (!is.null(b$outer.info)) {
+            if (b$optimizer[2] %in% c("newton", "bfgs")) {
+                boi <- b$outer.info
+                message("\n", boi$conv, " after ", boi$iter, " iteration", sep = "")
+                if (boi$iter == 1)
+                  message(".") else message("s.")
+                message("\nGradient range [", min(boi$grad), ",", max(boi$grad),
+                  "]", sep = "")
+                message("\n(score ", b$gcv.ubre, " & scale ", b$sig2, ").", sep = "")
+                ev <- eigen(boi$hess)$values
+                if (min(ev) > 0)
+                  message("\nHessian positive definite, ") else message("\n")
+                message("eigenvalue range [", min(ev), ",", max(ev), "].\n", sep = "")
+            } else {
+                message("\n")
+                print(b$outer.info)
+            }
+        } else {
+            if (length(b$sp) == 0)
+                message("\nModel required no smoothing parameter selection") else {
+                message("\nSmoothing parameter selection converged after", b$mgcv.conv$iter,
+                  "iteration")
+                if (b$mgcv.conv$iter > 1)
+                  message("s")
+                if (!b$mgcv.conv$fully.converged)
+                  message(" by steepest\ndescent step failure.\n") else message(".\n")
+                message("The RMS", b$method, "score gradient at convergence was",
+                  b$mgcv.conv$rms.grad, ".\n")
+                if (b$mgcv.conv$hess.pos.def)
+                  message("The Hessian was positive definite.\n") else message("The Hessian was not positive definite.\n")
+            }
+        }
+        if (!is.null(b$rank)) {
+            message("Model rank = ", b$rank, "/", length(b$coefficients), "\n")
+        }
     }
-    else {
-      if (length(b$sp) == 0)
-        message("\nModel required no smoothing parameter selection")
-      else {
-        message("\nSmoothing parameter selection converged after",
-            b$mgcv.conv$iter, "iteration")
-        if (b$mgcv.conv$iter > 1)
-          message("s")
-        if (!b$mgcv.conv$fully.converged)
-          message(" by steepest\ndescent step failure.\n")
-        else message(".\n")
-        message("The RMS", b$method, "score gradient at convergence was",
-            b$mgcv.conv$rms.grad, ".\n")
-        if (b$mgcv.conv$hess.pos.def)
-          message("The Hessian was positive definite.\n")
-        else message("The Hessian was not positive definite.\n")
-      }
+    message("\n")
+    kchck <- k.check(b, subsample = k.sample, n.rep = k.rep)
+    if (!is.null(kchck)) {
+        message("Basis dimension (k) checking results. Low p-value (k-index<1) may\n")
+        message("indicate that k is too low, especially if edf is close to k'.\n\n")
+        printCoefmat(kchck, digits = 3)
     }
-    if (!is.null(b$rank)) {
-      message("Model rank = ", b$rank, "/", length(b$coefficients), "\n")
-    }
-  }
-  message("\n")
-  kchck <- k.check(b, subsample = k.sample, n.rep = k.rep)
-  if (!is.null(kchck)) {
-    message("Basis dimension (k) checking results. Low p-value (k-index<1) may\n")
-    message("indicate that k is too low, especially if edf is close to k'.\n\n")
-    printCoefmat(kchck, digits = 3)
-  }
 }
 \end{lstlisting}
 

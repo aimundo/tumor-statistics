@@ -123,7 +123,7 @@ p12<-ggplot(basis_plot,
               size=sz)+
     geom_point(show.legend = FALSE,
                size=sz+1)+
-    labs(y='Penalized \n basis functions')+
+    labs(y='Weighted \n basis functions')+
     scale_y_continuous(breaks=seq(-1,1,1))+
     facet_wrap(~Basis,
                labeller=as_labeller(basis_names)
