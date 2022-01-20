@@ -4,6 +4,21 @@
 %
 \documentclass[
 ]{article}
+\title{\textbf{Generalized additive models to analyze non-linear trends in biomedical longitudinal data using R:}\\
+Beyond repeated measures ANOVA and Linear Mixed Models\\
+\strut \\
+\textbf{Response to Reviewer's Comments}\\
+Journal of Submission: Statistics in Medicine}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Manuscript ID: SIM-21-0640.R1}
+\author{}
+\date{\vspace{-2.5em}}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{iftex}
@@ -167,21 +182,6 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-
-\title{\textbf{Generalized additive models to analyze non-linear trends in biomedical longitudinal data using R:}\\
-Beyond repeated measures ANOVA and Linear Mixed Models\\
-\strut \\
-\textbf{Response to Reviewer's Comments}\\
-Journal of Submission: Statistics in Medicine}
-\usepackage{etoolbox}
-\makeatletter
-\providecommand{\subtitle}[1]{% add subtitle to \maketitle
-  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
-}
-\makeatother
-\subtitle{Manuscript ID: SIM-21-0640.R1}
-\author{}
-\date{\vspace{-2.5em}}
 
 \begin{document}
 \maketitle
@@ -434,7 +434,7 @@ We have made major changes to this section based on the reviewer's comments.
 
 \begin{itemize}
 \item
-  We have removed the sentence ``if the difference between the credible intervals of the fitted smooths\ldots{} is non-zero'', and now L487-L489 now read: ``is that the difference between them can be computed, followed by the estimation of an empirical Bayesian simultaneous CI around this difference.''
+  We have removed the sentence ``if the difference between the credible intervals of the fitted smooths\ldots{} is non-zero'', and now L491-L493 now read: ``is that the difference between them can be computed, followed by the estimation of an empirical Bayesian simultaneous CI around this difference.''
 \item
   L497-L498 The sentence now reads ``unlikely to be distinguishable from zero''.
 \item
@@ -629,7 +629,7 @@ We have changed the word from ``global'' to ``population''.
 \hypertarget{reviewers-comments-22}{%
 \subsubsection{Reviewer's Comments}\label{reviewers-comments-22}}
 
-L283 I think it is better to say ``\ldots the mathematical space within which the true but unknown \(f(x_t)\) is thought to exist.''
+L283 I think it is better to say ``\ldots the mathematical space within which the true but unknown \(f(time_t)\) is thought to exist.''
 
 \hypertarget{section-23}{%
 \subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-23}}
@@ -674,7 +674,7 @@ L356 use straight quotes in code, not curly ones. And speficy the \passthrough{\
 \hypertarget{section-27}{%
 \subsubsection{\texorpdfstring{\textcolor{reviewersblue} {Reply to Reviewer's Comments}}{}}\label{section-27}}
 
-We use the code notation provided by the \(LaTeX\) package \passthrough{\lstinline!listings!}, and have updated the quotes to be straight in all code chunks. Regarding \passthrough{\lstinline!family!}, we believe that it is not necessary to include it here, but we indicate in L459-460 what the argument exists and that other distributions can be used.
+We use the code notation provided by the \(LaTeX\) package \passthrough{\lstinline!listings!}, and have updated the quotes to be straight in all code chunks. Regarding \passthrough{\lstinline!family!}, we believe that it is not necessary to include it here, but we indicate in L460-L461 what the argument exists and that other distributions can be used.
 
 \hypertarget{reviewers-comments-27}{%
 \subsubsection{Reviewer's Comments}\label{reviewers-comments-27}}

@@ -205,7 +205,7 @@ This section could also do with a little more explanation; {gratia} (and hence I
 
 We have made major changes to this section based on the reviewer's comments. 
 
-- We have removed the sentence "if the difference between the credible intervals of the fitted smooths... is non-zero", and now L487-L489 now read: "is that the difference between them can be computed, followed by the estimation of an empirical Bayesian simultaneous CI around this difference."
+- We have removed the sentence "if the difference between the credible intervals of the fitted smooths... is non-zero", and now L491-L493 now read: "is that the difference between them can be computed, followed by the estimation of an empirical Bayesian simultaneous CI around this difference."
 
 - L497-L498 The sentence now reads "unlikely to be distinguishable from zero".
 
@@ -357,7 +357,7 @@ We have changed the word from  "global" to "population".
 
 ### Reviewer's Comments
 
-L283 I think it is better to say “…the mathematical space within which the true but unknown $f(x_t)$ is thought to exist.”
+L283 I think it is better to say “…the mathematical space within which the true but unknown $f(time_t)$ is thought to exist.”
 
 ### \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
@@ -393,7 +393,7 @@ L356 use straight quotes in code, not curly ones. And speficy the `family` here?
 
 ### \textcolor{reviewersblue} {Reply to Reviewer's Comments}
 
-We use the code notation provided by the $LaTeX$ package `listings`, and have updated the quotes to be straight in all code chunks. Regarding `family`, we believe that it is not necessary to include it here, but we indicate in L459-460 what the argument exists and that other distributions can be used.
+We use the code notation provided by the $LaTeX$ package `listings`, and have updated the quotes to be straight in all code chunks. Regarding `family`, we believe that it is not necessary to include it here, but we indicate in L460-L461 what the argument exists and that other distributions can be used.
 
 ### Reviewer's Comments
 
